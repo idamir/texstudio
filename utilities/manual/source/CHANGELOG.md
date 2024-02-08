@@ -1,7 +1,22 @@
 # CHANGELOG
+## TeXstudio 4.7.3
+
+- First line of macro editor no longer uses macro type, use buttons to set type. Macro format changes slightly. For details s. [#3458](https://github.com/texstudio-org/texstudio/pull/3458)
+- add export of all macros in Edit Macros dialog
+- fix missing connection error message when browsing macro repository [#3448](https://github.com/texstudio-org/texstudio/pull/3448)
+- fix switching (by clicking) between documents [#3473](https://github.com/texstudio-org/texstudio/issues/3473)
+- fix "Show all open documents in this tree" [#3476](https://github.com/texstudio-org/texstudio/issues/3476)
+- improved Package Help dialog [#3478](https://github.com/texstudio-org/texstudio/pull/3478)
+- fix handling a new file created from the context menu [#3471](https://github.com/texstudio-org/texstudio/issues/3471)
+
 ## TeXstudio 4.7.2
 
-- 
+- remove something (alt+del) handles matching delimiters
+- fix detecting parent/child documents when autoloading is disabled [#3411](https://github.com/texstudio-org/texstudio/issues/3411)
+- fix completion of user constructs like a_b [#3403](https://github.com/texstudio-org/texstudio/issues/3403)
+- fix navigating in subfiles [#3404](https://github.com/texstudio-org/texstudio/issues/3404)
+- fix duplicate shortcut in 'Additional Shortcut' column is not removed [#3408](https://github.com/texstudio-org/texstudio/pull/3408)
+- fix wrong cursor, scaling, settings in pdf viewer when switching window mode [#3426](https://github.com/texstudio-org/texstudio/pull/3426) [#3428](https://github.com/texstudio-org/texstudio/pull/3428) ...
 
 ## TeXstudio 4.7.1
 

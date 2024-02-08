@@ -38,7 +38,7 @@ public:
     bool getLineWrap();
 
 private:
-	void setLanguageFromText(void);
+	void setLanguageFromType(QTreeWidgetItem *current);
     QTreeWidgetItem* findCreateFolder(const QString &menu);
     QTreeWidgetItem* findCreateFolder(QTreeWidgetItem *parent, QStringList folders);
 
@@ -50,19 +50,20 @@ protected:
     virtual void keyPressEvent(QKeyEvent *e) override;
 
 signals:
-	void runScript(const QString &script);
+	void execMacro(const Macro &macro);
 
 private slots:
-    void change(QTreeWidgetItem *current,QTreeWidgetItem *previous);
+	void change(QTreeWidgetItem *current,QTreeWidgetItem *previous);
 	void slotOk();
-	void slotRunScript();
+	void slotExecMacro();
 	void slotAdd();
 	void slotRemove();
-    void slotAddFolder();
+	void slotAddFolder();
 	void slotMoveUp();
 	void slotMoveDown();
     void importMacro();
     void exportMacro();
+    void exportAllMacros();
     void browseMacrosOnRepository();
 	void textChanged();
 	void nameChanged();
@@ -71,9 +72,7 @@ private slots:
 	void abbrevChanged();
 	void triggerChanged();
 	void showTooltip();
-	void changeTypeToNormal();
-	void changeTypeToEnvironment();
-	void changeTypeToScript();
+	void changeType();
 };
 
 #endif // USERMENUDIALOG_H

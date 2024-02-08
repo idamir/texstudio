@@ -3,6 +3,7 @@
 
 #include "mostQtHeaders.h"
 #include "help.h"
+#include "latexrepository.h"
 
 
 namespace Ui {
@@ -23,7 +24,7 @@ public:
 	~TexdocDialog();
 
 private slots:
-    void regenerateTable(int state=0);
+    void regenerateTable(int state=Qt::Unchecked);
     void tableSearchTermChanged(QString term);
 	void itemChanged(QTableWidgetItem* item);
 	void delayedCheckDocAvailable(const QString &package);
@@ -38,6 +39,7 @@ private:
 	QString lastDocRequest;
     Help *help;
     QStringList m_packages;
+    QButtonGroup buttonGroup;
 };
 
 #endif // TEXDOCDIALOG_H

@@ -1,6 +1,6 @@
 # babel.sty
 # available from ctan
-# tbraun 4.11.2008; Matthew Bertucci 2023/11/11 for v3.97
+# tbraun 4.11.2008; Matthew Bertucci 2024/01/07 for v24.1
 
 #keyvals:\usepackage/babel#c
 %<language%>
@@ -16,7 +16,6 @@ main=%<language%>
 headfoot=%<language%>
 noconfigs
 showlanguages
-nocase
 silent
 hyphenmap=#off,first,select,other,other*
 bidi=#default,basic,basic-r,bidi-l,bidi-r
@@ -162,7 +161,7 @@ Alph=%<counter%>
 onchar=#ids,fonts,letters
 intraspace=%<base shrink stretch%>
 intrapenalty=%<penalty%>
-transforms=#transliteration.dad,digraphs.ligatures,hyphen.repeat,oneletter.nobreak,prehyphen.nobreak,diaeresis.hyphen,transliteration.omega,sigma.final,transliteration.hk,punctuation.space,digraphs.hyphen,danda.nobreak,letters.noj,letters.uv,transliteration.iast,transliteration.gajica,kashida.plain
+transforms=#transliteration.dad,digraphs.ligatures,hyphen.repeat,oneletter.nobreak,prehyphen.nobreak,punctuation.space,diaeresis.hyphen,transliteration.omega,sigma.final,transliteration.hk,punctuation.space,digraphs.hyphen,danda.nobreak,letters.noj,letters.uv,transliteration.iast,transliteration.gajica,kashida.plain
 justification=#kashida,elongated,unhyphenated,padding
 linebreaking=#kashida,elongated,unhyphenated,padding
 mapfont=
@@ -170,7 +169,8 @@ maparabic
 mapdigits
 calendar=%<calendar%>
 calendar=%<calendar%>.%<variant%>
-casing=#yiwn,eszett,iota
+casing=#yiwn,eszett,iota,nouv,uv
+interchar=%<interchar-list%>
 #endkeyvals
 
 \localenumeral{style}{number}
@@ -210,6 +210,7 @@ extension.u.tag.bcp47
 
 \getlocaleproperty{cmd}{locale}{property}#*d
 \getlocaleproperty*{cmd}{locale}{property}#*d
+\ShowLocaleProperties{language}#*
 \LocaleForEach{code}#*
 \BabelEnsureInfo#*
 \localeid#*
@@ -230,7 +231,7 @@ extension.u.tag.bcp47
 \babelprehyphenation[options%keyvals]{locale-name}{lua-pattern}{replacement}#*
 
 #keyvals:\babelposthyphenation#c,\babelprehyphenation#c
-label=#transliteration.dad,digraphs.ligatures,hyphen.repeat,oneletter.nobreak,prehyphen.nobreak,diaeresis.hyphen,transliteration.omega,sigma.final,transliteration.hk,punctuation.space,digraphs.hyphen,danda.nobreak,letters.noj,letters.uv,transliteration.iast,transliteration.gajica,kashida.plain
+label=#transliteration.dad,digraphs.ligatures,hyphen.repeat,oneletter.nobreak,prehyphen.nobreak,punctuation.space,diaeresis.hyphen,transliteration.omega,sigma.final,transliteration.hk,punctuation.space,digraphs.hyphen,danda.nobreak,letters.noj,letters.uv,transliteration.iast,transliteration.gajica,kashida.plain
 fonts=%<tag1 tag2 ...%>
 attribute=%<attribute%>
 #endkeyvals
@@ -244,6 +245,7 @@ digraphs.ligatures
 hyphen.repeat
 oneletter.nobreak
 prehyphen.nobreak
+punctuation.space
 diaeresis.hyphen
 transliteration.omega
 sigma.final
@@ -270,6 +272,7 @@ label=%<label%>
 
 \enablelocaleinterchar{label}#*
 \disablelocaleinterchar{label}#*
+\IfBabelIntercharT{interchar-list}{code}#*
 
 \ensureascii{text}#*
 \asciiencoding#*
@@ -1763,7 +1766,7 @@ SuppressWarning#true,false
 #repl:"! ¡
 #endif
 
-### germanb.ldf v2.13 (and associated austrian.ldf and swissgerman.ldf) ###
+### germanb.ldf v2.14 (and associated austrian.ldf and swissgerman.ldf) ###
 #ifOption:german
 \captionsgerman#*
 \dategerman#*
@@ -1786,6 +1789,10 @@ SuppressWarning#true,false
 \mdqon#*
 \mdqoff#*
 \ck#*
+\ifcapsz#*
+\capsztrue#S
+\capszfalse#S
+\mkngender#*
 #repl:"a ä
 #repl:"e ë
 #repl:"i ï
@@ -1848,6 +1855,10 @@ SuppressWarning#true,false
 \mdqon#*
 \mdqoff#*
 \ck#*
+\ifcapsz#*
+\capsztrue#S
+\capszfalse#S
+\mkngender#*
 #repl:"a ä
 #repl:"e ë
 #repl:"i ï
@@ -1910,6 +1921,10 @@ SuppressWarning#true,false
 \mdqon#*
 \mdqoff#*
 \ck#*
+\ifcapsz#*
+\capsztrue#S
+\capszfalse#S
+\mkngender#*
 #repl:"a ä
 #repl:"e ë
 #repl:"i ï

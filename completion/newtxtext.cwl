@@ -1,5 +1,5 @@
 # newtxtext package
-# Matthew Bertucci 2023/10/31 for v1.73
+# Matthew Bertucci 2024/01/12 for v1.737
 
 #include:xpatch
 #include:xcolor
@@ -41,12 +41,9 @@ trueslanted
 scosf
 tighter
 looser
-supscaled=%<factor%>
-supsraised=##L
-supLspaced=##L
-supLRspaced=##L
-supscolor=#%color
 newsu
+no-math#true,false
+otfmath#true,false
 #endkeyvals
 
 \defigures#*

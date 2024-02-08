@@ -7,8 +7,8 @@ permissions:
   contents: read
 
 env:
-  OSX_QT_VERSION: 6.6.0
-  OSX_POPPLER_VERSION: 23.11.0
+  OSX_QT_VERSION: 6.6.1
+  OSX_POPPLER_VERSION: 24.02.0
   OSX_QUAZIP_VERSION: 1.4
 
 jobs:
@@ -64,23 +64,23 @@ jobs:
 
       - name: Upload zip to GitHub Artifacts
         if: github.event_name == 'push'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: texstudio-win-qt6-zip
           path: ./build/package-zip/texstudio-win-qt6-${{ steps.package.outputs.VERSION_NAME }}.zip
           
       - name: Upload to GitHub Artifacts
         if: github.event_name == 'push'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: texstudio-win-qt6-exe
           path: texstudio-win-qt6-${{ steps.package.outputs.VERSION_NAME }}.exe
 
       - name: Upload release file(s)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          name: release
+          name: release-win
           path: |
             texstudio-${{ steps.package.outputs.GIT_VERSION }}-win-qt6.exe
             texstudio-${{ steps.package.outputs.GIT_VERSION }}-win-portable-qt6.zip
@@ -134,16 +134,16 @@ jobs:
         
     - name: Upload to Github Artifacts
       if: github.event_name == 'push'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: texstudio-linux
         path: texstudio-linux-${{ steps.package.outputs.VERSION_NAME }}-x86_64.AppImage
 
     - name: Upload release file(s)
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        name: release
+        name: release-linux
         path: texstudio-${{ steps.package.outputs.GIT_VERSION }}-x86_64.AppImage
 
 
@@ -221,30 +221,122 @@ jobs:
         
     - name: Upload to Github artifacts
       if: github.event_name == 'push'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: texstudio-osx
         path: texstudio-osx-${{ steps.package.outputs.VERSION_NAME }}.dmg
 
     - name: Upload release file(s)
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        name: release
+        name: release-osx
         path: texstudio-${{ steps.package.outputs.GIT_VERSION }}-osx.dmg
+
+  macosxM1:
+    name: Mac OS X (M1)
+    if: true
+    runs-on: macos-14
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Fetch tag annotations
+      run: git fetch --tags --force
+
+    - name: Install Dependencies
+      run: |
+        wget https://github.com/sunderme/homebrew-qt6-modules/releases/download/${{ env.OSX_QT_VERSION }}/QtBase-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz
+        sudo tar xvf ./QtBase-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz -C /usr/local
+        rm QtBase-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz
+        wget https://github.com/sunderme/homebrew-qt6-modules/releases/download/${{ env.OSX_QT_VERSION }}/QtSvg-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz
+        sudo tar xvf ./QtSvg-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz -C /usr/local/QtBase-${{ env.OSX_QT_VERSION }}-Darwin --strip-components=1
+        rm QtSvg-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz
+        wget https://github.com/sunderme/homebrew-qt6-modules/releases/download/${{ env.OSX_QT_VERSION }}/Qt5Compat-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz
+        sudo tar xvf ./Qt5Compat-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz -C /usr/local/QtBase-${{ env.OSX_QT_VERSION }}-Darwin --strip-components=1
+        rm Qt5Compat-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz
+        wget https://github.com/sunderme/homebrew-qt6-modules/releases/download/${{ env.OSX_QT_VERSION }}/QtTools-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz
+        sudo tar xvf ./QtTools-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz -C /usr/local/QtBase-${{ env.OSX_QT_VERSION }}-Darwin --strip-components=1
+        rm QtTools-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz
+        wget https://github.com/sunderme/homebrew-qt6-modules/releases/download/${{ env.OSX_QT_VERSION }}/QtDeclarative-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz
+        sudo tar xvf ./QtDeclarative-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz -C /usr/local/QtBase-${{ env.OSX_QT_VERSION }}-Darwin --strip-components=1
+        rm QtDeclarative-${{ env.OSX_QT_VERSION }}-Darwin-M1.tar.xz
+        wget https://github.com/sunderme/homebrew-qt6-modules/releases/download/${{ env.OSX_QT_VERSION }}/poppler-${{ env.OSX_POPPLER_VERSION }}-Darwin-M1.tar.xz
+        sudo tar xvf ./poppler-${{ env.OSX_POPPLER_VERSION}}-Darwin-M1.tar.xz -C /usr/local --strip-components=1
+        rm poppler-${{ env.OSX_POPPLER_VERSION }}-Darwin-M1.tar.xz
+        wget https://github.com/sunderme/homebrew-qt6-modules/releases/download/${{ env.OSX_QT_VERSION }}/QuaZip-${{ env.OSX_QUAZIP_VERSION }}-Darwin-M1.tar.xz
+        sudo tar xvf ./QuaZip-${{ env.OSX_QUAZIP_VERSION }}-Darwin-M1.tar.xz -C /usr/local --strip-components=1
+        rm QuaZip-${{ env.OSX_QUAZIP_VERSION }}-Darwin-M1.tar.xz
+        brew install cairo fontconfig freetype gettext jpeg libpng libtiff little-cms2 openjpeg
+        brew install ninja pkg-config
+
+    - name: Configure
+      run: |
+        mkdir build
+        cd build
+        /usr/local/QtBase-${{ env.OSX_QT_VERSION }}-Darwin/bin/qt-cmake .. -G Ninja
+
+    - name: Build
+      run: |
+        cd build
+        cmake --build . --parallel
+
+    - name: Workarounds
+      run: |
+        cd build
+        mkdir -p texstudio.app/Contents/Frameworks
+        touch texstudio.app/Contents/Resources/empty.lproj
+
+    - name: Package
+      id: package
+      run: |
+        cd build
+        # /usr/local/QtBase-${{ env.OSX_QT_VERSION }}-Darwin/bin/macdeployqt texstudio.app -dmg
+        /usr/local/QtBase-${{ env.OSX_QT_VERSION }}-Darwin/bin/macdeployqt texstudio.app
+        codesign --force --deep --sign - texstudio.app
+        . ../.github/scripts/get-version.sh
+        cp -r texstudio.app ../texstudio-${GIT_VERSION}-osx-m1.app
+        mkdir ../app
+        mv texstudio.app ../app/texstudio-osx-m1-${VERSION_NAME}.app
+        cd ..
+        # zip -r texstudio-osx-m1-${VERSION_NAME}.zip texstudio-osx-m1-${VERSION_NAME}.app
+        zip -r texstudio-${GIT_VERSION}-osx-m1.zip texstudio-${GIT_VERSION}-osx-m1.app
+        echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_OUTPUT
+        echo "TXS_VERSION=${TXS_VERSION}" >> $GITHUB_OUTPUT
+        echo "GIT_VERSION=${GIT_VERSION}" >> $GITHUB_OUTPUT
+        
+    - name: Upload to Github artifacts
+      if: github.event_name == 'push'
+      uses: actions/upload-artifact@v4
+      with:
+        name: texstudio-osx-m1
+        path: app
+        # path: texstudio-osx-m1-${{ steps.package.outputs.VERSION_NAME }}.zip
+
+    - name: Upload release file(s)
+      uses: actions/upload-artifact@v4
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        name: release-osx-m1
+        path: texstudio-${{ steps.package.outputs.GIT_VERSION }}-osx-m1.zip
 
   release:
     permissions:
+      actions: write   # for GeekyEggo/delete-artifact to delete artifacts
       contents: write  # for softprops/action-gh-release to create GitHub release
     name: Release
-    needs: [build-win10, build-linux-release, macosx] # build-linux-win,macosx-qt5 is disabled
+    needs: [build-win10, build-linux-release, macosx, macosxM1] # build-linux-win,macosx-qt5 is disabled
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
     steps:
-    - name: Download temp artifact
-      uses: actions/download-artifact@v3
+    - name: Download temp artifacts
+      uses: actions/download-artifact@v4
       with:
-        name: release
+        pattern: release-*
+        merge-multiple: true
 
     - name: Calculate hashes
       run: |
@@ -259,10 +351,9 @@ jobs:
       with:
         prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
         files: ./*
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
 
-    - name: Delete temp artifact
-      uses: GeekyEggo/delete-artifact@v2.0.0
+    - name: Delete temp artifacts
+      uses: GeekyEggo/delete-artifact@v4
       with:
-        name: release
+        name: release-*
+        token: ${{ secrets.GITHUB_TOKEN }}

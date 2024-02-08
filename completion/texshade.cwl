@@ -1,5 +1,5 @@
 # texshade package
-# Matthew Bertucci 2022/10/11 for v1.26a
+# Matthew Bertucci 2024/01/10 for v1.28
 
 #include:color
 #include:graphics
@@ -87,8 +87,8 @@ usenames
 \emphdefault{style%keyvals}
 \emphregion{seqref}{selection}
 \englishlanguage
-\exportconsensus[filename%file]{seqref}
-\exportconsensus{seqref}
+\exportconsensus[pymol/chimera]{seqref}{filename%file}
+\exportconsensus{seqref}{filename%file}
 \feature{position%keyvals}{seqref}{selection}{labelstyle}{text}
 \featurenamecolor{ttttop...bbbbottom}{color}
 \featurenamesbf
@@ -204,6 +204,7 @@ usenames
 \hiderelevance
 \hideresidues
 \hideruler
+\hideruler[top/bottom]
 \hideseq{seq1,seq2,...}
 \hideseqs
 \hidesequencelogo
@@ -259,8 +260,12 @@ usenames
 \movelegend{x-offset}{y-offset}
 \namecolor{seq1,seq2,...}{color}
 \nameconsensus{name}
+\nameruler{name}
+\nameruler[top/bottom]{name}
 \namerulerpos{%<number%>}{%<text%>[%<color%>]}
+\namerulerpos[%<top/bottom%>]{%<number%>}{%<text%>[%<color%>]}
 \namerulerpos{number}{text}
+\namerulerpos[top/bottom]{number}{text}
 \namesbf
 \namescolor{color}
 \nameseq{seqref}{name}
@@ -341,20 +346,39 @@ usenames
 \romancount
 \Romancount
 \rotateruler
+\rotateruler[top/bottom]
 \rulercolor{color}
+\rulercolor[top/bottom]{color}
 \rulerfootnotesize
 \rulerhuge
 \rulerHuge
 \rulerlarge
 \rulerLarge
 \rulerLARGE
+\rulernamecolor{color}
+\rulernamecolor[top/bottom]{color}
+\rulernamefootnotesize
+\rulernamehuge
+\rulernameHuge
+\rulernamelarge
+\rulernameLarge
+\rulernameLARGE
+\rulernamenormalsize
+\rulernamerm
+\rulernamescriptsize
+\rulernamesf
+\rulernamesmall
+\rulernametiny
+\rulernamett
 \rulernormalsize
 \rulerrm
 \rulerscriptsize
 \rulersf
 \rulersmall
 \rulerspace{length}
+\rulerspace[top/bottom]{length}
 \rulersteps{number}
+\rulersteps[top/bottom]{number}
 \rulertiny
 \rulertt
 \secondcolumnDSSP
@@ -429,6 +453,7 @@ usenames
 \ttttopspace{length}
 \undofrequencycorrection
 \unrotateruler
+\unrotateruler[top/bottom]
 \vblockspace{length}
 \vsepspace{length}
 \weighttable{table%keyvals}
@@ -713,6 +738,10 @@ TC7#B
 TC8#B
 TC9#B
 TC99#B
+BrewerC#B
+BrewerG#B
+BrewerT#B
+BrewerA#B
 LightGreenYellow#B
 LightYellow#B
 LightGoldenrod#B

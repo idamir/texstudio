@@ -1,5 +1,5 @@
 # eolang package
-# Matthew Bertucci 2022/12/16 for v0.9.1
+# Matthew Bertucci 2024/01/12 for v0.19.0
 
 #include:stmaryrd
 #include:amsmath
@@ -22,11 +22,13 @@
 #include:tikzlibraryarrows.meta
 #include:hyperref
 #include:trimclip
+#include:shellesc
 
 #keyvals:\usepackage/eolang#c
 tmpdir=%<path%>
 nocomments
 anonymous
+noshell
 #endkeyvals
 
 \begin{phiquation}#\math

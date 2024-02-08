@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.0)
 
-project(TeXstudio VERSION 4.7.2 LANGUAGES C CXX)
+project(TeXstudio VERSION 4.7.3 LANGUAGES C CXX)
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 set(CMAKE_DEBUG_POSTFIX "d")
 set(CMAKE_AUTOMOC ON)
@@ -400,7 +400,7 @@ if(ZLIB_FOUND)
 	target_link_libraries(texstudio PUBLIC ${ZLIB_LIBRARIES})
 endif()
 
-if(UNIX AND NOT APPLE)
+if(UNIX AND NOT APPLE AND NOT HAIKU)
 	find_package(X11 REQUIRED)
 	target_include_directories(texstudio PUBLIC ${X11_INCLUDE_DIRS})
 	target_link_libraries(texstudio PUBLIC ${X11_LIBRARIES})
@@ -433,54 +433,56 @@ endif()
 
 ## installation
 
-install(TARGETS texstudio DESTINATION bin)
+include(GNUInstallDirs)
 
-if(UNIX AND NOT APPLE)
+install(TARGETS texstudio DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+if(UNIX AND NOT APPLE AND NOT HAIKU)
         option(APPDATA "Install appdata" ON)
-	install(FILES utilities/texstudio.desktop DESTINATION share/applications)
-	install(FILES utilities/texstudio.svg DESTINATION share/icons/hicolor/scalable/apps)
+	install(FILES utilities/texstudio.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
+	install(FILES utilities/texstudio.svg DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps)
         if(${APPDATA})
-		install(FILES utilities/texstudio.metainfo.xml DESTINATION share/metainfo)
+		install(FILES utilities/texstudio.metainfo.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
 	endif()
 endif()
 
 if(UNIX)
 	install(DIRECTORY translation/
-		DESTINATION share/texstudio
+		DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio
 		FILES_MATCHING
 		PATTERN *.qm
 	)
 	install(DIRECTORY templates/
-		DESTINATION share/texstudio
+		DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio
 		FILES_MATCHING
 		PATTERN *
 	)
 	install(DIRECTORY utilities/dictionaries/
-		DESTINATION share/texstudio
+		DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio
 		FILES_MATCHING
 		PATTERN *
 	)
 	install(DIRECTORY utilities/manual/build/html/
-		DESTINATION share/texstudio
+		DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio
 		FILES_MATCHING
 		PATTERN *.html
 	)
 	install(DIRECTORY utilities/manual/build/html/_images
-		DESTINATION share/texstudio
+		DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio
 		FILES_MATCHING
 		PATTERN *.png
 	)
 	install(DIRECTORY utilities/manual/build/html/_sphinx_design_static
-		DESTINATION share/texstudio
+		DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio
 	)
 	install(DIRECTORY utilities/manual/build/html/_static
-		DESTINATION share/texstudio
+		DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio
 	)
-	install(FILES utilities/manual/build/html/searchindex.js DESTINATION share/texstudio)
-	install(FILES utilities/latex2e.html DESTINATION share/texstudio)
-	install(FILES utilities/latex2e.css DESTINATION share/texstudio)
-	install(FILES utilities/list.png DESTINATION share/texstudio)
-	install(FILES utilities/AUTHORS DESTINATION share/texstudio)
-	install(FILES utilities/COPYING DESTINATION share/texstudio)
-	install(FILES utilities/manual/source/CHANGELOG.md DESTINATION share/texstudio)
+	install(FILES utilities/manual/build/html/searchindex.js DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
+	install(FILES utilities/latex2e.html DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
+	install(FILES utilities/latex2e.css DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
+	install(FILES utilities/list.png DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
+	install(FILES utilities/AUTHORS DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
+	install(FILES utilities/COPYING DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
+	install(FILES utilities/manual/source/CHANGELOG.md DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
 endif()

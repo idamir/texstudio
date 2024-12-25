@@ -111,7 +111,7 @@
           </size>
          </property>
          <property name="currentIndex">
-          <number>7</number>
+          <number>11</number>
          </property>
          <widget class="QWidget" name="pageGeneral">
           <layout class="QVBoxLayout">
@@ -1590,7 +1590,7 @@ Then you can select a new shortcut by one of the following ways:
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1085</width>
+                <width>639</width>
                 <height>423</height>
                </rect>
               </property>
@@ -3336,8 +3336,8 @@ them here.</string>
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>393</width>
-                <height>605</height>
+                <width>1085</width>
+                <height>761</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -3577,6 +3577,121 @@ them here.</string>
                     <property name="icon">
                      <iconset resource="../images.qrc">
                       <normaloff>:/images-ng/document-open.svgz</normaloff>:/images-ng/document-open.svgz</iconset>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="groupBox_AIChat">
+                 <property name="toolTip">
+                  <string>Store the conversation with AI provider on disk to allow later retrieval</string>
+                 </property>
+                 <property name="title">
+                  <string>AI chat assistant</string>
+                 </property>
+                 <layout class="QGridLayout" name="gl_AIChat" columnstretch="0,0,0,0,0">
+                  <item row="3" column="3">
+                   <widget class="QComboBox" name="cbAIPreferredModel">
+                    <item>
+                     <property name="text">
+                      <string>open-mistral-7b</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>open-mixtral-8x7b</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>mistral-small-latest</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>mistral-medium-latest</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>mistral-large-latest</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_AIProvider">
+                    <property name="text">
+                     <string>AI provider:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="4">
+                   <widget class="QPushButton" name="pbRetrieveModels">
+                    <property name="text">
+                     <string>Retrieve list of models</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0" colspan="2">
+                   <widget class="QLabel" name="label_AIAPI">
+                    <property name="text">
+                     <string>API key:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="3">
+                   <widget class="QComboBox" name="cbAIProvider">
+                    <item>
+                     <property name="text">
+                      <string>Mistral AI</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>OpenAI</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Local Model</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QCheckBox" name="cbAIRecordConversation">
+                    <property name="text">
+                     <string>Record Conversation</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_AIModel">
+                    <property name="text">
+                     <string>Preferred model:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="3">
+                   <widget class="QLineEdit" name="leAIAPIKey"/>
+                  </item>
+                  <item row="2" column="3">
+                   <widget class="QLineEdit" name="leAIAPIURL"/>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_91">
+                    <property name="text">
+                     <string>API URL:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="4">
+                   <widget class="QPushButton" name="pbResetAIURL">
+                    <property name="text">
+                     <string>Default</string>
                     </property>
                    </widget>
                   </item>
@@ -3875,7 +3990,7 @@ them here.</string>
                 <x>0</x>
                 <y>0</y>
                 <width>292</width>
-                <height>228</height>
+                <height>207</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -3931,6 +4046,11 @@ them here.</string>
                       <string>Preview with lualatex</string>
                      </property>
                     </item>
+                    <item>
+                     <property name="text">
+                      <string>Preview with xelatex</string>
+                     </property>
+                    </item>
                    </widget>
                   </item>
                   <item row="1" column="0">
@@ -3945,11 +4065,11 @@ them here.</string>
                   </item>
                   <item row="1" column="1">
                    <widget class="QComboBox" name="comboBoxPreviewMode">
-                    <property name="advancedOption" stdset="0">
-                     <bool>false</bool>
-                    </property>
                     <property name="toolTip">
                      <string>When the mode is changed, the preview on formulas is displayed accordingly (but for Inline it's still a tooltip).</string>
+                    </property>
+                    <property name="advancedOption" stdset="0">
+                     <bool>false</bool>
                     </property>
                     <item>
                      <property name="text">

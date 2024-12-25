@@ -1,5 +1,5 @@
 # univie-ling-wlg class
-# Matthew Bertucci 2023/01/27 for v.2.2
+# Matthew Bertucci 2024/06/28 for v.2.6
 
 #include:class-scrartcl
 #include:cochineal
@@ -28,6 +28,7 @@
 #include:multirow
 #include:varioref
 #include:prettyref
+#include:isodate
 
 #keyvals:\documentclass/univie-ling-wlg#c
 biblatex#true,false
@@ -99,6 +100,8 @@ issueeditor#true,false
 \issueeditors{names}
 \issuesubtitle{text}
 \issuetitle{text}
+\jedboard{name}
+\jeditors{name}
 \keywords{word1,word2,...%text}
 \lastpageref#*
 \ljobname#*
@@ -117,6 +120,10 @@ issueeditor#true,false
 \urlprefix#*
 \versal{text}
 \wlgurl#*
+\weblink{URL}#U
+\weblink{URL}[date]#U
+\SetURLDate{date}
+\urldate{date}
 
 #keyvals:\includefinalpaper
 author=%<name%>

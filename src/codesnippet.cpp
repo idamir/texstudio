@@ -149,7 +149,7 @@ CodeSnippet::CodeSnippet(const QString &newWord, bool replacePercentNewline, boo
                             sortWord.append('$');
                             break;
                         }
-                        [[gnu::fallthrough]];
+                        [[fallthrough]];
 					default:
 						sortWord.append(currentChar);
 					}
@@ -182,7 +182,7 @@ CodeSnippet::CodeSnippet(const QString &newWord, bool replacePercentNewline, boo
 				curLine += "%";
 				word += "%";
 			// no break
-                [[clang::fallthrough]];
+                [[fallthrough]];
 			case '\\':
 				if (currentChar.toLatin1() == '\n' || replacePercentNewline) {
 					lines.append(curLine);
@@ -192,7 +192,7 @@ CodeSnippet::CodeSnippet(const QString &newWord, bool replacePercentNewline, boo
 					//curLine+="\n";
 					break;
 				}
-                [[clang::fallthrough]];
+                [[fallthrough]];
 			default: // escape was not an escape character ...
 				curLine += '%';
 				curLine += currentChar;
@@ -370,7 +370,7 @@ void CodeSnippet::insertAt(QEditor *editor, QDocumentCursor *cursor, Placeholder
 	// on multi line commands, replace environments only
 	if (autoReplaceCommands && byCompleter && lines.size() > 1 && line.contains("\\begin{")) {
 		QString curLine = cursor->line().text();
-        int wordBreak = curLine.indexOf(QRegularExpression("\\W"), cursor->columnNumber());
+        int wordBreak = curLine.indexOf(QRegularExpression("\\W",QRegularExpression::UseUnicodePropertiesOption), cursor->columnNumber());
 		int closeCurl = curLine.indexOf("}", cursor->columnNumber());
 		int openCurl = curLine.indexOf("{", cursor->columnNumber());
 		int openBracket = curLine.indexOf("[", cursor->columnNumber());
@@ -384,10 +384,9 @@ void CodeSnippet::insertAt(QEditor *editor, QDocumentCursor *cursor, Placeholder
 					oldEnv = curLine.mid(cursor->columnNumber(), closeCurl - cursor->columnNumber());
 				else
 					oldEnv = curLine.mid(openCurl + 1, closeCurl - openCurl - 1);
-				QRegExp rx("\\\\begin\\{(.+)\\}");
-				rx.setMinimal(true);
-				rx.indexIn(line);
-				QString newEnv = rx.cap(1);
+                QRegularExpression rx("\\\\begin\\{(.+?)\\}");
+                QRegularExpressionMatch rxm=rx.match(line);
+                QString newEnv = rxm.captured(1);
 				// remove curly brakets as well
 				QDocument *doc = cursor->document();
 				QString searchWord = "\\end{" + oldEnv + "}";
@@ -442,7 +441,7 @@ void CodeSnippet::insertAt(QEditor *editor, QDocumentCursor *cursor, Placeholder
 	if (byCompleter && autoReplaceCommands && lines.size() == 1 && (line.startsWith('\\') || isKeyVal) ) {
 		if (cursor->nextChar().isLetterOrNumber() || cursor->nextChar() == QChar('{') || cursor->nextChar() == QChar('=')) {
 			QString curLine = cursor->line().text();
-            int wordBreak = curLine.indexOf(QRegularExpression("\\W"), cursor->columnNumber());
+            int wordBreak = curLine.indexOf(QRegularExpression("\\W",QRegularExpression::UseUnicodePropertiesOption), cursor->columnNumber());
 			int wordBreakEqual = curLine.indexOf("=", cursor->columnNumber());
 			int closeCurl = curLine.indexOf("}", cursor->columnNumber());
 			int openCurl = curLine.indexOf("{", cursor->columnNumber());

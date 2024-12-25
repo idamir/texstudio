@@ -9,6 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "qjsonarray.h"
 #ifdef INTERNAL_TERMINAL
 #include <qtermwidget5/qtermwidget.h>
 #endif
@@ -26,6 +27,8 @@
 #include "qformatconfig.h"
 
 #include "filedialog.h"
+
+#include <QJsonDocument>
 
 const QString ShortcutDelegate::addRowButton = "<internal: add row>";
 const QString ShortcutDelegate::deleteRowButton = "<internal: delete row>";
@@ -203,8 +206,8 @@ void ShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
 			return;
 		}
 		QString value_alternative = QKeySequence(box->currentText()).toString(QKeySequence::PortableText);
-		QRegExp rxCharKey("(Shift\\+)?."); // matches all single characters and single characters with shift like "Shift+A", should not match e.g. "F1" or "DEL"
-		if (rxCharKey.exactMatch(value_alternative)) {
+        QRegularExpression rxCharKey("^(Shift\\+)?.$"); // matches all single characters and single characters with shift like "Shift+A", should not match e.g. "F1" or "DEL"
+        if (value_alternative.indexOf(rxCharKey) == 0) {
 			if (!UtilsUi::txsConfirmWarning(ConfigDialog::tr("The shortcut you entered is a standard character key.\n"
 			                                        "You will not be able to type this character. Do you wish\n"
 			                                        "to set the key anyway?"))) {
@@ -233,8 +236,11 @@ void ShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                 QTreeWidgetItem *item=li.at(k);
                 QString id = item->data(0, Qt::UserRole).toString();
                 QStringList ids=id.split("/");
-                if(ids.value(0,"")!=progType)
-                    li.removeAll(item);
+                if(ids.value(0,"")!=progType){
+                    if(progType=="pdf" || ids.value(0,"")=="pdf"){
+                        li.removeAll(item);
+                    }
+                }
             }
 			REQUIRE(treeWidget->topLevelItem(1));
 			REQUIRE(treeWidget->topLevelItem(1)->childCount() >= 1);
@@ -599,7 +605,15 @@ ConfigDialog::ConfigDialog(QWidget *parent): QDialog(parent,Qt::Dialog|Qt::Windo
 	connect(ui.tbRevertIcon, SIGNAL(clicked()), this, SLOT(revertClicked()));
 	connect(ui.tbRevertCentralIcon, SIGNAL(clicked()), this, SLOT(revertClicked()));
 	connect(ui.tbRevertSymbol, SIGNAL(clicked()), this, SLOT(revertClicked()));
-    connect(ui.tbRevertPDF, SIGNAL(clicked()), this, SLOT(revertClicked()));	
+    connect(ui.tbRevertPDF, SIGNAL(clicked()), this, SLOT(revertClicked()));
+
+    // ai chat
+    connect(ui.cbAIProvider, SIGNAL(currentIndexChanged(int)), this, SLOT(aiProviderChanged(int)));
+    connect(ui.pbRetrieveModels, &QPushButton::clicked, this, &ConfigDialog::retrieveModels);
+    connect(ui.pbResetAIURL, &QPushButton::clicked, this, &ConfigDialog::resetAIURL);
+    // fill in the known models
+    aiFillInKnownModels();
+
 }
 
 
@@ -669,7 +683,116 @@ void ConfigDialog::revertClicked()
         if (bt->objectName() == "tbRevertPDF") {
             ui.horizontalSliderPDF->setValue(16);
         }
-	}
+    }
+}
+/*!
+ * \brief adapt model list depending on ai provider
+ * \param[provider] 0: mistral
+ * 1: openai
+ */
+void ConfigDialog::aiProviderChanged(int provider)
+{
+    bool activateCustomURL=false;
+    switch(provider){
+    case 0:
+        ui.cbAIPreferredModel->clear();
+        ui.cbAIPreferredModel->addItem("open-mistral-7b");
+        ui.cbAIPreferredModel->addItem("open-mixtral-8x7b");
+        ui.cbAIPreferredModel->addItem("mistral-small-latest");
+        ui.cbAIPreferredModel->addItem("mistral-medium-latest");
+        ui.cbAIPreferredModel->addItem("mistral-large-latest");
+        break;
+    case 1:
+        ui.cbAIPreferredModel->clear();
+        ui.cbAIPreferredModel->addItem("gpt-4o-mini");
+        ui.cbAIPreferredModel->addItem("gpt-3.5-turbo");
+        ui.cbAIPreferredModel->addItem("gpt-4");
+        ui.cbAIPreferredModel->addItem("gpt-4o");
+        break;
+    default:
+        ui.cbAIPreferredModel->clear();
+        activateCustomURL=true;
+        break;
+    }
+    ui.leAIAPIURL->setEnabled(activateCustomURL);
+    ui.pbResetAIURL->setEnabled(activateCustomURL);
+}
+/*!
+ * \brief retieve the current list of available model from AI provider
+ * API key is needed
+ */
+void ConfigDialog::retrieveModels()
+{
+    if(!ui.leAIAPIKey->text().isEmpty()){
+        QString provider=ui.cbAIProvider->currentText();
+        QString key=ui.leAIAPIKey->text();
+        QString url;
+        switch(ui.cbAIProvider->currentIndex()){
+        case 0:
+            url="https://api.mistral.ai/v1/models";
+            break;
+        case 1:
+            url="https://api.openai.com/v1/models";
+            break;
+        case 2:
+            url=ui.leAIAPIURL->text();
+            url=url.replace("chat/completions","models");
+            break;
+        default:
+            break;
+        }
+        QNetworkRequest request(url);
+        request.setRawHeader("Authorization",QString("Bearer "+key).toUtf8());
+        QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+        connect(manager,&QNetworkAccessManager::finished,this,&ConfigDialog::modelsRetrieved);
+        manager->get(request);
+    }
+}
+/*!
+ * \brief reset custom ai api url to default
+ */
+void ConfigDialog::resetAIURL()
+{
+    ui.leAIAPIURL->setText("http://localhost:8080/v1/chat/completions");
+}
+
+void ConfigDialog::modelsRetrieved(QNetworkReply *reply)
+{
+    if(reply->error() == QNetworkReply::NoError){
+        QByteArray data = reply->readAll();
+        QJsonDocument doc=QJsonDocument::fromJson(data);
+        QJsonObject obj=doc.object();
+        QStringList models;
+
+        QJsonArray lst=obj["data"].toArray();
+        foreach (const QJsonValue & value, lst) {
+            models.append(value.toObject()["id"].toString());
+        }
+
+        ui.cbAIPreferredModel->clear();
+        ui.cbAIPreferredModel->addItems(models);
+        if(!models.isEmpty()){
+            ConfigManager *config = dynamic_cast<ConfigManager *>(ConfigManagerInterface::getInstance());
+            if (config){
+                config->ai_knownModels=models;
+            }
+        }
+
+    }
+    reply->deleteLater();
+}
+/*!
+ * \brief fill in known models for AI provider
+ */
+void ConfigDialog::aiFillInKnownModels()
+{
+    ConfigManager *config = dynamic_cast<ConfigManager *>(ConfigManagerInterface::getInstance());
+    if (!config) return;
+    if(!config->ai_knownModels.isEmpty()){
+        ui.cbAIPreferredModel->clear();
+        ui.cbAIPreferredModel->addItems(config->ai_knownModels);
+        ui.cbAIPreferredModel->setCurrentText(config->ai_preferredModel);
+    }
 }
 
 //sets the items of a combobox to the filenames and sub-directory names in the directory which name
@@ -1177,7 +1300,7 @@ void ConfigDialog::importDictionary()
     QString filename = FileDialog::getOpenFileName(this, tr("Import Dictionary"), QString(), tr("OpenOffice Dictionary") + " (*.oxt)", nullptr, QFileDialog::DontResolveSymlinks);
 	if (filename.isNull()) return;
 
-	ConfigManager *config = dynamic_cast<ConfigManager *>(ConfigManagerInterface::getInstance());
+    ConfigManager *config = dynamic_cast<ConfigManager *>(ConfigManagerInterface::getInstance());
 	if (!config) return;
 
 	QString targetDir = config->parseDir("[txs-settings-dir]/dictionaries");

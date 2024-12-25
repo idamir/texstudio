@@ -46,7 +46,7 @@ void LatexOutputFilterTest::run_data() {
 				)
 			<< short(LatexOutputFilter::Start)
 			<< QString("C:\\Program Files (x86)\\MiKTeX 2.9\\tex\\latex\\ams\\math\\amsopn.sty");
-	QTest::newRow("quoted open")
+    QTest::newRow("quoted open2")
 			<< (QStringList() << "(\"C:\\Program Files (x86)\\MiKTeX 2.9\\tex\\latex\\ams\\math\\amsopn.sty\""
 							  << "Package: amsopn 1999/12/14 v2.01 operator names"
 				)
@@ -59,7 +59,7 @@ void LatexOutputFilterTest::run_data() {
 				)
 			<< short(LatexOutputFilter::Start)
 			<< QString();
-	QTest::newRow("quoted close open")
+    QTest::newRow("quoted close open2")
 			<< (QStringList() << "(\"C:\\Program Files (x86)\\MiKTeX 2.9\\tex\\latex\\base\\minimal.cls\""
 							  << "Document Class: minimal 2001/05/25 Standard LaTeX minimal class"
 							  << ") (\"C:\\Program Files (x86)\\MiKTeX 2.9\\tex\\latex\\base\\inputenc.sty\""
@@ -74,7 +74,7 @@ void LatexOutputFilterTest::run_data() {
 			<< (QStringList() << "(./chapter1.tex(")
 			<< short(LatexOutputFilter::ExpectingFileName)
 			<< QString("./chapter1.tex");
-	QTest::newRow("open")
+    QTest::newRow("open 2")
 			<< (QStringList() << "(D:\\bugreport\\bug.aux"
 				)
 			<< short(LatexOutputFilter::Start)
@@ -84,7 +84,7 @@ void LatexOutputFilterTest::run_data() {
 				)
 			<< short(LatexOutputFilter::Start)
 			<< QString();
-	QTest::newRow("open close")
+    QTest::newRow("open close2")
 			<< (QStringList() << "(D:\\bugreport\\bug.aux)"
 				)
 			<< short(LatexOutputFilter::Start)
@@ -258,7 +258,7 @@ void LatexOutputFilterTest::run_data() {
 				)
 			<< short(LatexOutputFilter::BadBox)
 			<< "c:/test.tex";
-	QTest::newRow("badbox underfull")
+    QTest::newRow("badbox underfull2")
 			<< (QStringList()
 				<< "(c:/test.tex"
 				<< "Overfull \\hbox (badness 10000) in paragraph"
@@ -327,7 +327,7 @@ void LatexOutputFilterTest::run_data() {
 				)
 			<< short(LatexOutputFilter::ExpectingFileName)
 			<< "file1.tex";
-	QTest::newRow("TeX open close")
+    QTest::newRow("TeX open close2")
 			<< (QStringList()
 				<< "(d:/main.tex"
 				<< ":<+ file1.tex"
@@ -354,7 +354,7 @@ void LatexOutputFilterTest::run_data() {
 				)
 			<< short(LatexOutputFilter::Start)
 			<< "d:/main.tex";
-	QTest::newRow("TeX open close2")
+    QTest::newRow("TeX open close3")
 			<< (QStringList()
 				<< ":<+ Zusammenfassung.tex"
 				<< ":<-"
@@ -381,7 +381,7 @@ void LatexOutputFilterTest::run_data() {
 	// these might overconstrain the filename detection heuristic, if there cannot be found any real-world
 	// example supporting those. They might get removed in the future.
 
-	QTest::newRow("open")
+    QTest::newRow("open synt")
 			<< (QStringList() << "(d:/data/test.tex")
 			<< short(LatexOutputFilter::Start)
 			<< "d:/data/test.tex";
@@ -397,7 +397,7 @@ void LatexOutputFilterTest::run_data() {
 			<< (QStringList() << "(d:/56789_123456789_123456789_123456789_12345678___74_chars_before_the_dot.aux")
 			<< short(LatexOutputFilter::InFileName)
 			<< QString();
-	QTest::newRow("open close")
+    QTest::newRow("open close synt")
 			<< (QStringList() << "(test.tex)")
 			<< short(LatexOutputFilter::Start)
 			<< QString();
@@ -540,7 +540,7 @@ void LatexOutputFilterTest::fileNameLikelyComplete_data() {
 	QTest::newRow("file") << "foo.tex" << true;
 	QTest::newRow("file2") << "foo.bar" << true;
 	QTest::newRow("file3") << "foo bar.tex" << true;
-	QTest::newRow("file3") << "foo.jpeg" << true;
+    QTest::newRow("file4") << "foo.jpeg" << true;
 	QTest::newRow("expr") << "filter.parseLine" << false;
 }
 
@@ -690,7 +690,7 @@ void LatexOutputFilterTest::detectError_data()
                 )
             << short(LatexOutputFilter::Start)
             << "";
-    QTest::newRow("Undefinded control sequence V")
+    QTest::newRow("Undefinded control sequence VI")
             << (QStringList()
                 <<"! Undefined control sequence."
                 <<"\\variable ->\\3"

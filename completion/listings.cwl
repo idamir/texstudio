@@ -1,5 +1,5 @@
 # mode: listings.sty
-# dani/2006-02-18; Matthew Bertucci 2023-02-27 for v1.9
+# dani/2006-02-18; Matthew Bertucci 2024-03-13 for v1.10a
 
 #include:keyval
 
@@ -154,6 +154,7 @@ S
 [PLUS]S
 SAS
 Scala
+[3.0]Scala
 Scilab
 sh
 SHELXL
@@ -342,15 +343,15 @@ lastline=%<number%>
 linerange={%<first1-last1,first2-last2,...%>}
 consecutivenumbers#true,false
 keywordsprefix=%<prefix%>
-keywords={%<list of keywords%>}
-keywords=[%<number%>]{%<list of keywords%>}
-morekeywords={%<list of keywords%>}
-morekeywords=[%<number%>]{%<list of keywords%>}
-deletekeywords={%<list of keywords%>}
-deletekeywords=[%<number%>]{%<list of keywords%>}
-ndkeywords={%<list of keywords%>}
-moreendkeywords={%<list of keywords%>}
-deleteendkeywords={%<list of keywords%>}
+keywords={%<list of keywords%>}##d
+keywords=[%<number%>]{%<list of keywords%>}##d
+morekeywords={%<list of keywords%>}##d
+##morekeywords=[%<number%>]{%<list of keywords%>}##d
+deletekeywords={%<list of keywords%>}##d
+deletekeywords=[%<number%>]{%<list of keywords%>}##d
+endkeywords={%<list of keywords%>}##d
+moreendkeywords={%<list of keywords%>}##d
+deleteendkeywords={%<list of keywords%>}##d
 texcs={%<list of csnames%>}
 texcs=[%<class number%>]{%<list of csnames%>}
 moretexcs={%<list of csnames%>}

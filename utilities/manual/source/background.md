@@ -50,7 +50,7 @@ have the root document open. With this option enabled TeXstudio will
 always know about your complete document and act accordingly when
 performing highlighting or completion.
 
-The option `Editor -> cache included files` lets txs store important information about opened files on the disk.
+The option `Editor -> Cache documents for faster reopening` lets txs store important information about opened files on the disk.
 If the files are reopened, it uses the cached information to speed-up loading. Only if a file is explicitly opened in a tab, txs loads the complete file from disk.
 In cached files, txs does not search, e.g. with find usages or find in project. The preview for labels does not work if the label is defined in a cached file. If that functionality is important for you, deactivate caching or load explicitly the files when needed.
 
@@ -131,6 +131,8 @@ position in a LaTeX document. The char `#` cannot be used inside a
     syntax checking\
     If \#\#L is added to a key, a length is expected as argument.\
     If \#\#l is added to a key, the argument is defining a label. (see
+    listings.cwl)\
+    If \#\#d is added to a key, the argument is treated same like command definition,i.e. no syntax check. (see
     listings.cwl)
 -   `#endkeyvals` (at start of line): end definition of keyvals, see
     graphicx.cwl in source code
@@ -150,7 +152,7 @@ cwl files should be encoded as UTF-8.
 
 In its simplest form the command is just a valid LaTeX expression as you
 find it in the documentation, e.g. `\section{title}`. By default, every
-option is treated as a placeholder. Alteratively, you may either just
+option is treated as a placeholder. Alternatively, you may either just
 define a stop position for the cursor by `%|` (Example:
 `\left(%|\right)`) or use `%< %>` to mark only part of an option as
 placeholder (Example: `\includegraphics[scale=%<1%>]{file}`). New lines
@@ -261,6 +263,8 @@ The following classifications are known to TXS:
 |  L0 to L5        | this command declares a structure command. The level is between L0 (`\part`-like) down to L5 (`\subparagraph`-like). Structure commands are highlighted in the code, can be folded and appear in the structure outline. |
 |  /env1,env2,\... | valid only in environment env1 or env2 etc. |
 |  \\env           | environment alias, means that the environment is handled like the \"env\" environment. This is useful for env=math or tabular. |
+|  beginEnv               | this command declares environment start command, the environment name is given after a \"\#\"|
+|  endEnv               | this command declares environment stop command, the environment name is given after a \"\#\"|
 
 Examples:
 
@@ -277,6 +281,7 @@ Examples:
 |  `\myplot{file}{label}{params}#l`                  | defines the second argument as label. Note: the argument has to be named `label` for this to work. |
 |  `\myplot{file}{customname%labeldef}`              | defines the second argument as label, but you are free to choose the name `customname` which will be used as a placeholder in the completer. |
 |  `\myplot{file}{label1%labeldef}{label2%labeldef}` | defines the second and third arguments as labels. |
+|  `\ExplSyntaxOn#beginEnv#expl3` | define environment start, here `%expl3` which is an internal env used to check whetehr expl3 commands are valid |
 
 ### cwl guidelines
 
@@ -374,7 +379,7 @@ data:
 
 FilesToOpen only has an effect for multi-file documents. You may add a
 preview image next to the template file. Again, it must have the same
-name, but extension \".png\".
+name, but extension \".webp\".
 
 ## Creating table templates
 
@@ -566,7 +571,7 @@ python.qxf
 
 The results is the following highlighting:
 
-![](images/format_example.png)
+![](images/format_example.webp)
 
 ## Building TeXstudio
 TeXstudio uses `cmake` as a building system.
@@ -621,3 +626,18 @@ Instead when building for qt6 a debug build (`DCMAKE_BUILD_TYPE=Debug`), a targe
 build>qt-cmake .. -DCMAKE_BUILD_TYPE=Debug
 build>cmake --build . -t texstudio_lupdate
 ```
+
+### Translating manual
+The manual is writen as markdown in `utilities/manual/source`.
+The webpage [https://texstudio-org.github.io](https://texstudio-org.github.io) needs html to show the pages.
+Txs uses sphinx to translate markdown to html.
+A call of `make html` in the folder `utilities/manual` calls the translator.
+The following packages are needed on ubuntu to perform the task:
+``` 
+sphinx
+furo
+python3-myst-parser
+python3-sphinx-inline-tabs
+python3-sphinx-designer
+python3-sphinxex-opengraph
+``` 

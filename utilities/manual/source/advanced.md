@@ -1,18 +1,135 @@
 # Advanced features
 
+## AI chat assistant
+
+### set-up
+
+TeXstudio offers an interface for AI chat assistant. It supports [Mistral AI](https://mistral.ai), [ChatGPT](https://openai.com/chatgpt) or local language models as AI provider. The communication to those servers is done using the official API which incur costs (except for local models). The user must set up an account and enter payment information. The cost is based on the number of words (tokens) in the question and answer, please refer the ai provider for details.
+
+```{warning}
+Using an AI assistant means both questions and selected text is sent to that provider !
+```
+
+Once an account is registered, an "API key" is provided which needs to be entered into TeXstudio configuration.
+There also the AI provider needs to be chosen as well as the desired ai model. The button "Retrieve list of models" downloads a current list of available models from the ai provider. An API key needs to be present for this to work.
+
+![AI configuration](images/conf_ai.webp)
+
+The conversation is stored on disk, so that results can be reused later on. This can be disabled.
+
+Local models can easily be set up via [llamafile](https://github.com/Mozilla-Ocho/llamafile). Please refer their help for details. TeXstudio expects the OpenAI API interface on 127.0.0.1:8080 to work which is the default for llamafile, hence the llamafile needs to be started manually next to TeXstudio.
+Local models do not leak information to providers. A powerful GPU is recommended to get reasonable response times.
+
+### Usage
+
+The ai chat assistant is called via the menu "Wizards/AI chat...".
+
+![AI assistant](images/ai_wizard.webp)
+
+The wizard is split in three parts.
+The lower half allows entering queries which will be sent to the ai provider by pressing "send".
+The responses are shown in the upper right widget which presents the whole conversation which may consist of more than one question/answer.
+The upper left part gives access to old conversation in order to repeat or reuse questions or answers.
+
+The "insert" button only inserts the last answer into the current editor. If explicit latex-code is given in the answer, only the latex-code is inserted and thereof also only the part between `\begin{document}` and `\end{document}` as the tools tend to answer with complete documents which contain the relevant code like tables, etc.
+
+If a TeXstudio-macro is detected, TeXstudio offers to execute that code directly.
+
+### Examples
+
+#### Manipulating texts
+
+TeXstudio predefines selected text as "text".
+Queries can refer to that text (as text) directly and receive any transformed results.
+
+E.g.
+
+Selected text: `TeXstudio is a highly popular and powerful cross-platform open-source LaTeX editor, widely used by academics, researchers, and professionals for creating complex mathematical and scientific documents. Its user-friendly interface and rich features make it an ideal choice for both beginners and advanced LaTeX users.`
+
+Query: `Extend the text`
+
+Result (mistral.ai/open-mistral-7b): `TeXstudio is a highly popular and powerful cross-platform open-source LaTeX editor, widely used by academics, researchers, and professionals for creating complex mathematical and scientific documents. Its user-friendly interface, which includes features such as a spell checker, code completion, and a built-in document viewer, makes it an approachable choice for beginners. For more advanced LaTeX users, TeXstudio offers additional functionality such as a built-in compiler, project management tools, and support for various external packages. TeXstudio is also customizable, allowing users to tailor the editor to their specific needs and preferences. Overall, TeXstudio is a versatile and feature-rich tool that is well-suited for creating professional-level LaTeX documents.`
+
+Similarly request like `summarize the text`,`shorten the text` should work well.
+
+#### Generating LaTeX code
+
+The assistant should provide an easy way to answer general LaTeX questions tailored to the real current situation.
+
+E.g.
+
+Query: "Generate a latex table with 4 rows and 3 columns."
+
+Result (mistral.ai/open-mistral-7b): `To create a LaTeX table with 5 rows and 3 columns, you can use the following code as a starting point:`
+```latex
+\documentclass{article}
+\usepackage{tabularx} % For fixed width columns
+
+\begin{document}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|} % Set width of table to textwidth
+% X is used for columns that adjust width to content
+
+% Table header
+\hline
+Column 1 & Column 2 & Column 3 \\
+\hline
+% Table content
+Row 1, Column 1 & Row 1, Column 2 & Row 1, Column 3 \\
+Row 2, Column 1 & Row 2, Column 2 & Row 2, Column 3 \\
+Row 3, Column 1 & Row 3, Column 2 & Row 3, Column 3 \\
+Row 4, Column 1 & Row 4, Column 2 & Row 4, Column 3 \\
+Row 5, Column 1 & Row 5, Column 2 & Row 5, Column 3 \\
+
+% Table footer
+\hline
+\end{tabularx}
+\caption{Your table caption}
+\label{table:your_label}
+\end{table}
+
+\end{document}
+```
+
+`Replace Column 1, Column 2, Column 3, Row 1, Column 1, etc., with your actual content. The tabularx package is used here to ensure that the table fits within the text width, and the X column type is used to allow columns to expand and fill the available space. Update the caption, label, and table width as needed. `
+
+TeXstudio only inserts the part between begin/end document which is what you likely want.
+Please be aware that packages which are used in the result but not set in *your* document are not automatically included in *your* document.
+
+```{warning}
+The quality of the result may be not as expected and AI models do have the tendency to hallucinate, i.e. they invent code which is not working at all. Specifying what you want in more details may help to get what you want.
+
+Wizards in TeXstudio are tailored for generating LaTeX code. The results are reproducible, faster and cheaper, so it is usually preferable to use these first.
+```
+
+#### Macro generation
+
+The ai chat assistant can generate complete TeXstudio macros (scripts) which can solve specific problems.
+Here the result quality varies a lot and non-working code is generated often, less so with newer, larger models.
+
+E.g.
+
+Query: `Write a macro for texstudio which converts the first letter of every word in a text-selection to uppercase.`
+
+The results have been disappointing with mistral.ai, though it was possible to get better results in the chat on the internet.
+The assumption is that this may get better (or better queries are needed).
+
+
 ## Sessions
 
 TeXstudio uses "Sessions" to store and restore the set-up of open documents.
 Session are stored as *.txss2* files.
 By default, the session is stored when exiting from TeXstudio and restored at start-up.
 
-![Session menu](images/menu_session.png)
+![Session menu](images/menu_session.webp)
 
 ## User Fold Marker
 
 Normally every structure command marks a start of foldable range, and every environment or TeX group constructs a foldable range. You can mark an extra foldable range by inserting special comments `%BEGIN_FOLD` and `%END_FOLD`. 
 
-![Example for user fold marker](images/userfoldmarker.png)
+![Example for user fold marker](images/userfoldmarker.webp)
 
 ## Bibliography
 
@@ -25,7 +142,7 @@ The optional fields can be automatically deleted with the
 \"Clean\" command of the \"Bibliography\" menu.
 ```
 
-![Bibliography Menu](images/doc16.png)
+![Bibliography Menu](images/doc16.webp)
 
 Specialized bibliography programs like [JabRef](https://github.com/JabRef/jabref) allow a more comfortable management of bibliography references. It can also be set up to insert *bibIDs* directly into TeXstudio.
 
@@ -36,7 +153,7 @@ TeXstudio provides some basic support for version control management with git or
 Once [set up](configuration.md#configuring-svngit-support), saving the document will also generate a check-in.
 This is only the case with explicit saves via "File/Save" (or the shortcut `CTRL+S`), saving via a compile run is not checked in. This allows tweaking the document around compilation runs without overflowing the version management.
 
-Newly saved documents are automatically added to an exsiting repository, if no repository exist, a new one will be generated at the directory level of the document.
+Newly saved documents are automatically added to an existing repository, if no repository exist, a new one will be generated at the directory level of the document.
 
 ```{note}
 You cannot checkout/clone a repository via TeXstudio. Just use the
@@ -44,7 +161,7 @@ normal tools for this. Once you have a working copy, TeXstudio can operate
 on it.
 ```
 
-![Menu SVN/GIT](images/menu_svn.png)
+![Menu SVN/GIT](images/menu_svn.webp)
 
 \"File/Checkin\" 
 
@@ -139,6 +256,22 @@ the following magic comments:
     This is equivalent to
     `% !TeX TXS-program:bibliography = txs:///biber`
 
+## Local packages
+
+Many users define personal commands, settings, colors, etc in a personal file which is included into the latex document via `\include` or `\input`.
+TeXstudio can read the files and take up the defined commands for completion but is does not have any understanding of the arguments like if they are labels, texts or math elements.
+The syntactital definition is given to TeXstudio via [cwl files](background.md#description-of-the-cwl-format). 
+TeXstudio searches for local cwl files for local packages. To notify TeXstudio that a package is local, the package name has to be given as a relative path, e.g. `\usepackage{./myPackage}`.
+TeXstudio looks for `./myPackage.cwl` and loads it if present.
+
+```{note}
+The local package filename needs to be `myPackage.sty`.
+Otherwise all normal commands are valid.
+
+If a cwl file is changed, the updated version is only loaded into TeXstudio after a restart of TeXstudio.
+```
+
+
 ## Personal macros
 
 TeXstudio allows you to insert your own macros. These macros are defined
@@ -156,7 +289,7 @@ macro: When the last written characters match this expression, they are
 removed and the macro is inserted/executed. (see
 [below](#triggers) for more details).
 
-Some macros can be directly downloaded from an internet repository. The
+Some macros can be directly downloaded from an [internet repository](https://github.com/texstudio-org/texstudio-macro). The
 dialog is started with the button \"Browse\". For easier data exchange,
 macros can be im- and exported to a file. If you want to add a macro of
 your own to that repository, you can hand it in as a feature request on
@@ -169,7 +302,7 @@ Folders can be added to sort a larger number of macros sensibly. To move
 macros into/from folders, only drag and drop works.
 The \"Exec Macro\" button executes the macro immediately.
 
-![doc17](images/doc17.png)
+![doc17](images/doc17.webp)
 
 ### Text macros
 
@@ -209,7 +342,7 @@ on insertion.
         cut buffer, e.g. generate env (ctrl+e).
 -   The option %(*filefilter*%) will be replaced by a filename which is
     asked for in a file dialog. The file filter is the standard
-    Qt-Filefilterformat. For example \"Images (\*.png \*.xpm
+    Qt-Filefilterformat. For example \"Images (\*.webp \*.xpm
     \*.jpg);;Text files (\*.txt);;XML files (\*.xml)\", see also
     [Qt-Doc](https://doc.qt.io/qt-6/qfiledialog.html)
 
@@ -559,7 +692,7 @@ some others packages). This command can only be used with the \"Convert
 to html\" tool.
 ```
 
-![doc18](images/doc18.png)
+![doc18](images/doc18.webp)
 
-![doc19](images/doc19.png)
+![doc19](images/doc19.webp)
 

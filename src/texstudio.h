@@ -14,6 +14,7 @@
 #ifndef Header_TexStudio
 #define Header_TexStudio
 
+#include "aichatassistant.h"
 #include "mostQtHeaders.h"
 
 #include "bibtexparser.h"
@@ -51,6 +52,7 @@
 #include "help.h"
 
 #include <QProgressDialog>
+#include <QFileSystemModel>
 
 /*!
  * \file texstudio.h
@@ -104,21 +106,21 @@ protected:
 	//these are just wrappers around configManager so we don't have to type so much (todo??? move them to configmanager.h and use a singleton design???)
 	Q_INVOKABLE inline QMenu *newManagedMenu(const QString &id, const QString &text) { return configManager.newManagedMenu(id, text); }
 	Q_INVOKABLE inline QMenu *newManagedMenu(QMenu *menu, const QString &id, const QString &text) { return configManager.newManagedMenu(menu, id, text); }
-    Q_INVOKABLE QAction *newManagedAction(QWidget *menu, const QString &id, const QString &text, const char *slotName = nullptr, const QKeySequence &shortCut = 0, const QString &iconFile = "", const QList<QVariant> &args = QList<QVariant>());
+	Q_INVOKABLE QAction *newManagedAction(QWidget *menu, const QString &id, const QString &text, const char *slotName = nullptr, const QKeySequence &shortCut = 0, const QString &iconFile = "", const QList<QVariant> &args = QList<QVariant>());
 	Q_INVOKABLE QAction *newManagedAction(QWidget *menu, const QString &id, const QString &text, const char *slotName, const QList<QKeySequence> &shortCuts, const QString &iconFile = "", const QList<QVariant> &args = QList<QVariant>());
-    Q_INVOKABLE QAction *newManagedEditorAction(QWidget *menu, const QString &id, const QString &text, const char *slotName = nullptr, const QKeySequence &shortCut = 0, const QString &iconFile = "", const QList<QVariant> &args = QList<QVariant>());
+	Q_INVOKABLE QAction *newManagedEditorAction(QWidget *menu, const QString &id, const QString &text, const char *slotName = nullptr, const QKeySequence &shortCut = 0, const QString &iconFile = "", const QList<QVariant> &args = QList<QVariant>());
 	Q_INVOKABLE QAction *newManagedEditorAction(QWidget *menu, const QString &id, const QString &text, const char *slotName, const QList<QKeySequence> &shortCuts, const QString &iconFile = "", const QList<QVariant> &args = QList<QVariant>());
 	Q_INVOKABLE inline QAction *newManagedAction(QWidget *menu, const QString &id, QAction *act) { return configManager.newManagedAction(menu, id, act); }
 	Q_INVOKABLE inline QMenu *getManagedMenu(const QString &id) { return configManager.getManagedMenu(id); }
 	Q_INVOKABLE inline QAction *getManagedAction(const QString &id) { return configManager.getManagedAction(id); }
 	Q_INVOKABLE inline QList<QAction *> getManagedActions(const QStringList &ids, const QString &commonPrefix = "") { return configManager.getManagedActions(ids, commonPrefix); }
-    Q_INVOKABLE QAction *insertManagedAction(QAction *before, const QString &id, const QString &text, const char *slotName = nullptr, const QKeySequence &shortCut = 0, const QString &iconFile = "");
-    Q_INVOKABLE void loadManagedMenu(const QString &fn);
+	Q_INVOKABLE QAction *insertManagedAction(QAction *before, const QString &id, const QString &text, const char *slotName = nullptr, const QKeySequence &shortCut = 0, const QString &iconFile = "");
+	Q_INVOKABLE void loadManagedMenu(const QString &fn);
 
-    Q_INVOKABLE void setupToolBars();
+	Q_INVOKABLE void setupToolBars();
 
 	void addTagList(const QString &id, const QString &iconName, const QString &text, const QString &tagFile);
-    void addMacrosAsTagList();
+	void addMacrosAsTagList();
 
 private slots:
 	void updateToolBarMenu(const QString &menuName);
@@ -132,7 +134,7 @@ private:
 	void createStatusBar();
 	bool activateEditorForFile(QString f, bool checkTemporaryNames = false, bool setFocus = true);
 	bool saveAllFilesForClosing(); ///< checks for unsaved files and asks the user if they should be saved
-    bool saveFilesForClosing(const QList<LatexDocument *> &documentList); ///< checks for unsaved files and asks the user if they should be saved
+    bool saveFilesForClosing(QList<LatexDocument *> &documentList); ///< checks for unsaved files and asks the user if they should be saved
 	void closeAllFiles();
 	bool canCloseNow(bool saveSettings = true); ///< asks the user and close all files, and prepares to exit txs
 	void closeEvent(QCloseEvent *e);
@@ -155,16 +157,20 @@ private:
 
 	//gui
 	Editors *editors;
-	QSplitter *sidePanelSplitter;
 	QSplitter *mainHSplitter;
 	QSplitter *centralVSplitter;
 	QFrame *centralFrame;
 	QToolBar *centralToolBar;
-	CustomWidgetList *leftPanel;
-	TitledPanel *sidePanel;
+    QDockWidget *m_firstDockWidget = nullptr;
+    QAction *m_toggleDocksAction;
 	SymbolListModel *symbolListModel;
 	SymbolWidget *symbolWidget;
+    QTreeView *fileView; ///< file explorer in docks
+    QFileSystemModel *fileExplorerModel = nullptr;
 	QString hiddenLeftPanelWidgets;
+    QString docksToBeRaised; ///< when restoring docks from hidden sidepanel, these docks should be raised. Dock names are separated by "|"
+    QMap<QString, QString> m_dockIcons;
+    QList<QDockWidget*> m_docksOrder;
 
     //StructureTreeView *structureTreeView;
     QTreeWidget *structureTreeWidget;
@@ -237,7 +243,7 @@ private:
 	void linkToEditorSlot(QAction *act, const char *slot, const QList<QVariant> &args);
 
     bool parseStruct(LatexDocument *doc, QVector<QTreeWidgetItem *> &rootVector, QSet<LatexDocument*> *visited=nullptr, QList<QTreeWidgetItem *> *todoList=nullptr, int currentColor=0);
-    void parseStructLocally(LatexDocument* document, QVector<QTreeWidgetItem *> &rootVector, QList<QTreeWidgetItem *> *todoList=nullptr, QList<QTreeWidgetItem *> *labelList=nullptr, QList<QTreeWidgetItem *> *magicList=nullptr, QList<QTreeWidgetItem *> *biblioList=nullptr);
+    void parseStructLocally(LatexDocument* document, QVector<QTreeWidgetItem *> &rootVector, QList<QTreeWidgetItem *> *todoList=nullptr, QList<QTreeWidgetItem *> *labelList=nullptr, QList<QTreeWidgetItem *> *magicList=nullptr, QList<QTreeWidgetItem *> *biblioList=nullptr, QList<QTreeWidgetItem *> *blockList=nullptr);
 #ifndef QT_NO_DEBUG
     void checkForShortcutDuplicate();
 #endif
@@ -246,7 +252,9 @@ private slots:
     void updateAllTOCs();
 
     void updateTOC();
-    void updateCurrentPosInTOC(QTreeWidgetItem *root=nullptr,StructureEntry *old=nullptr,StructureEntry *selected=nullptr);
+    void updateCurrentPosInTOC(StructureEntry *old=nullptr, StructureEntry *selected=nullptr);
+    void updateCurrentPosInStructure(StructureEntry *old=nullptr, StructureEntry *selected=nullptr);
+    void updateCurrentPosInTOCHelper(QTreeWidgetItem *root=nullptr, StructureEntry *old=nullptr, StructureEntry *selected=nullptr, bool tocMode=true);
     void syncExpanded(QTreeWidgetItem *item);
     void syncCollapsed(QTreeWidgetItem *item);
     void editSectionCopy();
@@ -434,6 +442,8 @@ protected slots:
     void insertTextFromAction();
     void insertFromTagList(QListWidgetItem *item);
 	void insertBib();
+    void openFromExplorer(const QModelIndex &index);
+    void insertFromExplorer(bool visible);
 	void closeEnvironment();
 
 	void insertBibEntryFromAction();
@@ -474,6 +484,7 @@ protected slots:
 	void quickBeamer(); ///< start quick beamer wizard
 	void quickGraphics(const QString &graphicsFile = QString()); ///< start quick graphics wizard
 	void quickMath(); ///< start quick math wizard
+    void aiChat(); ///< start ai chat assistant
 
 	bool checkProgramPermission(const QString &program, const QString &cmdId, LatexDocument *master);
 	void runInternalPdfViewer(const QFileInfo &master, const QString &options);
@@ -611,6 +622,7 @@ protected slots:
 	void fileAutoReloading(QString fname);
 
 	void jumpToSearchResult(LatexDocument *doc, int lineNumber, const SearchQuery *query);
+    void jumpToFileSearchResult(QString fn, int lineNumber, const SearchQuery *query);
 
 	void cursorPositionChanged();
 	void syncPDFViewer(QDocumentCursor cur, bool inForeground = true);
@@ -672,6 +684,8 @@ protected:
 	UserMenuDialog *userMacroDialog;
 	QComboBox *cmbLog;
 
+    AIChatAssistant *aiChatDlg = nullptr;
+
 	QStringList m_columnCutBuffer;
 
 	QTimer autosaveTimer,previewDelayTimer,previewFullCompileDelayTimer;
@@ -729,6 +743,13 @@ public slots:
 	void slowOperationEnded();
 
 	void openBugsAndFeatures();
+    void maniplateDockingTabBars();
+    void addDock(const QString &name, const QString &iconName, const QString &title, QWidget *wgt);
+    void toggleDocks(bool visible);
+    void resetDocks();
+    void toggleDockVisibility();
+    void updateDockVisibility(bool visible);
+    bool checkDockSpread();
 
 signals:
 	void infoNewFile(); ///< signal that a new file has been generated. Used for scritps as trigger.

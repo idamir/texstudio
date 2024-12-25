@@ -69,7 +69,7 @@ bool TemplateManager::ensureUserTemplateDirExists()
 // Originally user templates were stored whereever the user wanted and maintained in the option "User/Templates".
 // This behavior has now been changed to always store user templates in [config]/templates/user/ The advantage is
 // that we don't have to maintain the template list and it's not lost when resetting the configuration.
-// This function allows to move existing templates to the the new location.
+// This function allows to move existing templates to the new location.
 void TemplateManager::checkForOldUserTemplates()
 {
 	ConfigManagerInterface *cfg = ConfigManager::getInstance();
@@ -114,7 +114,7 @@ TemplateSelector *TemplateManager::createLatexTemplateDialog()
 	connect(dialog, SIGNAL(editTemplateRequest(TemplateHandle)), SLOT(editTemplate(TemplateHandle)));
 	connect(dialog, SIGNAL(editTemplateInfoRequest(TemplateHandle)), SLOT(editTemplateInfo(TemplateHandle)));
 
-    LocalLatexTemplateResource *builtinTemplates= new LocalLatexTemplateResource(builtinTemplateDir(), tr("Builtin"), this, QIcon(":/images/appicon.png"));
+    LocalLatexTemplateResource *builtinTemplates= new LocalLatexTemplateResource(builtinTemplateDir(), tr("Builtin"), this, getRealIcon("builtin"));
     LocalLatexTemplateResource *userTemplates= new LocalLatexTemplateResource(userTemplateDir(), tr("User"), this, getRealIcon("user"));
     QString description = tr("Basic template files shipped with TeXstudio.");
     builtinTemplates->setDescription(description);

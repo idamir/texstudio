@@ -1,8 +1,7 @@
 # letgut class
-# Matthew Bertucci 2023/05/23 for v0.9.7
+# Matthew Bertucci 2024/10/08 for v0.10
 
 #include:luatex
-#include:l3keys2e
 #include:fontspec
 #include:microtype
 #include:parskip
@@ -70,6 +69,8 @@ editorial#true,false
 informations#true,false
 detailedtoc=#section,subsection,subsubsection,paragraph,subparagraph,all,none
 reverse-files-attachement
+watermark letter=%<letter%>
+watermark scale=%<factor%>
 #endkeyvals
 
 \inputarticle{file}#i

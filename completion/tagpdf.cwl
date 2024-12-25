@@ -1,5 +1,5 @@
 # tagpdf package
-# Matthew Bertucci 2023/12/18 for v0.98r
+# Matthew Bertucci 2024/12/21 for v0.99k
 
 #include:pdfmanagement-testphase
 
@@ -12,32 +12,49 @@ disabledelayedshipout
 \tagpdfsetup{keyvals}
 
 #keyvals:\tagpdfsetup
-activate-all#true,false
 activate=%<tag%>
-activate-mc#true,false
-activate-struct#true,false
-no-struct-dest#true,false
-activate-tree#true,false
-activate-socket#true,false
-add-new-tag=%<tag/role%>
-add-new-tag={%<keyvals%>}
-interwordspace=#true,on,false,off
-log=#none,v,vv,vvv,all
-newattribute={%<name%>}{%<content%>}
-show-spaces#true,false
-paratagging#true,false
-paratagging-show#true,false
-paratag=%<string%>
-tabsorder=#row,column,structure,none
-tagunmarked#true,false
-uncompress
+activate/all#true,false
+activate/mc#true,false
+activate/softhyphen#true,false
+activate/spaces#true,false
+activate/struct#true,false
+activate/struct-dest#true,false
+activate/tagunmarked#true,false
+activate/tree#true,false
+role/mathml-tags#true,false
+role/new-tag=%<tag/role%>
+role/new-attribute={%<name%>}{%<content%>}
+role/map-tags=#false,pdf
+debug/show
+debug/show=#para,paraOff,spaces,spacesOff
+debug/log=#none,v,vv,vvv,all
+debug/uncompress
+viewer/pane/mathml#true,false
+viewer/pane/mathsource#true,false
+viewer/startstructure=%<number%>
+page/tabsorder=#row,column,structure,none
+page/exclude-header-footer=#false,pagination
+para/tagging#true,false
+para/tag=%<tag%>
+para/maintag=%<tag%>
+para/flattened#true,false
+math/alt/use#true,false
+math/mathml/write-dummy=%<code%>
+math/mathml/sources=%<comma list%>
+math/mathml/AF#true,false
+math/tex/AF#true,false
+table/tagging=
+table/header-rows=%<comma list%>
+text/lang=%<lang%>
 #endkeyvals
 
 \tagtool{keyvals}
 
 #keyvals:\tagtool
-para#true,false
-paratag=%<string%>
+para/tagging#true,false
+para/maintag=%<tag%>
+para/tag=%<tag%>
+para/flattened#true,false
 #endkeyvals
 
 \tagmcbegin{keyvals}
@@ -55,8 +72,6 @@ raw=%<PDF code%>
 \tagmcend
 \tagmcuse
 \tagmcifinTF{true code}{false code}
-\tagpdfparaOn
-\tagpdfparaOff
 
 \tagstructbegin{keyvals}
 
@@ -65,6 +80,7 @@ tag=%<tag%>
 stash#true,false
 label=%<name%>
 parent=%<structure number%>
+firstkid
 alt=%<text%>
 actualtext=%<text%>
 attribute={%<attr1,attr2,...%>}
@@ -84,9 +100,6 @@ E=%<text%>
 \tagstructend
 \tagstructuse{label}
 
-\tagstop
-\tagstart
-
 \ShowTagging{keyvals}
 
 #keyvals:\ShowTagging
@@ -98,4 +111,46 @@ debug/structures
 
 # not documented
 \tagpdfsuppressmarks{arg}#*
-\UseTaggingSocket{socket name}#*
+
+# expl3 interface
+\tag_check_child:nnF {%<⟨tag⟩%>} {%<⟨namespace⟩%>} {%<⟨false code⟩%>}#/%expl3
+\tag_check_child:nnT {%<⟨tag⟩%>} {%<⟨namespace⟩%>} {%<⟨true code⟩%>}#/%expl3
+\tag_check_child:nnTF {%<⟨tag⟩%>} {%<⟨namespace⟩%>} {%<⟨true code⟩%>} {%<⟨false code⟩%>}#/%expl3
+\tag_get:n {%<⟨keyword⟩%>}#/%expl3
+\tag_if_active:F {%<⟨false code⟩%>}#/%expl3
+\tag_if_active:T {%<⟨true code⟩%>}#/%expl3
+\tag_if_active:TF {%<⟨true code⟩%>} {%<⟨false code⟩%>}#/%expl3
+\tag_if_active_p:#/%expl3
+\tag_if_box_tagged:N %<⟨box⟩%>#/%expl3
+\tag_if_box_tagged:NF %<⟨box⟩%> {%<⟨false code⟩%>}#/%expl3
+\tag_if_box_tagged:NT %<⟨box⟩%> {%<⟨true code⟩%>}#/%expl3
+\tag_if_box_tagged:NTF %<⟨box⟩%> {%<⟨true code⟩%>} {%<⟨false code⟩%>}#/%expl3
+\tag_if_box_tagged_p:N %<⟨box⟩%>#/%expl3
+\tag_mc_add_missing_to_stream:Nn %<⟨box⟩%> {%<⟨stream name⟩%>}#/%expl3
+\tag_mc_artifact_group_begin:n {%<⟨name⟩%>}#/%expl3
+\tag_mc_artifact_group_end:#/%expl3
+\tag_mc_begin:n {%<⟨keyvals⟩%>}#/%expl3
+\tag_mc_begin_pop:n {%<⟨keyvals⟩%>}#/%expl3
+\tag_mc_end:#/%expl3
+\tag_mc_end_push:#/%expl3
+\tag_mc_if_in:F {%<⟨false code⟩%>}#/%expl3
+\tag_mc_if_in:T {%<⟨true code⟩%>}#/%expl3
+\tag_mc_if_in:TF {%<⟨true code⟩%>} {%<⟨false code⟩%>}#/%expl3
+\tag_mc_if_in_p:#/%expl3
+\tag_mc_new_stream:n {%<⟨stream name⟩%>}#/%expl3
+\tag_mc_reset_box:N %<⟨box⟩%>#/%expl3
+\tag_mc_use:n {%<⟨label⟩%>}#/%expl3
+\tag_spacechar_off:#/%expl3
+\tag_spacechar_on:#/%expl3
+\tag_struct_begin:n {%<⟨keyvals⟩%>}#/%expl3
+\tag_struct_end:#/%expl3
+\tag_struct_end:n {%<⟨tag⟩%>}#/%expl3
+\tag_struct_gput:nnn {%<⟨struct number⟩%>} {%<⟨keyword⟩%>} {%<⟨value⟩%>}#/%expl3
+\tag_struct_gput_ref:nnn {%<⟨struct number⟩%>} {%<⟨keyword⟩%>} {%<⟨value⟩%>}#/%expl3
+\tag_struct_insert_annot:nn {%<⟨object ref⟩%>}{%<⟨struct parent number⟩%>}#/%expl3
+\tag_struct_object_ref:e {%<⟨struct number⟩%>}#/%expl3
+\tag_struct_object_ref:n {%<⟨struct number⟩%>}#/%expl3
+\tag_struct_parent_int:#/%expl3
+\tag_struct_use:n {%<⟨label⟩%>}#/%expl3
+\tag_struct_use_num:n {%<⟨struct number⟩%>}#/%expl3
+\tag_tool:n {%<⟨keyval⟩%>}#/%expl3

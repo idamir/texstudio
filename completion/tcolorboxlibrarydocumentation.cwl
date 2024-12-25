@@ -1,5 +1,5 @@
 # documentation tcolorboxlibrary
-# 2024/01/10 for v6.2.0
+# 2024/09/27 for v6.4.0
 
 #include:tcolorboxlibrarylistings
 #include:tcolorboxlibraryskins
@@ -17,7 +17,7 @@
 \begin{docCommand*}[options%keyvals]{name}{parameters}
 \end{docCommand*}
 \begin{docCommands}{%<{variant1},{variant2},...%>}
-\begin{docCommands}[options%keyvals]{%<{variant1},{variant2},...%>}
+\begin{docCommands}[%<options%>]{%<{variant1},{variant2},...%>}
 \end{docCommands}
 \begin{docEnvironment}{name}{parameters}
 \begin{docEnvironment}[options%keyvals]{name}{parameters}
@@ -26,7 +26,7 @@
 \begin{docEnvironment*}[options%keyvals]{name}{parameters}
 \end{docEnvironment*}
 \begin{docEnvironments}{%<{variant1},{variant2},...%>}
-\begin{docEnvironments}[options%keyvals]{%<{variant1},{variant2},...%>}
+\begin{docEnvironments}[%<options%>]{%<{variant1},{variant2},...%>}
 \end{docEnvironments}
 \begin{docKey}{name}{parameters}{description}
 \begin{docKey}[key path][options%keyvals]{name}{parameters}{description%text}
@@ -35,7 +35,7 @@
 \begin{docKey*}[key path][options%keyvals]{name}{parameters}{description%text}
 \end{docKey*}
 \begin{docKeys}{%<{variant1},{variant2},...%>}
-\begin{docKeys}[options%keyvals]{%<{variant1},{variant2},...%>}
+\begin{docKeys}[%<options%>]{%<{variant1},{variant2},...%>}
 \end{docKeys}
 \begin{docPathOperation}{name}{parameters}
 \begin{docPathOperation}[options%keyvals]{name}{parameters}
@@ -44,7 +44,7 @@
 \begin{docPathOperation*}[options%keyvals]{name}{parameters}
 \end{docPathOperation*}
 \begin{docPathOperations}{%<{variant1},{variant2},...%>}
-\begin{docPathOperations}[options%keyvals]{%<{variant1},{variant2},...%>}
+\begin{docPathOperations}[%<options%>]{%<{variant1},{variant2},...%>}
 \end{docPathOperations}
 \docValue{name}
 \docValue[options%keyvals]{name}
@@ -104,6 +104,8 @@
 \refPathOperation*{name}
 \refAux{name}
 \refAuxcs{name}
+\refPkg{package}
+\refPkg[CTAN name]{package}
 \colDef{text%plain}
 \colOpt{text%plain}
 \colFade{text%plain}
@@ -191,12 +193,11 @@ documentation listing style=%<listings style%>
 documentation minted options={%<minted keys%>}
 documentation minted style=%<minted style%>
 documentation minted language=%<language%>
-before example={%<code%>}
-after example={%<code%>}
 #endkeyvals
 
 #keyvals:\tcbset,\begin{docCommand},\begin{docCommand*},\begin{docCommands},\begin{docEnvironment},\begin{docEnvironment*},\begin{docEnvironments},\begin{docKey},\begin{docKey*},\begin{docKeys},\tcbmakedocSubKey,\tcbmakedocSubKeys,\begin{docPathOperation},\begin{docPathOperation*},\begin{docPathOperations},\docValue,\docValue*,\docAuxCommand,\docAuxCommand*,\docAuxEnvironment,\docAuxEnvironment*,\docAuxKey,\docAuxKey*,\docCounter,\docCounter*,\docLength,\docLength*,\docColor,\docColor*,\begin{dispExample*},\begin{dispListing*}
 keywords bold#true,false
+page ref formatter=%<macro%>
 index command=%<macro%>
 index command name=%<name%>
 index format=#pgfsection,pgfchapter,pgf,doc,off

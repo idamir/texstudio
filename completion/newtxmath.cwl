@@ -1,5 +1,5 @@
 # newtxmath package
-# Matthew Bertucci 2023/11/10 for v1.732
+# Matthew Bertucci 2024/06/20 for v1.75
 
 #include:amsmath
 #include:ifthen
@@ -29,6 +29,7 @@ baskervaldx
 utopia
 heuristica
 erewhon
+gelasio
 xcharter
 cmintegrals
 cmbraces
@@ -64,6 +65,7 @@ noOT1
 amsthm
 scaled=%<factor%>
 vecsep=##L
+alth
 #endkeyvals
 
 #ifOption:amsthm
@@ -929,8 +931,12 @@ vecsep=##L
 #endif
 
 #ifOption:cochineal
-\fAlt#m
 \rhoAlt#m
+#endif
+
+#ifOption:ebgaramond
+\hslashAlt#m
+\hbarAlt#m
 #endif
 
 #ifOption:minion

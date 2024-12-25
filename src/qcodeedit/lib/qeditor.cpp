@@ -1582,7 +1582,7 @@ void QEditor::load(const QString& file, QTextCodec* codec)
 	if ( m_lineEndingsActions )
 	{
 		// TODO : update Conservative to report original line endings
-        const QRegularExpression rx(" \\[\\w+\\]");
+        const QRegularExpression rx(" \\[\\w+\\]",QRegularExpression::UseUnicodePropertiesOption);
 		QAction *a = m_lineEndingsActions->actions().at(0);
 
 		if ( a )
@@ -3134,6 +3134,7 @@ void QEditor::paintEvent(QPaintEvent */*e*/)
 		return;
 
 	QPainter p(viewport());
+    p.setRenderHint(QPainter::Antialiasing, true);
     const qreal yOffset = verticalOffset();
     const qreal xOffset = horizontalOffset();
 
@@ -4678,6 +4679,11 @@ QHash<QString, int> QEditor::getEditOperations(bool excludeDefault){
 		addEditOperation(CursorPageDown, Qt::NoModifier, Qt::Key_PageDown);
 		addEditOperation(SelectPageDown, Qt::ShiftModifier, Qt::Key_PageDown);
 
+        registerEditOperation(CursorNextBlock);
+        registerEditOperation(SelectCursorNextBlock);
+        registerEditOperation(CursorPrevBlock);
+        registerEditOperation(SelectCursorPrevBlock);
+
 		addEditOperation(DeleteLeft, Qt::NoModifier, Qt::Key_Backspace);
         addEditOperation(DeleteRight, QKeySequence::Delete);
     #ifdef Q_OS_MAC
@@ -4771,6 +4777,9 @@ QString QEditor::translateEditOperation(const EditOperation& op){
 	case CursorPageUp: return tr("Move cursor one page up");
 	case CursorPageDown: return tr("Move cursor one page down");
 
+    case CursorNextBlock: return tr("Move cursor to next block");
+    case CursorPrevBlock: return tr("Move cursor to previous block");
+
 	case EnumForSelectionStart: return tr("Internal");
 
 	case SelectCursorUp: return tr("Select up");
@@ -4787,6 +4796,9 @@ QString QEditor::translateEditOperation(const EditOperation& op){
 
 	case SelectPageUp: return tr("Select page up");
 	case SelectPageDown: return tr("Select page down");
+
+    case SelectCursorNextBlock: return tr("Select to next block");
+    case SelectCursorPrevBlock: return tr("Select to previous block");
 
 	case EnumForCursorEnd: return tr("Internal");
 
@@ -4909,6 +4921,15 @@ void QEditor::cursorMoveOperation(QDocumentCursor &cursor, EditOperation eop){
 		cutBuffer.clear();
 		pageDown(mode);
 		return;
+
+    case CursorNextBlock: case SelectCursorNextBlock:
+        op = QDocumentCursor::NextBlock;
+        cutBuffer.clear();
+        break;
+    case CursorPrevBlock: case SelectCursorPrevBlock:
+        op = QDocumentCursor::PreviousBlock;
+        cutBuffer.clear();
+        break;
 	default:
 		return;
 	}
@@ -5815,15 +5836,7 @@ void QEditor::scrollToFirstLine(int l){
 
     const qreal ls = document()->getLineSpacing();
     const qreal ypos = m_doc->y(l-1);
-    const qreal yval = verticalOffset();
-    const int ylen = viewport()->height();
-    const qreal yend = ypos + ylen;
-
-	if ( ypos < yval )
-        verticalScrollBar()->setValue(qFloor(ypos / ls));
-	else if ( yend > (yval + ylen) )
-        verticalScrollBar()->setValue(qFloor(1. + (yend - ylen) / ls));
-
+    verticalScrollBar()->setValue(qRound(ypos / ls));
 }
 
 void QEditor::setCursorSurroundingLines(int s){
@@ -5957,7 +5970,7 @@ void QEditor::insertFromMimeData(const QMimeData *d)
 {
 	if ( d && m_cursor.isValid() && !isReadOnly() )
 	{
-
+        m_doc->clearLanguageMatches();
 		if ( d->hasFormat("text/column-selection") )
 		{
 			QStringList columns = QString::fromLocal8Bit(

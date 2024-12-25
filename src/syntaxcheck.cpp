@@ -1,5 +1,4 @@
 #include "syntaxcheck.h"
-#include "latexdocument.h"
 #include "latexeditorview_config.h"
 #include "spellerutility.h"
 #include "tablemanipulation.h"
@@ -114,6 +113,7 @@ void SyntaxCheck::run()
                 speller=newSpeller;
                 mReplacementList=newReplacementList;
                 mFormatList=newFormatList;
+                m_nonTextGrammarFormats=m_newNonTextGrammarFormats;
 			}
 			mLtxCommandLock.unlock();
 		}
@@ -152,14 +152,26 @@ void SyntaxCheck::run()
 		newLine.dlh->lockForWrite();
 		if (newLine.ticket == newLine.dlh->getCurrentTicket()) { // discard results if text has been changed meanwhile
             newLine.dlh->setCookie(QDocumentLine::LEXER_COOKIE,QVariant::fromValue<TokenList>(tl));
+            QList<QFormatRange>grammarOverlays=newLine.dlh->getOverlaysNoLock(m_nonTextGrammarFormats);
             foreach (const Error &elem, newRanges){
                 if(!mSyntaxChecking && (elem.type!=ERR_spelling) && (elem.type!=ERR_highlight) ){
                     // skip all syntax errors
                     continue;
                 }
-                int fmt= elem.type == ERR_spelling ? SpellerUtility::spellcheckErrorFormat : syntaxErrorFormat;
-                fmt= elem.type == ERR_highlight ? elem.format : fmt;
+                int fmt= (elem.type == ERR_spelling) ? SpellerUtility::spellcheckErrorFormat : syntaxErrorFormat;
+                fmt= (elem.type == ERR_highlight) ? elem.format : fmt;
                 newLine.dlh->addOverlayNoLock(QFormatRange(elem.range.first, elem.range.second, fmt));
+                // for ERR_highlight, remove grammarErrors
+                if(m_hideNonTextGrammarErrors && elem.type==ERR_highlight){
+                    for(int i = 0; i<grammarOverlays.size();++i){
+                        const QFormatRange &range=grammarOverlays.at(i);
+                        if(range.offset>=elem.range.first && range.offset<=elem.range.second){
+                            newLine.dlh->removeOverlayNoLock(range);
+                            grammarOverlays.removeAt(i);
+                            --i;
+                        }
+                    }
+                }
             }
             // add comment hightlight if present
             if(commentStart.first>=0){
@@ -291,6 +303,25 @@ void SyntaxCheck::setSpeller(SpellerUtility *su)
 void SyntaxCheck::enableSyntaxCheck(const bool enable){
     if (stopped) return;
     mSyntaxChecking=enable;
+}
+/*! \brief hide non text spelling errors
+ * \param hide
+ */
+void SyntaxCheck::setHideNonTextGrammarErrors(const bool hide)
+{
+    m_hideNonTextGrammarErrors=hide;
+}
+/*!
+ * \brief SyntaxCheck::setNonTextGrammarFormats
+ * \param formats
+ */
+void SyntaxCheck::setNonTextGrammarFormats(const QList<int> formats)
+{
+    if (stopped) return;
+    mLtxCommandLock.lock();
+    newLtxCommandsAvailable = true;
+    m_newNonTextGrammarFormats=formats;
+    mLtxCommandLock.unlock();
 }
 /*!
  * \brief set character/text replacementList for spell checking
@@ -442,8 +473,18 @@ bool SyntaxCheck::checkCommand(const QString &cmd, const StackEnvironment &envs)
     bool textOrMathEnvUsed=false;
     for (int i = envs.size()-1; i > -1; --i) {
 		Environment env = envs.at(i);
-        if(textOrMathEnvUsed &&(env.name=="math" || env.name=="text" )){
-            continue; // only the lowest text/math is valid as they can be used alternately
+        if(textOrMathEnvUsed){
+            if(env.name=="math" || env.name=="text" ) continue; // only the lowest text/math is valid as they can be used alternately
+            // look also for alias envs!
+            QStringList altEnvs = ltxCommands->environmentAliases.values(env.name);
+            bool skip=false;
+            foreach (const QString &altEnv, altEnvs) {
+                if (altEnv=="math" || altEnv=="text" ){
+                    skip=true;
+                    break;
+                }
+            }
+            if(skip) continue; // only the lowest text/math is valid as they can be used alternately
         }
 		if (ltxCommands->possibleCommands.contains(env.name) && ltxCommands->possibleCommands.value(env.name).contains(cmd))
 			return true;
@@ -569,6 +610,74 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
         if(!activeEnv.isEmpty() && activeEnv.top().endingColumn>=0 && tk.start>activeEnv.top().endingColumn){
             Environment env=activeEnv.pop();
         }
+        // handle single command env stop e.g. \ExplSyntaxOff
+        if(tk.type==Token::command){
+            const QString word=tk.getText();
+            if(ltxCommands->possibleCommands["%endEnv"].contains(word)){
+                const QString envName=ltxCommands->environmentAliases.value(word);
+                if(activeEnv.top().name == envName){
+                    activeEnv.pop();
+                    continue;
+                }
+            }
+        }
+
+        if(!activeEnv.isEmpty() && activeEnv.top().name == "%expl3"){
+            // special treatment for expl3 commands in expl3 env
+            if((tk.type==Token::commandUnknown || tk.type==Token::command)&&tk.getText()!="\\\\"){ // special treatment for \\ , see #3877
+                // collect next parts
+                // e.g. \cs_new:Npn is split into \cs _ new : Npn
+                const int start = tk.start;
+                int end=tk.start+tk.length;
+                int colonPosition=-1;
+                for(++i;i<tl.length();++i){
+                    Token tk2= tl[i];
+                    if(end != tk2.start){
+                        // token does not adjoin previous one
+                        --i;
+                        break;
+                    }
+                    end+=tk2.length;
+                    if(tk2.type==Token::word){
+                        continue;
+                    }
+                    if(tk2.type==Token::punctuation){
+                        if(tk2.getText()=="_"){
+                            continue;
+                        }
+                        if(tk2.getText()==":"){
+                            colonPosition=end;
+                            continue;
+                        }
+                    }
+                    end-=tk2.length;
+                    --i;
+                    break; // unwanted element, stop joing for latex3 command
+                }
+                if(colonPosition>=0) {
+                    // highlight part after colon as math/number
+                    // highlight command part
+                    Error elem;
+                    elem.range = QPair<int, int>(start, colonPosition-start);
+                    elem.format=mFormatList["#pictureHighlight"];
+                    elem.type = ERR_highlight;
+                    newRanges.append(elem); // highlight
+                    // highlight after column
+                    elem.range = QPair<int, int>(colonPosition, end-colonPosition);
+                    elem.format=mFormatList["math"];
+                    elem.type = ERR_highlight;
+                    newRanges.append(elem); // highlight
+                }else{
+                    // ltx3 command w/o colon inside
+                    Error elem;
+                    elem.range = QPair<int, int>(start, end-start);
+                    elem.format=mFormatList["#pictureHighlight"];
+                    elem.type = ERR_highlight;
+                    newRanges.append(elem); // highlight
+                }
+            }
+            continue;
+        }
 		// ignore commands in definition arguments e.g. \newcommand{cmd}{definition}
 		if (stackContainsDefinition(stack)) {
 			Token top = stack.top();
@@ -648,7 +757,7 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
         }
         // force text != math when text command is used, i.e. \textbf in math env, see #2603
         if(tk.subtype==Token::text){
-            if(tk.type==Token::braces){
+            if(tk.type==Token::braces||tk.type==Token::openBrace){
                 // add to active env
                 // invalidates math env as active
                 Environment env;
@@ -658,11 +767,20 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
                 env.ticket = ticket;
                 env.level = tk.level;
                 env.startingColumn=tk.start+1;
-                env.endingColumn=tk.start+tk.length-1;
+                if(tk.type==Token::openBrace){
+                    env.endingColumn=-1;
+                }else{
+                    env.endingColumn=tk.start+tk.length-1;
+                }
                 // avoid stacking same env (e.g. braces in braces, see #2411 )
                 Environment topEnv=activeEnv.top();
                 if(topEnv.name!=env.name)
                     activeEnv.push(env);
+            }
+            if(tk.type==Token::closeBrace){
+                if(activeEnv.top().name=="text"){
+                    activeEnv.pop();
+                }
             }
         }
         // spell checking
@@ -693,7 +811,7 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
                 }
             }
             word = latexToPlainWordwithReplacementList(word, mReplacementList); //remove special chars
-            if (speller->hideNonTextSpellingErrors && (checkMathEnvActive(activeEnv)||containsEnv("picture", activeEnv)) ){
+            if (speller->hideNonTextSpellingErrors && (checkMathEnvActive(activeEnv)||containsEnv("picture", activeEnv)||containsEnv("pictureHighlight", activeEnv)) ){
                 word.clear();
                 tk.ignoreSpelling=true;
             }else{
@@ -914,25 +1032,11 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
 					if(env=="tikztimingtable"){
 						option="ll"; // is always 2 columns
 					}else{
-						for (int k = i + 1; k < tl.length(); k++) {
-							Token elem = tl.at(k);
-							if (elem.level < tk.level)
-								break;
-							if (elem.level > tk.level)
-								continue;
-							if (elem.subtype == Token::colDef) {
-								option = line.mid(elem.start + 1, elem.length - 2); // strip {}
-								break;
-							}
-						}
+                        option = Parsing::getArg(tl.mid(i+1),Token::colDef);
 					}
 				}
                 if(option.contains("colspec")){
-                    const QRegularExpression re{"^(.*colspec\\s*[=]\\s*\\{)(.*)\\}"};
-                    const QRegularExpressionMatch match = re.match(option);
-                    if (match.hasMatch()) {
-                        option = match.captured(2);
-                    }
+                    option=LatexTables::handleColSpec(option);
                 }
 				QSet<QString> translationMap=ltxCommands->possibleCommands.value("%columntypes");
 				QStringList res = LatexTables::splitColDef(option);
@@ -961,9 +1065,9 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
             if (word.contains('@')) {
                 continue; //ignore commands containg @
             }
-			if(!tk.optionalCommandName.isEmpty()){
+            if(!tk.optionalCommandName.isEmpty() && !tk.optionalCommandName.contains("/")){
 				word=tk.optionalCommandName;
-			}
+            }
 			Token tkEnvName;
 
 			if (word == "\\begin" || word == "\\end") {
@@ -973,6 +1077,22 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
 					word = word + line.mid(tkEnvName.start, tkEnvName.length);
 				}
 			}
+            // special treatment for \ExplSyntaxOn, \ExplSyntaxOff
+            // \ProvidesExplPackage, \ProvidesExplClass and \ProvidesExplFile
+            // activate latex3 mode which ignores _ in commandnames
+            if(ltxCommands->possibleCommands["%beginEnv"].contains(word)){
+                const QString envName=ltxCommands->environmentAliases.value(word);
+                Environment env;
+                env.name = envName;
+                env.id = 1; // to be changed
+                env.dlh = dlh;
+                env.ticket = ticket;
+                env.level = tk.level;
+                env.startingColumn=tk.start+tk.length;
+                activeEnv.push(env);
+                continue;
+            }
+
             // special treatment for & in math
             if(word=="&" && containsEnv("math", activeEnv)){
                 Error elem;
@@ -1065,13 +1185,12 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
 					continue;
 				}
 				if (word == "\\multicolumn") {
-					QRegExp rxMultiColumn("\\\\multicolumn\\{(\\d+)\\}\\{.+\\}\\{.+\\}");
-					rxMultiColumn.setMinimal(true);
-					int res = rxMultiColumn.indexIn(line, tk.start);
-					if (res > -1) {
+                    static QRegularExpression rxMultiColumn("\\\\multicolumn\\{(\\d+?)\\}\\{.+?\\}\\{.+?\\}");
+                    QRegularExpressionMatch rxMultiColumnMatch = rxMultiColumn.match(line, tk.start);
+                    if (rxMultiColumnMatch.hasMatch()) {
 						// multicoulmn before &
 						bool ok;
-						int c = rxMultiColumn.cap(1).toInt(&ok);
+                        int c = rxMultiColumnMatch.captured(1).toInt(&ok);
 						if (ok) {
 							activeEnv.top().excessCol += c - 1;
 						}

@@ -47,7 +47,8 @@ void LatexTables::addRow(QDocumentCursor &c, const int numberOfColumns )
 				cur.insertText("\\\\\n");
 			} else {
 				ch.movePosition(2, QDocumentCursor::NextCharacter, QDocumentCursor::KeepAnchor);
-                if (ch.selectedText().contains(QRegularExpression("^\\S+$"))) {
+                const QString txt=ch.selectedText();
+                if (!txt.contains("\\\\") && !txt.contains("\\tabularnewline")) {
 					cur.movePosition(1, QDocumentCursor::PreviousCharacter);
 					cur.insertText("\\\\\n");
 				}
@@ -198,10 +199,10 @@ void LatexTables::addColumn(QDocument *doc, const int lineNumber, const int afte
 		QString text = cur.line().text();
 		int col = cur.columnNumber();
 		text = text.mid(col);
-		QRegExp rxHL("^(\\s*\\\\hline\\s*)");
-		int pos_hline = rxHL.indexIn(text);
-		if (pos_hline > -1) {
-			int l = rxHL.cap().length();
+        QRegularExpression rxHL("^(\\s*\\\\hline\\s*)");
+        QRegularExpressionMatch rxHLm=rxHL.match(text);
+        if (rxHLm.hasMatch()) {
+            int l = rxHLm.capturedLength();
 			cur.movePosition(l, QDocumentCursor::NextCharacter);
 		}
 		if (cur.atLineEnd()) cur.movePosition(1, QDocumentCursor::NextCharacter);
@@ -314,9 +315,9 @@ void LatexTables::removeColumn(QDocument *doc, const int lineNumber, const int c
 						}
 						//commands
 						if (zw.at(i) == '\\') {
-							QRegExp rx("\\w+");
-							rx.indexIn(zw, i + 1);
-							QString cmd = "\\" + rx.cap();
+                            QRegularExpression rx("\\w+");
+                            QRegularExpressionMatch rxm=rx.match(zw,i+1);
+                            QString cmd = "\\" + rxm.captured();
 							if (elementsToKeep.contains(cmd)) {
 								keep += " " + cmd;
 							}
@@ -440,7 +441,7 @@ QString LatexTables::getDef(QDocumentCursor &cur)
 	QDocumentCursor c(cur);
 	int result = findNextToken(c, QStringList(), false, true);
 	if (result != -2) return QString();
-	QString line = c.line().text();
+    QString line = getTableText(cur);
 	QString opt;
 	int pos = line.indexOf("\\begin");
 	if (pos > -1) {
@@ -488,36 +489,48 @@ QString LatexTables::getDef(QDocumentCursor &cur)
 	}
     // in case of colspec, refine further
     if(opt.contains("colspec")){
-        QRegularExpression re{"^(.*colspec\\s*[=]\\s*\\{)(.*)\\}"};
+        QRegularExpression re{"(colspec\\s*[=]\\s*\\{)(.*)\\}"};
         QRegularExpressionMatch match = re.match(opt);
         if (match.hasMatch()) {
-            int offset=match.capturedLength(1);
+            int offset=match.capturedStart(2);
             QString matched = match.captured(2);
-            opt=matched;
-            cur.moveTo(c.lineNumber(), pos+1+offset);
+            QString prefix=opt.left(offset);
+            opt=handleColSpec(opt);
+            // handle cursor selection more precisely in case of multiline arguments
+            const int posColspec=line.indexOf("colspec");
+            QString pre=line.left(posColspec);
+            int ln=c.lineNumber();
+            if(pre.contains("\n")){
+                //adapt ln and offset for multiline argument
+                ln+=pre.count("\n");
+                int lastNewline=prefix.lastIndexOf("\n");
+                offset=offset-pos-lastNewline-2;
+            }
+            cur.moveTo(ln, pos+1+offset);
             cur.movePosition(opt.length(), QDocumentCursor::NextCharacter, QDocumentCursor::KeepAnchor);
         }
     }
 	return opt;
 }
 
-// get the number of columns which are defined by the the tabular (or alike) env
+// get the number of columns which are defined by the tabular (or alike) env
 int LatexTables::getNumberOfColumns(QDocumentCursor &cur)
 {
 	QDocumentCursor c(cur);
 	int result = findNextToken(c, QStringList(), false, true);
 	if (result != -2) return -1;
-	QString line = c.line().text();
-	int pos = line.indexOf("\\begin");
+    QDocumentCursor tmpCur(cur);
+    QString tableText = getTableText(tmpCur);
+    int pos = tableText.indexOf("\\begin");
 	if (pos > -1) {
 		QStringList values;
-        resolveCommandOptions(line, pos, values);
+        resolveCommandOptions(tableText, pos, values);
 		return getNumberOfColumns(values);
 	}
 	return -1;
 }
 
-// get the number of columns which are defined by the the tabular (or alike) env, strings contain definition
+// get the number of columns which are defined by the tabular (or alike) env, strings contain definition
 int LatexTables::getNumberOfColumns(QStringList values)
 {
 	if (values.isEmpty())
@@ -732,9 +745,10 @@ QStringList LatexTables::splitColDef(QString def)
 		if (ch == ']')
 			sqrBracket--;
 		if ((ch.isLetter() || ch == ']') && !inAt && !inDef && curl == 0 && sqrBracket == 0) {
-			if ((ch == 's' || ch == 'S' || ch == 'X') && i + 1 < def.length() && def.at(i + 1) == '[')
+            const QString colTyes_with_optional_args = "spbmVXQS";
+            if (colTyes_with_optional_args.contains(ch) && i + 1 < def.length() && def.at(i + 1) == '[')
 				continue;
-			if ((i + 1 < def.length()) && def.at(i + 1) == '{') {
+            if ((i + 1 < def.length()) && def.at(i + 1) == '{' )  {
 				appendDef = true;
 			} else {
 				result << col;
@@ -866,10 +880,11 @@ QString LatexTables::getTableText(QDocumentCursor &cur)
 	result = findNextToken(cur, QStringList(), true, false);
 	if (result != -2) return QString();
 	line = cur.line().text();
-	QRegExp rx("\\\\end\\{.*\\}");
-	i = rx.indexIn(line);
+    QRegularExpression rx("\\\\end\\{.*\\}");
+    QRegularExpressionMatch rxm=rx.match(line);
+    i = rxm.capturedStart();
 	if (i >= 0)
-		cur.setColumnNumber(i + rx.cap(0).length(), QDocumentCursor::KeepAnchor);
+        cur.setColumnNumber(i + rxm.capturedLength(0), QDocumentCursor::KeepAnchor);
 	QString res = cur.selectedText();
 	return res;
 }
@@ -907,7 +922,9 @@ void LatexTables::alignTableCols(QDocumentCursor &cur)
         if (args.count() < 3) alignment = ""; // incomplete definition -> fall back to defaults
         else alignment = args.at(2).value;
     } else if (args.count() > 1 && tabularNames.contains(tableType)) {
-        alignment = args.at(1).value;
+        int p=1;
+        while(args.at(p).isOptional && args.count()>(p+1)) ++p; // skip optional arguments
+        alignment = args.at(p).value;
     } else return; // not a registered table environment
     alignment=handleColSpec(alignment);
 	int cellsEnd = text.indexOf("\\end{" + tableType);
@@ -948,10 +965,24 @@ QString LatexTables::handleColSpec(QString opt)
 {
     // in case of colspec, refine further
     if(opt.contains("colspec")){
-        QRegularExpression re{"^(.*colspec\\s*[=]\\s*\\{)(.*)\\}"};
+        QRegularExpression re{"(colspec\\s*[=]\\s*)(\\{.*\\})"};
         QRegularExpressionMatch match = re.match(opt);
         if (match.hasMatch()) {
             opt = match.captured(2);
+            // braces are allowed in colspec
+            // go through opening/closing braces and find potential comma, that splits colDef
+            // see #3831
+            int brace=0;
+            int squareBracket=0;
+            int i=0;
+            for(;i<opt.length();++i){
+                if(opt.at(i)=='}') --brace;
+                if(opt.at(i)=='{') ++brace;
+                if(opt.at(i)=='[') ++squareBracket;
+                if(opt.at(i)==']') --squareBracket;
+                if(opt.at(i)==',' && brace==0 && squareBracket==0) break;
+            }
+            opt=opt.mid(1,i-2); // remove rest of coldesfinition,cut surrounding braces
         }
     }
     return opt;

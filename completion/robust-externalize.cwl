@@ -1,5 +1,5 @@
 # robust-externalize package
-# Matthew Bertucci 2024/01/17 for v2.5
+# Matthew Bertucci 2024/03/16 for v2.9
 
 #include:pgfkeys
 #include:pgffor
@@ -19,9 +19,14 @@
 \begin{CacheMeNoContent}
 \end{CacheMeNoContent}
 \begin{PlaceholderFromCode}{name placeholder}#V
+\begin{PlaceholderFromCode}[style]{name placeholder}#V
+\begin{PlaceholderFromCode}*{name placeholder}#V
+\begin{PlaceholderFromCode}*[style]{name placeholder}#V
 \end{PlaceholderFromCode}
 \begin{PlaceholderPathFromCode}{name placeholder}#V
 \begin{PlaceholderPathFromCode}[suffix]{name placeholder}#V
+\begin{PlaceholderPathFromCode}*{name placeholder}#V
+\begin{PlaceholderPathFromCode}*[suffix]{name placeholder}#V
 \end{PlaceholderPathFromCode}
 \begin{SetPlaceholderCode}{name placeholder}#V
 \end{SetPlaceholderCode}
@@ -47,6 +52,8 @@
 \cacheEnvironment{envname}{preset options}
 \cacheMe[preset style]{content%definition}
 \cacheMe{content%definition}
+\cacheMeCode[preset style]{code%definition}
+\cacheMeCode{code%definition}
 \cacheTikz
 \cacheTikz[preset for TikZ]
 \cacheTikz[preset for TikZ][preset for TikZpicture]
@@ -161,6 +168,7 @@
 \RenewDocumentCommandAutoForward{cmd}{xargs}{def}
 \RenewExpandableDocumentCommandAutoForward{cmd}{xargs}[add. style]{def}
 \RenewExpandableDocumentCommandAutoForward{cmd}{xargs}{def}
+\res{name}
 \rescanPlaceholderInVariableNoReplacement{name macro}{name placeholder%definition}
 \robExtAddCachePath{path%file}#*
 \robExtAddCachePathAndName{path%file}#*
@@ -211,6 +219,12 @@
 \cacheTikzitWithStyle[preset]{file}
 \tikzfig{name}
 \tikzfig<options>{name}
+\placeholderRemoveSpacesUntil{placeholder}{separator}
+\placeholderRemoveSpacesUntil{placeholder}[number]{separator}
+\placeholderPrependAllLines{placeholder}{text}
+\placeholderRemoveLeadingSpaces{placeholder}
+\lenToCmNoUnit{length}
+\lenToCmNoUnit[unit]{length}
 
 # not documented
 \addPlaceholdersToGroupBefore{arg1}{arg2}#S
@@ -220,8 +234,13 @@
 \begin{RobExtCacheMeCode}{arg}#S
 \begin{RobExtCacheMeNoContent}#S
 \begin{RobExtPlaceholderFromCode}{arg}#S
+\begin{RobExtPlaceholderFromCode}[opt]{arg}#S
+\begin{RobExtPlaceholderFromCode}*{arg}#S
+\begin{RobExtPlaceholderFromCode}*[opt]{arg}#S
 \begin{RobExtPlaceholderPathFromCode}[opt]{arg}#S
 \begin{RobExtPlaceholderPathFromCode}{arg}#S
+\begin{RobExtPlaceholderPathFromCode}*[opt]{arg}#S
+\begin{RobExtPlaceholderPathFromCode}*{arg}#S
 \checkIfPlaceholderNameIsLegal{arg}#S
 \end{RobExtCacheMe}#S
 \end{RobExtCacheMeCode}#S
@@ -395,7 +414,6 @@
 \setPlaceholderFirst{arg1}{arg2}#S
 \setPlaceholderFromStringExpanded{arg1}{arg2}#S
 \showAllRegisteredGroupsAndPlaceholders#S
-
 \robExtGenericAutoForward{string}{code}#S
 \robExtGenericAutoForward{string}[add. style]{code}#S
 \robExtGenericAutoForward[preset]{string}{code}#S
@@ -443,3 +461,15 @@
 \robExtCacheTikzit[preset]#S
 \robExtCacheTikzitWithStyle{file}#S
 \robExtCacheTikzitWithStyle[preset]{file}#S
+\robExtPlaceholderRemoveSpacesUntil{arg1}{arg2}#S
+\robExtPlaceholderRemoveSpacesUntil{arg1}[opt]{arg2}#S
+\robExtPlaceholderPrependAllLines{arg1}{arg2}#S
+\robExtPlaceholderRemoveLeadingSpaces{arg}#S
+\robExtLenToCmNoUnit{arg}#S
+\robExtLenToCmNoUnit[opt]{arg}#S
+\robExtCurrentPlaceholderName#S
+\robExtCacheMeCode[preset style]{code%definition}#S
+\robExtCacheMeCode{code%definition}#S
+\robExtResForceNumber{arg}#S
+\robExtNoResult{arg}#S
+\robExtRes{arg}#S

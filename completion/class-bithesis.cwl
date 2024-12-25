@@ -1,13 +1,14 @@
 # bithesis class
-# Matthew Bertucci 2023/10/01 for v3.6.0
+# Matthew Bertucci 2024/10/08 for v3.8.0
 
 #include:l3keys2e
 #include:class-ctexbook
 #include:geometry
 #include:xcolor
-# loads table option of xcolot
+# loads table option of xcolor
 #include:colortbl
 #include:xeCJK
+#include:zhlineskip
 #include:titletoc
 #include:setspace
 #include:graphicx
@@ -51,7 +52,7 @@ cover={%<键值列表%>}
 cover/date=%<任意字符串%>
 cover/headerImage=%<图片路径%>
 cover/xiheiFont=%<字体路径%>
-cover/dilimiter=%<任意字符串%>
+cover/delimiter=%<任意字符串%>
 cover/autoWidth#true,false
 cover/autoWidthPadding=##L
 cover/labelMaxWidth=##L
@@ -61,6 +62,10 @@ cover/valueAlign=#c,l,r
 cover/underlineThickness=##L
 cover/underlineOffset=##L
 cover/hideCoverInPeerReview#true,false
+cover/showSpecialTypeBox#true,false
+cover/prefer-zh#true,false
+cover/reverse-titles#true,false
+cover/addTitleZh#true,false
 info={%<键值列表%>}
 info/title=%<字符串%>
 info/titleEn=%<字符串%>
@@ -91,6 +96,8 @@ info/instituteEn=%<字符串%>
 info/defenseDate=%<字符串%>
 info/defenseDateEn=%<字符串%>
 info/classifiedLevel=%<字符串%>
+info/crossResearch#true,false
+info/internationalStudentUGP#true,false
 info/teacher=%<字符串%>
 info/semester=%<字符串%>
 style={%<键值列表%>}
@@ -98,13 +105,19 @@ style/head=%<字符串%>
 style/headline=%<字符串%>
 style/bibliographyIndent#true,false
 style/pageVerticalAlign=#top,scattered
+style/non-CJK-font-in-headings=#serif,sans
 style/mathFont=#asana,bonum,cm,concrete,dejavu,erewhon,euler,fira,garamond,gfsneohellenic,kp,libertinus,lm,newcm,pagella,schola,stix,stix2,termes,xcharter,xits,none
 style/windowsSimSunFakeBold#true,false
 style/unicodeMathOptions=%<任意选项%>
 style/hyphen#true,false
+style/mathAboveDisplaySkip=##L
+style/mathBelowDisplaySkip=##L
+style/betterTimesNewRoman#true,false
 TOC={%<键值列表%>}
+TOC/title=%<字符串%>
 TOC/abstract#true,false
 TOC/abstractEn#true,false
+TOC/TOC#true,false
 TOC/symbols#true,false
 appendices={%<键值列表%>}
 appendices/chapterLeveltrue,false
@@ -120,10 +133,14 @@ misc/arialFont=%<字符串%>
 misc/tabularFontSize=%<其他字号%>
 misc/autoref={%<键值列表%>}
 misc/hideLinks#true,false
+misc/floatSeparation=%<实数%>
+misc/algorithmSeparation=%<实数%>
+misc/tabularRowSeparation=%<实数%>
 const={%<键值列表%>}
 const/autoref={%<键值列表%>}
 const/style/substituteSymbol=%<字符串%>
 const/info={%<键值列表%>}
+const/heading={%<键值列表%>}
 #endkeyvals
 
 \begin{abstractEn}

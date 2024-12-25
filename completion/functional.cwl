@@ -1,5 +1,5 @@
 # functional package
-# Matthew Bertucci 2023/01/07 for v2023A
+# Matthew Bertucci 2024/12/18 for v2024C
 
 # Note on cwl: the package author Jianrui Lyu encourages use of spaces between
 # args which along with the need to have proper "\newcommand" completion
@@ -1135,6 +1135,7 @@ tracing#true,false
 \expOnce{arg}#*
 \expPartial{arg}#*
 \fileInputStop#*
+\funColor{arg1}{arg2}#*
 \prgLocal#*
 \noExpand{tokens}#*
 \onlyOnce{tokens}#*

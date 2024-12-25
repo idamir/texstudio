@@ -1,16 +1,28 @@
 # mismath package
-# Matthew Bertucci 2023/12/19 for v2.9
+# Matthew Bertucci 2024/06/17 for v3.1
 
 #include:amsmath
 #include:mathtools
 #include:esvect
+#include:mleftright
 #include:ifthen
 #include:xspace
 #include:iftex
+#include:etoolbox
+#include:xkeyval
 
 #keyvals:\usepackage/mismath#c
 ibrackets
 decimalcomma
+nofunction
+otherReIm
+classicReIm
+# options passed to mathtools
+fixamsmath
+donotfixamsmathbugs
+allowspaces
+disallowspaces
+legacycolonsymbols
 # options passed to amsmath
 intlimits
 nointlimits
@@ -54,7 +66,9 @@ alignedleftspaceyesifneg
 \boldvect
 \boldvectcommand#*
 \C#m
+\cmmathcal{letter}#*m
 \codim#m
+\coker#m
 \Conv#m
 \Cov#m
 \cov#m
@@ -109,15 +123,17 @@ alignedleftspaceyesifneg
 \onlymathC#*
 \P#m
 \Par
+\pifonts{options%keyvals}#*
 \pinormal#*m
 \pinumber#m
-\pinumber[csname]#m
+\pinumber[option%keyvals]#m
 \pow{expr}{exponent}#m
 \probastyle#*
 \Q#m
 \R#m
 \rank#m
 \Re#m
+\Res#m
 \rot#m
 \sech#m
 \sgn#m
@@ -144,6 +160,20 @@ alignedleftspaceyesifneg
 \end{mathcols}#m
 \changecol#/mathcols
 \bslash#*
+\upDelta#*m
+\opDelta#m
+\opdelta#m
+
+#keyvals:\pifonts,\pinumber
+lgrmath=%<font name%>
+fontspec=%<font name%>
+upgreek=#Euler,Symbol
+mathdesign
+fourier
+kpfonts
+pxfonts
+txfonts
+#endkeyvals
 
 # deprecated
 \enumber#S

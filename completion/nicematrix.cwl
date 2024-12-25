@@ -1,5 +1,5 @@
 # nicematrix package
-# Matthew Bertucci 2023/12/15 for v6.26b
+# Matthew Bertucci 2024/12/16 for v7.0a
 
 #include:amsmath
 #include:array
@@ -123,6 +123,7 @@ notes/para
 notes/bottomrule
 small
 light-syntax
+light-syntax-expanded
 name=%<name%>
 create-medium-nodes
 create-large-nodes
@@ -138,11 +139,11 @@ extra-margin=##L
 parallelize-diags#true,false
 delimiters/max-width
 vlines-in-sub-matrix=%<letter%>
-colortbl-like
-color-inside
 rounded-corners
 rounded-corners=##L
 no-cell-nodes
+ampersand-in-blocks
+&-in-blocks
 #endkeyvals
 
 #keyvals:\NiceMatrixOptions,\begin{NiceTabular}
@@ -197,13 +198,13 @@ rounded-corners=##L
 borders={%<borders options%>}
 hvlines
 v-center
+p
+j
+m
 t
 b
 T
 B
-L
-R
-C
 tikz={%<TikZ options%>}
 name=%<name%>
 respect-arraystretch
@@ -274,6 +275,10 @@ cell-space-limits=##L
 rowcolor=#%color
 color=#%color
 bold
+fill=#%color
+opacity=%<factor%>
+rounded-corners
+rounded-corners=##L
 #endkeyvals
 
 \begin{NiceMatrixBlock}

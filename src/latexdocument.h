@@ -188,7 +188,7 @@ public:
 	void reCheckSyntax(int lineStart = 0, int lineNum = -1);
 	QString getErrorAt(QDocumentLineHandle *dlh, int pos, StackEnvironment previous, TokenStack stack);
 
-	void getEnv(int lineNumber, StackEnvironment &env); // get Environment for syntax checking, number of cols is now part of env
+    void getEnv(int lineNumber, StackEnvironment &env) const; // get Environment for syntax checking, number of cols is now part of env
 	Q_INVOKABLE QString getLastEnvName(int lineNumber); // special function to use with javascript (insert "\item" from menu)
 
     void enableSyntaxCheck(bool enable);
@@ -201,8 +201,11 @@ public:
     struct HandledData {
         QStringList removedUsepackages;
         QStringList addedUsepackages;
+        QStringList handledUsepackages; // move packages from removed to handled if they were directly added in order to handle identical usepackage in one line better (#3556)
         QStringList removedUserCommands;
         QStringList addedUserCommands;
+        QStringList removedUserSnippets; // small snippets which automatically generated for completion only, e.g. x_y or \mathsf{as}
+        QStringList addedUserSnippets;
         QStringList lstFilesToLoad;
         QStringList removedIncludes;
         QList<LatexDocument *> addedIncludes;
@@ -229,6 +232,9 @@ public:
     void gatherCompletionFiles(QStringList &files, QStringList &loadedFiles, LatexPackage &pck, bool gatherForCompleter = false);
 
     std::list<StructureEntry *> docStructure;
+
+    void setHideNonTextGrammarErrors(bool hide);
+    void setGrammarFormats(const QList<int> &formats);
 
 private:
 	QString fileName; //absolute
@@ -279,6 +285,9 @@ private:
     bool m_isSubfileRoot=false;
 
     bool m_cachedDataOnly=false;
+
+    bool m_hideNonTextGrammarErrors=true;
+    QList<int> m_grammarFormats;
 
 #ifndef QT_NO_DEBUG
 public:
@@ -385,7 +394,7 @@ public:
 
 
 	QHash<QString, LatexPackage> cachedPackages;
-    bool addDocsToLoad(QStringList filenames, LatexDocument *parentDocument, bool isHigherLevel=false);
+    std::pair<bool,bool> addDocsToLoad(QStringList filenames, LatexDocument *parentDocument, bool isHigherLevel=false);
 	void removeDocs(QStringList removeIncludes);
 	void hideDocInEditor(LatexEditorView *edView);
 	QString findPackageByCommand(const QString command);

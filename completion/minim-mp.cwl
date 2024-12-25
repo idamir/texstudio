@@ -1,7 +1,36 @@
 # minim-mp package
-# Matthew Bertucci 2023/12/20 for v1.3
+# Matthew Bertucci 2024/04/03 for v1.6
 
 #include:luatex
+
+#keyvals:\usepackage/minim-mp#c
+luamplib
+#endkeyvals
+
+#ifOption:luamplib
+\mplibtextextlabel{choice%keyvals}
+\mplibshowlog{choice%keyvals}
+\mplibcodeinherit{choice%keyvals}
+#keyvals:\mplibtextextlabel#c,\mplibshowlog#c,\mplibcodeinherit#c
+enable
+disable
+#endkeyvals
+\mplibsetformat{format name%keyvals}
+#keyvals:\mplibsetformat#c
+plain
+metafun
+#endkeyvals
+\mplibnumbersystem{type%keyvals}
+#keyvals:\mplibnumbersystem#c
+scaled
+double
+decimal
+#endkeyvals
+\everymplib{metapost code}
+\everymplib[instance name]{metapost code}
+\everyendmplib{metapost code%definition}
+\everyendmplib[instance name]{metapost code}
+#endif
 
 # from minim-mp.sty
 \begin{metapost}

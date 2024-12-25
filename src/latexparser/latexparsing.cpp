@@ -14,7 +14,7 @@ namespace Parsing {
 /*!
  * Realizes the first pass lexing
  * Following functionality is implemented:
- * + separate the the text into words,symbols
+ * + separate the text into words,symbols
  * + assign each symbol/word a basic context like word,command,symbol,open/close brace etc.
  * + set tokenlist as LEXER_RAW_COOKIE on line
  * + remove cookie LEXER_COOKIE (as it is invalid)
@@ -339,7 +339,8 @@ bool latexDetermineContexts2(QDocumentLineHandle *dlh, TokenStack &stack, Comman
                     tk.subtype = Token::keyVal_val;
                     if (!commandStack.isEmpty() && lp->commandDefs.contains(commandStack.top().optionalCommandName + "/" + keyName)) {
                         CommandDescription cd = lp->commandDefs.value(commandStack.top().optionalCommandName + "/" + keyName);
-                        tk.subtype = cd.argTypes.value(0, Token::keyVal_val);
+                        ArgumentDescription ad=cd.arguments.value(0, ArgumentDescription{ArgumentDescription::MANDATORY,Token::keyVal_val});
+                        tk.subtype = ad.tokenType;
                     }
                 }
 
@@ -348,15 +349,21 @@ bool latexDetermineContexts2(QDocumentLineHandle *dlh, TokenStack &stack, Comman
             if (!commandStack.isEmpty() && commandStack.top().level == level) {
                 //possible command argument without brackets
                 CommandDescription &cd = commandStack.top();
-                if (cd.args > 0) {
-                    //cd.optionalArgs = 0; // relax no optional arguments after mandatory, e.g. \newcommand\abc[1]{adadf}, #3073
-                    cd.bracketArgs = 0;
-                    cd.args--;
-                    tk.subtype = cd.argTypes.takeFirst();
-                    tk.level++;
+                // skip over optional arguments
+                while(!cd.arguments.isEmpty() && (cd.arguments.first().type >= ArgumentDescription::OPTIONAL)) {
+                    cd.arguments.takeFirst();
                 }
-                if (cd.args <= 0) {
+                // check for mandatory argument
+                if (!cd.arguments.isEmpty() && cd.arguments[0].type==ArgumentDescription::MANDATORY) {
+                    ArgumentDescription ad=cd.arguments.takeFirst();
+                    tk.subtype = ad.tokenType;
+                    tk.level++;
+                }else{
                     // unknown arg, stop handling this command
+                    cd.arguments.clear();
+                }
+                if (cd.arguments.isEmpty()) {
+                    // command has been handled
                     commandStack.pop();
                 }
             }
@@ -377,7 +384,7 @@ bool latexDetermineContexts2(QDocumentLineHandle *dlh, TokenStack &stack, Comman
                     }
 
                 }
-                if ((cd.args > 0 || cd.optionalArgs > 0 || cd.bracketArgs > 0 || cd.overlayArgs > 0) && tk.subtype != Token::def) { // don't interpret commands in definition (\newcommand{def})
+                if (cd.arguments.size() > 0 && tk.subtype != Token::def) { // don't interpret commands in definition (\newcommand{def})
                     cd.optionalCommandName=command;
                     commandStack.push(cd);
                 }
@@ -397,22 +404,41 @@ bool latexDetermineContexts2(QDocumentLineHandle *dlh, TokenStack &stack, Comman
             if (!commandStack.isEmpty() && commandStack.top().level == level) {
                 CommandDescription &cd = commandStack.top();
                 if (tk.type == Token::openBrace) {
-                    if (cd.args > 0) {
-                        //cd.optionalArgs=0; // argument order (option/mandatory) is not checked, e.g \newcommad{cmd}[argNumber][default]{definition}
-                        cd.args--;
-                        tk.subtype = cd.argTypes.takeFirst();
+                    // skip over optional arguments, here assume optional arguments as [],<> and ()
+                    while(!cd.arguments.isEmpty() && (cd.arguments.first().type >= ArgumentDescription::OPTIONAL) ) {
+                        cd.arguments.takeFirst();
+                    }
+                    // check for mandatory argument
+                    if (!cd.arguments.isEmpty() && cd.arguments.first().type == ArgumentDescription::MANDATORY) {
+                        ArgumentDescription ad= cd.arguments.takeFirst();
+                        tk.subtype = ad.tokenType;
                     } else {
-                        // ignore, but make sure that optional arguments are impossible after that (see #2046)
-                        commandStack.pop();
                         lexed << tk;
                         continue;
                     }
                 }
                 if (tk.type == Token::openSquare) {
-                    if (cd.optionalArgs > 0) {
-                        cd.optionalArgs--;
-                        tk.subtype = cd.optTypes.takeFirst();
-                    } else {
+                    bool handled=false;
+                    while(!handled && !cd.arguments.isEmpty() && (cd.arguments.first().type == ArgumentDescription::OVERLAY || cd.arguments.first().type == ArgumentDescription::BRACKET)) {
+                        cd.arguments.takeFirst();
+                    }
+                    if (!cd.arguments.isEmpty() && cd.arguments.first().type == ArgumentDescription::DEFAULT_OVERLAY) {
+                        // check next token to be less
+                        if (i + 1 < tl.length() && tl[i + 1].type == Token::less) {
+                            ArgumentDescription ad= cd.arguments.takeFirst();
+                            tk.subtype = ad.tokenType;
+                            ++i;
+                            handled=true;
+                        } else {
+                            cd.arguments.takeFirst();
+                        }
+                    }
+                    if (!handled && !cd.arguments.isEmpty() && cd.arguments.first().type == ArgumentDescription::OPTIONAL) {
+                        ArgumentDescription ad= cd.arguments.takeFirst();
+                        tk.subtype = ad.tokenType;
+                        handled=true;
+                    }
+                    if(!handled){
                         // unexpected optional argument
                         // ignore
                         lexed << tk;
@@ -420,18 +446,23 @@ bool latexDetermineContexts2(QDocumentLineHandle *dlh, TokenStack &stack, Comman
                     }
                 }
                 if (tk.type == Token::openBracket) {
-                    if (cd.bracketArgs > 0) {
-                        cd.bracketArgs--;
-                        tk.subtype = cd.bracketTypes.takeFirst();
+                    // skip over optional arguments
+                    while(!cd.arguments.isEmpty() && (cd.arguments.first().type == ArgumentDescription::OPTIONAL || cd.arguments.first().type == ArgumentDescription::OVERLAY || cd.arguments.first().type == ArgumentDescription::DEFAULT_OVERLAY)) {
+                        cd.arguments.takeFirst();
+                    }
+                    // check for mandatory argument
+                    if (!cd.arguments.isEmpty() && cd.arguments.first().type == ArgumentDescription::BRACKET) {
+                        ArgumentDescription ad= cd.arguments.takeFirst();
+                        tk.subtype = ad.tokenType;
                     } else {
                         lexed << tk;
                         continue;
                     }
                 }
                 if (tk.type == Token::less) {
-                    if (cd.overlayArgs > 0) {
-                        cd.overlayArgs--;
-                        tk.subtype = cd.overlayTypes.takeFirst();
+                    if (!cd.arguments.isEmpty() && cd.arguments.first().type == ArgumentDescription::OVERLAY) {
+                        ArgumentDescription ad= cd.arguments.takeFirst();
+                        tk.subtype = ad.tokenType;
                     } else {
                         lexed << tk;
                         continue;
@@ -485,6 +516,20 @@ bool latexDetermineContexts2(QDocumentLineHandle *dlh, TokenStack &stack, Comman
                 if (stack.top().type != Token::opposite(tk.type))
                     continue; //closing bracket/> is ignored if no correct open is present
             }
+            // special treatment for beamer default overlay [< >]
+            if(tk.type==Token::greater && stack.top().type == Token::openSquare){
+                if(!commandStack.isEmpty() && commandStack.top().arguments.size()>0 && commandStack.top().arguments.first().type==ArgumentDescription::DEFAULT_OVERLAY){
+                    // check if closing bracket is expected
+                    if(i+1<tl.length() && tl[i+1].type==Token::closeSquareBracket){
+                        // closing bracket found
+                        ++i;
+                        tk=tl[i]; // use outer closing square bracket
+                    }else{
+                        // closing bracket not found, ignore token
+                        continue;
+                    }
+                }
+            }
             if (!stack.isEmpty() && stack.top().type == Token::opposite(tk.type)) {
                 Token tk1 = stack.pop();
 
@@ -534,11 +579,10 @@ bool latexDetermineContexts2(QDocumentLineHandle *dlh, TokenStack &stack, Comman
                                 CommandDescription cd = lp->commandDefs.value("\\begin{" + env + "}", CommandDescription());
                                 // special treatment for verbatim
                                 if (lp->possibleCommands["%verbatimEnv"].contains(env)) {
-                                    if(cd.args==1 && cd.optionalArgs==1 && i<(tl.length()-1) && tl[i+1].type==Token::openSquare){ // next Token needs to be [ i.e. optional arg, otherwise start verbatim directly
+                                    if(cd.args()==1 && cd.args(ArgumentDescription::OPTIONAL)==1 && i<(tl.length()-1) && tl[i+1].type==Token::openSquare){ // next Token needs to be [ i.e. optional arg, otherwise start verbatim directly
                                         // special treatment for \begin{abc}[...]
                                         cd.verbatimAfterOptionalArg=true;
-                                        cd.args--;
-                                        cd.argTypes.takeFirst();
+                                        cd.arguments.takeFirst();
                                         cd.optionalCommandName="\\begin{" + env + "}";
                                         cd.level=tk1.level;
                                         commandStack.push(cd);
@@ -553,9 +597,8 @@ bool latexDetermineContexts2(QDocumentLineHandle *dlh, TokenStack &stack, Comman
                                         stack.push(tk3);
                                     }
                                 } else { // only care for further arguments if not in verbatim mode (see minted)
-                                    if ((cd.args > 1)||(cd.args==1 && cd.optionalArgs>0)) {
-                                        cd.args--;
-                                        cd.argTypes.takeFirst();
+                                    if ((cd.args() > 1)||(cd.args()==1 && cd.args(ArgumentDescription::OPTIONAL)>0)) {
+                                        cd.arguments.takeFirst();
                                         cd.optionalCommandName="\\begin{" + env + "}";
                                         cd.level=tk1.level;
                                         commandStack.push(cd);
@@ -592,7 +635,7 @@ bool latexDetermineContexts2(QDocumentLineHandle *dlh, TokenStack &stack, Comman
                 }
                 if (!commandStack.isEmpty() && commandStack.top().level == level) {
                     CommandDescription cd = commandStack.top();
-                    if (cd.args <= 0 && cd.bracketArgs <= 0) {
+                    if (cd.arguments.isEmpty()) {
                         // all args handled, stop handling this command
                         commandStack.pop();
                         if(cd.verbatimAfterOptionalArg){ // delayed verbatim start to handle optional argument
@@ -652,13 +695,24 @@ bool latexDetermineContexts2(QDocumentLineHandle *dlh, TokenStack &stack, Comman
                 //lastComma = -1;
                 lastEqual = level;
                 level++;
+                if(lp->commandDefs.contains(commandStack.top().optionalCommandName + "/" + keyName)){
+                    // handle keyval values with normal commandStack mechanism (mandatory argument only!!)
+                    // allows argument classification
+                    CommandDescription cd = lp->commandDefs.value(commandStack.top().optionalCommandName + "/" + keyName);
+                    if(cd.arguments[0].tokenType!=Token::definition){
+                        // special treatment for length for now
+                        continue;
+                    }
+                    cd.level=level;
+                    commandStack.push(cd);
+                }
                 continue;
             }
             if (lastComma < 0 ) {
                 tk.level = level;
                 tk.type = Token::keyVal_key;
                 if(!commandStack.isEmpty()){
-                    CommandDescription &cd = commandStack.top();
+                    const CommandDescription &cd = commandStack.top();
                     tk.optionalCommandName=cd.optionalCommandName;
                 }
                 keyName = line.mid(tk.start, tk.length);
@@ -716,9 +770,11 @@ bool latexDetermineContexts2(QDocumentLineHandle *dlh, TokenStack &stack, Comman
                             }
                         }
                     }
+                    //basically used for length values
                     if (!commandStack.isEmpty() && lp->commandDefs.contains(commandStack.top().optionalCommandName + "/" + keyName)) {
                         CommandDescription cd = lp->commandDefs.value(commandStack.top().optionalCommandName + "/" + keyName);
-                        tk.type = cd.argTypes.value(0, Token::keyVal_val); // only types can be set in key_val as they need to be recognized later
+                        auto ad=cd.arguments.value(0, ArgumentDescription{ArgumentDescription::MANDATORY,Token::keyVal_val});
+                        tk.type = ad.tokenType; // only types can be set in key_val as they need to be recognized later
                         if(!lexed.isEmpty() && lexed.last().type==tk.type && lexed.last().subtype==tk.subtype){
                             lexed.last().length=tk.start+tk.length-lexed.last().start;
                             continue;
@@ -781,16 +837,21 @@ bool latexDetermineContexts2(QDocumentLineHandle *dlh, TokenStack &stack, Comman
             if (!commandStack.isEmpty() && commandStack.top().level == level) {
                 //possible command argument without brackets
                 CommandDescription &cd = commandStack.top();
-                if (cd.args > 0) {
-                    cd.optionalArgs = 0; // no optional arguments after mandatory
-                    cd.args--;
-                    tk.subtype = cd.argTypes.takeFirst();
+                // skip over optional arguments, here assume optional arguments as [],<> and ()
+                while(!cd.arguments.isEmpty() && (cd.arguments.first().type >= ArgumentDescription::OPTIONAL) ) {
+                    cd.arguments.takeFirst();
                 }
-                if (cd.args <= 0) {
-                    // unknown arg, stop handling this command
+                if (cd.arguments.size() && cd.arguments.first().type==ArgumentDescription::MANDATORY) {
+                    auto ad=cd.arguments.takeFirst();
+                    tk.subtype = ad.tokenType;
+                    tk.level++; // needs tk level be increased
+                }else{
+                    cd.arguments.clear(); // unknown arg, stop handling this command
+                }
+                if (cd.arguments.isEmpty()) {
+                    // command has been handled completely
                     commandStack.pop();
                 }
-                tk.level++; // needs tk level be increased
             }
 
             if(tk.subtype==Token::keyVal_val && tk.type==Token::punctuation && line.mid(tk.start, tk.length)==",") continue; // exception for comma in keyVal braces

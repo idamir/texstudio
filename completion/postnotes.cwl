@@ -1,5 +1,30 @@
 # postnotes package
-# Matthew Bertucci 2023/11/15 for v0.2.7
+# Matthew Bertucci 2024/12/05 for v0.5.1
+
+#keyvals:\usepackage/postnotes#c
+deprecatedheadervars#true,false
+#endkeyvals
+
+#ifOption:deprecatedheadervars
+\pnhdchapfirst#*
+\pnhdchaplast#*
+\pnhdnamefirst#*
+\pnhdnamelast#*
+\pnhdpagefirst#*
+\pnhdpagelast#*
+\pnhdsectfirst#*
+\pnhdsectlast#*
+#endif
+#ifOption:deprecatedheadervars=true
+\pnhdchapfirst#*
+\pnhdchaplast#*
+\pnhdnamefirst#*
+\pnhdnamelast#*
+\pnhdpagefirst#*
+\pnhdpagelast#*
+\pnhdsectfirst#*
+\pnhdsectlast#*
+#endif
 
 \postnote{text}
 \postnote[options%keyvals]{text}
@@ -11,6 +36,7 @@ sortnum=%<number%>
 nomark
 label=##l
 zlabel=##l
+maybemulti
 #endkeyvals
 
 \postnotesection{text}
@@ -34,6 +60,8 @@ format={%<font commands%>}
 listenv=%<envname%>
 makemark={%<code%>}
 maketextmark={%<code%>}
+multiple#true,false
+multisep=%<separator%>
 pretextmark={%<code%>}
 posttextmark={%<code%>}
 postprintnote={%<code%>}
@@ -41,19 +69,13 @@ style=#endnotes,pagenote
 hyperref=#auto,true,false
 backlink#true,false
 sort#true,false
+checkduplicates#true,false
+checkfloats#true,false
+maybemulti#true,false
+counteraux#true,false
 #endkeyvals
 
-\pnhdchapfirst#*
-\pnhdchaplast#*
-\pnhdnamefirst#*
-\pnhdnamefirst#*
-\pnhdnamelast#*
-\pnhdnamelast#*
 \pnhdnotes#*
-\pnhdpagefirst#*
-\pnhdpagelast#*
-\pnhdsectfirst#*
-\pnhdsectlast#*
 \pnhdtopage#*
 \pnhdtopages#*
 \pnheaderdefault#*
@@ -66,9 +88,10 @@ sort#true,false
 \pnthesectionnextnote#*
 \pntitle#*
 \thepostnote#*
+\theHpostnote#*
 \thepostnotesection#*
+\theHpostnotesection#*
 \thepostnotetext#*
-
-# deprecated
-\postnotesectionx{text}#S
-\postnotesectionx[options]{text}#S
+\theHpostnotetext#*
+\pnsetcounteraux{integer}#*
+\pnaddtocounteraux{integer}#*

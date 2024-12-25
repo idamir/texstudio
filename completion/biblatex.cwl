@@ -2,7 +2,7 @@
 # commands for biblatex users
 # tbraun, 19.08.2009
 # dbitouze, 14.02.2012
-# Matthew Bertucci 06.03.2023 for v3.19
+# Matthew Bertucci 03.23.2024 for v3.20
 
 #include:pdftexcmds
 #include:etoolbox
@@ -64,7 +64,7 @@ notetype=#foot+end,footonly,endonly
 hyperref=#true,false,auto,manual
 backref#true,false
 backrefstyle=#none,three,two,two+,three+,all+
-backrefsetstyle=#=setonly,memonly,setormem,setandmem,memandset,setplusmem
+backrefsetstyle=#setonly,memonly,setormem,setandmem,memandset,setplusmem
 backreffloats#true,false
 indexing=#true,false,cite,bib
 loadfiles#true,false
@@ -148,7 +148,7 @@ uniquetitle#true,false
 uniquebaretitle#true,false
 uniquework#true,false
 uniqueprimaryauthor#true,false
-uniquename=#true,false,init,full,allinit,allfull,mininit,minfull
+uniquename=#true,false,init,full,allinit,allfull,mininit,minfull,minyearinit,minyearfull
 uniquelist=#true,false,minyear
 nohashothers#true,false
 nosortothers#true,false
@@ -368,6 +368,7 @@ sorting=%<name%>
 sortingnamekeytemplatename=%<name%>
 uniquenametemplatename=%<name%>
 labelalphanametemplatename=%<name%>
+namehashtemplatename=%<name%>
 nametemplates=%<name%>
 labelprefix=%<string%>
 #endkeyvals
@@ -1193,6 +1194,7 @@ name=%<refcontextname%>
 \bibrangedash#*
 \bibrangessep#*
 \bibdatesep#*
+\bibdatendsep#*
 \bibdaterangesep#*
 \mkbibdatelong{year}{month}{day}#*
 \mkbibdateshort{year}{month}{day}#*
@@ -1571,6 +1573,7 @@ strside=#left,right
 inits#true,false
 base#true,false
 disambiguation=#none,init,initorfull,full
+hashscope=#init,full
 #endkeyvals
 \DeclareNolabel{specification}#*
 \nolabel{regexp}#*
@@ -1717,6 +1720,7 @@ override#true,false
 \ifsortingnamekeytemplatename{string}{true}{false}#*
 \ifuniquenametemplatename{string}{true}{false}#*
 \iflabelalphanametemplatename{string}{true}{false}#*
+\ifnamehashtemplatename{string}{true}{false}#*
 \iffieldundef{field}{true}{false}#*
 \iflistundef{literal list}{true}{false}#*
 \ifnameundef{name list}{true}{false}#*
@@ -2076,6 +2080,7 @@ override#true,false
 
 \AtBeginRefsection{code}#*
 \AtNextRefsection{code}#*
+\AtFollowingRefsections{code}#*
 \AtBeginBibliography{code}#*
 \AtBeginShorthands{code}#*
 \AtBeginBiblist{biblistname}{code}#*
@@ -2111,6 +2116,8 @@ override#true,false
 ## 4.11 Hints and Caveats ##
 \DeclareUniquenameTemplate{specification}#*
 \DeclareUniquenameTemplate[name]{specification}#*
+\DeclareNamehashTemplate{specification}#*
+\DeclareNamehashTemplate[name]{specification}#*
 
 # miscellaneous
 \actualoperator#*
@@ -2185,7 +2192,7 @@ override#true,false
 \Footcitetexts[pre][post]{bibid}[pre][post]{bibid}#SC
 \Footcitetexts{bibid}{bibid}#SC
 
-### biblatex-abnt v3.4 ###
+### biblatex-abnt v4.0 ###
 #ifOption:style=abnt
 #keyvals:\usepackage/biblatex#c,\ExecuteBibliographyOptions#c
 # from abnt.bbx
@@ -2198,21 +2205,25 @@ repeattitles#true,false
 repeatfirstfields#true,false
 repeatfields#true,false
 usedashes#true,false
+slashdaterange#true,false
 indent#true,false
 extradate#true,false
 extrayear#true,false
+dateyear#true,false
+datemonth#true,false
 justify#true,false
 pretty#true,false
+oldspacing#true,false
 citecount#true,false
 # from abnt.cbx
 sccite#true,false
+accite#true,false
 #endkeyvals
 # from abnt.bbx
 #include:xpatch
-\origbibsetup#S
-\FirstWordUpper{text}#*
-\FirstWordSC{text}#*
-\FirstWordLCSC{text}#*
+\FirstWordUpper{text}#S
+\FirstWordSC{text}#S
+\FirstWordLCSC{text}#S
 \traceparam{arg}#S
 \paramL#S
 \traceparamA#S
@@ -2221,30 +2232,32 @@ sccite#true,false
 \traceparamC{arg}#S
 \traceparamD{arg}#S
 \traceparamE#S
-\smartuppercase{text}#*
-\smartlowercase{text}#*
-\smartlcsc{text}#*
-\smartsc{text}#*
-\UpperOrSC{text}#*
-\NormalOrSC{text}#*
-\iffieldregex{field}{regex}{true}{false}#*
-\iffieldendswithpunct{field}{true}{false}#*
-\IfGivenIsInitial{arg1}{arg2}#*
+\smartuppercase{text}#S
+\smartlowercase{text}#S
+\smartlcsc{text}#S
+\smartsc{text}#S
+\UpperOrSC{text}#S
+\NormalOrSC{text}#S
+\iffieldregex{field}{regex}{true}{false}#S
+\iffieldendswithpunct{field}{true}{false}#S
+\IfGivenIsInitial{arg1}{arg2}#S
 \multinamedelimorig#S
 \finalnamedelimorig#S
-\abntnum{number}#*
-\bibnameunderscore#*
-\nopunctdash#*
+\abntnum{number}#S
+\bibnameunderscore#S
+\nopunctdash#S
+\mkdaterangeyearmonth#S
 # from abnt.cbx
-\UpperOrSCCite{text}#*
-\NormalOrSCCite{text}#*
-\IfGivenIsInit{arg1}{arg2}#*
+\UpperOrSCCite{text}#S
+\NormalOrSCCite{text}#S
+\NormalOrACCiteOrSCCite{text}#S
+\IfGivenIsInit{arg1}{arg2}#S
 \origmkbibnamefamily#S
 \origmkbibnamegiven#S
 \origmkbibnameprefix#S
 \origmkbibnamesuffix#S
-\FirstWord{text}#*
-\addapud#*
+\FirstWord{text}#S
+\addapud#S
 \apud{bibid}{bibid}#C
 \apud(post){bibid}{bibid}#*C
 \apud(pre)(post){bibid}{bibid}#C
@@ -2252,20 +2265,20 @@ sccite#true,false
 \apud[post]{bibid}[post]{bibid}#*C
 \apud[pre][post]{bibid}[pre][post]{bibid}#*C
 \apud(pre)(post)[pre][post]{bibid}[pre][post]{bibid}#C
-\plaincite[prenote][postnote]{bibid}#*C
-\plaincite[postnote]{bibid}#*C
-\plaincite{bibid}#*C
-\citelastname[prenote][postnote]{bibid}#*C
-\citelastname[postnote]{bibid}#*C
-\citelastname{bibid}#*C
+\plaincite[prenote][postnote]{bibid}#SC
+\plaincite[postnote]{bibid}#SC
+\plaincite{bibid}#SC
+\citelastname[prenote][postnote]{bibid}#SC
+\citelastname[postnote]{bibid}#SC
+\citelastname{bibid}#SC
 \textapud{bibid}{bibid}#C
 \textapud{bibid}[post]{bibid}#*C
 \textapud[post]{bibid}{bibid}#*C
 \textapud[post]{bibid}[post]{bibid}#C
 \textapud[pre][post]{bibid}[pre][post]{bibid}#C
-\citeyearorsh*[prenote][postnote]{bibid}#*C
-\citeyearorsh*[postnote]{bibid}#*C
-\citeyearorsh*{bibid}#*C
+\citeyearorsh*[prenote][postnote]{bibid}#SC
+\citeyearorsh*[postnote]{bibid}#SC
+\citeyearorsh*{bibid}#SC
 #endif
 
 #ifOption:style=abnt-ibid
@@ -2281,21 +2294,25 @@ repeattitles#true,false
 repeatfirstfields#true,false
 repeatfields#true,false
 usedashes#true,false
+slashdaterange#true,false
 indent#true,false
 extradate#true,false
 extrayear#true,false
+dateyear#true,false
+datemonth#true,false
 justify#true,false
 pretty#true,false
+oldspacing#true,false
 citecount#true,false
 # from abnt.cbx
 sccite#true,false
+accite#true,false
 #endkeyvals
 # from abnt.bbx
 #include:xpatch
-\origbibsetup#S
-\FirstWordUpper{text}#*
-\FirstWordSC{text}#*
-\FirstWordLCSC{text}#*
+\FirstWordUpper{text}#S
+\FirstWordSC{text}#S
+\FirstWordLCSC{text}#S
 \traceparam{arg}#S
 \paramL#S
 \traceparamA#S
@@ -2304,33 +2321,34 @@ sccite#true,false
 \traceparamC{arg}#S
 \traceparamD{arg}#S
 \traceparamE#S
-\smartuppercase{text}#*
-\smartlowercase{text}#*
-\smartlcsc{text}#*
-\smartsc{text}#*
-\UpperOrSC{text}#*
-\NormalOrSC{text}#*
-\iffieldregex{field}{regex}{true}{false}#*
-\iffieldendswithpunct{field}{true}{false}#*
-\IfGivenIsInitial{arg1}{arg2}#*
+\smartuppercase{text}#S
+\smartlowercase{text}#S
+\smartlcsc{text}#S
+\smartsc{text}#S
+\UpperOrSC{text}#S
+\NormalOrSC{text}#S
+\iffieldregex{field}{regex}{true}{false}#S
+\iffieldendswithpunct{field}{true}{false}#S
+\IfGivenIsInitial{arg1}{arg2}#S
 \multinamedelimorig#S
 \finalnamedelimorig#S
-\abntnum{number}#*
-\bibnameunderscore#*
-\nopunctdash#*
+\abntnum{number}#S
+\bibnameunderscore#S
+\nopunctdash#S
+\mkdaterangeyearmonth#S
 # from abnt-ibid.cbx
-\UpperOrSCCite{text}#*
-\NormalOrSCCite{text}#*
-\IfInitial{arg1}{arg2}{arg3}#*
+\UpperOrSCCite{text}#S
+\NormalOrSCCite{text}#S
+\IfInitial{arg1}{arg2}{arg3}#S
 \origmkbibnamefamily#S
 \origmkbibnamegiven#S
 \origmkbibnameprefix#S
 \origmkbibnamesuffix#S
-\mkidem{arg}#*
-\mkibid{arg}#*
-\mkopcit{arg}#*
-\mkloccit{arg}#*
-\addapud#*
+\mkidem{arg}#S
+\mkibid{arg}#S
+\mkopcit{arg}#S
+\mkloccit{arg}#S
+\addapud#S
 \apud{bibid}{bibid}#C
 \apud(post){bibid}{bibid}#*C
 \apud(pre)(post){bibid}{bibid}#C
@@ -2353,21 +2371,24 @@ repeattitles#true,false
 repeatfirstfields#true,false
 repeatfields#true,false
 usedashes#true,false
+slashdaterange#true,false
 indent#true,false
 extradate#true,false
 extrayear#true,false
+dateyear#true,false
+datemonth#true,false
 justify#true,false
 pretty#true,false
+oldspacing#true,false
 citecount#true,false
 # from abnt-numeric.cbx
 comp#true,false
 #endkeyvals
 # from abnt.bbx
 #include:xpatch
-\origbibsetup#S
-\FirstWordUpper{text}#*
-\FirstWordSC{text}#*
-\FirstWordLCSC{text}#*
+\FirstWordUpper{text}#S
+\FirstWordSC{text}#S
+\FirstWordLCSC{text}#S
 \traceparam{arg}#S
 \paramL#S
 \traceparamA#S
@@ -2376,20 +2397,48 @@ comp#true,false
 \traceparamC{arg}#S
 \traceparamD{arg}#S
 \traceparamE#S
-\smartuppercase{text}#*
-\smartlowercase{text}#*
-\smartlcsc{text}#*
-\smartsc{text}#*
-\UpperOrSC{text}#*
-\NormalOrSC{text}#*
-\iffieldregex{field}{regex}{true}{false}#*
-\iffieldendswithpunct{field}{true}{false}#*
-\IfGivenIsInitial{arg1}{arg2}#*
+\smartuppercase{text}#S
+\smartlowercase{text}#S
+\smartlcsc{text}#S
+\smartsc{text}#S
+\UpperOrSC{text}#S
+\NormalOrSC{text}#S
+\iffieldregex{field}{regex}{true}{false}#S
+\iffieldendswithpunct{field}{true}{false}#S
+\IfGivenIsInitial{arg1}{arg2}#S
 \multinamedelimorig#S
 \finalnamedelimorig#S
-\abntnum{number}#*
-\bibnameunderscore#*
-\nopunctdash#*
+\abntnum{number}#S
+\bibnameunderscore#S
+\nopunctdash#S
+\mkdaterangeyearmonth#S
+#endif
+
+### biblatex-accursius v1.0 ###
+#ifOption:style=accursius
+#keyvals:\usepackage/biblatex#c,\ExecuteBibliographyOptions#c
+itapunctuation#true,false
+nourlinrunning#true,false
+authoryearstyle#true,false
+scauthor#true,false
+revname#true,false
+authortypeparens#true,false
+editionroman#true,false
+shortjournal#true,false
+publocformat=#publocyear,locpubyear,loccolonpub
+jourvolnumdate=#allcommas,numslashdate,biblatex
+iusminimal#true,false
+iusshorthand#true,false
+noportal#true,false
+noportalurlinrunning#true,false
+absolutelynoportalurl#true,false
+#endkeyvals
+# from accursius.bbx
+\mkbibsc{arg}#S
+\mkidem{arg}#S
+# from accursius.cbx
+\ifcitesingletitle#S
+\citedhref{arg}#S
 #endif
 
 ### biblatex-acmart v0.1 ###
@@ -8099,7 +8148,7 @@ biblabel=#superscript,brackets
 \mkibid{arg}#*
 #endif
 
-### biblatex-publist v2.5 ###
+### biblatex-publist v2.13 ###
 #ifOption:style=publist
 # from publist.bbx
 \ExecutePublistOptions{options%keyvals}
@@ -8108,12 +8157,14 @@ plauthorname=%<surname%>
 plauthorfirstname=%<first name%>
 plauthornameprefix=%<von-part%>
 plauthorhandling=#omit,highlight
+annotations=%<comma list%>
 nameorder=#family-given,given-family
 fixyear#true,false
 hlyear#true,false
 marginyear#true,false
 plsorting=%<sorting scheme%>
 plauthorfirstinit#true,false
+citinfo#true,false
 jifinfo#true,false
 oainfo=#simple,verbose,none
 prinfo#true,false
@@ -8162,12 +8213,26 @@ plnumbering=#global,local,global-descending,local-descending,none
 \GetTotalCount
 \GetSectionCount
 \GetSectionCount[section number]
+\mkbplannot#*
+\bplannot#*
+\theannotsymb#S
+\GetAnnotSymbol{category}
+\SetAnnotSymbols{comma list}
 # from publist.cbx
 \citeitem[prenote][postnote]{bibid}#*C
 \citeitem[postnote]{bibid}#*C
 \citeitem{bibid}#C
+\citesecitem[prenote][postnote]{bibid}#*C
+\citesecitem[postnote]{bibid}#*C
+\citesecitem{bibid}#C
+\citesecitem*{bibid}#C
+\citeitemrange{bibid}{bibid}#C
+\citesecitemrange{bibid}{bibid}#C
+\citesecitemrange*{bibid}{bibid}#C
+\itemrangesep#*
 \shiftciteitem{integer}
 \mkrefdesc{number}#*
+\secitemsecref#*
 \theprevcrefsection#S
 #endif
 
@@ -8178,6 +8243,7 @@ plauthorname=%<surname%>
 plauthorfirstname=%<first name%>
 plauthornameprefix=%<von part%>
 plauthorhandling=#omit,highlight
+annotations=%<comma list%>
 nameorder=#family-given,given-family
 boldyear#true,false
 pubstateextra#true,false
@@ -8185,6 +8251,7 @@ marginyear#true,false
 plnumbered=#true,false,reset
 reversenumbering#true,false
 plauthorfirstinit#true,false
+citinfo#true,false
 prinfo#true,false
 linktitleall#true,false
 linktitledoi#true,false
@@ -8224,6 +8291,11 @@ linktitleissn#true,false
 \GetTotalCount
 \GetSectionCount
 \GetSectionCount[section number]
+\mkbplannot#*
+\bplannot#*
+\theannotsymb#S
+\GetAnnotSymbol{category}
+\SetAnnotSymbols{comma list}
 #endif
 
 ### biblatex-realauthor v2.7.1a ###
@@ -8914,12 +8986,15 @@ alllinks#true,false
 \possciteauthor[prenote][postnote]{bibid}#SC
 #endif
 
-### univie-ling v1.17 ###
+### univie-ling v2.9 ###
 #ifOption:style=univie-ling
 # from univie-ling.bbx
 #keyvals:\usepackage/biblatex#c,\ExecuteBibliographyOptions#c
 issueeditor#true,false
+annotations#true,false
 #endkeyvals
+\annotsep#*
+\annotationdelim#*
 \mkbibdateunified{arg1}{arg2}{arg3}#*
 #endif
 

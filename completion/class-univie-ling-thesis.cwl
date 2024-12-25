@@ -1,14 +1,13 @@
 # univie-ling-thesis class
-# Matthew Bertucci 2022/10/03 for v2.0
+# Matthew Bertucci 2024/09/22 for v.2.8
 
-#include:xkeyval
 #include:class-scrreprt
 #include:array
 #include:translator
 #include:fontenc
 # loads T1 option of fontenc
 #include:mathpazo
-#include:uarial
+#include:sourcesanspro
 #include:sourcecodepro
 #include:url
 #include:geometry
@@ -24,6 +23,7 @@
 # loads style=univie-ling option of biblatex
 #include:varioref
 #include:prettyref
+#include:isodate
 
 #keyvals:\documentclass/univie-ling-thesis#c
 all#true,false
@@ -39,6 +39,7 @@ polyglossia#true,false
 pdfa#true,false
 fonts=#ps,otf,none
 fontenc={%<enc1,enc2,...%>}
+titlepage#true,false
 #endkeyvals
 
 #ifOption:apa
@@ -293,6 +294,10 @@ apamaxprtauth=%<number%>
 \Expression{text}
 \Meaning{text}
 \Concept{text}
+\weblink{URL}#U
+\weblink{URL}[date]#U
+\SetURLDate{date}
+\urldate{date}
 
 #keyvals:\thesistype
 magister

@@ -1,5 +1,5 @@
 # langsci-affiliations package
-# Matthew Bertucci 2023/02/12 for v1.1
+# Matthew Bertucci 2024/12/04 for v1.4
 
 \ResolveAffiliations{author}
 \ResolveAffiliations[options%keyvals]{author}
@@ -16,9 +16,13 @@ output in groups#true,false
 separator between two=%<separator%>
 separator between multiple=%<separator%>
 separator between final two=%<separator%>
+separator between indices=%<separator%>
 separator between affiliations=%<separator%>
+output authors paragraph format=
 output authors font=%<font commands%>
+output affiliation paragraph format=
 output affiliation font=%<font commands%>
 input names separator=%<separator%>
 input affiliation separator=%<separator%>
+author affiliation skip=##L
 #endkeyvals

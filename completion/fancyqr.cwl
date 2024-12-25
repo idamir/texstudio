@@ -1,7 +1,7 @@
 # fancyqr package
-# Matthew Bertucci 2022/08/20 for v1.1
+# Matthew Bertucci 2024/11/29 for v2.2
 
-#include:tikz
+#include:pict2e
 #include:qrcode
 
 \fancyqr{URL}#U
@@ -11,17 +11,22 @@
 \fancyqrset{options%keyvals}
 
 #keyvals:\fancyqr,\fancyqrset,\fancyqr*
+classic#true,false
+color=#%color
+compensate=##L
+gradient#true,false
+gradient angle=%<degrees%>
 image=%<graphics code%>
 image padding=%<number%>
 image x padding=%<number%>
 image y padding=%<number%>
-gradient#true,false
-color=#%color
 l color=#%color
 left color=#%color
 r color=#%color
+random color=%<colors%>
 right color=#%color
-gradient angle=%<degrees%>
+size=##L
+width=##L
 # from qrcode
 height=##L
 level=#L,M,Q,H
@@ -36,6 +41,7 @@ nolink
 #endkeyvals
 
 \FancyQrDoNotPrintSquare{x}{y}
+\FancyQrDoNotPrintRadius{factor}
 \FancyQrRoundCut
 \FancyQrHardCut
 
@@ -46,12 +52,11 @@ flat
 frame
 blobs
 glitch
-swift
 dots
 default
 #endkeyvals
 
-\FancyLoadDefault
+\FancyQrLoadDefault
 
 # not documented
 \FancyQrColor{arg}#S

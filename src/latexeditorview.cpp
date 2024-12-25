@@ -117,7 +117,7 @@ bool DefaultInputBinding::runMacros(QKeyEvent *event, QEditor *editor)
 		if (!m.isActiveForTrigger(Macro::ST_REGEX)) continue;
 		if (!m.isActiveForLanguage(language)) continue;
 		if (!(m.isActiveForFormat(line.getFormatAt(column)) || (column > 0 && m.isActiveForFormat(line.getFormatAt(column - 1))))) continue; //two checks, so it works at beginning and end of an environment
-        const QRegularExpression &r = m.triggerRegex; //a const qregexp doesn't exist
+        const QRegularExpression &r = m.triggerRegex;
         QRegularExpressionMatch match=r.match(prev);
         if (match.hasMatch()) {
             // force last match which basically is right-most match, see #2448
@@ -212,6 +212,21 @@ bool DefaultInputBinding::keyPressEvent(QKeyEvent *event, QEditor *editor)
         else {
             EnumsTokenType::TokenType ctx = Parsing::getCompleterContext(editor->cursor().line().handle(), editor->cursor().columnNumber());
             if(ctx==EnumsTokenType::def) return true;
+            // check for environment
+            const LatexDocument *doc = qobject_cast<LatexDocument *>(editor->document());
+            StackEnvironment env;
+            doc->getEnv(editor->cursor().lineNumber(),env);
+            // use topEnv as completion filter for commands
+            const QStringList ignoreEnv = {"document","normal"};
+            if(!env.isEmpty() && !ignoreEnv.contains(env.top().name)){
+                QString envName=env.top().name;
+                QStringList envAliases = doc->lp->environmentAliases.values(envName);
+                if(!envAliases.isEmpty()){
+                    envName=envAliases.first();
+                }
+                LatexEditorView::completer->setFilter(envName);
+            }
+
             LatexCompleter::CompletionFlags flags= ctx==EnumsTokenType::width ? LatexCompleter::CF_FORCE_LENGTH : LatexCompleter::CompletionFlag(0) ;
             LatexEditorView::completer->complete(editor, flags);
 		}
@@ -663,6 +678,7 @@ LatexEditorView::LatexEditorView(QWidget *parent, LatexEditorViewConfig *aconfig
 
 	codeeditor = new QCodeEdit(false, this, doc);
 	editor = codeeditor->editor();
+    document = doc;
 
 	editor->setProperty("latexEditor", QVariant::fromValue<LatexEditorView *>(this));
 
@@ -1157,6 +1173,8 @@ void LatexEditorView::removeTemporaryHighlight()
 
 void LatexEditorView::displayLineGrammarErrorsInternal(int lineNr, const QList<GrammarError> &errors)
 {
+    const QList<int> nonTextFormats = {numbersFormat, verbatimFormat, pictureFormat, pweaveDelimiterFormat, pweaveBlockFormat,
+                                       sweaveDelimiterFormat, sweaveBlockFormat, math_DelimiterFormat, asymptoteBlockFormat};
 	QDocumentLine line = document->line(lineNr);
 	foreach (const int f, grammarFormats)
 		line.clearOverlays(f);
@@ -1169,8 +1187,11 @@ void LatexEditorView::displayLineGrammarErrorsInternal(int lineNr, const QList<G
 			if (grammarFormatsDisabled[index]) continue;
 			f = grammarFormats[index];
 		}
-		if (config->hideNonTextGrammarErrors && (isNonTextFormat(line.getFormatAt(error.offset)) || isNonTextFormat(line.getFormatAt(error.offset + error.length - 1))))
-			continue;
+        if (config->hideNonTextGrammarErrors){
+            QFormatRange overlays=line.getOverlayAt(error.offset,nonTextFormats);
+            if(overlays.length>0)
+                continue;
+        }
 		line.addOverlay(QFormatRange(error.offset, error.length, f));
 	}
 	//todo: check for width changing like if (changed && ff->format(wordRepetitionFormat).widthChanging()) line.handle()->updateWrapAndNotifyDocument(i);
@@ -1633,20 +1654,37 @@ LatexCompleter *LatexEditorView::getCompleter()
 void LatexEditorView::updatePackageFormats()
 {
 	for (int i = 0; i < editor->document()->lines(); i++) {
-		QList<QFormatRange> li = editor->document()->line(i).getOverlays();
-		QString curLineText = editor->document()->line(i).text();
-		for (int j = 0; j < li.size(); j++)
-			if (li[j].format == packagePresentFormat || li[j].format == packageMissingFormat || li[j].format == packageUndefinedFormat) {
-				int newFormat = packageUndefinedFormat;
-                if (!latexPackageList->empty()) {
-                    newFormat = latexPackageList->find(curLineText.mid(li[j].offset, li[j].length)) != latexPackageList->end() ? packagePresentFormat : packageMissingFormat;
-				}
-				if (newFormat != li[j].format) {
-					editor->document()->line(i).removeOverlay(li[j]);
-					li[j].format = newFormat;
-					editor->document()->line(i).addOverlay(li[j]);
-				}
-			}
+        QDocumentLineHandle *dlh=editor->document()->line(i).handle();
+        QList<QFormatRange> li = dlh->getOverlays(-1);
+        QString curLineText = dlh->text();
+        TokenList tl = dlh->getCookieLocked(QDocumentLine::LEXER_COOKIE).value<TokenList>();
+        for (const Token &tk : tl) {
+            if(tk.type != Token::package && tk.type!=Token::beamertheme && tk.type!=Token::documentclass) continue;
+            QString preambel;
+            if (tk.type == Token::beamertheme) { // special treatment for  \usetheme
+                preambel = "beamertheme";
+            }
+            const QString rpck =  trimLeft(curLineText.mid(tk.start, tk.length)); // left spaces are ignored by \cite, right space not
+            const QString suffix = tk.type == Token::documentclass ? ".cls" : ".sty";
+            //check and highlight
+            bool localPackage = false;
+            if(rpck.startsWith(".")){
+                // check if file exists
+                LatexDocument *root=document->getRootDocument();
+                QFileInfo fi=root->getFileInfo();
+                QFileInfo fi_cwl=QFileInfo(fi.absolutePath(),rpck+suffix);
+                localPackage=fi_cwl.exists();
+            }
+            if (latexPackageList->empty())
+                dlh->addOverlay(QFormatRange(tk.start, tk.length, packageUndefinedFormat));
+            else if ( (latexPackageList->find(preambel + rpck + suffix) != latexPackageList->end())
+                      || (latexPackageList->find(preambel + rpck) != latexPackageList->end())
+                     || localPackage) {
+                dlh->addOverlay(QFormatRange(tk.start, tk.length, packagePresentFormat));
+            } else {
+                dlh->addOverlay(QFormatRange(tk.start, tk.length, packageMissingFormat));
+            }
+        }
 	}
 }
 
@@ -1794,6 +1832,8 @@ void LatexEditorView::updateSettings()
 	QDocument::setWorkAround(QDocument::ForceSingleCharacterDrawing, config->hackRenderingMode == 2);
 	LatexDocument::syntaxErrorFormat = syntaxErrorFormat;
     if (document){
+        document->setHideNonTextGrammarErrors(config->hideNonTextGrammarErrors);
+        document->setGrammarFormats(grammarFormats);
 		document->updateSettings();
         document->setCenterDocumentInEditor(config->centerDocumentInEditor);
     }
@@ -2166,8 +2206,8 @@ void LatexEditorView::documentContentChanged(int linenr, int count)
             QString curLine=line.text();
             QString text = curLine.mid(col);
             QString regularExpression=ConfigManagerInterface::getInstance()->getOption("Editor/todo comment regExp").toString();
-            QRegExp rx(regularExpression);
-            if (rx.indexIn(text)==0) {
+            QRegularExpression rx(regularExpression);
+            if (text.indexOf(rx) == 0) {
                 line.addOverlay(QFormatRange(col, text.length(), todoFormat));
                 addedOverlayTodo = true;
             }
@@ -2200,15 +2240,27 @@ void LatexEditorView::documentContentChanged(int linenr, int count)
 					if (tk.type == Token::beamertheme) { // special treatment for  \usetheme
 						preambel = "beamertheme";
 					}
-					QString text = dlh->text();
-					QString rpck =  trimLeft(text.mid(tk.start, tk.length)); // left spaces are ignored by \cite, right space not
+                    const QString text = dlh->text();
+                    const QString rpck =  trimLeft(text.mid(tk.start, tk.length)); // left spaces are ignored by \cite, right space not
+                    const QString suffix = tk.type == Token::documentclass ? ".cls" : ".sty";
 					//check and highlight
+                    bool localPackage = false;
+                    if(rpck.startsWith(".")){
+                        // check if file exists
+                        LatexDocument *root=document->getRootDocument();
+                        QFileInfo fi=root->getFileInfo();
+                        QFileInfo fi_cwl=QFileInfo(fi.absolutePath(),rpck+suffix);
+                        localPackage=fi_cwl.exists();
+                    }
                     if (latexPackageList->empty())
 						dlh->addOverlay(QFormatRange(tk.start, tk.length, packageUndefinedFormat));
-                    else if (latexPackageList->find(preambel + rpck) != latexPackageList->end())
+                    else if ( (latexPackageList->find(preambel + rpck + suffix) != latexPackageList->end())
+                              || (latexPackageList->find(preambel + rpck) != latexPackageList->end())
+                              || localPackage) {
 						dlh->addOverlay(QFormatRange(tk.start, tk.length, packagePresentFormat));
-					else
-						dlh->addOverlay(QFormatRange(tk.start, tk.length, packageMissingFormat));
+                    } else {
+                        dlh->addOverlay(QFormatRange(tk.start, tk.length, packageMissingFormat));
+                    }
 
 					addedOverlayPackage = true;
 				}
@@ -2646,7 +2698,7 @@ void LatexEditorView::mouseHovered(QPoint pos)
 			handled = true;
 			command = line.mid(tk.start, tk.length);
 			CommandDescription cd = lp.commandDefs.value(command);
-			if (cd.args > 0)
+            if (cd.args() > 0)
 				value = Parsing::getArg(tl.mid(tkPos + 1), dlh, 0, ArgumentList::Mandatory);
 			if (config->toolTipPreview && showMathEnvPreview(cursor, command, value, pos)) {
                 // action is already performed as a side effect
@@ -2708,7 +2760,10 @@ void LatexEditorView::mouseHovered(QPoint pos)
 				type.replace(' ', "&nbsp;");
 			}
             QString text = QString("%1:&nbsp;<b>%2</b>").arg(type,value);
-            if (latexPackageList->find(preambel + value) != latexPackageList->end()) {
+            const QString suffix = tk.type == Token::documentclass ? ".cls" : ".sty";
+            if (latexPackageList->find(preambel + value + suffix) != latexPackageList->end()
+                || latexPackageList->find(preambel + value) != latexPackageList->end()
+                || value.startsWith(".")) { // don't check relative paths,i.e. local packages
 				QString description = LatexRepository::instance()->shortDescription(value);
 				if (!description.isEmpty()) text += "<br>" + description;
 				QToolTip::showText(editor->mapToGlobal(editor->mapFromFrame(pos)), text);

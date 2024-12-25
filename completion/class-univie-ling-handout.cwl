@@ -1,5 +1,5 @@
 # univie-ling-handout class
-# Matthew Bertucci 2022/10/03 for v1.2.0
+# Matthew Bertucci 2024/06/28 for v.2.6
 
 #include:class-scrartcl
 #include:geometry
@@ -324,12 +324,19 @@ apamaxprtauth=%<number%>
 \hoEventLoc[header%text]{location%text}
 \hoEventDate{date}
 \hoEventDate[header%text]{date}
+\hoDate{date}
+\hoDate[header%text]{date}
 \Bibheading{text}
 \Expression{text}
 \Meaning{text}
 \Concept{text}
+\weblink{URL}#U
+\weblink{URL}[date]#U
+\SetURLDate{date}
+\urldate{date}
 
 \aftertitle#*
+\beforedate#*
 \beforeevent#*
 \beforesubtitle#*
 \beforetitle#*

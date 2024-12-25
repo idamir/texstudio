@@ -116,10 +116,6 @@ void Macro::init(const QString &nname, Macro::Type ntype, const QString &ntag, c
 
 	} while (lastLen != realtrigger.length());
 
-    /*if (realtrigger.startsWith("(?<=")) {
-		triggerLookBehind = true;
-		realtrigger.remove(1, 3); //qregexp doesn't support look behind, but we can emulate it by removing the first capture
-    }*/
     triggerRegex = QRegularExpression("(?:" + realtrigger + ")$"); // (?: non capturing)
 }
 
@@ -234,9 +230,9 @@ void Macro::parseTriggerLanguage(QLanguageFactory *langFactory)
     if(!langFactory) return;
     if (triggerLanguage.isEmpty()) return;
 	triggerLanguages.clear();
-	QRegExp tempRE(triggerLanguage, Qt::CaseInsensitive);
+    QRegularExpression tempRE(triggerLanguage+"$", QRegularExpression::CaseInsensitiveOption);
 	foreach (const QString &lang, langFactory->languages()) {
-		if (tempRE.exactMatch(lang))
+        if (lang.indexOf(tempRE)==0)
 			triggerLanguages << langFactory->languageData(lang).d;
 	}
 }

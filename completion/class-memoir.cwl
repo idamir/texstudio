@@ -914,7 +914,7 @@ right
 \justlastraggedleft#*
 \keepthetitle#*
 \killtitle#*
-\label(bookmark){label%labeldef}
+\label(bookmark){label%labeldef}#*
 \LastFrameCommand#*
 \lastlineparrule#*
 \lastlinerulefill#*
@@ -1715,8 +1715,10 @@ none
 \thechrsinstr#S
 \thedate#*
 \theHbook#*
+\theHchapter#*
 \theHpoem#*
 \theHpoemline#*
+\theHverse#*
 \thelastpage#*
 \thelastsheet#*
 \themaxsecnumdepth#*

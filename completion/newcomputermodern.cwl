@@ -1,8 +1,13 @@
 # newcomputermodern package
-# Matthew Bertucci 2024/01/12 for v5.1
+# Matthew Bertucci 2024/11/04 for v7.0.0
 
 #include:fontspec
 #include:unicode-math
+
+#keyvals:\usepackage/newcomputermodern#c
+regular
+sansdefault
+#endkeyvals
 
 \textprosgegrammeni{text%plain}
 \prosgegrammeni
@@ -331,6 +336,7 @@
 \congdot#m
 \conictaper#m
 \conjquant#m
+\convolution#m
 \csub#m
 \csube#m
 \csup#m
@@ -1040,6 +1046,8 @@
 \turnediota#m
 \twocaps#m
 \twocups#m
+\twoheadhookleftarrow#m
+\twoheadhookrightarrow#m
 \twoheadleftarrowtail#m
 \twoheadleftdbkarrow#m
 \twoheadmapsfrom#m

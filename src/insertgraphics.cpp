@@ -47,7 +47,7 @@ QStringList InsertGraphics::m_imageFormats = QStringList() << "eps" << "jpg" << 
 InsertGraphics::InsertGraphics(QWidget *parent, InsertGraphicsConfig *conf)
 	: QDialog(parent)
 {
-	setWindowTitle(tr("Insert Graphic"));
+	setWindowTitle(tr("Insert Graphics", "Wizard"));
 	setModal(true);
 	ui.setupUi(this);
     UtilsUi::resizeInFontHeight(this, 35, 40);
@@ -75,7 +75,6 @@ InsertGraphics::InsertGraphics(QWidget *parent, InsertGraphicsConfig *conf)
 	connect(ui.cbPlaceForce, SIGNAL(clicked()), this, SLOT(updatePlacement()));
 	connect(ui.pbSaveDefault, SIGNAL(clicked()), this, SLOT(saveDefault()));
     connect(this, SIGNAL(fileNameChanged(const QString&)), this, SLOT(updateLabel(const QString&)));
-	setWindowTitle(tr("Insert Graphics", "Wizard"));
 
 	ui.lePlacement->setValidator(new PlacementValidator(this));
 	togglePlacementCheckboxes(true);
@@ -480,13 +479,13 @@ void InsertGraphics::updateLabel(const QString &fname)
 void InsertGraphics::togglePlacementCheckboxes(bool forceHide)
 {
 	if (ui.placementCheckboxes->isVisible() || forceHide) {
-		ui.placementCheckboxes->hide();
 		ui.pbPlaceExpand->setIcon(getRealIcon("down-arrow-circle-silver"));
-		resize(width(), height() - (ui.placementCheckboxes->height() + ui.gridLayout->verticalSpacing()));
+		resize(width(), height() - (ui.placementCheckboxes->height() - ui.gridLayout->verticalSpacing()));
+		ui.placementCheckboxes->hide();
 	} else {
-		resize(width(), height() + (ui.placementCheckboxes->height() + ui.gridLayout->verticalSpacing()));
 		ui.pbPlaceExpand->setIcon(getRealIcon("up-arrow-circle-silver"));
 		ui.placementCheckboxes->show();
+		resize(width(), height() + (ui.placementCheckboxes->height() - ui.gridLayout->verticalSpacing()));
 	}
 }
 

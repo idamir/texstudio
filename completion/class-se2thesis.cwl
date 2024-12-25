@@ -1,5 +1,5 @@
 # se2thesis class
-# Matthew Bertucci 2023/09/12 for v3.2.0
+# Matthew Bertucci 2024/06/09 for v4.1.0
 
 #include:graphicx
 #include:translations
@@ -15,7 +15,7 @@
 class=#scrreprt,scrbook
 paper=#a4,b5
 logofile={%<path-to-file%>}
-thesistype=#bachelor,bachelorproposal,master,masterproposal,phd,phdproposal
+thesistype=#bachelor,bachelorproposal,master,masterproposal,phd,phdeng,phdphil,phdproposal
 colormode=#cmyk,rgb,bw
 #endkeyvals
 
@@ -54,4 +54,5 @@ colormode=#cmyk,rgb,bw
 \end{hyp}
 \begin{summary}{label text%text}
 \end{summary}
+\summarybox{label text%text}{text}#*
 \headingdot#*

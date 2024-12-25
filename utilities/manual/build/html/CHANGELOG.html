@@ -1,23 +1,23 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta property="og:title" content="CHANGELOG" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="CHANGELOG.html" />
 <meta property="og:site_name" content="TeXstudio" />
-<meta property="og:description" content="TeXstudio 4.7.3: First line of macro editor no longer uses macro type, use buttons to set type. Macro format changes slightly. For details s.#3458, add export of all macros in Edit Macros dialog, f..." />
-<meta name="description" content="TeXstudio 4.7.3: First line of macro editor no longer uses macro type, use buttons to set type. Macro format changes slightly. For details s.#3458, add export of all macros in Edit Macros dialog, f..." />
+<meta property="og:description" content="TeXstudio 4.8.6: provide command completion for expl3 commands, hide grammar errors in math/non-text environments (word repetition and language tool), hide spelling errors in picture envs like tikz..." />
+<meta name="description" content="TeXstudio 4.8.6: provide command completion for expl3 commands, hide grammar errors in math/non-text environments (word repetition and language tool), hide spelling errors in picture envs like tikz..." />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Background information" href="background.html" />
 
-    <link rel="shortcut icon" href="_static/texstudio.ico"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
-        <title>CHANGELOG - TeXstudio 4.7.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
-    <link rel="stylesheet" type="text/css" href="_static/tabs.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="shortcut icon" href="_static/texstudio.ico"/><!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+        <title>CHANGELOG - TeXstudio 4.8.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=9701f087" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=e61b947c" />
     
     
 
@@ -131,7 +131,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">TeXstudio 4.7.3 documentation</div></a>
+      <a href="index.html"><div class="brand">TeXstudio 4.8.6 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -151,13 +151,10 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
-  <div class="sidebar-logo-container">
-    <img class="sidebar-logo" src="_static/texstudio128x128.png" alt="Logo"/>
-  </div>
   
-  <span class="sidebar-brand-text">TeXstudio 4.7.3 documentation</span>
+  <span class="sidebar-brand-text">TeXstudio 4.8.6 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -210,21 +207,102 @@
         </div>
         <article role="main">
           <section id="changelog">
-<h1>CHANGELOG<a class="headerlink" href="#changelog" title="Permalink to this heading">#</a></h1>
+<h1>CHANGELOG<a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
+<section id="texstudio-4-8-6">
+<h2>TeXstudio 4.8.6<a class="headerlink" href="#texstudio-4-8-6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>provide command completion for expl3 commands</p></li>
+<li><p>hide grammar errors in math/non-text environments (word repetition and language tool)</p></li>
+<li><p>hide spelling errors in picture envs like tikzpicture</p></li>
+</ul>
+</section>
+<section id="texstudio-4-8-5">
+<h2>TeXstudio 4.8.5<a class="headerlink" href="#texstudio-4-8-5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fix false delimiter mismatch marker which gets stuck under certain circumstances <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/489">#489</a></p></li>
+<li><p>fix label stop working when using subfigure package <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3816">#3816</a></p></li>
+<li><p>fix ai wizard conversation history <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3820">#3820</a></p></li>
+<li><p>fix colspec parsing <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3831">#3831</a></p></li>
+<li><p>fix user command handling in cached files <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3828">#3828</a></p></li>
+<li><p>fix label detection on memoir class <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3829">#3829</a></p></li>
+<li><p>fix crash when %Tex root document was not found</p></li>
+<li><p>class are used for completion in documentclass</p></li>
+<li><p>class names are not used anymore for package name completion</p></li>
+<li><p>local packages can provide local cwl files ,<a class="reference external" href="https://texstudio-org.github.io/advanced.html#local-packages">see manual</a></p></li>
+<li><p>fix handling of user definition commands in subfiles <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3885">#3885</a></p></li>
+<li><p>fix crash in preview tooltip if no pdflatex is defined <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3875">#3875</a></p></li>
+<li><p>handle special columntypes (m[l],NiceMatrix) better <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3881">#3881</a></p></li>
+<li><p>handle key/val completion in frame environment better <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3846">#3846</a></p></li>
+<li><p>fix caching of newly defined colornames</p></li>
+</ul>
+</section>
+<section id="texstudio-4-8-4">
+<h2>TeXstudio 4.8.4<a class="headerlink" href="#texstudio-4-8-4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fix word selection <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3812">#3812</a></p></li>
+</ul>
+</section>
+<section id="texstudio-4-8-3">
+<h2>TeXstudio 4.8.3<a class="headerlink" href="#texstudio-4-8-3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>use argument position to assign argument type (fixes some issues concerning keyval arguments)</p></li>
+<li><p>windows binaries are code signed for easier installation</p></li>
+<li><p>fix activation of keyvals for completion when new packages are used <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3791">#3791</a></p></li>
+<li><p>improved table manipulation when multiline arguments are used <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3789">#3789</a></p></li>
+</ul>
+</section>
+<section id="texstudio-4-8-2">
+<h2>TeXstudio 4.8.2<a class="headerlink" href="#texstudio-4-8-2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fix background colors for AI chat interface in dark mode</p></li>
+<li><p>on osx, new default spell dictionary changed to [txs-app-dir]/../Resources which is independent on actual txs app name.</p></li>
+<li><p>automatically apply work-around on OSX if docks are spread-out in OSX style</p></li>
+<li><p>configuration is directly saved after accepting changes</p></li>
+<li><p>allow custom url for chatgpt server</p></li>
+</ul>
+</section>
+<section id="texstudio-4-8-1">
+<h2>TeXstudio 4.8.1<a class="headerlink" href="#texstudio-4-8-1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>allow hiding of sidepanel docks via view/show</p></li>
+<li><p>reduce number on visible dock on OSX due to qt osx style weakness</p></li>
+<li><p>fix raised dock after hiding/showing sidepanel <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3653">#3653</a></p></li>
+<li><p>fallback to simple syntax highligting when tooltip background differs from general background <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3644">#3644</a></p></li>
+<li><p>fix structure view context on sections <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3642">#3642</a></p></li>
+<li><p>fix black background on comboboxes with windows11 style (qt6.7.1)</p></li>
+</ul>
+</section>
+<section id="texstudio-4-8-0">
+<h2>TeXstudio 4.8.0<a class="headerlink" href="#texstudio-4-8-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>AI chat assistant added</p></li>
+<li><p>use moveable/<strong>splitable</strong> docks for sidepanel</p></li>
+<li><p>extended search can now also search in all files in one folder</p></li>
+<li><p>add basic syntax highlighting for latex3 code</p></li>
+<li><p>fix handling CJK characters in pdf on OSX <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3558">#3558</a></p></li>
+<li><p>fix rare crash <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3556">#3556</a></p></li>
+<li><p>reload hidden docs when user chooses to discard changes <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3550">#3550</a></p></li>
+</ul>
+</section>
 <section id="texstudio-4-7-3">
-<h2>TeXstudio 4.7.3<a class="headerlink" href="#texstudio-4-7-3" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.7.3<a class="headerlink" href="#texstudio-4-7-3" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>First line of macro editor no longer uses macro type, use buttons to set type. Macro format changes slightly. For details s. <a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/3458">#3458</a></p></li>
-<li><p>add export of all macros in Edit Macros dialog</p></li>
+<li><p>add export of all macros in Edit Macros dialog <a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/3451">#3451</a></p></li>
+<li><p>macro editor now executes normal and environment macros in addition to script macros <a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/3444">#3444</a></p></li>
+<li><p>macro editor with better button arrangement <a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/3451">#3451</a></p></li>
+<li><p>copy data from all issues in the messages pane (log) to clipboard <a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/3487">#3487</a></p></li>
+<li><p>insert graphics wizard opens position details without changing position or size of ui elements located above position details <a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/3509">#3509</a></p></li>
+<li><p>improved Package Help dialog <a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/3478">#3478</a>, <a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/3497">#3497</a></p></li>
 <li><p>fix missing connection error message when browsing macro repository <a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/3448">#3448</a></p></li>
 <li><p>fix switching (by clicking) between documents <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3473">#3473</a></p></li>
 <li><p>fix “Show all open documents in this tree” <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3476">#3476</a></p></li>
-<li><p>improved Package Help dialog <a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/3478">#3478</a></p></li>
 <li><p>fix handling a new file created from the context menu <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3471">#3471</a></p></li>
+<li><p>small fixes</p></li>
 </ul>
 </section>
 <section id="texstudio-4-7-2">
-<h2>TeXstudio 4.7.2<a class="headerlink" href="#texstudio-4-7-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.7.2<a class="headerlink" href="#texstudio-4-7-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>remove something (alt+del) handles matching delimiters</p></li>
 <li><p>fix detecting parent/child documents when autoloading is disabled <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3411">#3411</a></p></li>
@@ -235,14 +313,14 @@
 </ul>
 </section>
 <section id="texstudio-4-7-1">
-<h2>TeXstudio 4.7.1<a class="headerlink" href="#texstudio-4-7-1" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.7.1<a class="headerlink" href="#texstudio-4-7-1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix highlighting of %TODO comments after loading a file <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3398">#3398</a></p></li>
 <li><p>fix missing document height update when copy wrapped single lines <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3396">#3396</a></p></li>
 </ul>
 </section>
 <section id="texstudio-4-7-0">
-<h2>TeXstudio 4.7.0<a class="headerlink" href="#texstudio-4-7-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.7.0<a class="headerlink" href="#texstudio-4-7-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>remove auto inserted closing parenthesis if the opening one is removed via backspace</p></li>
 <li><p>optimize internal parsing</p></li>
@@ -253,7 +331,7 @@
 </ul>
 </section>
 <section id="texstudio-4-6-3">
-<h2>TeXstudio 4.6.3<a class="headerlink" href="#texstudio-4-6-3" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.6.3<a class="headerlink" href="#texstudio-4-6-3" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>improved handling of active packages when loading included files</p></li>
 <li><p>better detection that a screen is not active any more and move window onto active screen</p></li>
@@ -261,20 +339,20 @@
 </ul>
 </section>
 <section id="texstudio-4-6-2">
-<h2>TeXstudio 4.6.2<a class="headerlink" href="#texstudio-4-6-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.6.2<a class="headerlink" href="#texstudio-4-6-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix crash</p></li>
 </ul>
 </section>
 <section id="texstudio-4-6-1">
-<h2>TeXstudio 4.6.1<a class="headerlink" href="#texstudio-4-6-1" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.6.1<a class="headerlink" href="#texstudio-4-6-1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix wrong path for saving cache information (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3225">#3225</a>)</p></li>
 <li><p>allow delimiter operations on $ math sections</p></li>
 </ul>
 </section>
 <section id="texstudio-4-6-0">
-<h2>TeXstudio 4.6.0<a class="headerlink" href="#texstudio-4-6-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.6.0<a class="headerlink" href="#texstudio-4-6-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>use subfiles root for compilation if the current document is a child</p></li>
 <li><p>load the complete subfile project to provide proper syntax checking, also when just opening a subfile root</p></li>
@@ -292,7 +370,7 @@
 </ul>
 </section>
 <section id="texstudio-4-5-2">
-<h2>TeXstudio 4.5.2<a class="headerlink" href="#texstudio-4-5-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.5.2<a class="headerlink" href="#texstudio-4-5-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>follow system light-/dark-mode on windows/linux for Fusion&amp;Windows-Style</p></li>
 <li><p>allow wheel usage over linenumber/linemark/fold panel of editors</p></li>
@@ -305,7 +383,7 @@
 <li><p>when the mouse cursor hovers over a spin/combo box, the wheel scrolls through the configuration page instead of changing values (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2977">#2977</a>)</p></li>
 <li><p>copy some details (icons, separators) to menu item list in combo box (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3025">#3025</a>)</p></li>
 <li><p>support toggling comment on folded lines (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2912">#2912</a>)</p></li>
-<li><p>don’t show pointing hand cursor over hyperlinks when magnifier is activ (<a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/2982">#2982</a>)</p></li>
+<li><p>don’t show pointing hand cursor over hyperlinks when magnifier is active (<a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/2982">#2982</a>)</p></li>
 <li><p>improve usage of tab key and enter key in QuickStart Wizard (<a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/3014">#3014</a>)</p></li>
 <li><p>add \maketitle to the document created by QuickStart Wizard if appropriate (<a class="reference external" href="https://github.com/texstudio-org/texstudio/pull/3015">#3015</a>)</p></li>
 <li><p>pos1 (home) key now sets cursor to start or to first non-blank character of editor lines (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/3012">#3012</a>)</p></li>
@@ -319,7 +397,7 @@
 </ul>
 </section>
 <section id="texstudio-4-5-1">
-<h2>TeXstudio 4.5.1<a class="headerlink" href="#texstudio-4-5-1" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.5.1<a class="headerlink" href="#texstudio-4-5-1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Provide online template repository</p></li>
 <li><p>change preview target in IDEFIX menu (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2760">#2760</a>)</p></li>
@@ -345,7 +423,7 @@
 </ul>
 </section>
 <section id="texstudio-4-4-1">
-<h2>TeXstudio 4.4.1<a class="headerlink" href="#texstudio-4-4-1" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.4.1<a class="headerlink" href="#texstudio-4-4-1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix file association on OSX</p></li>
 <li><p>allow ignore all in spell checker dialog</p></li>
@@ -355,7 +433,7 @@
 </ul>
 </section>
 <section id="texstudio-4-4-0">
-<h2>TeXstudio 4.4.0<a class="headerlink" href="#texstudio-4-4-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.4.0<a class="headerlink" href="#texstudio-4-4-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>new icon theme Colibri (by geolta)</p></li>
 <li><p>modernized manual</p></li>
@@ -368,7 +446,7 @@
 </ul>
 </section>
 <section id="texstudio-4-3-1">
-<h2>TeXstudio 4.3.1<a class="headerlink" href="#texstudio-4-3-1" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.3.1<a class="headerlink" href="#texstudio-4-3-1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix loading files various times if relative path is used for \include (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2533">#2533</a>)</p></li>
 <li><p>fix custom verbatim highlighting (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2528">#2528</a>)</p></li>
@@ -377,7 +455,7 @@
 </ul>
 </section>
 <section id="texstudio-4-3-0">
-<h2>TeXstudio 4.3.0<a class="headerlink" href="#texstudio-4-3-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.3.0<a class="headerlink" href="#texstudio-4-3-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>show most used command at first place in completer</p></li>
 <li><p>more cwls</p></li>
@@ -390,13 +468,13 @@
 </ul>
 </section>
 <section id="texstudio-4-2-3">
-<h2>TeXstudio 4.2.3<a class="headerlink" href="#texstudio-4-2-3" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.2.3<a class="headerlink" href="#texstudio-4-2-3" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix unable to save under special circumstances (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2124">#2124</a>)</p></li>
 <li><p>fix stuck to save unsaved document (only in explicit root mode and with a new unsaved document,<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2153">#2153</a>)</p></li>
 <li><p>xindex engine added</p></li>
 <li><p>fix math highlighting in keyvals (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2138">#2138</a>)</p></li>
-<li><p>add context menu in embbeded pdf viewer to invert pdf colors</p></li>
+<li><p>add context menu in embedded pdf viewer to invert pdf colors</p></li>
 <li><p>remember window state (maximized/normal) of config dialog</p></li>
 <li><p>fix (and speed-up) miktex package detection</p></li>
 <li><p>fix handling apostrophed words better in spellchecker (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2179">#2179</a>)</p></li>
@@ -405,7 +483,7 @@
 </ul>
 </section>
 <section id="texstudio-4-2-2">
-<h2>TeXstudio 4.2.2<a class="headerlink" href="#texstudio-4-2-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.2.2<a class="headerlink" href="#texstudio-4-2-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>more cwls</p></li>
 <li><p>fix crash, <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2093">#2093</a>, <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2084">#2084</a>, <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2109">#2109</a></p></li>
@@ -413,7 +491,7 @@
 </ul>
 </section>
 <section id="texstudio-4-2-1">
-<h2>TeXstudio 4.2.1<a class="headerlink" href="#texstudio-4-2-1" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.2.1<a class="headerlink" href="#texstudio-4-2-1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix placeholder issues</p></li>
 <li><p>fix handling mirrored placeholder, like in issue <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2063">#2063</a></p></li>
@@ -424,7 +502,7 @@
 </ul>
 </section>
 <section id="texstudio-4-2-0">
-<h2>TeXstudio 4.2.0<a class="headerlink" href="#texstudio-4-2-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.2.0<a class="headerlink" href="#texstudio-4-2-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>more cwls</p></li>
 <li><p>fix key handling for some special keyboard set-ups (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/2011">#2011</a>)</p></li>
@@ -434,7 +512,7 @@
 </ul>
 </section>
 <section id="texstudio-4-1-2">
-<h2>TeXstudio 4.1.2<a class="headerlink" href="#texstudio-4-1-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.1.2<a class="headerlink" href="#texstudio-4-1-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>allow resizing the different sections in the symbol widget</p></li>
 <li><p>fix automatic session restore on OSX/Qt6</p></li>
@@ -445,14 +523,14 @@
 </ul>
 </section>
 <section id="texstudio-4-1-1">
-<h2>TeXstudio 4.1.1<a class="headerlink" href="#texstudio-4-1-1" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.1.1<a class="headerlink" href="#texstudio-4-1-1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix weird OSX issue that cursor keys were not working</p></li>
 <li><p>allow maximise config dialog</p></li>
 </ul>
 </section>
 <section id="texstudio-4-1-0">
-<h2>TeXstudio 4.1.0<a class="headerlink" href="#texstudio-4-1-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.1.0<a class="headerlink" href="#texstudio-4-1-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>change session format to json in order to circumvent OSX/Qt6 issue</p></li>
 <li><p>fix input box for Chinese (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/1896">#1896</a>)</p></li>
@@ -461,7 +539,7 @@
 </ul>
 </section>
 <section id="texstudio-4-0-4">
-<h2>TeXstudio 4.0.4<a class="headerlink" href="#texstudio-4-0-4" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.0.4<a class="headerlink" href="#texstudio-4-0-4" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>use QT6.2.1 on OSX, fix crash when checking for updates, fix restoring last session</p></li>
 <li><p>better pdf font substitution on windows (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/1812">#1812</a>)</p></li>
@@ -470,7 +548,7 @@
 </ul>
 </section>
 <section id="texstudio-4-0-3">
-<h2>TeXstudio 4.0.3<a class="headerlink" href="#texstudio-4-0-3" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.0.3<a class="headerlink" href="#texstudio-4-0-3" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix linewidth calculation in Qt6</p></li>
 <li><p>fix crash on load/new doc (under unknown,system specific circumstances)</p></li>
@@ -479,7 +557,7 @@
 </ul>
 </section>
 <section id="texstudio-4-0-2">
-<h2>TeXstudio 4.0.2<a class="headerlink" href="#texstudio-4-0-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.0.2<a class="headerlink" href="#texstudio-4-0-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix structure view (includes and cursor marking, <a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/1828">#1828</a>)</p></li>
 <li><p>fix completer tooltip on bibids (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/1835">#1835</a>)</p></li>
@@ -488,17 +566,17 @@
 </ul>
 </section>
 <section id="texstudio-4-0-1">
-<h2>TeXstudio 4.0.1<a class="headerlink" href="#texstudio-4-0-1" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.0.1<a class="headerlink" href="#texstudio-4-0-1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>add more cwls</p></li>
 <li><p>fix pdfviewer page display</p></li>
 <li><p>build OSX with QT6.2, fix special characters entry (alt+n + n , etc.) (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/1770">#1770</a>)</p></li>
 <li><p>activate crash handler on win again</p></li>
-<li><p>fix strcuture detection for included files</p></li>
+<li><p>fix structure detection for included files</p></li>
 </ul>
 </section>
 <section id="texstudio-4-0-0">
-<h2>TeXstudio 4.0.0<a class="headerlink" href="#texstudio-4-0-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 4.0.0<a class="headerlink" href="#texstudio-4-0-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>adapt to Qt6/poppler-qt6</p></li>
 <li><p>OSX/win build provided with Qt6</p></li>
@@ -506,13 +584,13 @@
 <li><p>more and updated completion word lists thanks to mbertucci47</p></li>
 <li><p>handle text (e.g. \text{text}) in mathenv as text with spell checking</p></li>
 <li><p>performance improvement for large files with large number of labels and/or large number of includes</p></li>
-<li><p>fix that search options are persistant</p></li>
+<li><p>fix that search options are persistent</p></li>
 <li><p>automatic structure scrolling can be turned off (<a class="reference external" href="https://github.com/texstudio-org/texstudio/issues/1742">#1742</a>)</p></li>
 <li><p>some bug fixes</p></li>
 </ul>
 </section>
 <section id="texstudio-3-1-2">
-<h2>TeXstudio 3.1.2<a class="headerlink" href="#texstudio-3-1-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 3.1.2<a class="headerlink" href="#texstudio-3-1-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>completed global TOC (background color coded, can be adjusted in config)</p></li>
 <li><p>fontawesome5 symbol pane</p></li>
@@ -526,21 +604,21 @@
 </ul>
 </section>
 <section id="texstudio-3-1-1">
-<h2>TeXstudio 3.1.1<a class="headerlink" href="#texstudio-3-1-1" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 3.1.1<a class="headerlink" href="#texstudio-3-1-1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix crashes concerning opening included files</p></li>
 <li><p>let global TOC update as you type</p></li>
 </ul>
 </section>
 <section id="texstudio-3-1-0">
-<h2>TeXstudio 3.1.0<a class="headerlink" href="#texstudio-3-1-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 3.1.0<a class="headerlink" href="#texstudio-3-1-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix changing GUI language</p></li>
 <li><p>global TOC added which needs to be updated for now (WIP)</p></li>
 </ul>
 </section>
 <section id="texstudio-3-0-5">
-<h2>TeXstudio 3.0.5<a class="headerlink" href="#texstudio-3-0-5" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 3.0.5<a class="headerlink" href="#texstudio-3-0-5" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix crash when deleting all elements of a build chain (#1415)</p></li>
 <li><p>fix large tooltips on win with ADWAITA style</p></li>
@@ -553,20 +631,20 @@
 </ul>
 </section>
 <section id="texstudio-3-0-4">
-<h2>TeXstudio 3.0.4<a class="headerlink" href="#texstudio-3-0-4" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 3.0.4<a class="headerlink" href="#texstudio-3-0-4" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix RTL presentation when zoomed (#1404)</p></li>
 <li><p>fix pdf toolbar size setting</p></li>
 </ul>
 </section>
 <section id="texstudio-3-0-3">
-<h2>TeXstudio 3.0.3<a class="headerlink" href="#texstudio-3-0-3" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 3.0.3<a class="headerlink" href="#texstudio-3-0-3" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix OSX build</p></li>
 </ul>
 </section>
 <section id="texstudio-3-0-2">
-<h2>TeXstudio 3.0.2<a class="headerlink" href="#texstudio-3-0-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 3.0.2<a class="headerlink" href="#texstudio-3-0-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>handle \tabularnewline correctly (#1373)</p></li>
 <li><p>fix text insertion on selected text (#1359&amp;#1354)</p></li>
@@ -577,7 +655,7 @@
 </ul>
 </section>
 <section id="texstudio-3-0-1">
-<h2>TeXstudio 3.0.1<a class="headerlink" href="#texstudio-3-0-1" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 3.0.1<a class="headerlink" href="#texstudio-3-0-1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix glitch in modern style (#1238 , triangle missing)</p></li>
 <li><p>fix equation preview (#1234)</p></li>
@@ -586,7 +664,7 @@
 </ul>
 </section>
 <section id="texstudio-3-0-0">
-<h2>TeXstudio 3.0.0<a class="headerlink" href="#texstudio-3-0-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 3.0.0<a class="headerlink" href="#texstudio-3-0-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>speed up document parsing, should result in faster document load times</p></li>
 <li><p>spell checking is done asynchronously</p></li>
@@ -596,7 +674,7 @@
 </ul>
 </section>
 <section id="texstudio-2-12-22">
-<h2>TeXstudio 2.12.22<a class="headerlink" href="#texstudio-2-12-22" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.12.22<a class="headerlink" href="#texstudio-2-12-22" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fixes garbled symbols in OSX</p></li>
 <li><p>fix crash when changing magic language comment</p></li>
@@ -604,13 +682,13 @@
 </ul>
 </section>
 <section id="texstudio-2-12-20">
-<h2>TeXstudio 2.12.20<a class="headerlink" href="#texstudio-2-12-20" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.12.20<a class="headerlink" href="#texstudio-2-12-20" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fixes a problem with replacing when search highlight is activated.</p></li>
 </ul>
 </section>
 <section id="texstudio-2-12-18">
-<h2>TeXstudio 2.12.18<a class="headerlink" href="#texstudio-2-12-18" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.12.18<a class="headerlink" href="#texstudio-2-12-18" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>bug fixes</p></li>
 <li><p>some cwl added</p></li>
@@ -619,14 +697,14 @@
 </ul>
 </section>
 <section id="texstudio-2-12-16">
-<h2>TeXstudio 2.12.16<a class="headerlink" href="#texstudio-2-12-16" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.12.16<a class="headerlink" href="#texstudio-2-12-16" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>bug fixes</p></li>
-<li><p>somes fixes for tool-tip preview by MeanSquaredError</p></li>
+<li><p>some fixes for tool-tip preview by MeanSquaredError</p></li>
 </ul>
 </section>
 <section id="texstudio-2-12-14">
-<h2>TeXstudio 2.12.14<a class="headerlink" href="#texstudio-2-12-14" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.12.14<a class="headerlink" href="#texstudio-2-12-14" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix bug that not all available GUI languages are shown</p></li>
 <li><p>tweak fuzzy completer</p></li>
@@ -634,7 +712,7 @@
 </ul>
 </section>
 <section id="texstudio-2-12-12">
-<h2>TeXstudio 2.12.12<a class="headerlink" href="#texstudio-2-12-12" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.12.12<a class="headerlink" href="#texstudio-2-12-12" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>improve macro handling, provide gui that directly downloads macros from github.com/texstudio-org/texstudio-macro</p></li>
 <li><p>add fuzzy completion mode</p></li>
@@ -644,7 +722,7 @@
 </ul>
 </section>
 <section id="texstudio-2-12-10">
-<h2>TeXstudio 2.12.10<a class="headerlink" href="#texstudio-2-12-10" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.12.10<a class="headerlink" href="#texstudio-2-12-10" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>improvement recognized latex commands and packages for completion/syntax checking</p></li>
 <li><p>complete package names when they contain minus</p></li>
@@ -656,7 +734,7 @@
 </ul>
 </section>
 <section id="texstudio-2-12-8">
-<h2>TeXstudio 2.12.8<a class="headerlink" href="#texstudio-2-12-8" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.12.8<a class="headerlink" href="#texstudio-2-12-8" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>improved tokenizer for syntax checking and completion</p></li>
 <li><p>pressing Ctrl+F while the editor search has focus opens the extended search, i.e., you’ll get extended search by pressing Ctrl+F twice</p></li>
@@ -676,7 +754,7 @@
 </ul>
 </section>
 <section id="texstudio-2-12-6">
-<h2>TeXstudio 2.12.6<a class="headerlink" href="#texstudio-2-12-6" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.12.6<a class="headerlink" href="#texstudio-2-12-6" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>use Breeze window theme on KDE Plasma 5 (thanks to Alexander Wilms)</p></li>
 <li><p>support single-finger panning gesture on most config dialog components</p></li>
@@ -690,7 +768,7 @@
 <li><p>tags for beamer</p></li>
 <li><p>change preview default to embedded pdf</p></li>
 <li><p>handle preview failures more gracefully, i.e. no warning pop-ups</p></li>
-<li><p>repect preview settings (panel,etc) also for hover preview</p></li>
+<li><p>respect preview settings (panel,etc) also for hover preview</p></li>
 <li><p>show hover preview as tooltip in case of inline-mode</p></li>
 <li><p>warn if compiler commands are actually a command list</p></li>
 <li><p>several improvements to the latex parser</p></li>
@@ -725,7 +803,7 @@
 </ul>
 </section>
 <section id="texstudio-2-12-4">
-<h2>TeXstudio 2.12.4<a class="headerlink" href="#texstudio-2-12-4" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.12.4<a class="headerlink" href="#texstudio-2-12-4" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>detect definition of tex counts using \newcount</p></li>
 <li><p>improve config dialog layout</p></li>
@@ -746,7 +824,7 @@
 <li><p>fix highlighting of current section in structure (bug 2103)</p></li>
 <li><p>fix delays when typing _abc</p></li>
 <li><p>fix bug in log parser: wrong filename if empty brackets () occur in text</p></li>
-<li><p>fix word repetition erro on non-breaking space (~)</p></li>
+<li><p>fix word repetition error on non-breaking space (~)</p></li>
 <li><p>fix file detection in latex/include file</p></li>
 <li><p>fix width of side panel not saved (bug 2083)</p></li>
 <li><p>fix ampersand in in recent session names</p></li>
@@ -768,7 +846,7 @@
 </ul>
 </section>
 <section id="texstudio-2-12-2">
-<h2>TeXstudio 2.12.2<a class="headerlink" href="#texstudio-2-12-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.12.2<a class="headerlink" href="#texstudio-2-12-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>PDF shortcuts are now changeable</p></li>
 <li><p>Support LanguageTool json API (needed for LanguageTool &gt; 3.5)</p></li>
@@ -782,7 +860,7 @@
 </ul>
 </section>
 <section id="texstudio-2-12-0">
-<h2>TeXstudio 2.12.0<a class="headerlink" href="#texstudio-2-12-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.12.0<a class="headerlink" href="#texstudio-2-12-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>improved user interface: optimized layout, some new icons, some changes of color</p></li>
 <li><p>warn if file-saving fails</p></li>
@@ -837,7 +915,7 @@
 </ul>
 </section>
 <section id="texstudio-2-11-2">
-<h2>TeXstudio 2.11.2<a class="headerlink" href="#texstudio-2-11-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.11.2<a class="headerlink" href="#texstudio-2-11-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>major performance speedup, in case some default section commands were not defined in any used package</p></li>
 <li><p>speed up pasting into large documents (factor 100x)</p></li>
@@ -886,7 +964,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-11-0">
-<h2>TeXstudio 2.11.0<a class="headerlink" href="#texstudio-2-11-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.11.0<a class="headerlink" href="#texstudio-2-11-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>support two editors next to each other</p></li>
 <li><p>new tabular wizard</p></li>
@@ -903,7 +981,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 <li><p>do not parse for structure in non-LaTeX-like languages</p></li>
 <li><p>make preview work with \input in preamble (files get rewritten to absolute paths for the temporary compilation)</p></li>
 <li><p>use QSaveFile for file saving instead of our custom file saving strategy if available (Qt5 only)</p></li>
-<li><p>eneable left/right shortcuts for embedded viewer</p></li>
+<li><p>enable left/right shortcuts for embedded viewer</p></li>
 <li><p>remove multiple default values for latexmk (fixes bug 1694)</p></li>
 <li><p>support environment variables in additional search paths</p></li>
 <li><p>support [txs-app-dir] and [txs-settings-dir] in additional search paths for log and pdf</p></li>
@@ -913,7 +991,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 <li><p>make pasting into cursor mirrors a single undo block</p></li>
 <li><p>do not remove cursor mirrors on undo</p></li>
 <li><p>select text of current item in Packages Help to allow easier overwriting (feature request 1063)</p></li>
-<li><p>select search/replace texts when switchting there using Tab / Backtab (feature request 1064)</p></li>
+<li><p>select search/replace texts when switching there using Tab / Backtab (feature request 1064)</p></li>
 <li><p>added optional workingDirectory argument to script function system()</p></li>
 <li><p>added editor-&gt;insertSnippet() to scripting environment</p></li>
 <li><p>added option to choose log encoding</p></li>
@@ -947,7 +1025,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 <li><p>fix line breaks for cursor mirrors</p></li>
 <li><p>fix auto paren completion for cursor mirrors</p></li>
 <li><p>fix line operations to work with cursor mirrors</p></li>
-<li><p>fix sychronize text of placeholder mirror when inserting an environment on a selection (Ctrl+E)</p></li>
+<li><p>fix synchronize text of placeholder mirror when inserting an environment on a selection (Ctrl+E)</p></li>
 <li><p>fix font in pdf viewer status bar did not scale</p></li>
 <li><p>fix loading of badword lists</p></li>
 <li><p>fix LanguageTool startup</p></li>
@@ -961,7 +1039,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-10-8">
-<h2>TeXstudio 2.10.8<a class="headerlink" href="#texstudio-2-10-8" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.10.8<a class="headerlink" href="#texstudio-2-10-8" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>automatically expand search result if all matches are within one file</p></li>
 <li><p>detection of magic comment % !TeX is more permissive concerning case sensistivity</p></li>
@@ -972,7 +1050,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-10-6">
-<h2>TeXstudio 2.10.6<a class="headerlink" href="#texstudio-2-10-6" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.10.6<a class="headerlink" href="#texstudio-2-10-6" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>add option to choose the poppler render backend</p></li>
 <li><p>prevention of file corruption if saving fails for some reason</p></li>
@@ -1003,14 +1081,14 @@ before changing to windowed mode (Bug #1876)</p></li>
 <li><p>fix: context help for \documentclass</p></li>
 <li><p>fix: treat minted as verboten environment</p></li>
 <li><p>fix: correctly handle files with uppercase extension .TEX as tex files</p></li>
-<li><p>fix: workaround for pasting from LibreOffice (priorize text over image)</p></li>
+<li><p>fix: workaround for pasting from LibreOffice (prioritize text over image)</p></li>
 <li><p>updates to translations</p></li>
 <li><p>updates to the manual</p></li>
 <li><p>updates to cwl files</p></li>
 </ul>
 </section>
 <section id="texstudio-2-10-4">
-<h2>TeXstudio 2.10.4<a class="headerlink" href="#texstudio-2-10-4" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.10.4<a class="headerlink" href="#texstudio-2-10-4" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>adapt to changed TeXlive paths on Mac OS X El Capitan (path detection and change notification)</p></li>
 <li><p>more granular selection of update notifications: stable / release candidate /development</p></li>
@@ -1048,7 +1126,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-10-2">
-<h2>TeXstudio 2.10.2<a class="headerlink" href="#texstudio-2-10-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.10.2<a class="headerlink" href="#texstudio-2-10-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix recognition of environments defined via \newtheorem</p></li>
 <li><p>fix disabling of syntax check</p></li>
@@ -1061,7 +1139,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-10-0">
-<h2>TeXstudio 2.10.0<a class="headerlink" href="#texstudio-2-10-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.10.0<a class="headerlink" href="#texstudio-2-10-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>new and improved LaTeX parser, the last command argument can now span over several lines</p></li>
 <li><p>change: consolidated default shortcuts of tools</p></li>
@@ -1085,7 +1163,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 <li><p>user-visible list of hidden documents</p></li>
 <li><p>added –foreground and –no-foreground options to pdf viewer</p></li>
 <li><p>make format for magicComment editable in Options -&gt; Highlighting</p></li>
-<li><p>added line operation “Delete from start of line”, more constent naming of line operations, adaption for OSX default shortcuts</p></li>
+<li><p>added line operation “Delete from start of line”, more consistent naming of line operations, adaption for OSX default shortcuts</p></li>
 <li><p>improved support for output redirection of commands</p></li>
 <li><p>support shell-style literal quotes (”) in commands</p></li>
 <li><p>new selection actions “Expand Selection to Word”, “Expand Selection to Line”</p></li>
@@ -1136,13 +1214,13 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-9-4">
-<h2>TeXstudio 2.9.4<a class="headerlink" href="#texstudio-2-9-4" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.9.4<a class="headerlink" href="#texstudio-2-9-4" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix: bug concerning overwritten shortcuts on Linux and OSX</p></li>
 </ul>
 </section>
 <section id="texstudio-2-9-2">
-<h2>TeXstudio 2.9.2<a class="headerlink" href="#texstudio-2-9-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.9.2<a class="headerlink" href="#texstudio-2-9-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>allow word wrapping at all CJK characters</p></li>
 <li><p>simplified latexmk call (thanks to YoungFrog)</p></li>
@@ -1156,7 +1234,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-9-0">
-<h2>TeXstudio 2.9.0<a class="headerlink" href="#texstudio-2-9-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.9.0<a class="headerlink" href="#texstudio-2-9-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>link overlays for urls</p></li>
 <li><p>close editor tab by pressing middle mouse button</p></li>
@@ -1214,7 +1292,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-8-8">
-<h2>TeXstudio 2.8.8<a class="headerlink" href="#texstudio-2-8-8" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.8.8<a class="headerlink" href="#texstudio-2-8-8" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>basic Asymptote highlighting</p></li>
 <li><p>improved parsing of command options</p></li>
@@ -1235,7 +1313,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-8-6">
-<h2>TeXstudio 2.8.6<a class="headerlink" href="#texstudio-2-8-6" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.8.6<a class="headerlink" href="#texstudio-2-8-6" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>tab key inserts tab or indents, depending on cursor selection</p></li>
 <li><p>error table can be filtered and sorted</p></li>
@@ -1264,7 +1342,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-8-4">
-<h2>TeXstudio 2.8.4<a class="headerlink" href="#texstudio-2-8-4" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.8.4<a class="headerlink" href="#texstudio-2-8-4" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>improved syncing to PDF: don’t scroll PDF to top of page if the highlighted area is already visible</p></li>
 <li><p>support command detection for \DeclareRobustCommand</p></li>
@@ -1290,7 +1368,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-8-2">
-<h2>TeXstudio 2.8.2<a class="headerlink" href="#texstudio-2-8-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.8.2<a class="headerlink" href="#texstudio-2-8-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>color completion</p></li>
 <li><p>some more predefined completions for tikz</p></li>
@@ -1305,7 +1383,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-8-0">
-<h2>TeXstudio 2.8.0<a class="headerlink" href="#texstudio-2-8-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.8.0<a class="headerlink" href="#texstudio-2-8-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>completion and syntax check on keyval options, e.g. \includegraphics (graphicx!)</p></li>
 <li><p>search and replace over several documents improved</p></li>
@@ -1324,7 +1402,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-7-0">
-<h2>TeXstudio 2.7.0<a class="headerlink" href="#texstudio-2-7-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.7.0<a class="headerlink" href="#texstudio-2-7-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>added Edit -&gt; Text Operations (To Lowercase / To Uppercase / To Titlecase)</p></li>
 <li><p>added list of recent sessions</p></li>
@@ -1347,7 +1425,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-6-6">
-<h2>TeXstudio 2.6.6<a class="headerlink" href="#texstudio-2-6-6" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.6.6<a class="headerlink" href="#texstudio-2-6-6" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>fix home/end keys with embedded viewer</p></li>
 <li><p>fix macro abbreviation</p></li>
@@ -1356,9 +1434,9 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-6-4">
-<h2>TeXstudio 2.6.4<a class="headerlink" href="#texstudio-2-6-4" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.6.4<a class="headerlink" href="#texstudio-2-6-4" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>package scanner: queries the tex istallation for installed packages and highlights missing packages</p></li>
+<li><p>package scanner: queries the tex installation for installed packages and highlights missing packages</p></li>
 <li><p>package completion</p></li>
 <li><p>basic annotation support in internal pdf viewer</p></li>
 <li><p>improved render speed, especially on mac</p></li>
@@ -1375,7 +1453,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-6-2">
-<h2>TeXstudio 2.6.2<a class="headerlink" href="#texstudio-2-6-2" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.6.2<a class="headerlink" href="#texstudio-2-6-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>structure tree view: context menu entries to recursively collapse/expand the structure</p></li>
 <li><p>improved hard line wrap with joining lines</p></li>
@@ -1394,7 +1472,7 @@ before changing to windowed mode (Bug #1876)</p></li>
 </ul>
 </section>
 <section id="texstudio-2-6-0">
-<h2>TeXstudio 2.6.0<a class="headerlink" href="#texstudio-2-6-0" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.6.0<a class="headerlink" href="#texstudio-2-6-0" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Retina Mac support</p></li>
 <li><p>switched to svg icons</p></li>
@@ -1417,7 +1495,7 @@ matrix, align. align*, split, multline, multline*, gather, gather*, flalign, fla
 </ul>
 </section>
 <section id="texstudio-2-5-2-svn-3707">
-<h2>TeXstudio 2.5.2  SVN 3707<a class="headerlink" href="#texstudio-2-5-2-svn-3707" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.5.2  SVN 3707<a class="headerlink" href="#texstudio-2-5-2-svn-3707" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>new %BEGIN_FOLD … %END_FOLD comment to mark arbitrary regions as foldable</p></li>
 <li><p>add support to display CJK and Cyrillic in PDF viewer</p></li>
@@ -1432,7 +1510,7 @@ matrix, align. align*, split, multline, multline*, gather, gather*, flalign, fla
 </ul>
 </section>
 <section id="texstudio-2-5-1-svn-3445">
-<h2>TeXstudio 2.5.1  SVN 3445<a class="headerlink" href="#texstudio-2-5-1-svn-3445" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.5.1  SVN 3445<a class="headerlink" href="#texstudio-2-5-1-svn-3445" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>improved fold panel</p></li>
 <li><p>new template system</p></li>
@@ -1446,7 +1524,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texstudio-2-5-svn-3378">
-<h2>TeXstudio 2.5  SVN 3378<a class="headerlink" href="#texstudio-2-5-svn-3378" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.5  SVN 3378<a class="headerlink" href="#texstudio-2-5-svn-3378" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>cursor history (go back/forward)</p></li>
 <li><p>references, packages and included file names become links on Ctrl+MouseOver</p></li>
@@ -1462,7 +1540,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texstudio-2-4-svn-3255">
-<h2>TeXstudio 2.4  SVN 3255<a class="headerlink" href="#texstudio-2-4-svn-3255" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.4  SVN 3255<a class="headerlink" href="#texstudio-2-4-svn-3255" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>new build system which allows easier combination of several commands</p></li>
 <li><p>support many new tools: xelatex, lualatex, biber, latexmk, texindy</p></li>
@@ -1482,7 +1560,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texstudio-2-3-svn-2459">
-<h2>TeXstudio 2.3  SVN 2459<a class="headerlink" href="#texstudio-2-3-svn-2459" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.3  SVN 2459<a class="headerlink" href="#texstudio-2-3-svn-2459" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>list of commands accepting \ref/\cite-references can be changed</p></li>
 <li><p>remember search history</p></li>
@@ -1497,7 +1575,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texstudio-2-2-svn-2143">
-<h2>TeXstudio 2.2  SVN 2143<a class="headerlink" href="#texstudio-2-2-svn-2143" title="Permalink to this heading">#</a></h2>
+<h2>TeXstudio 2.2  SVN 2143<a class="headerlink" href="#texstudio-2-2-svn-2143" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>pdf viewer can show multiple pages in continuous fashion</p></li>
 <li><p>pdf viewer works non-blocking (multi-threaded)</p></li>
@@ -1511,7 +1589,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texmakerx-2-1-svn-1772">
-<h2>TexMakerX 2.1  SVN 1772<a class="headerlink" href="#texmakerx-2-1-svn-1772" title="Permalink to this heading">#</a></h2>
+<h2>TexMakerX 2.1  SVN 1772<a class="headerlink" href="#texmakerx-2-1-svn-1772" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>improved latex syntax checking: auto detect used packages and more reliable</p></li>
 <li><p>auto detect master/include relations, no master document should be needed anymore</p></li>
@@ -1522,7 +1600,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texmakerx-2-0-svn-1495">
-<h2>TexMakerX 2.0  SVN 1495<a class="headerlink" href="#texmakerx-2-0-svn-1495" title="Permalink to this heading">#</a></h2>
+<h2>TexMakerX 2.0  SVN 1495<a class="headerlink" href="#texmakerx-2-0-svn-1495" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>integrated pdf viewer with forward/reverse search based on Texworks</p></li>
 <li><p>online latex syntax checking like spell checking(for simple errors)</p></li>
@@ -1537,7 +1615,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texmakerx-1-9-9a">
-<h2>TexMakerX 1.9.9a<a class="headerlink" href="#texmakerx-1-9-9a" title="Permalink to this heading">#</a></h2>
+<h2>TexMakerX 1.9.9a<a class="headerlink" href="#texmakerx-1-9-9a" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>some performance issues on mac have been addressed. It should feel faster for long sible lines on mac.</p></li>
 <li><p>more than one overlay can be shown at the same time e.g. for syntax highlighting and spell checking</p></li>
@@ -1553,7 +1631,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texmakerx-1-9-9">
-<h2>TexMakerX 1.9.9<a class="headerlink" href="#texmakerx-1-9-9" title="Permalink to this heading">#</a></h2>
+<h2>TexMakerX 1.9.9<a class="headerlink" href="#texmakerx-1-9-9" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>added interactive structure view update</p></li>
 <li><p>added basic scripting</p></li>
@@ -1568,7 +1646,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texmakerx-1-9-3">
-<h2>TexMakerX 1.9.3<a class="headerlink" href="#texmakerx-1-9-3" title="Permalink to this heading">#</a></h2>
+<h2>TexMakerX 1.9.3<a class="headerlink" href="#texmakerx-1-9-3" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>added a find in open files dialog</p></li>
 <li><p>added automatic bibtex calling</p></li>
@@ -1582,7 +1660,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texmakerx-1-9-2">
-<h2>TexMakerX 1.9.2<a class="headerlink" href="#texmakerx-1-9-2" title="Permalink to this heading">#</a></h2>
+<h2>TexMakerX 1.9.2<a class="headerlink" href="#texmakerx-1-9-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>added experimental latex preview</p></li>
 <li><p>added random text generator</p></li>
@@ -1599,7 +1677,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texmakerx-1-9">
-<h2>TexMakerX 1.9<a class="headerlink" href="#texmakerx-1-9" title="Permalink to this heading">#</a></h2>
+<h2>TexMakerX 1.9<a class="headerlink" href="#texmakerx-1-9" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>first steps for dynamic syntax highlighting: references in in commands like \label or \ref are checked and are marked especially if the reference does not exist (in case of referencing) or if it has been defined multiple times</p></li>
 <li><p>extended word completion system to use “kile”-word lists (*.cwl)</p></li>
@@ -1621,7 +1699,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texmakerx-1-8-1">
-<h2>TexMakerX 1.8.1<a class="headerlink" href="#texmakerx-1-8-1" title="Permalink to this heading">#</a></h2>
+<h2>TexMakerX 1.8.1<a class="headerlink" href="#texmakerx-1-8-1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>added Windows DDE support</p></li>
 <li><p>added free menu key board mapping (also shift+insert key bindings)</p></li>
@@ -1634,7 +1712,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texmakerx-1-8">
-<h2>TexMakerX 1.8<a class="headerlink" href="#texmakerx-1-8" title="Permalink to this heading">#</a></h2>
+<h2>TexMakerX 1.8<a class="headerlink" href="#texmakerx-1-8" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>forking from Texmaker</p></li>
 <li><p>editor based on qcodeedit (code folding, better bookmarks, incremental search, …)</p></li>
@@ -1648,7 +1726,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texmaker-1-8">
-<h2>Texmaker 1.8<a class="headerlink" href="#texmaker-1-8" title="Permalink to this heading">#</a></h2>
+<h2>Texmaker 1.8<a class="headerlink" href="#texmaker-1-8" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>texmaker can now be only started once per user : inverse search will no more launch a new instance of texmaker</p></li>
 <li><p>the spell checker is now based on hunspell-1.2.4</p></li>
@@ -1659,7 +1737,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texmaker-1-7-1">
-<h2>Texmaker 1.7.1<a class="headerlink" href="#texmaker-1-7-1" title="Permalink to this heading">#</a></h2>
+<h2>Texmaker 1.7.1<a class="headerlink" href="#texmaker-1-7-1" title="Link to this heading">#</a></h2>
 <p>Bugs fixed :</p>
 <ul class="simple">
 <li><p>no more crash with the “Previous LaTeX error” command and the syntax highlighting</p></li>
@@ -1667,7 +1745,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texmaker-1-7">
-<h2>Texmaker 1.7<a class="headerlink" href="#texmaker-1-7" title="Permalink to this heading">#</a></h2>
+<h2>Texmaker 1.7<a class="headerlink" href="#texmaker-1-7" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>New search widget</p></li>
 <li><p>Spell checking is now based on hunspell and uses OpenOffice.org dictionaries.</p></li>
@@ -1677,7 +1755,7 @@ ref/commands overview</p></li>
 </ul>
 </section>
 <section id="texmaker-1-6">
-<h2>Texmaker 1.6<a class="headerlink" href="#texmaker-1-6" title="Permalink to this heading">#</a></h2>
+<h2>Texmaker 1.6<a class="headerlink" href="#texmaker-1-6" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>spell checking bug has been fixed (when misspelled and original word has not the same size)</p></li>
 <li><p>some keyboard accelerators has been changed (trouble with non latin1 keyboard configuration). Users can now changed some keyboard shortcuts (“latex” and “math” menus)</p></li>
@@ -1691,7 +1769,7 @@ texmaker file [-master] [-line xxx]</p></li>
 </ul>
 </section>
 <section id="texmaker-1-5">
-<h2>Texmaker 1.5<a class="headerlink" href="#texmaker-1-5" title="Permalink to this heading">#</a></h2>
+<h2>Texmaker 1.5<a class="headerlink" href="#texmaker-1-5" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>a “most used symbols” panel has been added</p></li>
 <li><p>the math mode “$$…$$” is replaced by “[ ]”</p></li>
@@ -1705,7 +1783,7 @@ texmaker file [-master] [-line xxx]</p></li>
 </ul>
 </section>
 <section id="texmaker-1-4">
-<h2>Texmaker 1.4<a class="headerlink" href="#texmaker-1-4" title="Permalink to this heading">#</a></h2>
+<h2>Texmaker 1.4<a class="headerlink" href="#texmaker-1-4" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Spell checking has been added (aspell is required)</p></li>
 <li><p>Support for the main pstricks commands has been added</p></li>
@@ -1717,14 +1795,14 @@ texmaker file [-master] [-line xxx]</p></li>
 </ul>
 </section>
 <section id="texmaker-1-3">
-<h2>Texmaker 1.3<a class="headerlink" href="#texmaker-1-3" title="Permalink to this heading">#</a></h2>
+<h2>Texmaker 1.3<a class="headerlink" href="#texmaker-1-3" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Texmaker is now a pure QT4 program (qt &gt;= 4.1 is required). The qt3 support library is no more required. The editor is now based on the qt4 QtextEdit object and the symbols icon view is an qt4 QTableWidget object.</p></li>
 <li><p>For each file, three bookmarks can be used to speed up navigation.</p></li>
 </ul>
 </section>
 <section id="texmaker-1-2">
-<h2>Texmaker 1.2<a class="headerlink" href="#texmaker-1-2" title="Permalink to this heading">#</a></h2>
+<h2>Texmaker 1.2<a class="headerlink" href="#texmaker-1-2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Don’t use anymore double-clic to open a file from the structure view (Qt-4.0.0 bug). A simple clic must be used now.</p></li>
 <li><p>Don’t use anymore / to separate commands (quick build and users commands) but | to avoid confusion with the directories separator.</p></li>
@@ -1784,6 +1862,13 @@ Can be used for inverse search.</p></li>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">CHANGELOG</a><ul>
+<li><a class="reference internal" href="#texstudio-4-8-6">TeXstudio 4.8.6</a></li>
+<li><a class="reference internal" href="#texstudio-4-8-5">TeXstudio 4.8.5</a></li>
+<li><a class="reference internal" href="#texstudio-4-8-4">TeXstudio 4.8.4</a></li>
+<li><a class="reference internal" href="#texstudio-4-8-3">TeXstudio 4.8.3</a></li>
+<li><a class="reference internal" href="#texstudio-4-8-2">TeXstudio 4.8.2</a></li>
+<li><a class="reference internal" href="#texstudio-4-8-1">TeXstudio 4.8.1</a></li>
+<li><a class="reference internal" href="#texstudio-4-8-0">TeXstudio 4.8.0</a></li>
 <li><a class="reference internal" href="#texstudio-4-7-3">TeXstudio 4.7.3</a></li>
 <li><a class="reference internal" href="#texstudio-4-7-2">TeXstudio 4.7.2</a></li>
 <li><a class="reference internal" href="#texstudio-4-7-1">TeXstudio 4.7.1</a></li>
@@ -1885,14 +1970,11 @@ Can be used for inverse search.</p></li>
       
     </aside>
   </div>
-</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
-    <script src="_static/scripts/furo.js"></script>
-    <script src="_static/tabs.js"></script>
-    <script src="_static/design-tabs.js"></script>
+</div><script src="_static/documentation_options.js?v=c69ef620"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script type="module" src="_static/scripts/furo.js?v=3e7832f7"></script>
+    <script src="_static/tabs.js?v=3ee01567"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
     </body>
 </html>

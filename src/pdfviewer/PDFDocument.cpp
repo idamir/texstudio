@@ -2930,7 +2930,7 @@ void PDFDocument::setupToolBar(){
     connect(toolBarTimer, SIGNAL(timeout()), this, SLOT(showToolbars()));
 
     toolBar->addAction(actionTypeset);
-    toolBar->addSeparator();
+    separatorAfterTypeset = toolBar->addSeparator();
     toolBar->addAction(actionExternalViewer);
     toolBar->addSeparator();
     toolBar->addAction(actionMagnify);
@@ -3171,6 +3171,7 @@ void PDFDocument::init(bool embedded)
 	actionExternalViewer->setIcon(getRealIcon("acroread"));
 	if (embedded) {
 		actionTypeset->setVisible(false);
+		separatorAfterTypeset->setVisible(false);
 		actionShrinkViewer->setVisible(false);
 	} else {
 		actionClose->setVisible(false);
@@ -3713,12 +3714,12 @@ retryNow:
 			pdfWidget->setFocus();
 
 		// set page viewer only once
-        int maxDigits = 1 + qFloor(log10(pdfWidget->realNumPages()));
-		//if (maxDigits < 2) maxDigits = 2;
+		int maxDigits = 1 + qFloor(log10(pdfWidget->realNumPages()));
 		leCurrentPage->setMaxLength(maxDigits);
-        leCurrentPage->setFixedWidth(UtilsUi::getFmWidth(leCurrentPage->fontMetrics(), QString(maxDigits + 1, '#')));
+		int numWidth = UtilsUi::getFmWidth(leCurrentPage->fontMetrics(), QString(maxDigits, '#')) + 8;
+		leCurrentPage->setFixedWidth(numWidth);
 		leCurrentPageValidator->setTop(pdfWidget->realNumPages());
-        //qDebug() << pdfWidget->realNumPages() << maxDigits << UtilsUi::getFmWidth(leCurrentPage->fontMetrics(), QString(maxDigits + 1, '#'))<<QString(maxDigits + 1, '#');
+		// qDebug() << pdfWidget->realNumPages() << maxDigits << numWidth;
 
 		loadSyncData();
 		if (fillCache) {
@@ -4207,11 +4208,15 @@ void PDFDocument::syncClick(int pageIndex, const QPointF &pos, bool activate)
 		QString fullName = scanner.getNameFileInfo(curDir, node).canonicalFilePath();
 		if (!globalConfig->syncFileMask.trimmed().isEmpty()) {
 			bool found = false;
-			foreach (const QString & s, globalConfig->syncFileMask.split(";"))
-			if (QRegExp(s.trimmed(), Qt::CaseSensitive, QRegExp::Wildcard).exactMatch(fullName)) {
-				found = true;
-				break;
-			}
+            foreach (const QString & s, globalConfig->syncFileMask.split(";")){
+                QString rxs=s.trimmed().replace(".","\\.").replace("*",".*");
+                QRegularExpression rx=QRegularExpression(rxs);
+                QRegularExpressionMatch rxm=rx.match(fullName);
+                if (rxm.hasMatch()) {
+                    found = true;
+                    break;
+                }
+            }
 			if (!found) continue;
 		}
 

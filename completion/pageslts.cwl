@@ -1,14 +1,7 @@
 # pageslts package
-# Matthew Bertucci 2022/08/10 for v1.2f
+# Matthew Bertucci 2024/12/07 for v2.0b
 
-#include:ltxcmds
-#include:atveryend
-#include:everyshi
-#include:letltxmacro
-#include:kvoptions
 #include:undolabl
-#include:rerunfilecheck
-#include:alphalph
 
 #keyvals:\usepackage/pageslts#c
 pagecontinue#true,false
@@ -40,7 +33,6 @@ Alph
 \expandPagenumbering{numstyle}#*
 \extract{arg1}#S
 \fnsymbolmult{number}#*
-\lastpagerefend{arg}#S
 \lastpagereftext{arg1}#S
 \lastpagereftextstar{arg1}#S
 \lastpagereftxt{arg1}#S
@@ -52,4 +44,5 @@ Alph
 \pncmissing#S
 \XRoman{counter}#*
 \xroman{counter}#*
-\XXRoman{counter}#*
+\pagesLTSlastpage#S
+\pagesLTSlastpageHy#S

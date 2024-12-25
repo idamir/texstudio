@@ -92,6 +92,7 @@ public:
 			QString wrd = getCurWord();
 			completer->filterList(wrd, showMostUsed);
 			completer->widget->show();
+            completer->widget->raise();
 			if (showMostUsed == 1 && completer->countWords() == 0) { // if prefered list is empty, take next more extensive one
                 completer->setTab(0); // typical
 			}
@@ -152,10 +153,10 @@ public:
             // check whether cursor is inside math in case of automatic delimter insertion
             // this is done here as the charcter format is used for detection and here we are sure that at least 1 character was used.
             QString cwCmd=cw.word;
-            QRegExp rx("\\\\[a-zA-Z]+");
-            int pos=rx.indexIn(cwCmd);
-            if(pos>-1){
-                cwCmd=rx.cap(0);
+            QRegularExpression rx("\\\\[a-zA-Z]+");
+            QRegularExpressionMatch rxm=rx.match(cwCmd);
+            if(rxm.hasMatch()){
+                cwCmd=rxm.captured(0);
             }
             bool inMath=false;
             if(cw.lines.size()==1 && completer->latexParser.possibleCommands["math"].contains(cwCmd)){
@@ -167,11 +168,13 @@ public:
             //for (int i = maxWritten - cursor.columnNumber(); i > 0; i--) cursor.deleteChar();
             if(maxWritten>cursor.columnNumber()){
                 cursor.movePosition(maxWritten-cursor.columnNumber(),QDocumentCursor::NextCharacter,QDocumentCursor::KeepAnchor);
+                editor->document()->clearLanguageMatches(); // fix #489 (delimiter mismatch marker is not cleared)
                 cursor.removeSelectedText();
             }
             //for (int i = cursor.columnNumber() - curStart; i > 0; i--) cursor.deletePreviousChar();
             if(curStart<cursor.columnNumber()){
                 cursor.movePosition(cursor.columnNumber()-curStart,QDocumentCursor::PreviousCharacter,QDocumentCursor::KeepAnchor);
+                editor->document()->clearLanguageMatches(); // fix #489 (delimiter mismatch marker is not cleared)
                 cursor.removeSelectedText();
             }
 			if (!autoOverridenText.isEmpty()) {
@@ -450,7 +453,7 @@ public:
 				} else if (getCurWord() == "") {
 					maxWritten = curStart + 1;
 				} else {
-					if (LatexCompleter::config && LatexCompleter::config->eowCompletes) {
+                    if (LatexCompleter::config && LatexCompleter::config->eowCompletes && !completer->isCurrentWordUserConstruct()) {
 						insertCompletedWord();
 					}
 					QDocumentCursor edc = editor->cursor();
@@ -659,8 +662,10 @@ public:
 
 	void resetBinding()
 	{
-		if (completer)
+        if (completer){
 			completer->listModel->setEnvironMode(false);
+            completer->setFilter(QString());
+        }
 		showMostUsed = false;
 		QString curWord = getCurWord();
 		if (!active) return;
@@ -704,6 +709,7 @@ public:
 		completer->filterList(getCurWord());
 		if (showAlways) {
 			completer->widget->show();
+            completer->widget->raise(); // fix #3598 - problem with qdocks
 			select(completer->list->model()->index(0, 0, QModelIndex()));
 		}
 	}
@@ -836,8 +842,10 @@ bool CompletionListModel::isNextCharPossible(const QChar &c)
 	        LatexCompleter::config->caseSensitive == LatexCompleterConfig::CCS_CASE_SENSITIVE)
 		cs = Qt::CaseSensitive;
 	QString extension = curWord + c;
-	foreach (const CompletionWord &cw, words)
-		if (cw.word.startsWith(extension, cs)) return true;
+    foreach (const CompletionWord &cw, words){
+        // disregard spaces at the end of the word for assuming a word was entered completely (#3544)
+        if (cw.word.trimmed().startsWith(extension, cs)) return true;
+    }
 	return false;
 }
 
@@ -860,6 +868,10 @@ CompletionWord CompletionListModel::getLastWord()
 
 void CompletionListModel::setKeyValWords(const QString &name, const QSet<QString> &newwords)
 {
+    if(keyValLists.contains(name) && keyValLists[name].count()==newwords.count()){
+        // don't recreate existing keyval list
+        return;
+    }
 	QList<CompletionWord> newWordList;
 	newWordList.clear();
 	for (QSet<QString>::const_iterator i = newwords.constBegin(); i != newwords.constEnd(); ++i) {
@@ -884,6 +896,15 @@ void CompletionListModel::setKeyValWords(const QString &name, const QSet<QString
     std::sort(newWordList.begin(), newWordList.end());
 
     keyValLists.insert(name, newWordList);
+}
+/*!
+ * \brief set environment filer
+ * Only completion words are shown which contain the filter string in environmentRestriction property or which have no restriction (empty string in that property)
+ * \param filter
+ */
+void CompletionListModel::setEnvironmentFilter(const QString &filter)
+{
+    m_filter=filter;
 }
 
 void CompletionListModel::setDisableMostUsedSorting(bool set)
@@ -1021,8 +1042,8 @@ void CompletionListModel::filterList(const QString &word, int mostUsed, bool fet
 
         QRegularExpression rx(regExpression);
 
-        words=QtConcurrent::blockingFiltered(baselist,[rx](const CompletionWord &item){
-            return item.sortWord.contains(rx);
+        words=QtConcurrent::blockingFiltered(baselist,[rx,this](const CompletionWord &item){
+            return item.sortWord.contains(rx) && (item.environmentRestriction.isEmpty() || item.environmentRestriction==m_filter);
         });
 
         QtConcurrent::blockingMap(words,[word](CompletionWord &item){
@@ -1133,6 +1154,11 @@ void CompletionListModel::filterList(const QString &word, int mostUsed, bool fet
             if (it->word.startsWith(word, cs) &&
                     (!checkFirstChar || it->word[1] == word[1]) ) {
 
+                // leave out words which are restricted to a certain environment (except for all-mode)
+                if (mostUsed < 2 && !it->environmentRestriction.isEmpty() && it->environmentRestriction != m_filter) {
+                    ++it;
+                    continue;
+                }
                 if (mostUsed == 3 || it->usageCount >= mostUsed || it->usageCount == -2) {
                     if (mostUsed < 2 && type != CodeSnippet::none && it->type != type) {
                         ++it;
@@ -1694,6 +1720,10 @@ void LatexCompleter::updateAbbreviations()
 	listModel->setAbbrevWords(wordsAbbrev);
 }
 
+void LatexCompleter::setLatexReference(LatexReference *ref) { latexReference = ref; }
+
+LatexReference *LatexCompleter::getLatexReference() { return latexReference; }
+
 void LatexCompleter::complete(QEditor *newEditor, const CompletionFlags &flags)
 {
 	Q_ASSERT(list);
@@ -1833,11 +1863,16 @@ void LatexCompleter::complete(QEditor *newEditor, const CompletionFlags &flags)
 			eow.remove(".");
 			eow.remove(":");
 			eow.remove("_");
+            eow.remove("-");
 		}
 		if (flags & CF_FORCE_PACKAGE) {
 			eow.remove("_");
             eow.remove("-");
 		}
+        if (flags & CF_FORCE_EXPL3) {
+            eow.remove("_");
+            eow.remove(":");
+        }
         if (flags & CF_FORCE_KEYVAL) {
             eow.remove(" ");
         }
@@ -1962,6 +1997,17 @@ void LatexCompleter::setTab(int index)
 		tbAbove->setCurrentIndex(index);
 }
 
+bool LatexCompleter::isCurrentWordUserConstruct()
+{
+    if (list->isVisible() && list->currentIndex().isValid()){
+        QVariant v = list->model()->data(list->currentIndex(), Qt::DisplayRole);
+        if (!v.isValid() || !v.canConvert<CompletionWord>()) return false;
+        CompletionWord cw = v.value<CompletionWord>();
+        return cw.type == CompletionWord::userConstruct;
+    }
+    return false;
+}
+
 void LatexCompleter::filterList(QString word, int showMostUsed)
 {
 	QString cur = ""; //needed to preserve selection
@@ -2031,12 +2077,13 @@ void LatexCompleter::selectionChanged(const QModelIndex &index)
 		emit showPreview(text);
 		return;
 	}
-	QRegExp wordrx("^\\\\([^ {[*]+|begin\\{[^ {}]+)");
-	if (!forcedCite && wordrx.indexIn(listModel->words[index.row()].word) == -1) {
+    QRegularExpression wordrx("^\\\\([^ {[*]+|begin\\{[^ {}]+)");
+    QRegularExpressionMatch wordrxMatch = wordrx.match(listModel->words[index.row()].word);
+    if (!forcedCite && !wordrxMatch.hasMatch()) {
 		QToolTip::hideText();
 		return;
 	}
-	QString cmd = wordrx.cap(0);
+    QString cmd = wordrxMatch.captured(0);
 	QString topic;
 	if (config->tooltipPreview && latexParser.possibleCommands["%ref"].contains(cmd)) {
 		QString value = listModel->words[index.row()].word;
@@ -2113,6 +2160,12 @@ void LatexCompleter::showTooltip(QString text)
 	showTooltipLimited(pos, text, list->width());
 }
 
+void LatexCompleter::setFilter(QString filter)
+{
+    listModel->setEnvironmentFilter(filter);
+    listModel->curWord = ""; // force filter update
+}
+
 void LatexCompleter::editorDestroyed()
 {
     editor = nullptr;
@@ -2135,6 +2188,8 @@ bool LatexCompleter::close()
 	} else return false;
 }
 
+bool LatexCompleter::isVisible() { return list->isVisible(); }
+
 void LatexCompleterConfig::setFiles(const QStringList &newFiles)
 {
 	files = newFiles;
@@ -2149,3 +2204,9 @@ bool LatexCompleter::existValues()
 {
 	return listModel->keyValLists.value(workingDir).size() > 0;
 }
+
+void LatexCompleter::setWorkPath(const QString cwd) { workingDir = cwd; }
+
+bool LatexCompleter::completingGraphic() { return forcedGraphic; }
+
+bool LatexCompleter::completingKey() { return forcedKeyval; }

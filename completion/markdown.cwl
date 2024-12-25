@@ -1,5 +1,5 @@
 # markdown package
-# Matthew Bertucci 2023/04/03 for v2.22.0-0-g5a3d0fe
+# Matthew Bertucci 2024/11/25 for v3.9.0
 
 #include:paralist
 #include:amsmath
@@ -8,33 +8,41 @@
 #include:fancyvrb
 #include:graphicx
 #include:ltxcmds
-#include:gobble
 #include:url
 #include:etoolbox
 #include:lt3luabridge
+#include:luaxml
 
 #ifOption:strikeThrough
-#include:soulutf8
+#include:soul
 #endif
 #ifOption:strikeThrough=true
-#include:soulutf8
+#include:soul
 #endif
 
 \begin{markdown}
+\begin{markdown}[options%keyvals]
 \end{markdown}
-\begin{markdown*}{options%keyvals}
-\end{markdown*}
+\begin{yaml}
+\begin{yaml}[options%keyvals]
+\end{yaml}
+
+\markinline{markdown text}
+\markinline[options%keyvals]{markdown text}
 
 \markdownInput{file}#i
 \markdownInput[options%keyvals]{file}#i
+\yamlInput{file}#i
+\yamlInput[options%keyvals]{file}#i
 
 \markdownSetup{options%keyvals}
 \markdownSetupSnippet{name%specialDef}{options%keyvals}#s#%markdownsnippet
 \markdownIfSnippetExists{name}{true}{false}#*
+\yamlSetup{options%keyvals}
 
-#keyvals:\usepackage/markdown#c,\begin{markdown*}#c,\markdownInput#c,\markdownSetup#c,\markdownSetupSnippet#c
+#keyvals:\usepackage/markdown#c,\begin{markdown}#c,\begin{yaml}#c,\markinline#c,\markdownInput#c,\yamlInput#c,\markdownSetup#c,\markdownSetupSnippet#c,\yamlSetup#c
 plain#true,false
-import=#witiko/dot,witiko/graphicx/http,witiko/tilde,witiko/markdown/techdoc
+import=#witiko/dot,witiko/graphicx/http,witiko/tilde,witiko/markdown/defaults
 snippet=#%markdownsnippet
 helperScriptFileName=%<file name%>
 inputTempFileName=%<file name%>
@@ -57,8 +65,10 @@ debugExtensions#true,false
 codeSpans#true,false
 definitionLists#true,false
 eagerCache#true,false
-extensions=%<file names%>
+experimental#true,false
+ensureJekyllData#true,false
 expectJekyllData#true,false
+extensions=%<file names%>
 fancyLists#true,false
 fencedCode#true,false
 fencedCodeAttributes#true,false
@@ -66,7 +76,6 @@ fencedDivs#true,false
 hashEnumerators#true,false
 headerAttributes#true,false
 html#true,false
-hybrid#true,false
 inlineCodeAttributes#true,false
 inlineNotes#true,false
 jekyllData#true,false
@@ -99,25 +108,14 @@ frozenCache#true,false
 frozenCacheFileName=%<file name%>
 #endkeyvals
 
-#keyvals:\begin{markdown*}#c,\markdownInput#c,\markdownSetup#c,\markdownSetupSnippet#c
+#keyvals:\begin{markdown}#c,\markinline#c,\markdownInput#c,\markdownSetup#c,\markdownSetupSnippet#c
 renderers={%<renderer options%>}
+unprotectedRenderers={%<renderer options%>}
 rendererPrototypes={%<renderer prototype options%>}
+unprotectedRendererPrototypes={%<renderer prototype options%>}
 code={%<code%>}
 jekyllDataRenderers={%<keyvals%>}
 #endkeyvals
-
-#ifOption:theme=witiko/dot
-#include:grffile
-#endif
-
-#ifOption:theme=witiko/graphicx/http
-#include:catchfile
-#include:grffile
-#endif
-
-#ifOption:theme=witiko/markdown/techdoc
-#include:varioref
-#endif
 
 #ifOption:lineBlocks
 #include:verse
@@ -127,8 +125,6 @@ jekyllDataRenderers={%<keyvals%>}
 #endif
 
 \ifmarkdownLaTeXLoaded#S
-\markdownError{error text%text}{help text%text}#S
-\markdownInfo{info text%text}#S
 \markdownInputPlainTeX{file}#Si
 \markdownLaTeXBasicCitations{arg1}{arg2}{arg3}{arg4}{arg5}{arg6}#S
 \markdownLaTeXBasicTextCitations{arg1}{arg2}{arg3}{arg4}{arg5}{arg6}#S
@@ -165,18 +161,19 @@ jekyllDataRenderers={%<keyvals%>}
 \markdownOptionTexComments#*
 \markdownOptionUnderscores#*
 \markdownVersionSpace#S
-\markdownWarning{warning text%text}#S
 
 # from markdown.tex
 \markdown#S
 \endmarkdown#S
 \markdownBegin#*
+\markdownConvert#*
 \markdownEnd#*
 \markdownEscape{file}#*
 \markdownExecute{code}#*
 \markdownExecuteDirect{code}#*
 \markdownExecuteShellEscape#*
 \markdownIfOption{option}{true}{false}#*
+\markdownInputFilename#*
 \markdownInputFileStream#S
 \markdownLastModified#S
 \markdownLuaExecute{code}#*
@@ -206,7 +203,6 @@ jekyllDataRenderers={%<keyvals%>}
 \markdownOptionInlineFootnotes#*
 \markdownOptionInputTempFileName#*
 \markdownOptionJekyllData#*
-\markdownOptionOutputDir#*
 \markdownOptionPipeTables#*
 \markdownOptionPreserveTabs#*
 \markdownOptionShiftHeadings#*
@@ -222,6 +218,7 @@ jekyllDataRenderers={%<keyvals%>}
 \markdownOptionUnderscores#*
 \markdownOutputFileStream#S
 \markdownPrepare#*
+\markdownPrepareInputFilename{arg}#*
 \markdownPrepareLuaOptions#*
 \markdownReadAndConvert#*
 \markdownReadAndConvertProcessLine{arg1}{arg2}{arg3}#*
@@ -289,6 +286,8 @@ jekyllDataRenderers={%<keyvals%>}
 \markdownRendererEllipsisPrototype#*
 \markdownRendererEmphasis#*
 \markdownRendererEmphasisPrototype{arg1}#*
+\markdownRendererError#*
+\markdownRendererErrorPrototype#*
 \markdownRendererFancyOlBegin#*
 \markdownRendererFancyOlBeginPrototype#*
 \markdownRendererFancyOlBeginTight#*
@@ -367,12 +366,14 @@ jekyllDataRenderers={%<keyvals%>}
 \markdownRendererJekyllDataMappingEndPrototype#*
 \markdownRendererJekyllDataNumber#*
 \markdownRendererJekyllDataNumberPrototype{arg1}{arg2}#*
+\markdownRendererJekyllDataProgrammaticString{arg1}{arg2}#*
+\markdownRendererJekyllDataProgrammaticStringPrototype{arg1}{arg2}#*
 \markdownRendererJekyllDataSequenceBegin#*
 \markdownRendererJekyllDataSequenceBeginPrototype{arg1}{arg2}#*
 \markdownRendererJekyllDataSequenceEnd#*
 \markdownRendererJekyllDataSequenceEndPrototype#*
-\markdownRendererJekyllDataString#*
-\markdownRendererJekyllDataStringPrototype{arg1}{arg2}#*
+\markdownRendererJekyllDataTypographicString{arg1}{arg2}#*
+\markdownRendererJekyllDataTypographicStringPrototype{arg1}{arg2}#*
 \markdownRendererLeftBrace#*
 \markdownRendererLeftBracePrototype#*
 \markdownRendererLineBlockBegin#*
@@ -451,10 +452,10 @@ jekyllDataRenderers={%<keyvals%>}
 \markdownRendererUnderscorePrototype#*
 \markdownRendererUntickedBox#*
 \markdownRendererUntickedBoxPrototype#*
+\markdownRendererWarning#*
+\markdownRendererWarningPrototype#*
 \markdownVersion#S
-
-# deprecated
-\markdownRendererFootnote#S
-\markdownRendererFootnotePrototype#S
-\markdownRendererHorizontalRule#S
-\markdownRendererHorizontalRulePrototype#S
+\markinlinePlainTeX{markdown text}#*
+\yamlBegin#*
+\yamlEnd#*
+\markdownThemeVersion#S

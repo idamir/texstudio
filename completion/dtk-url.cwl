@@ -1,15 +1,15 @@
 # dtk-url package
-# Matthew Bertucci 3/27/2022 for v1.5
+# Matthew Bertucci 2024/07/11 for v1.9
 
 #include:url
 #include:xcolor
 #include:xkeyval
-#include:hvqrurl
 #include:pdfescape
 #include:ifpdf
 #include:atveryend
 #include:embedfile
 
+\File{file}
 \CTANurl{URL}#*U
 \ctanurl{URL}#U
 \Email{email%URL}#U

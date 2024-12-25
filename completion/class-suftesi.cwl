@@ -1,9 +1,8 @@
 # suftesi class
-# Matthew Bertucci 2023/09/07 for v3.2.1
+# Matthew Bertucci 2024/12/06 for v3.2.6
 
 #include:xkeyval
 #include:class-book
-#include:fontsize
 #include:geometry
 #include:enumitem
 # loads inline option of enumitem
@@ -32,11 +31,15 @@
 \rhoAlt#*m
 
 ## Class options ##
+#ifOption:loadfontsize
+#include:fontsize
+#endif
+
 #ifOption:fewfootnotes=true
-#include:zref-perpage
+#include:footnpag
 #endif
 #ifOption:fewfootnotes
-#include:zref-perpage
+#include:footnpag
 #endif
 
 #ifOption:defaultfont=standard
@@ -62,7 +65,6 @@
 #include:amsthm
 #include:mathalpha
 # from cal=boondoxo option of mathalpha
-\mathcal{text%plain}#m
 \mathbfcal{text%plain}#m
 #endif
 
@@ -100,6 +102,7 @@
 structure=#book,article,collection
 pagelayout=#standard,standardaureo,periodical,periodicalaureo,compact,compactaureo,supercompact,supercompactaureo,pocketa,pocketb,pocketc
 version=#screen,cscreen,draft,final
+loadfontsize
 parindent=##L
 defaultfont=#none,cochineal,libertine,palatino,standard
 fontsize=##L

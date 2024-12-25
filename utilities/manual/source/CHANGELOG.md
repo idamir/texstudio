@@ -1,13 +1,80 @@
 # CHANGELOG
+## TeXstudio 4.8.6
+
+- provide command completion for expl3 commands
+- hide grammar errors in math/non-text environments (word repetition and language tool)
+- hide spelling errors in picture envs like tikzpicture
+
+## TeXstudio 4.8.5
+
+- fix false delimiter mismatch marker which gets stuck under certain circumstances [#489](https://github.com/texstudio-org/texstudio/issues/489)
+- fix label stop working when using subfigure package [#3816](https://github.com/texstudio-org/texstudio/issues/3816)
+- fix ai wizard conversation history [#3820](https://github.com/texstudio-org/texstudio/issues/3820)
+- fix colspec parsing [#3831](https://github.com/texstudio-org/texstudio/issues/3831)
+- fix user command handling in cached files [#3828](https://github.com/texstudio-org/texstudio/issues/3828)
+- fix label detection on memoir class [#3829](https://github.com/texstudio-org/texstudio/issues/3829)
+- fix crash when %Tex root document was not found
+- class are used for completion in documentclass
+- class names are not used anymore for package name completion
+- local packages can provide local cwl files ,[see manual](https://texstudio-org.github.io/advanced.html#local-packages)
+- fix handling of user definition commands in subfiles [#3885](https://github.com/texstudio-org/texstudio/issues/3885)
+- fix crash in preview tooltip if no pdflatex is defined [#3875](https://github.com/texstudio-org/texstudio/issues/3875)
+- handle special columntypes (m[l],NiceMatrix) better [#3881](https://github.com/texstudio-org/texstudio/issues/3881)
+- handle key/val completion in frame environment better [#3846](https://github.com/texstudio-org/texstudio/issues/3846)
+- fix caching of newly defined colornames
+
+## TeXstudio 4.8.4
+
+- fix word selection [#3812](https://github.com/texstudio-org/texstudio/issues/3812)
+
+## TeXstudio 4.8.3
+
+- use argument position to assign argument type (fixes some issues concerning keyval arguments)
+- windows binaries are code signed for easier installation
+- fix activation of keyvals for completion when new packages are used [#3791](https://github.com/texstudio-org/texstudio/issues/3791)
+- improved table manipulation when multiline arguments are used [#3789](https://github.com/texstudio-org/texstudio/issues/3789)
+
+## TeXstudio 4.8.2
+
+- fix background colors for AI chat interface in dark mode
+- on osx, new default spell dictionary changed to [txs-app-dir]/../Resources which is independent on actual txs app name.
+- automatically apply work-around on OSX if docks are spread-out in OSX style
+- configuration is directly saved after accepting changes
+- allow custom url for chatgpt server
+
+## TeXstudio 4.8.1
+
+- allow hiding of sidepanel docks via view/show
+- reduce number on visible dock on OSX due to qt osx style weakness
+- fix raised dock after hiding/showing sidepanel [#3653](https://github.com/texstudio-org/texstudio/issues/3653)
+- fallback to simple syntax highligting when tooltip background differs from general background [#3644](https://github.com/texstudio-org/texstudio/issues/3644)
+- fix structure view context on sections [#3642](https://github.com/texstudio-org/texstudio/issues/3642)
+- fix black background on comboboxes with windows11 style (qt6.7.1)
+
+## TeXstudio 4.8.0
+
+- AI chat assistant added
+- use moveable/**splitable** docks for sidepanel
+- extended search can now also search in all files in one folder
+- add basic syntax highlighting for latex3 code
+- fix handling CJK characters in pdf on OSX [#3558](https://github.com/texstudio-org/texstudio/issues/3558)
+- fix rare crash [#3556](https://github.com/texstudio-org/texstudio/issues/3556)
+- reload hidden docs when user chooses to discard changes [#3550](https://github.com/texstudio-org/texstudio/issues/3550)
+
 ## TeXstudio 4.7.3
 
 - First line of macro editor no longer uses macro type, use buttons to set type. Macro format changes slightly. For details s. [#3458](https://github.com/texstudio-org/texstudio/pull/3458)
-- add export of all macros in Edit Macros dialog
+- add export of all macros in Edit Macros dialog [#3451](https://github.com/texstudio-org/texstudio/pull/3451)
+- macro editor now executes normal and environment macros in addition to script macros [#3444](https://github.com/texstudio-org/texstudio/pull/3444)
+- macro editor with better button arrangement [#3451](https://github.com/texstudio-org/texstudio/pull/3451)
+- copy data from all issues in the messages pane (log) to clipboard [#3487](https://github.com/texstudio-org/texstudio/pull/3487)
+- insert graphics wizard opens position details without changing position or size of ui elements located above position details [#3509](https://github.com/texstudio-org/texstudio/pull/3509)
+- improved Package Help dialog [#3478](https://github.com/texstudio-org/texstudio/pull/3478), [#3497](https://github.com/texstudio-org/texstudio/pull/3497)
 - fix missing connection error message when browsing macro repository [#3448](https://github.com/texstudio-org/texstudio/pull/3448)
 - fix switching (by clicking) between documents [#3473](https://github.com/texstudio-org/texstudio/issues/3473)
 - fix "Show all open documents in this tree" [#3476](https://github.com/texstudio-org/texstudio/issues/3476)
-- improved Package Help dialog [#3478](https://github.com/texstudio-org/texstudio/pull/3478)
 - fix handling a new file created from the context menu [#3471](https://github.com/texstudio-org/texstudio/issues/3471)
+- small fixes
 
 ## TeXstudio 4.7.2
 
@@ -76,7 +143,7 @@
 - when the mouse cursor hovers over a spin/combo box, the wheel scrolls through the configuration page instead of changing values ([#2977](https://github.com/texstudio-org/texstudio/issues/2977))
 - copy some details (icons, separators) to menu item list in combo box ([#3025](https://github.com/texstudio-org/texstudio/issues/3025))
 - support toggling comment on folded lines ([#2912](https://github.com/texstudio-org/texstudio/issues/2912))
-- don't show pointing hand cursor over hyperlinks when magnifier is activ ([#2982](https://github.com/texstudio-org/texstudio/pull/2982))
+- don't show pointing hand cursor over hyperlinks when magnifier is active ([#2982](https://github.com/texstudio-org/texstudio/pull/2982))
 - improve usage of tab key and enter key in QuickStart Wizard ([#3014](https://github.com/texstudio-org/texstudio/pull/3014))
 - add \maketitle to the document created by QuickStart Wizard if appropriate ([#3015](https://github.com/texstudio-org/texstudio/pull/3015))
 - pos1 (home) key now sets cursor to start or to first non-blank character of editor lines ([#3012](https://github.com/texstudio-org/texstudio/issues/3012))
@@ -155,7 +222,7 @@
 - fix stuck to save unsaved document (only in explicit root mode and with a new unsaved document,[#2153](https://github.com/texstudio-org/texstudio/issues/2153)) 
 - xindex engine added
 - fix math highlighting in keyvals ([#2138](https://github.com/texstudio-org/texstudio/issues/2138))
-- add context menu in embbeded pdf viewer to invert pdf colors
+- add context menu in embedded pdf viewer to invert pdf colors
 - remember window state (maximized/normal) of config dialog
 - fix (and speed-up) miktex package detection
 - fix handling apostrophed words better in spellchecker ([#2179](https://github.com/texstudio-org/texstudio/issues/2179))
@@ -235,7 +302,7 @@
 - fix pdfviewer page display
 - build OSX with QT6.2, fix special characters entry (alt+n + n , etc.) ([#1770](https://github.com/texstudio-org/texstudio/issues/1770))
 - activate crash handler on win again
-- fix strcuture detection for included files
+- fix structure detection for included files
  
 
 ## TeXstudio 4.0.0
@@ -246,7 +313,7 @@
 - more and updated completion word lists thanks to mbertucci47
 - handle text (e.g. \text{text}) in mathenv as text with spell checking
 - performance improvement for large files with large number of labels and/or large number of includes
-- fix that search options are persistant
+- fix that search options are persistent
 - automatic structure scrolling can be turned off ([#1742](https://github.com/texstudio-org/texstudio/issues/1742))
 - some bug fixes
 
@@ -340,7 +407,7 @@
 ## TeXstudio 2.12.16
 
 - bug fixes
-- somes fixes for tool-tip preview by MeanSquaredError
+- some fixes for tool-tip preview by MeanSquaredError
 
 ## TeXstudio 2.12.14
 
@@ -398,7 +465,7 @@
 - tags for beamer
 - change preview default to embedded pdf
 - handle preview failures more gracefully, i.e. no warning pop-ups
-- repect preview settings (panel,etc) also for hover preview
+- respect preview settings (panel,etc) also for hover preview
 - show hover preview as tooltip in case of inline-mode
 - warn if compiler commands are actually a command list
 - several improvements to the latex parser
@@ -453,7 +520,7 @@
 - fix highlighting of current section in structure (bug 2103)
 - fix delays when typing _abc
 - fix bug in log parser: wrong filename if empty brackets () occur in text
-- fix word repetition erro on non-breaking space (~)
+- fix word repetition error on non-breaking space (~)
 - fix file detection in latex/include file
 - fix width of side panel not saved (bug 2083)
 - fix ampersand in in recent session names
@@ -606,7 +673,7 @@ before changing to windowed mode (Bug #1876)
 - do not parse for structure in non-LaTeX-like languages
 - make preview work with \input in preamble (files get rewritten to absolute paths for the temporary compilation)
 - use QSaveFile for file saving instead of our custom file saving strategy if available (Qt5 only)
-- eneable left/right shortcuts for embedded viewer
+- enable left/right shortcuts for embedded viewer
 - remove multiple default values for latexmk (fixes bug 1694)
 - support environment variables in additional search paths
 - support [txs-app-dir] and [txs-settings-dir] in additional search paths for log and pdf
@@ -616,7 +683,7 @@ before changing to windowed mode (Bug #1876)
 - make pasting into cursor mirrors a single undo block
 - do not remove cursor mirrors on undo
 - select text of current item in Packages Help to allow easier overwriting (feature request 1063)
-- select search/replace texts when switchting there using Tab / Backtab (feature request 1064)
+- select search/replace texts when switching there using Tab / Backtab (feature request 1064)
 - added optional workingDirectory argument to script function system()
 - added editor->insertSnippet() to scripting environment
 - added option to choose log encoding
@@ -650,7 +717,7 @@ before changing to windowed mode (Bug #1876)
 - fix line breaks for cursor mirrors
 - fix auto paren completion for cursor mirrors
 - fix line operations to work with cursor mirrors
-- fix sychronize text of placeholder mirror when inserting an environment on a selection (Ctrl+E)
+- fix synchronize text of placeholder mirror when inserting an environment on a selection (Ctrl+E)
 - fix font in pdf viewer status bar did not scale
 - fix loading of badword lists
 - fix LanguageTool startup
@@ -704,7 +771,7 @@ before changing to windowed mode (Bug #1876)
 - fix: context help for \documentclass
 - fix: treat minted as verboten environment
 - fix: correctly handle files with uppercase extension .TEX as tex files
-- fix: workaround for pasting from LibreOffice (priorize text over image)
+- fix: workaround for pasting from LibreOffice (prioritize text over image)
 - updates to translations
 - updates to the manual
 - updates to cwl files
@@ -783,7 +850,7 @@ before changing to windowed mode (Bug #1876)
 - user-visible list of hidden documents
 - added --foreground and --no-foreground options to pdf viewer
 - make format for magicComment editable in Options -> Highlighting
-- added line operation "Delete from start of line", more constent naming of line operations, adaption for OSX default shortcuts
+- added line operation "Delete from start of line", more consistent naming of line operations, adaption for OSX default shortcuts
 - improved support for output redirection of commands
 - support shell-style literal quotes (\") in commands
 - new selection actions "Expand Selection to Word", "Expand Selection to Line"
@@ -1044,7 +1111,7 @@ before changing to windowed mode (Bug #1876)
 
 ## TeXstudio 2.6.4
 
-- package scanner: queries the tex istallation for installed packages and highlights missing packages
+- package scanner: queries the tex installation for installed packages and highlights missing packages
 - package completion
 - basic annotation support in internal pdf viewer
 - improved render speed, especially on mac

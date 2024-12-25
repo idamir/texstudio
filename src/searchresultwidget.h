@@ -22,6 +22,7 @@ public:
 
 signals:
     void jumpToSearchResult(LatexDocument *doc, int lineNumber, const SearchQuery *query);
+    void jumpToFileSearchResult(QString fn, int lineNumber, const SearchQuery *query);
 	void runSearch(SearchQuery *query);
 
 public slots:
@@ -29,22 +30,29 @@ public slots:
 
 private slots:
 	void clickedSearchResult(const QModelIndex &index);
+    void replaceButtonClicked();
+    void replaceTextEditChanged(const QString &text);
 	void updateSearch();
+    void changeScope(int mode);
+    void changeFileFilter(int mode);
 	void searchCompleted();
 
 private:
 	QLabel *searchTypeLabel;
 	QLabel *searchTextLabel;
+    QLabel *m_replaceByLabel;
 	QPushButton *searchAgainButton;
 	QLineEdit *replaceTextEdit;
 	QPushButton *replaceButton;
 	QComboBox *searchScopeBox;
+    QComboBox *m_fileFilterBox;
 	QTreeView *searchTree;
 
 	SearchQuery *query;
 
 	void retranslateUi();
 	void updateSearchScopeBox(SearchQuery::Scope sc);
+    void adaptGUItoScope();
 };
 
 

@@ -1,5 +1,5 @@
 # opTeX commands
-# Matthew Bertucci 2023/11/22 for v1.13
+# Matthew Bertucci 2024/12/13 for v1.16
 
 #include:plaintex
 #include:luatex
@@ -374,6 +374,7 @@
 \lorem[%<from%>-%<to%>]
 \lipsum[%<number%>]#*
 \lipsum[%<from%>-%<to%>]#*
+\ConTeXt
 \OpTeX
 \LaTeX
 \LuaTeX
@@ -387,6 +388,8 @@
 \addto%<\macro%>{%<text%>}
 \adef%<⟨char⟩%>{%<body%>}
 \afterfi{text}
+\afterxfi{text}
+\xfipoint
 \aheadto%<\macro%>{%<text%>}
 \basefilename %<⟨filename⟩%>
 \bp{dimen expression}
@@ -425,6 +428,7 @@
 \kv{key%plain}
 \kvdict={%<name%>}
 \kvx{key%plain}{code}
+\nnum{number}
 \nokvx{code}
 \nospaceafter %<\macro%>
 \nospacefuturelet
@@ -450,11 +454,13 @@
 \sxdef{string%definition}{def}#S
 \sxdef{%<string%>}%<⟨parameters⟩%>{%<body%>}
 \trycs{string%definition}{text}
+\trykv{key%plain}{code}
 \useit{arg}
 \usesecond{arg1}{arg2}
 \wterm{text}
 \xargs %<⟨what⟩ ⟨token1⟩ ⟨token2⟩ ...%>
 \xcasesof %<⟨list of pairs⟩%>
+\xloop
 
 ## Compatibility with Plain TEX ##
 \oldaccents#*
@@ -695,9 +701,16 @@
 \toleft#*m
 \subeqmark %<suffix%>#*m
 \scriptspaces{s-rel}{s-bin}{ss-rel}{ss-bin}#*
+\interval#*
+\rmsbsp#*
 \bfserif#*
+\flexipa#*
+\partialsymbolvars#*
+\mrmpartial#*
 \rmchars{list}#*
 \vargreek{list}#*
+\enablefic#*
+\finalitalcorr#*
 \textvariables#*
 \textdigits#*
 \textmoremath#*
@@ -705,16 +718,20 @@
 \mathclap{formula}#*
 \mathrlap{formula}#*
 \mathllap{formula}#*
-\mathset{options%keyvals}#*
-#keyvals:\mathset
+\mathsetup{options%keyvals}#*
+#keyvals:\mathsetup
 dots
+interval
 vert
+rmsbsp
 bfserif
-rmchar={%<list%>}
+flexipa
+rmchars={%<list%>}
 vargreek={%<list%>}
 text={%<list%>}
 mstyle=%<style%>
 bstyle=%<style%>
+enablefic
 #endkeyvals
 
 # loaded by \load[mte]
@@ -749,8 +766,10 @@ bstyle=%<style%>
 \Erewhon#S
 \expd#S
 \extend#S
+\FBembo#S
 \Fraunces#S
 \Garamondl#S
+\Gentium#S
 \GFSBodoni#S
 \hair#S
 \Heros#S
@@ -777,6 +796,7 @@ bstyle=%<style%>
 \Merriweather#S
 \mono#S
 \Montserrat#S
+\Neohellenic#S
 \NewCM#S
 \nocaps#S
 \nocond#S
@@ -788,7 +808,9 @@ bstyle=%<style%>
 \osize#S
 \Overlock#S
 \Pagella#S
+\Plex#S
 \Poltawski#S
+\Raleway#S
 \Roboto#S
 \sanssemi#S
 \Schola#S

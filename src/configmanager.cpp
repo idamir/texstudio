@@ -17,6 +17,7 @@
 #include "updatechecker.h"
 #include "utilsVersion.h"
 #include "utilsUI.h"
+#include <QSysInfo>
 
 #include <QDomElement>
 
@@ -499,7 +500,11 @@ ConfigManager::ConfigManager(QObject *parent): QObject (parent),
 	registerOption("Tools/Insert Unicode From SymbolGrid", &insertSymbolsAsUnicode, false, &pseudoDialog->checkBoxInsertSymbolAsUCS);
     registerOption("Tools/SymbolGrid Splitter", &stateSymbolsWidget, QByteArray());
 
-	registerOption("Spell/DictionaryDir", &spellDictDir, "", &pseudoDialog->leDictDir); //don't translate it
+#ifdef Q_OS_OSX
+    registerOption("Spell/DictionaryDir", &spellDictDir, "[txs-app-dir]/../Resources", &pseudoDialog->leDictDir);
+#else
+    registerOption("Spell/DictionaryDir", &spellDictDir, "", &pseudoDialog->leDictDir);
+#endif
 	registerOption("Spell/Language", &spellLanguage, "<none>", &pseudoDialog->comboBoxSpellcheckLang);
     registerOption("Spell/Dic", &spell_dic, "<dic not found>", nullptr);
 	registerOption("Thesaurus/Database", &thesaurus_database, "<dic not found>", &pseudoDialog->comboBoxThesaurusFileName);
@@ -693,6 +698,17 @@ ConfigManager::ConfigManager(QObject *parent): QObject (parent),
 	registerOption("Terminal/Shell", &terminalConfig->terminalShell, "/bin/bash", &pseudoDialog->lineEditTerminalShell);
 #endif
 
+    // AI chat assistant
+    registerOption("AIchat/Provider",&ai_provider,0,&pseudoDialog->cbAIProvider);
+    registerOption("AIchat/APIKEY",&ai_apikey,"",&pseudoDialog->leAIAPIKey);
+    registerOption("AIchat/PreferredModel",&ai_preferredModel,"open-mistral-7b",&pseudoDialog->cbAIPreferredModel);
+    registerOption("AIchat/CustomURL",&ai_apiurl,"http://localhost:8080/v1/chat/completions",&pseudoDialog->leAIAPIURL);
+    registerOption("AIchat/KnownModels",&ai_knownModels,QStringList(),nullptr);
+    registerOption("AIchat/SystemPrompt_test",&ai_systemPrompt,"");
+    registerOption("AIchat/Temperature",&ai_temperature,"0.7");
+    registerOption("AIchat/RecordConversation",&ai_recordConversation,true,&pseudoDialog->cbAIRecordConversation);
+    registerOption("AIchat/StreamResults",&ai_streamResults,false);
+
 	//interfaces
     int defaultStyle=0;
 
@@ -785,7 +801,7 @@ ConfigManager::ConfigManager(QObject *parent): QObject (parent),
 #endif
 
     // runaway limit for lexing
-    registerOption("Editor/RUNAWAYLIMIT", &RUNAWAYLIMIT , 30);
+    registerOption("Editor/RUNAWAYLIMIT", &RUNAWAYLIMIT , 50);
 }
 
 ConfigManager::~ConfigManager()
@@ -1084,13 +1100,13 @@ QSettings *ConfigManager::readSettings(bool reread)
                                                            tr("Key replacement: %1 %2").arg(keyReplace[i],tr("before word")),
                                                            keyReplaceBeforeWord[i].replace("%", "%%"),
                                                            "",
-                                                           "(?language:latex)(?<=\\s|^)" + QRegExp::escape(keyReplace[i])
+                                                           "(?language:latex)(?<=\\s|^)" + QRegularExpression::escape(keyReplace[i])
                                                            ));
                     completerConfig->userMacros.append(Macro(
                                                            tr("Key replacement: %1 %2").arg(keyReplace[i],tr("after word")),
                                                            keyReplaceAfterWord[i].replace("%", "%%"),
                                                            "",
-                                                           "(?language:latex)(?<=\\S)" + QRegExp::escape(keyReplace[i])
+                                                           "(?language:latex)(?<=\\S)" + QRegularExpression::escape(keyReplace[i])
                                                            ));
                 }
             } else {
@@ -1106,12 +1122,12 @@ QSettings *ConfigManager::readSettings(bool reread)
                     userNames.append(tr("Key replacement: %1 %2").arg(keyReplace[i],tr("before word")));
                     userTags.append(keyReplaceBeforeWord[i].replace("%", "%%"));
                     userAbbrevs.append("");
-                    userTriggers.append("(?language:latex)(?<=\\s|^)" + QRegExp::escape(keyReplace[i]));
+                    userTriggers.append("(?language:latex)(?<=\\s|^)" + QRegularExpression::escape(keyReplace[i]));
 
                     userNames.append(tr("Key replacement: %1 %2").arg(keyReplace[i],tr("after word")));
                     userTags.append(keyReplaceAfterWord[i].replace("%", "%%"));
                     userAbbrevs.append("");
-                    userTriggers.append("(?language:latex)(?<=\\S)" + QRegExp::escape(keyReplace[i]));
+                    userTriggers.append("(?language:latex)(?<=\\S)" + QRegularExpression::escape(keyReplace[i]));
                 }
 
                 for (int i = 0; i < userTags.size(); i++)
@@ -1608,15 +1624,26 @@ bool ConfigManager::execConfigDialog(QWidget *parentToDialog)
 
 
 	//appearance
-	QString displayedInterfaceStyle = interfaceStyle == "" ? tr("default") : interfaceStyle;
 	confDlg->ui.comboBoxInterfaceStyle->clear();
-    QStringList availableStyles=QStyleFactory::keys();
+	QStringList availableStyles=QStyleFactory::keys();
 #ifdef ADWAITA
-    availableStyles << "Adwaita (txs)" << "Adwaita Dark (txs)";
+	availableStyles << "Adwaita (txs)" << "Adwaita Dark (txs)";
 #endif
-    availableStyles << "Orion Dark" << tr("default");
-    confDlg->ui.comboBoxInterfaceStyle->addItems(availableStyles);
-	confDlg->ui.comboBoxInterfaceStyle->setCurrentIndex(confDlg->ui.comboBoxInterfaceStyle->findText(displayedInterfaceStyle));
+	availableStyles << "Orion Dark" << tr("default");
+	int i = availableStyles.indexOf("windows11");
+	if (i>-1) {
+		bool ok;
+		QString productType = QSysInfo::productType();
+		float version = QSysInfo::productVersion().toFloat(&ok);
+		if (productType!="windows" || !ok || version < 11.0) {
+			availableStyles.removeAt(i);
+		}
+	}
+	confDlg->ui.comboBoxInterfaceStyle->addItems(availableStyles);
+	int cb_i = confDlg->ui.comboBoxInterfaceStyle->findText(interfaceStyle);
+	if (cb_i==-1) cb_i = availableStyles.count() - 1;  // use default
+	confDlg->ui.comboBoxInterfaceStyle->setCurrentIndex(cb_i);
+	QString displayedInterfaceStyle = availableStyles.at(cb_i);
 	confDlg->ui.comboBoxInterfaceStyle->setEditText(displayedInterfaceStyle);
 
 	confDlg->fmConfig->setBasePointSize( editorConfig->fontSize );
@@ -1739,7 +1766,7 @@ bool ConfigManager::execConfigDialog(QWidget *parentToDialog)
         previewMode = static_cast<PreviewMode>(confDlg->ui.comboBoxPreviewMode->currentIndex());
         buildManager->dvi2pngMode = static_cast<BuildManager::Dvi2PngMode>(confDlg->ui.comboBoxDvi2PngMode->currentIndex());
 #ifdef NO_POPPLER_PREVIEW
-		if (buildManager->dvi2pngMode == BuildManager::DPM_EMBEDDED_PDF || buildManager->dvi2pngMode == BuildManager::DPM_LUA_EMBEDDED_PDF) {
+		if (buildManager->dvi2pngMode == BuildManager::DPM_EMBEDDED_PDF || buildManager->dvi2pngMode == BuildManager::DPM_LUA_EMBEDDED_PDF || buildManager->dvi2pngMode == BuildManager::DPM_XE_EMBEDDED_PDF) {
 			buildManager->dvi2pngMode = BuildManager::DPM_DVIPNG; //fallback when poppler is not included
 		}
 #endif
@@ -1906,6 +1933,9 @@ bool ConfigManager::execConfigDialog(QWidget *parentToDialog)
 		guiSecondaryToolbarIconSize = confDlg->ui.horizontalSliderCentraIcon->value();
 		guiSymbolGridIconSize = confDlg->ui.horizontalSliderSymbol->value();
         guiPDFToolbarIconSize = confDlg->ui.horizontalSliderPDF->value();
+
+        // save new settings directly to disk as users tend to close txs rarely (#3740)
+        saveSettings();
 	} else {
 		// GUI scaling
 		confDlg->ui.horizontalSliderIcon->setValue(guiToolbarIconSize);
@@ -2446,12 +2476,14 @@ QList<QVariant> parseCommandArguments (const QString &str)
 	if (str == "()") return result;
 	s.remove(0, 1);
 	//                            1/-----2---\  /----3----\  /4-/5/6---------6\5\4--4\ 0
-	static const QRegExp args("^ *((-? *[0-9]+)|(true|false)|(\"(([^\"]*|\\\\\")*)\")) *,?");
-	while (args.indexIn(s) != -1) {
-		if (!args.cap(2).isEmpty()) result << args.cap(2).toInt();
-		else if (!args.cap(3).isEmpty()) result << (args.cap(3) == "true");
-		else if (!args.cap(5).isEmpty()) result << (args.cap(5).replace("\\\"", "\"").replace("\\n", "\n").replace("\\t", "\t").replace("\\\\", "\\"));
-		s.remove(0, args.matchedLength());
+    static const QRegularExpression rxArgs("^ *((-? *[0-9]+)|(true|false)|(\"(([^\"]*|\\\\\")*)\")) *,?");
+    QRegularExpressionMatch args=rxArgs.match(s);
+    while (args.hasMatch()) {
+        if (!args.captured(2).isEmpty()) result << args.captured(2).toInt();
+        else if (!args.captured(3).isEmpty()) result << (args.captured(3) == "true");
+        else if (!args.captured(5).isEmpty()) result << (args.captured(5).replace("\\\"", "\"").replace("\\n", "\n").replace("\\t", "\t").replace("\\\\", "\\"));
+        s.remove(0, args.capturedLength());
+        args=rxArgs.match(s);
 	}
 	return result;
 }

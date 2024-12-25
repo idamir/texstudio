@@ -1,6 +1,6 @@
 # babel.sty
 # available from ctan
-# tbraun 4.11.2008; Matthew Bertucci 2024/01/07 for v24.1
+# tbraun 4.11.2008; Matthew Bertucci 2024/10/20 for v24.12
 
 #keyvals:\usepackage/babel#c
 %<language%>
@@ -161,7 +161,7 @@ Alph=%<counter%>
 onchar=#ids,fonts,letters
 intraspace=%<base shrink stretch%>
 intrapenalty=%<penalty%>
-transforms=#transliteration.dad,digraphs.ligatures,hyphen.repeat,oneletter.nobreak,prehyphen.nobreak,punctuation.space,diaeresis.hyphen,transliteration.omega,sigma.final,transliteration.hk,punctuation.space,digraphs.hyphen,danda.nobreak,letters.noj,letters.uv,transliteration.iast,transliteration.gajica,kashida.plain
+transforms=#transliteration.dad,digraphs.ligatures,hyphen.repeat,oneletter.nobreak,prehyphen.nobreak,diaeresis.hyphen,transliteration.omega,sigma.final,transliteration.hk,punctuation.space,digraphs.hyphen,danda.nobreak,letters.noj,letters.uv,transliteration.iast,transliteration.gajica,kashida.plain
 justification=#kashida,elongated,unhyphenated,padding
 linebreaking=#kashida,elongated,unhyphenated,padding
 mapfont=
@@ -187,7 +187,9 @@ convert
 \babelcalendar{calendar}{year-macro%cmd}{month-macro%cmd}{day-macro%cmd}#d
 \babelcalendar[YYYY-MM-DD]{calendar}{year-macro%cmd}{month-macro%cmd}{day-macro%cmd}#d
 
-\languagename
+\localename
+\mainlocalename
+\languagename#*
 \iflanguage{language}{true}{false}
 \localeinfo{field%keyvals}
 \localeinfo*{field%keyvals}
@@ -220,11 +222,18 @@ extension.u.tag.bcp47
 \babelnullhyphen#*
 \babelhyphenation{exceptions}#*
 \babelhyphenation[lang1,lang2,...]{exceptions}#*
-\begin{hyphenrules}{language}
-\end{hyphenrules}
 \babelpatterns{patterns}#*
 \babelpatterns[lang1,lang2,...]{patterns}#*
-
+\babelhyphenmins{left}{right}#*
+\babelhyphenmins{left}{right}[hyphenationmin]#*
+\babelhyphenmins[lang1,lang2,...]{left}{right}#*
+\babelhyphenmins[lang1,lang2,...]{left}{right}[hyphenationmin]#*
+\babelhyphenmins*{left}{right}#*
+\babelhyphenmins*{left}{right}[hyphenationmin]#*
+\babelhyphenmins*[lang1,lang2,...]{left}{right}#*
+\babelhyphenmins*[lang1,lang2,...]{left}{right}[hyphenationmin]#*
+\begin{hyphenrules}{language}
+\end{hyphenrules}
 \babelposthyphenation{hypenrules-name}{lua-pattern}{replacement}#*
 \babelposthyphenation[options%keyvals]{hypenrules-name}{lua-pattern}{replacement}#*
 \babelprehyphenation{locale-name}{lua-pattern}{replacement}#*
@@ -245,7 +254,6 @@ digraphs.ligatures
 hyphen.repeat
 oneletter.nobreak
 prehyphen.nobreak
-punctuation.space
 diaeresis.hyphen
 transliteration.omega
 sigma.final
@@ -313,6 +321,8 @@ label=%<label%>
 \EnableBabelHook{name}#*
 \DisableBabelHook{name}#*
 \BabelContentsFiles#*
+\IfBabelSelectorTF{selectors}{true}{false}#*
+\PassOptionsToLocale{options}{locale}#*
 
 \babelcharproperty{char-code}{property}{value}#*
 \babelcharproperty{char-code}[to-char-code]{property}{value}#*
@@ -338,6 +348,7 @@ select.write=#shift,keep,omit
 select.encoding=#off
 #endkeyvals
 
+\localebox{text}#*
 \fmtname#*
 
 \glqq
@@ -371,6 +382,8 @@ select.encoding=#off
 \addto{cmd}{code}#S
 \AfterBabelCommands{code}#S
 \allowhyphens#S
+\BabelCJKGlue#S
+\BabelCJKSpace#S
 \BabelDated{arg}#S
 \BabelDatedd{arg}#S
 \BabelDateDot#S
@@ -391,9 +404,9 @@ select.encoding=#off
 \BabelString#S
 \BabelStringsDefault#S
 \BabelText{arg}#S
+\BabelWrapText{arg}#S
 \EndBabelCommands#S
 \IfBabelLayout{layout}{true}{false}#S
-\IfBabelSelectorTF{selectors}{true}{false}#S
 \LdfInit{language}{captionslanguage}#S
 \loadlocalcfg{file}#Si
 \localename#S
@@ -402,6 +415,7 @@ select.encoding=#off
 \SetHyphenMap{to-lower-macros}#S
 \SetString{macro-name}{string}#S
 \SetStringLoop{macro-name}{string-list}#S
+\SetTransformValue{locale}{variable}{value}#S
 \StartBabelCommands*{language-list}{category}#S
 \StartBabelCommands*{language-list}{category}[selector]#S
 \StartBabelCommands{language-list}{category}#S
@@ -1247,7 +1261,7 @@ select.encoding=#off
 #repl:"> »
 #endif
 
-### frenchb.ldf v3.5m (and associated acadian.ldf) ###
+### french.ldf v3.6a (and associated acadian.ldf) ###
 #ifOption:french
 \frenchsetup{options%keyvals}
 \frenchbsetup{options%keyvals}#S
@@ -1327,6 +1341,7 @@ SuppressWarning#true,false
 \FBeverylineguill#*
 \FBfigtabshape#*
 \FBfnindent#*
+\FBfnmarkspace#*
 \FBFrenchFootnotesfalse#*
 \FBFrenchFootnotestrue#*
 \FBFrenchSuperscriptstrue#*
@@ -1403,7 +1418,6 @@ SuppressWarning#true,false
 \ifFBOldFigTabCaptions#*
 \ifFBOriginalTypewriter#*
 \ifFBPartNameFull#*
-\ifFBReduceListSpacing#*
 \ifFBShowOptions#*
 \ifFBSmallCapsFigTabCaptions#*
 \ifFBStandardEnumerateEnv#*
@@ -1543,6 +1557,7 @@ SuppressWarning#true,false
 \FBeverylineguill#*
 \FBfigtabshape#*
 \FBfnindent#*
+\FBfnmarkspace#*
 \FBFrenchFootnotesfalse#*
 \FBFrenchFootnotestrue#*
 \FBFrenchSuperscriptstrue#*
@@ -1619,7 +1634,6 @@ SuppressWarning#true,false
 \ifFBOldFigTabCaptions#*
 \ifFBOriginalTypewriter#*
 \ifFBPartNameFull#*
-\ifFBReduceListSpacing#*
 \ifFBShowOptions#*
 \ifFBSmallCapsFigTabCaptions#*
 \ifFBStandardEnumerateEnv#*
@@ -1766,7 +1780,7 @@ SuppressWarning#true,false
 #repl:"! ¡
 #endif
 
-### germanb.ldf v2.14 (and associated austrian.ldf and swissgerman.ldf) ###
+### germanb.ldf v2.15 (and associated austrian.ldf and swissgerman.ldf) ###
 #ifOption:german
 \captionsgerman#*
 \dategerman#*
@@ -1792,6 +1806,9 @@ SuppressWarning#true,false
 \ifcapsz#*
 \capsztrue#S
 \capszfalse#S
+\ifnocapsz#*
+\nocapsztrue#S
+\nocapszfalse#S
 \mkngender#*
 #repl:"a ä
 #repl:"e ë
@@ -1858,6 +1875,9 @@ SuppressWarning#true,false
 \ifcapsz#*
 \capsztrue#S
 \capszfalse#S
+\ifnocapsz#*
+\nocapsztrue#S
+\nocapszfalse#S
 \mkngender#*
 #repl:"a ä
 #repl:"e ë
@@ -1924,6 +1944,9 @@ SuppressWarning#true,false
 \ifcapsz#*
 \capsztrue#S
 \capszfalse#S
+\ifnocapsz#*
+\nocapsztrue#S
+\nocapszfalse#S
 \mkngender#*
 #repl:"a ä
 #repl:"e ë
@@ -1965,7 +1988,7 @@ SuppressWarning#true,false
 #repl:"> »
 #endif
 
-### ngermanb.ldf v2.13 (and associated naustrian.ldf and nswissgerman.ldf) ###
+### ngermanb.ldf v2.15 (and associated naustrian.ldf and nswissgerman.ldf) ###
 #ifOption:ngerman
 \captionsngerman#*
 \datengerman#*
@@ -1987,6 +2010,12 @@ SuppressWarning#true,false
 \glossaryname#*
 \mdqon#*
 \mdqoff#*
+\ifcapsz#*
+\capsztrue#S
+\capszfalse#S
+\ifnocapsz#*
+\nocapsztrue#S
+\nocapszfalse#S
 #repl:"a ä
 #repl:"e ë
 #repl:"i ï
@@ -2033,6 +2062,12 @@ SuppressWarning#true,false
 \glossaryname#*
 \mdqon#*
 \mdqoff#*
+\ifcapsz#*
+\capsztrue#S
+\capszfalse#S
+\ifnocapsz#*
+\nocapsztrue#S
+\nocapszfalse#S
 #repl:"a ä
 #repl:"e ë
 #repl:"i ï
@@ -2079,6 +2114,12 @@ SuppressWarning#true,false
 \glossaryname#*
 \mdqon#*
 \mdqoff#*
+\ifcapsz#*
+\capsztrue#S
+\capszfalse#S
+\ifnocapsz#*
+\nocapsztrue#S
+\nocapszfalse#S
 #repl:"a ä
 #repl:"e ë
 #repl:"i ï

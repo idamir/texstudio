@@ -1,13 +1,17 @@
 cmake_minimum_required(VERSION 3.1.0)
 
-project(TeXstudio VERSION 4.7.3 LANGUAGES C CXX)
+project(TeXstudio VERSION 4.8.6 LANGUAGES C CXX)
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 set(CMAKE_DEBUG_POSTFIX "d")
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+if(APPLE)
+set(CMAKE_CXX_STANDARD 20)
+else()
 set(CMAKE_CXX_STANDARD 17)
+endif()
 
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -35,7 +39,7 @@ else()
 endif()
 
 if(WIN32 AND NOT MSVC)
-	add_compile_options(-fpermissive)
+        add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-fpermissive>)
         add_compile_options(-Wa,-mbig-obj)
 endif()
 
@@ -43,8 +47,7 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Network Xml Concurrent Widgets UiTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS PrintSupport Svg Qml REQUIRED)
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-	find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core5Compat REQUIRED)
-	find_package(Qt${QT_VERSION_MAJOR} COMPONENTS LinguistTools QUIET)
+    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS LinguistTools QUIET)
 endif()
 
 message(STATUS "building for Qt ${QT_VERSION_MAJOR}")
@@ -68,7 +71,7 @@ if(APPLE)
     )
     set(manual ${manual} utilities/manual/build/html/searchindex.js)
     file(GLOB images
-        utilities/manual/build/html/_images/*.png
+        utilities/manual/build/html/_images/*.webp
     )
     file(GLOB static
         utilities/manual/build/html/_static/*
@@ -110,8 +113,14 @@ set(TRANSLATION_FILES
 	translation/texstudio_en.ts
 )
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6 AND CMAKE_BUILD_TYPE STREQUAL "Debug")
-    message(STATUS "Generate translation source option.")
-    qt6_add_lupdate(texstudio TS_FILES ${TRANSLATION_FILES})
+	if(${QT_VERSION_MINOR} LESS_EQUAL 6)
+		message(STATUS "Generate translation source option.")
+		qt6_add_lupdate(texstudio TS_FILES ${TRANSLATION_FILES})
+	endif()
+	if(${QT_VERSION_MINOR} GREATER_EQUAL 7)
+                message(STATUS "Generate translation source option. (>= Qt6.7)")
+                qt6_add_translations(texstudio TS_FILES ${TRANSLATION_FILES})
+	endif()
 endif()
 
 if(WIN32)
@@ -187,12 +196,22 @@ else()
 			option(QUAZIP_IS_STATIC "QuaZIP is a static library" OFF)
 		endif()
 	else()
-		message(STATUS "Using internal QuaZIP")
-		option(TEXSTUDIO_USE_QT_ZLIB "Use Zlib from Qt" OFF)
+                message(STATUS "Using internal QuaZIP and internal zlib")
+                if(WIN32)
+                    set(ZLIB_BUILD_EXAMPLES OFF)
+                    set(SKIP_INSTALL_LIBRARIES ON)
+                    add_subdirectory(src/zlib-1.3.1)
+                    set(ZLIB_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/src/zlib-1.3.1)
+                    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+                        set(ZLIB_LIBRARY ${CMAKE_CURRENT_BINARY_DIR}/src/zlib-1.3.1/libzlibd.dll)
+                    else()
+                        set(ZLIB_LIBRARY ${CMAKE_CURRENT_BINARY_DIR}/src/zlib-1.3.1/libzlib.dll)
+                    endif()
+                endif()
 		set(BUILD_SHARED_LIBS OFF)
   		set(QUAZIP_INSTALL OFF)
-  		set(QUAZIP_USE_QT_ZLIB ${TEXSTUDIO_USE_QT_ZLIB})
-  		set(QUAZIP_ENABLE_TESTS OFF)
+                set(QUAZIP_USE_QT_ZLIB OFF)
+                set(QUAZIP_ENABLE_TESTS OFF)
 		set(QUAZIP_BZIP2 OFF)
 		set(QUAZIP_IS_STATIC ON)
 		set(QUAZIP_SOURCE_LINK 2)
@@ -313,7 +332,7 @@ endif()
 # poppler
 
 find_package(PkgConfig)
-pkg_check_modules(POPPLER QUIET IMPORTED_TARGET poppler-cpp poppler-qt${QT_VERSION_MAJOR})
+pkg_check_modules(POPPLER QUIET IMPORTED_TARGET poppler poppler-cpp poppler-qt${QT_VERSION_MAJOR})
 if(POPPLER_FOUND)
     message(STATUS "Build internal pdf previewer.")
 else()
@@ -326,7 +345,8 @@ endif()
 add_subdirectory(src/pdfviewer)
 
 # Build texstudio application
-add_executable(texstudio ${SOURCE_FILES} ${HEADER_FILES} ${RESOURCE_FILES} ${FORM_FILES} ${OSX_FILES} ${manual} ${images} ${static} ${static_scripts} ${static_styles} ${design_static})
+add_executable(texstudio ${SOURCE_FILES} ${HEADER_FILES} ${RESOURCE_FILES} ${FORM_FILES} ${OSX_FILES} ${manual} ${images} ${static} ${static_scripts} ${static_styles} ${design_static}
+)
 target_link_libraries(texstudio PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
@@ -342,9 +362,7 @@ target_link_libraries(texstudio PRIVATE
 if(NOT MSVC AND CMAKE_VERSION VERSION_GREATER_EQUAL "3.16.0")
     target_precompile_headers(texstudio PUBLIC src/mostQtHeaders.h)
 endif()
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    target_link_libraries(texstudio PRIVATE Qt${QT_VERSION_MAJOR}::Core5Compat)
-endif()
+
 if(TEXSTUDIO_BUILD_ADWAITA)
     target_link_libraries(texstudio PRIVATE Qt${QT_VERSION_MAJOR}::DBus)
 endif()
@@ -396,8 +414,8 @@ endif()
 
 find_package(ZLIB REQUIRED)
 if(ZLIB_FOUND)
-	target_include_directories(texstudio PUBLIC ${ZLIB_INCLUDE_DIR})
-	target_link_libraries(texstudio PUBLIC ${ZLIB_LIBRARIES})
+    target_include_directories(texstudio PUBLIC ${ZLIB_INCLUDE_DIR})
+    target_link_libraries(texstudio PUBLIC ${ZLIB_LIBRARIES})
 endif()
 
 if(UNIX AND NOT APPLE AND NOT HAIKU)
@@ -470,7 +488,7 @@ if(UNIX)
 	install(DIRECTORY utilities/manual/build/html/_images
 		DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio
 		FILES_MATCHING
-		PATTERN *.png
+		PATTERN *.webp
 	)
 	install(DIRECTORY utilities/manual/build/html/_sphinx_design_static
 		DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio

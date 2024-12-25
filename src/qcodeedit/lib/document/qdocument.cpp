@@ -798,6 +798,58 @@ void QDocument::load(const QString& file, QTextCodec* codec){
 	setCodecDirect(codec);
 	setLastModified(QFileInfo(file).lastModified());
 }
+/*!
+ * \brief save document to file directly
+ * Use codec which was used on loading
+ * Mainly itended for hidden documents which are not shown in editor
+ * \param file
+ */
+QDocument::SaveErrorCode QDocument::save(const QString &filename){
+    QString txt = text();
+    QByteArray data =  codec() ? codec()->fromUnicode(txt) : txt.toLocal8Bit();
+
+    // 1. Prepare
+    QString backupFilename;
+    if (QFileInfo::exists(filename)) {
+        const int MAX_TRIES = 100;
+        for (int i=0; i<MAX_TRIES; i++) {
+            QString fn = filename + QString("~txs%1").arg(i);
+            if (QFile::copy(filename, fn)) {
+                backupFilename = fn;
+                break;
+            }
+        }
+        if (backupFilename.isNull()) {
+            return noBackupFilenameAvailable;
+        }
+    }
+    SaveErrorCode errorCode=success;
+    // 2. Save
+    QFile f(filename);
+    if ( !f.open(QFile::WriteOnly) ) {
+        QFile::remove(backupFilename);  // original was not modified
+        return fileNotWritable;
+    } else {
+        int bytesWritten = f.write(data);
+        bool sucessfullySaved = (bytesWritten == data.size());
+
+        // 3. Cleanup
+        if (sucessfullySaved) {
+            QFile::remove(backupFilename);
+        } else {
+            QString message = tr("Writing the document to file\n%1\nfailed.").arg(filename);
+            QFile::remove(filename);
+            bool ok = QFile::rename(backupFilename, filename);  // revert
+            if (!ok) {
+                errorCode=backupFileNotRestored;
+            }else{
+                errorCode=writingFailed;
+            }
+        }
+        f.close(); //explicite close for watcher (??? is this necessary anymore?)
+    }
+    return errorCode;
+}
 
 /*!
 	\return The format scheme used by the document
@@ -964,7 +1016,7 @@ QDocument::LineEnding QDocument::lineEnding() const
 /*!
 	\return the lin endings detected upon loading
 
-	This should only ever take the the Window of Linux value
+	This should only ever take the Window of Linux value
 	if a document has been loaded. If no content has been
 	loaded it will fall back to Local.
 */
@@ -985,7 +1037,7 @@ QString QDocument::lineEndingString() const{
 	\brief Set the line ending policy of the document
 */
 void QDocument::setLineEnding(LineEnding le){
-	if (!m_impl) return;
+    if (!m_impl || lineEnding()==le) return;
 	execute(new QDocumentChangeMetaDataCommand(this, le));
 }
 
@@ -2909,10 +2961,19 @@ void QDocumentLineHandle::addOverlayNoLock(const QFormatRange& over)
 void QDocumentLineHandle::removeOverlay(const QFormatRange& over)
 {
 	QWriteLocker locker(&mLock);
-	int i = m_overlays.removeAll(over);
+    removeOverlayNoLock(over);
+}
+/*!
+ * \brief remove overlay with extra write locking
+ * Lock needs to be held by calling function
+ * \param over
+ */
+void QDocumentLineHandle::removeOverlayNoLock(const QFormatRange &over)
+{
+    int i = m_overlays.removeAll(over);
 
-	if ( i )
-		setFlag(QDocumentLine::FormatsApplied, false);
+    if ( i )
+        setFlag(QDocumentLine::FormatsApplied, false);
 }
 
 bool QDocumentLineHandle::hasOverlay(int id){
@@ -2927,15 +2988,37 @@ bool QDocumentLineHandle::hasOverlay(int id){
 
 QList<QFormatRange> QDocumentLineHandle::getOverlays(int preferredFormat) const {
 	QReadLocker locker(&mLock);
-	QList<QFormatRange> result;
-	if (preferredFormat==-1) {
-		return m_overlays;
-	}
+    return getOverlaysNoLock(preferredFormat);
+}
 
-	for (int i=0;i<m_overlays.size();i++)
-		if (m_overlays[i].format==preferredFormat) result.append(m_overlays[i]);
+QList<QFormatRange> QDocumentLineHandle::getOverlaysNoLock(int preferredFormat) const
+{
+    QList<QFormatRange> result;
+    if (preferredFormat==-1) {
+        return m_overlays;
+    }
 
-	return result;
+    for (int i=0;i<m_overlays.size();i++)
+        if (m_overlays[i].format==preferredFormat) result.append(m_overlays[i]);
+
+    return result;
+}
+/*!
+ * \brief return all overlays of which its format are in the list of preferredFormats
+ * \param preferredFormats
+ * \return
+ */
+QList<QFormatRange> QDocumentLineHandle::getOverlaysNoLock(QList<int> preferredFormats) const
+{
+    QList<QFormatRange> result;
+    if (preferredFormats.isEmpty()) {
+        return m_overlays;
+    }
+
+    for (int i=0;i<m_overlays.size();i++)
+        if (preferredFormats.contains(m_overlays[i].format)) result.append(m_overlays[i]);
+
+    return result;
 }
 
 QFormatRange QDocumentLineHandle::getOverlayAt(int index, int preferredFormat) const {
@@ -2947,6 +3030,18 @@ QFormatRange QDocumentLineHandle::getOverlayAt(int index, int preferredFormat) c
 			if (best.length<fr.length) best=fr;
 
 	return best;
+}
+
+QFormatRange QDocumentLineHandle::getOverlayAt(int index, QList<int> preferredFormats) const
+{
+    QReadLocker locker(&mLock);
+
+    QFormatRange best;
+    foreach (QFormatRange fr, m_overlays)
+        if (fr.offset<=index && fr.offset+fr.length>=index && (preferredFormats.contains(fr.format) || preferredFormats.isEmpty()))
+            if (best.length<fr.length) best=fr;
+
+    return best;
 }
 
 QFormatRange QDocumentLineHandle::getFirstOverlay(int start, int end, int preferredFormat) const {
@@ -4653,8 +4748,8 @@ bool QDocumentCursorHandle::movePosition(int count, int op, const QDocumentCurso
 	int &line = m_begLine;
 	int &offset = m_begOffset;
 
-	static QRegExp wordStart("\\b\\w+$"), wordEnd("^\\w+\\b");
-	static QRegExp wordOrCommandStart("\\\\?\\b\\w+$"), wordOrCommandEnd("^\\\\?\\w+\\b");
+    static QRegularExpression rxWordStart("\\b\\w+$",QRegularExpression::UseUnicodePropertiesOption), rxWordEnd("\\w+\\b",QRegularExpression::UseUnicodePropertiesOption);
+    static QRegularExpression rxWordOrCommandStart("\\\\?\\b\\w+$",QRegularExpression::UseUnicodePropertiesOption), rxWordOrCommandEnd("\\\\?\\w+\\b",QRegularExpression::UseUnicodePropertiesOption);
 
 	if ( !(m & QDocumentCursor::KeepAnchor) )
 	{
@@ -5217,7 +5312,8 @@ bool QDocumentCursorHandle::movePosition(int count, int op, const QDocumentCurso
 
 		case QDocumentCursor::StartOfWord :
 		{
-			int x = wordStart.indexIn(m_doc->line(line).text().left(offset));
+            QRegularExpressionMatch wordStart=rxWordStart.match(m_doc->line(line).text().left(offset));
+            int x = wordStart.capturedStart();
 
 			if ( x != -1 )
 			{
@@ -5234,11 +5330,12 @@ bool QDocumentCursorHandle::movePosition(int count, int op, const QDocumentCurso
 
 		case QDocumentCursor::EndOfWord :
 		{
-			int x = wordEnd.indexIn(m_doc->line(line).text(), offset, QRegExp::CaretAtOffset);
+            QRegularExpressionMatch wordEnd=rxWordEnd.match(m_doc->line(line).text(), offset);
+            int x = wordEnd.capturedStart();
 
 			if ( x == offset )
 			{
-				offset += wordEnd.matchedLength();
+                offset += wordEnd.capturedLength();
 			} else {
 				//qDebug("failed to find EOW");
 				return false;
@@ -5251,7 +5348,8 @@ bool QDocumentCursorHandle::movePosition(int count, int op, const QDocumentCurso
 
 		case QDocumentCursor::StartOfWordOrCommand :
 		{
-			int x = wordOrCommandStart.indexIn(m_doc->line(line).text().left(offset+1));  // offset+1 because we would not match if we would cut-off at the cursor if it is directly behind a slash like this: \|command
+            QRegularExpressionMatch wordOrCommandStart=rxWordOrCommandStart.match(m_doc->line(line).text().left(offset+1));
+            int x = wordOrCommandStart.capturedStart();  // offset+1 because we would not match if we would cut-off at the cursor if it is directly behind a slash like this: \|command
 
 			if ( x != -1 )
 			{
@@ -5268,12 +5366,12 @@ bool QDocumentCursorHandle::movePosition(int count, int op, const QDocumentCurso
 
 		case QDocumentCursor::EndOfWordOrCommand :
 		{
-
-			int x = wordOrCommandEnd.indexIn(m_doc->line(line).text(), offset, QRegExp::CaretAtOffset);
+            QRegularExpressionMatch wordOrCommandEnd=rxWordOrCommandEnd.match(m_doc->line(line).text(), offset);
+            int x = wordOrCommandEnd.capturedStart();
 
 			if ( x == offset )
 			{
-				offset += wordOrCommandEnd.matchedLength();
+                offset += wordOrCommandEnd.capturedLength();
 			} else {
 				//qDebug("failed to find EOWC");
 				return false;
@@ -5297,7 +5395,7 @@ bool QDocumentCursorHandle::movePosition(int count, int op, const QDocumentCurso
                     candidates.push(p);
                 }
                 if(p.role&QParenthesis::Close){
-                    if(candidates.top().id == p.id && candidates.top().role&QParenthesis::Open){
+                    if(!candidates.isEmpty() && candidates.top().id == p.id && candidates.top().role&QParenthesis::Open){
                         candidates.pop();
                     }else{
                         candidates.push(p);
@@ -6990,14 +7088,20 @@ void QDocumentPrivate::drawCursors(QPainter *p, const QDocument::PaintContext &c
 QString QDocumentPrivate::exportAsHtml(const QDocumentCursor& range, bool includeHeader, bool simplifyCSS, int maxLineWidth, int maxWrap) const{
 	QString result;
 	if (includeHeader) {
-		result += "<html><head>";
-		if ( m_formatScheme ) {
-			result += "<style type=\"text/css\">";
-			result += QString("pre { margin: %1px }\n").arg(simplifyCSS?0:1);
-			result += m_formatScheme->exportAsCSS(simplifyCSS);
-			result += "</style>";
-		}
-		result += "</head><body>";
+        // check tooltip background color
+        const QColor clr=QPalette().toolTipBase().color();
+        const bool tooltipWithDarkBackground=qGray(clr.rgb())<128;
+        if(darkMode==tooltipWithDarkBackground){
+            // set CSS scheme
+            result += "<html><head>";
+            if ( m_formatScheme ) {
+                result += "<style type=\"text/css\">";
+                result += QString("pre { margin: %1px }\n").arg(simplifyCSS?0:1);
+                result += m_formatScheme->exportAsCSS(simplifyCSS);
+                result += "</style>";
+            }
+            result += "</head><body>";
+        }
 	}
 	QDocumentSelection sel = range.selection();
 	REQUIRE_RET(sel.startLine >= 0 && sel.startLine < m_lines.size(),"");
@@ -7464,6 +7568,10 @@ qreal QDocumentPrivate::textWidth(int fid, const QString& text){
 				containsSurrogates = true; //strange characters (e.g.  0xbcd, 0x1d164)
             else if (c < QChar(0x20))
 				containsAsianChars = true;
+            else if (c >= QChar(0xff00) && c <= QChar(0xffef))
+                containsAsianChars = true;
+            else if (c >= QChar(0x3000) && c <= QChar(0x303f))
+                containsAsianChars = true;
 		}
 		if (!containsAsianChars && !containsSurrogates)
 			// TODO: we've blacklisted certain characters from which we know they may have non-standard text width

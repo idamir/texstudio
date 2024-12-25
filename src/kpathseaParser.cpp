@@ -70,7 +70,6 @@ void KpathSeaParser::run()
                 }
                 if(skipDocs) continue;
                 if (line.endsWith(".sty") || line.endsWith(".cls")) {
-					line.chop(4);
 					results.insert(line);
 				}
 			}
@@ -180,7 +179,6 @@ QHash<QString, QStringList> MiktexPackageScanner::loadMiktexPackageMap()
                         fn=fn.mid(i+1);
                     }
                     if (fn.endsWith(".sty") || fn.endsWith(".cls")) {
-                        fn.chop(4);
                         lst<<fn;
                     }
                 }
@@ -211,7 +209,6 @@ QStringList MiktexPackageScanner::stysForPackage(const QString &pck)
                         fn=fn.mid(i+1);
                     }
                     if (fn.endsWith(".sty") || fn.endsWith(".cls")) {
-                        fn.chop(4);
                         result.append(fn);
                     }
                 }
@@ -226,7 +223,6 @@ QStringList MiktexPackageScanner::stysForPackage(const QString &pck)
                 fn=fn.mid(i+1);
             }
 			if (fn.endsWith(".sty") || fn.endsWith(".cls")) {
-				fn.chop(4);
 				result.append(fn);
 			}
 		}

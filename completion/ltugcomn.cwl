@@ -1,5 +1,5 @@
 # ltugcomn package
-# Matthew Bertucci 2023/10/31 for v2.31
+# Matthew Bertucci 2024/10/28 for v2.33
 
 #include:mflogo
 
@@ -73,6 +73,7 @@
 \hours#*
 \HTML
 \HTTP
+\HTTPS
 \hyph
 \IDE
 \IEEE
@@ -262,6 +263,7 @@
 \TTN
 \TUB
 \tubbraced{text%plain}
+\tubcentsold#S
 \TUBdefaulteTeX#*
 \tubdots
 \TUBedit{text}#*
@@ -307,5 +309,6 @@
 \XSL
 \XSLFO
 \XSLT
+\YAML
 \ylap{text}
 \zlap{text}

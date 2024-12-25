@@ -14,6 +14,7 @@
 #include "qnetworkrequest.h"
 #include "smallUsefulFunctions.h"
 #include "templatemanager_p.h"
+#include "utilsSystem.h"
 
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -104,6 +105,10 @@ TemplateSelector::TemplateSelector(QString name, QWidget *parent)
 
 TemplateSelector::~TemplateSelector()
 {
+    if (networkManager) {
+        networkManager->deleteLater();
+        networkManager=nullptr;
+    }
 }
 
 void TemplateSelector::addResource(AbstractTemplateResource *res)
@@ -119,6 +124,8 @@ void TemplateSelector::addResource(AbstractTemplateResource *res)
 	foreach (TemplateHandle th, res->getTemplates()) {
 		QTreeWidgetItem *twi = new QTreeWidgetItem(QStringList() << th.name());
 		twi->setData(0, TemplateHandleRole, QVariant::fromValue<TemplateHandle>(th));
+		if (th.isMultifile()) twi->setIcon(0,getRealIcon("view-pages-overview"));
+		else twi->setIcon(0,getRealIcon("view-pages-single"));
 		topitem->addChild(twi);
 	}
     topitem->setExpanded(true);
@@ -127,12 +134,13 @@ void TemplateSelector::addResource(AbstractTemplateResource *res)
 void TemplateSelector::addOnlineRepository()
 {
     QTreeWidgetItem *topitem = new QTreeWidgetItem(QStringList() << tr("Online Repository"));
-    //topitem->setIcon(0, res->icon());
     QFont ft = topitem->font(0);
     ft.setBold(true);
     topitem->setFont(0, ft);
+    topitem->setData(0, ResourceRole, tr("Online available template files"));
     topitem->setData(0, UrlRole, QString("https://api.github.com/repos/texstudio-org/texstudio-template/contents"));
     topitem->setData(0, PathRole, QString(""));
+    topitem->setIcon(0,getRealIcon("folder-cloud"));
     ui.templatesTree->addTopLevelItem(topitem);
     QTreeWidgetItem *twi = new QTreeWidgetItem(QStringList() << tr("<loading...>"));
     topitem->addChild(twi);
@@ -157,7 +165,10 @@ const QNetworkRequest::Attribute tplAttributeItem = static_cast<QNetworkRequest:
  */
 void TemplateSelector::makeRequest(QString url, QString path,QTreeWidgetItem *item,bool download)
 {
-
+    if(!networkManager){
+        networkManager = new QNetworkAccessManager();
+        if(!networkManager) return;
+    }
     QString m_url=appendPath(url,path);
     if(download){
         // check if cached
@@ -179,6 +190,11 @@ void TemplateSelector::makeRequest(QString url, QString path,QTreeWidgetItem *it
     request.setAttribute(tplAttributeItem,QVariant::fromValue(item));
     QNetworkReply *reply = networkManager->get(request);
     connect(reply, &QNetworkReply::finished, this, &TemplateSelector::onRequestCompleted);
+#if QT_VERSION_MAJOR<6
+    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(onRequestError()));
+#else
+    connect(reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), SLOT(onRequestError()));
+#endif
 }
 
 /*!
@@ -202,7 +218,6 @@ void TemplateSelector::saveToCache(const QByteArray &data, const QString &path)
         file.close();
     }
 }
-
 
 void TemplateSelector::itemExpanded(QTreeWidgetItem* item){
     bool populated=item->data(0,PopulatedRole).toBool();
@@ -281,7 +296,7 @@ void TemplateSelector::onRequestCompleted()
                 QString name=dd["name"].toString();
                 if(name.endsWith(".json")){
                     auto *item=new QTreeWidgetItem();
-                    item->setText(0,name.left(name.length()-5));
+                    item->setText(0,name.replace("template_","").replace(".json",""));
                     item->setIcon(0,QIcon::fromTheme("file"));
                     item->setData(0,DownloadRole,dd["download_url"].toString());
                     item->setData(0,UrlRole, url);
@@ -305,21 +320,25 @@ void TemplateSelector::onRequestCompleted()
                     if(i<0) continue;
                     auto *item=rootItem->child(i);
                     item->setData(0,TexRole,dd["download_url"].toString());
+                    if (name.endsWith(".zip")) item->setIcon(0,getRealIcon("view-pages-overview"));
+                    else item->setIcon(0,getRealIcon("view-pages-single"));     // .tex
                 }
             }else{
                 // folder
                 QString name=dd["name"].toString();
-                auto *item=new QTreeWidgetItem();
-                QFont ft = item->font(0);
-                ft.setBold(true);
-                item->setFont(0, ft);
-                item->setText(0,name);
-                item->setIcon(0,QIcon::fromTheme("folder"));
-                QTreeWidgetItem *twi = new QTreeWidgetItem(QStringList() << tr("<loading...>"));
-                item->addChild(twi);
-                item->setData(0, UrlRole, url);
-                item->setData(0, PathRole, appendPath(path,name));
-                rootItem->addChild(item);
+                if(!name.startsWith(".")){
+                    auto *item=new QTreeWidgetItem();
+                    QFont ft = item->font(0);
+                    ft.setBold(true);
+                    item->setFont(0, ft);
+                    item->setText(0,name);
+                    item->setIcon(0,QIcon::fromTheme("folder"));
+                    QTreeWidgetItem *twi = new QTreeWidgetItem(QStringList() << tr("<loading...>"));
+                    item->addChild(twi);
+                    item->setData(0, UrlRole, url);
+                    item->setData(0, PathRole, appendPath(path,name));
+                    rootItem->addChild(item);
+                }
             }
         }
     }
@@ -485,8 +504,8 @@ void TemplateSelector::showInfo(QTreeWidgetItem *currentItem, QTreeWidgetItem *p
 
 		pbOk->setEnabled(true);
 		ui.lbName->setText(orDefault(th.name(), tr("<No Name>")));
-		ui.lbDescription->setText(orDefault(th.description(), "<No Description>"));
-		ui.lbAuthor->setText(orDefault(th.author(), "<Unknown Author>"));
+		ui.lbDescription->setText(orDefault(th.description(), tr("<No Description>")));
+		ui.lbAuthor->setText(orDefault(th.author(), tr("<Unknown Author>")));
 		ui.lbDate->setText(tr("Date") + ": " + th.date().toString(Qt::ISODate));
 		ui.lbVersion->setText(tr("Version") + ": " + th.version());
 		ui.lbLicense->setText(tr("License") + ": " + th.license());
@@ -505,6 +524,18 @@ void TemplateSelector::showInfo(QTreeWidgetItem *currentItem, QTreeWidgetItem *p
             QString path=currentItem->data(0,PathRole).toString();
             QString url=currentItem->data(0,UrlRole).toString();
             QString downloadUrl=currentItem->data(0,DownloadRole).toString();
+            if (currentItem->data(0,ResourceRole).isValid()) {
+                QString topDescription = currentItem->data(0,ResourceRole).toString();
+                ui.lbName->setText(currentItem->text(0));
+                ui.lbDescription->setText(topDescription);
+                ui.lbAuthor->setText("");
+                ui.lbDate->setText("");
+                ui.lbVersion->setText("");
+                ui.lbLicense->setText("");
+                ui.lbAuthorTag->setVisible(false);
+                if (previewLabel)
+                    previewLabel->setScaledPixmap(QPixmap());
+            }
             if(!downloadUrl.isEmpty()){
                 makeRequest(downloadUrl,path,currentItem,true);
             }
@@ -545,9 +576,9 @@ void TemplateSelector::editTemplate()
 {
 	TemplateHandle th = selectedTemplate();
 	if (th.isMultifile()) {
-		UtilsUi::txsInformation("Editing of multi-file templates is not supported.\n"
+		UtilsUi::txsInformation(tr("Editing of multi-file templates is not supported.\n"
 		               "Please open the template location and unzip the\n"
-		               "template to edit individual files.");
+		               "template to edit individual files."));
 		return;
 	}
 	if (!th.isEditable()) {
@@ -598,9 +629,31 @@ void TemplateSelector::removeTemplate()
 void TemplateSelector::openTemplateLocation()
 {
 	TemplateHandle th = selectedTemplate();
-	QString url = "file:///" + QFileInfo(th.file()).absolutePath();
+	QString url = th.file();
+	QString proto = url;
+	proto.truncate(8);
+	if (proto=="https://") {
+		url.replace(0, QString( "https://raw.githubusercontent.com/texstudio-org/texstudio-template/main").size(),
+								"https://github.com/texstudio-org/texstudio-template/tree/main");
+		url.truncate(url.lastIndexOf("/"));
+	}
+	else {
+		url = "file:///" + QFileInfo(th.file()).absolutePath();
+	}
 	if (!QDesktopServices::openUrl(QUrl(url))) {
 		UtilsUi::txsCritical(tr("Could not open location:") + QString("\n%1").arg(url));
 	}
 }
 
+void TemplateSelector::onRequestError()
+{
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    if (!reply) return;
+
+    QTreeWidgetItem *rootItem=reply->request().attribute(tplAttributeItem).value<QTreeWidgetItem*>();
+    if (!rootItem) return;
+    rootItem->child(0)->setText(0,tr("Repository not found. Network error:%1").arg("\n"+reply->errorString()));
+
+    networkManager->deleteLater();
+    networkManager=nullptr;
+}

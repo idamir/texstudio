@@ -1,5 +1,5 @@
 # Arguelles beamertheme
-# Matthew Bertucci 2023/10/31 for v2.3.0
+# Matthew Bertucci 2024/06/11 for v2.4.2
 
 #include:inputenc
 #include:fontenc
@@ -23,25 +23,10 @@
 sans
 frameno
 splitnav
-mp
 #endkeyvals
 
 #ifOption:splitnav
 #include:etoolbox
-#endif
-
-#ifOption:mp
-#include:ulem
-#include:booktabs
-#include:dcolumn
-#include:makecell
-#include:colortbl
-#include:cancel
-#include:pgfplots
-#include:csvsimple
-#include:pgfplotslibraryfillbetween
-#include:pgfplotslibrarygroupplots
-#include:pgfplotslibrarystatistics
 #endif
 
 \mediumfont

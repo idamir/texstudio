@@ -595,7 +595,6 @@ ConfigManager::ConfigManager(QObject *parent): QObject (parent),
 	registerOption("Editor/Hack Disable Line Cache", &editorConfig->hackDisableLineCache, false, &pseudoDialog->checkBoxHackDisableLineCache);
 	registerOption("Editor/Hack Disable Accent Workaround", &editorConfig->hackDisableAccentWorkaround, false, &pseudoDialog->checkBoxHackDisableAccentWorkaround);
 	registerOption("Editor/Hack Render Mode", &editorConfig->hackRenderingMode, 0, &pseudoDialog->comboBoxHackRenderMode);
-	registerOption("Editor/Hack QImage Cache", &editorConfig->hackQImageCache, false, &pseudoDialog->checkBoxHackQImageCache);
 
 	//completion
 	registerOption("Editor/Completion", &completerConfig->enabled, true, &pseudoDialog->checkBoxCompletion);
@@ -704,7 +703,7 @@ ConfigManager::ConfigManager(QObject *parent): QObject (parent),
     registerOption("AIchat/PreferredModel",&ai_preferredModel,"open-mistral-7b",&pseudoDialog->cbAIPreferredModel);
     registerOption("AIchat/CustomURL",&ai_apiurl,"http://localhost:8080/v1/chat/completions",&pseudoDialog->leAIAPIURL);
     registerOption("AIchat/KnownModels",&ai_knownModels,QStringList(),nullptr);
-    registerOption("AIchat/SystemPrompt_test",&ai_systemPrompt,"");
+    registerOption("AIchat/SystemPrompt",&ai_systemPrompt,"text:'''%txsSelectedText%'''\n");
     registerOption("AIchat/Temperature",&ai_temperature,"0.7");
     registerOption("AIchat/RecordConversation",&ai_recordConversation,true,&pseudoDialog->cbAIRecordConversation);
     registerOption("AIchat/StreamResults",&ai_streamResults,false);
@@ -916,7 +915,8 @@ QSettings *ConfigManager::readSettings(bool reread)
 #endif
 			fallBackPaths << PREFIX"/share/hunspell" << PREFIX"/share/myspell"
                           << "/usr/share/hunspell" << "/usr/share/myspell"
-                          << parseDir("[txs-app-dir]/../share/texstudio") ;
+                          << parseDir("[txs-app-dir]/../share/texstudio")
+                          << parseDir("[txs-app-dir]/../usr/share/texstudio") ;
 #endif
 #ifdef Q_OS_MAC
             fallBackPaths << parseDir("[txs-app-dir]/../Resources") << "/Applications/texstudio.app/Contents/Resources";
@@ -956,7 +956,8 @@ QSettings *ConfigManager::readSettings(bool reread)
 		QStringList fallBackPaths;
 #ifdef Q_OS_LINUX
         fallBackPaths << PREFIX"/share/mythes" << "/usr/share/mythes"
-                      << parseDir("[txs-app-dir]/../share/texstudio") ;
+                      << parseDir("[txs-app-dir]/../share/texstudio")
+                      << parseDir("[txs-app-dir]/../usr/share/texstudio") ;
 #endif
 		thesaurus_database = findResourceFile("th_" + QString(QLocale::system().name()) + "_v2.dat", true, preferredPaths, fallBackPaths);
 		if (thesaurus_database == "") thesaurus_database = findResourceFile("th_en_US_v2.dat", true, preferredPaths, fallBackPaths);
@@ -1466,7 +1467,18 @@ bool ConfigManager::execConfigDialog(QWidget *parentToDialog)
 		else  item->setCheckState(Qt::Unchecked);
 	}
 	//preview
-	confDlg->ui.comboBoxDvi2PngMode->setCurrentIndex(buildManager->dvi2pngMode);
+    int m_dvi2pngModeIndex = 0;
+    if (buildManager->dvi2pngMode!=BuildManager::DPM_BUILD_COMPILER){
+        m_dvi2pngModeIndex = static_cast <int>(buildManager->dvi2pngMode) + 1;
+    }
+    confDlg->ui.comboBoxDvi2PngMode->setCurrentIndex(m_dvi2pngModeIndex);
+#ifdef NO_POPPLER_PREVIEW
+	int l = confDlg->ui.comboBoxDvi2PngMode->count();
+	for (int index=l-1; index>=0; index--) {
+        if (static_cast <BuildManager::Dvi2PngMode>(index)>=BuildManager::DPM_EMBEDDED_PDF || index==0)
+			confDlg->ui.comboBoxDvi2PngMode->removeItem(index);
+	}
+#endif
 
 	//Autosave
 	if (autosaveEveryMinutes == 0) confDlg->ui.comboBoxAutoSave->setCurrentIndex(0);
@@ -1624,6 +1636,7 @@ bool ConfigManager::execConfigDialog(QWidget *parentToDialog)
 
 
 	//appearance
+    const QString oldInterfaceStyle = interfaceStyle;
 	confDlg->ui.comboBoxInterfaceStyle->clear();
 	QStringList availableStyles=QStyleFactory::keys();
 #ifdef ADWAITA
@@ -1764,9 +1777,14 @@ bool ConfigManager::execConfigDialog(QWidget *parentToDialog)
 		completerConfig->setFiles(newFiles);
 		//preview
         previewMode = static_cast<PreviewMode>(confDlg->ui.comboBoxPreviewMode->currentIndex());
-        buildManager->dvi2pngMode = static_cast<BuildManager::Dvi2PngMode>(confDlg->ui.comboBoxDvi2PngMode->currentIndex());
+        int m_dvi2pngModeIndex=confDlg->ui.comboBoxDvi2PngMode->currentIndex();
+        if (m_dvi2pngModeIndex==0){
+            buildManager->dvi2pngMode = BuildManager::DPM_BUILD_COMPILER;
+        }else{
+            buildManager->dvi2pngMode = static_cast <BuildManager::Dvi2PngMode>(m_dvi2pngModeIndex - 1);
+        }
 #ifdef NO_POPPLER_PREVIEW
-		if (buildManager->dvi2pngMode == BuildManager::DPM_EMBEDDED_PDF || buildManager->dvi2pngMode == BuildManager::DPM_LUA_EMBEDDED_PDF || buildManager->dvi2pngMode == BuildManager::DPM_XE_EMBEDDED_PDF) {
+        if (buildManager->dvi2pngMode>=BuildManager::DPM_EMBEDDED_PDF){
 			buildManager->dvi2pngMode = BuildManager::DPM_DVIPNG; //fallback when poppler is not included
 		}
 #endif
@@ -1917,7 +1935,9 @@ bool ConfigManager::execConfigDialog(QWidget *parentToDialog)
             if(displayedInterfaceStyle=="Orion Dark" && interfaceStyle!=displayedInterfaceStyle){
                 qApp->setStyleSheet("");
             }
-			setInterfaceStyle();
+            if(interfaceStyle!=oldInterfaceStyle){
+                setInterfaceStyle();
+            }
 		}
 
 		//language
@@ -1962,7 +1982,7 @@ bool ConfigManager::execConfigDialog(QWidget *parentToDialog)
 bool ConfigManager::systemUsesDarkMode(const QPalette &pal)
 {
 #if (QT_VERSION >= 0x060500) && (defined( Q_OS_WIN )||defined( Q_OS_LINUX ))
-    if(interfaceStyle=="Fusion" && interfaceStyle=="Windows"){
+    if(interfaceStyle=="Fusion" || interfaceStyle=="Windows"){
         // only style Fusion and Windows work properly with stylehints
         QStyleHints *sh=QGuiApplication::styleHints();
         return sh->colorScheme() == Qt::ColorScheme::Dark;
@@ -3716,6 +3736,21 @@ QVariant ConfigManager::getOption(const QString &name, const QVariant &defaultVa
 	if (rname.startsWith("texmaker/") && (option = getManagedProperty(rname.mid(9))))
 		return option->valueToQVariant();
 	return persistentConfig->value(rname, defaultValue);
+}
+/*!
+ * \brief return default value for given managed property
+ * \param name
+ * \return
+ */
+QVariant ConfigManager::getDefault(const QString &name) const
+{
+    REQUIRE_RET(persistentConfig, QVariant());
+    QString rname = name.startsWith("/") ? name.mid(1) : ("texmaker/" + name);
+    const ManagedProperty *option = nullptr;
+    if (rname.startsWith("texmaker/") && (option = getManagedProperty(rname.mid(9)))){
+        return option->def;
+    }
+    return QVariant();
 }
 
 bool ConfigManager::existsOption(const QString &name) const

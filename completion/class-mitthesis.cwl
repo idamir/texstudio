@@ -1,9 +1,8 @@
 # mitthesis class
-# Matthew Bertucci 2024/07/03 for v1.13
+# Matthew Bertucci 2025/05/07 for v1.20
 
 #include:class-report
 #include:etoolbox
-#include:iftex
 #include:geometry
 #include:mathtools
 #include:graphicx
@@ -45,7 +44,14 @@ twoside
 \begin{nomenclature}[space]
 \begin{nomenclature}[space][heading%text]
 \begin{nomenclature}[space][heading%text][level]
+\begin{nomenclature}[space][heading%text][level][style]
 \end{nomenclature}
+\begin{nomenclature*}
+\begin{nomenclature*}[space]
+\begin{nomenclature*}[space][heading%text]
+\begin{nomenclature*}[space][heading%text][level]
+\begin{nomenclature*}[space][heading%text][level][style]
+\end{nomenclature*}
 
 \EntryHeading{text}
 \entry{symbol}{description%text}
@@ -117,7 +123,6 @@ twoside
 # loads dvipsnames, svgnames, and x11names options of xcolor
 #include:caption
 #include:subcaption
-#include:titlesec
 # from dvipsnames option of xcolor
 Apricot#B
 Aquamarine#B

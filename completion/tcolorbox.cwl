@@ -159,26 +159,26 @@ library/all
 \RenewTotalTColorBox[init options]{cmd}{xargs}{options%keyvals}{content}
 \ProvideTotalTColorBox{cmd}{xargs}{options%keyvals}{content}#d
 \ProvideTotalTColorBox[init options]{cmd}{xargs}{options%keyvals}{content}#d
-\newtcbox{cmd}{options%keyvals}#d
-\newtcbox{cmd}[args]{options%keyvals}#d
-\newtcbox{cmd}[args][default]{options%keyvals}#d
-\newtcbox[init options]{cmd}{options%keyvals}#d
-\newtcbox[init options]{cmd}[args]{options%keyvals}#*d
-\newtcbox[init options]{cmd}[args][default]{options%keyvals}#*d
+\newtcbox{cmd}{options%keyvals}#d1
+\newtcbox{cmd}[args]{options%keyvals}#d1
+\newtcbox{cmd}[args][default]{options%keyvals}#d1
+\newtcbox[init options]{cmd}{options%keyvals}#d1
+\newtcbox[init options]{cmd}[args]{options%keyvals}#*d1
+\newtcbox[init options]{cmd}[args][default]{options%keyvals}#*d1
 \renewtcbox{cmd}{options%keyvals}
 \renewtcbox{cmd}[args]{options%keyvals}
 \renewtcbox{cmd}[args][default]{options%keyvals}
 \renewtcbox[init options]{cmd}{options%keyvals}
 \renewtcbox[init options]{cmd}[args]{options%keyvals}#*
 \renewtcbox[init options]{cmd}[args][default]{options%keyvals}#*
-\DeclareTCBox{cmd}{xargs}{options%keyvals}#d
-\DeclareTCBox[init options]{cmd}{xargs}{options%keyvals}#d
-\NewTCBox{cmd}{xargs}{options%keyvals}#d
-\NewTCBox[init options]{cmd}{xargs}{options%keyvals}#d
+\DeclareTCBox{cmd}{xargs}{options%keyvals}#d1
+\DeclareTCBox[init options]{cmd}{xargs}{options%keyvals}#d1
+\NewTCBox{cmd}{xargs}{options%keyvals}#d1
+\NewTCBox[init options]{cmd}{xargs}{options%keyvals}#d1
 \RenewTCBox{cmd}{xargs}{options%keyvals}
 \RenewTCBox[init options]{cmd}{xargs}{options%keyvals}
-\ProvideTCBox{cmd}{xargs}{options%keyvals}#d
-\ProvideTCBox[init options]{cmd}{xargs}{options%keyvals}#d
+\ProvideTCBox{cmd}{xargs}{options%keyvals}#d1
+\ProvideTCBox[init options]{cmd}{xargs}{options%keyvals}#d1
 \DeclareTotalTCBox{cmd}{xargs}{options%keyvals}{content}#d
 \DeclareTotalTCBox[init options]{cmd}{xargs}{options%keyvals}{content}#d
 \NewTotalTCBox{cmd}{xargs}{options%keyvals}{content%text}#d
@@ -302,13 +302,13 @@ coltitle=#%color
 fontupper=%<text%>
 fontlower=%<text%>
 fonttitle=%<text%>
-halign=#justify,left,flush left,right,flush right,center,flush center
-halign upper=#justify,left,flush left,right,flush right,center,flush center
+halign=#justify,left,flush left,right,flush right,center,flush center#c
+halign upper=#justify,left,flush left,right,flush right,center,flush center#c
 halign code={%<code%>}
 halign upper code={%<code%>}
-halign lower=#justify,left,flush left,right,flush right,center,flush center
+halign lower=#justify,left,flush left,right,flush right,center,flush center#c
 halign lower code={%<code%>}
-halign title=#justify,left,flush left,right,flush right,center,flush center
+halign title=#justify,left,flush left,right,flush right,center,flush center#c
 halign title code={%<code%>}
 flushleft upper
 center upper
@@ -571,13 +571,13 @@ IfBooleanT={%<arg%>}{%<true%>}
 IfBooleanF={%<arg%>}{%<false%>}
 void
 nirvana
-blend before title=#colon,dash,colon hang,dash hang
+blend before title=#colon,dash,colon hang,dash hang#c
 blend before title code={%<code%>}
 list entry=%<text%>
 list text=%<text%>
 add to list={%<list%>}{%<type%>}
 sidebyside#true,false
-sidebyside align=#center,top,bottom,center seam,top seam,bottom seam
+sidebyside align=#center,top,bottom,center seam,top seam,bottom seam#c
 sidebyside gap=##L
 lefthand width=##L
 righthand width=##L
@@ -620,7 +620,7 @@ tcbox raise=##L
 tcbox raise base
 on line
 verbatim
-tcbox width=#auto,auto limited,forced center,forced left,forced right,minimum center,minimum left,minimum right
+tcbox width=#auto,auto limited,forced center,forced left,forced right,minimum center,minimum left,minimum right#c
 #endkeyvals
 
 ## not documented
@@ -664,7 +664,7 @@ tcbox width=#auto,auto limited,forced center,forced left,forced right,minimum ce
 # crefname={%<singular%>}{%<plural%>}
 # Crefname={%<singular%>}{%<plural%>}
 # blend into=#figures,tables,listings
-# blend before title=#colon,dash,colon hang,dash hang
+# blend before title=#colon,dash,colon hang,dash hang#c
 # blend before title code=
 # list inside=
 # list type=

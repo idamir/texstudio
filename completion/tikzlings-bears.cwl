@@ -1,5 +1,5 @@
 # tikzlings-bears package
-# Matthew Bertucci 2024/12/12 for v2.1
+# Matthew Bertucci 2025/03/25 for v2.3
 
 #include:tikz
 #include:tikzlings-addons
@@ -9,8 +9,9 @@
 
 #keyvals:\bear#c
 body=#%color
-eye=#%color
+eyes=#%color
 mouth=#%color
+openmouth
 back
 3D
 contour
@@ -86,6 +87,8 @@ milkshake=#%color
 wine
 wine=#%color
 cocktail
+randomhead
+randomaccessories
 banana
 banana=#%color
 cricket
@@ -143,11 +146,12 @@ xshift=##L
 yshift=##L
 #endkeyvals
 
-\bearhookbackground#*
-\bearhookbelly#*
-\bearhookbody#*
-\bearhookforeground#*
-\tikzlinghookbackground#*
-\tikzlinghookbelly#*
-\tikzlinghookbody#*
-\tikzlinghookforeground#*
+# deprecated
+\bearhookbackground#S
+\bearhookbelly#S
+\bearhookbody#S
+\bearhookforeground#S
+\tikzlinghookbackground#S
+\tikzlinghookbelly#S
+\tikzlinghookbody#S
+\tikzlinghookforeground#S

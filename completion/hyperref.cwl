@@ -3,7 +3,7 @@
 #modified Edson 30-12-2010
 #modified Denis Bitouz\'e 14-06-2014
 #modified muzimuzhi 18 Jan 2020, 8 May 2020, 8 Jul 2020
-#modified Matthew Bertucci 24 May 2024 for v7.01i
+#modified Matthew Bertucci 21 May 2025 for v7.01m
 
 #include:iftex
 #include:keyval
@@ -17,7 +17,6 @@
 #include:bitset
 #include:bigintcalc
 #include:atbegshi
-#include:atveryend
 #include:rerunfilecheck
 #include:nameref
 #include:etoolbox
@@ -236,7 +235,7 @@ nextactionraw={%<PDF code%>}
 \autoref{label}#r
 \autoref*{label}#r
 \thispdfpagelabel
-\pdfstringdef{macroname%cmd}{TeXstring}#d
+\pdfstringdef{command}{TeX code}#d
 \begin{NoHyper}
 \end{NoHyper}
 \pdfbookmark{text}{name}
@@ -244,8 +243,8 @@ nextactionraw={%<PDF code%>}
 \currentpdfbookmark{text}{name}
 \subpdfbookmark{text}{name}
 \belowpdfbookmark{text}{name}
-\texorpdfstring{TEXstring}{PDFstring}
-\pdfstringdefDisableCommands{hooks}
+\texorpdfstring{TeX code}{PDF string}
+\pdfstringdefDisableCommands{code}
 \hypercalcbp{dimen specification}
 
 \Acrobatmenu{menuoption}{text}

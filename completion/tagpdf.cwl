@@ -1,13 +1,7 @@
 # tagpdf package
-# Matthew Bertucci 2024/12/21 for v0.99k
+# Matthew Bertucci 2025/05/17 for v0.99q
 
 #include:pdfmanagement-testphase
-
-#keyvals:\usepackage/tagpdf#c
-luamode
-genericmode
-disabledelayedshipout
-#endkeyvals
 
 \tagpdfsetup{keyvals}
 
@@ -21,6 +15,10 @@ activate/struct#true,false
 activate/struct-dest#true,false
 activate/tagunmarked#true,false
 activate/tree#true,false
+attach-css#true,false
+css-list={%<file1,file2,...%>}
+css-list-add={%<file1,file2,...%>}
+css-list-remove={%<file1,file2,...%>}
 role/mathml-tags#true,false
 role/new-tag=%<tag/role%>
 role/new-attribute={%<name%>}{%<content%>}
@@ -29,6 +27,7 @@ debug/show
 debug/show=#para,paraOff,spaces,spacesOff
 debug/log=#none,v,vv,vvv,all
 debug/uncompress
+debug/parent-child-check=#on,off,atend
 viewer/pane/mathml#true,false
 viewer/pane/mathsource#true,false
 viewer/startstructure=%<number%>
@@ -89,12 +88,14 @@ title=%<text%>
 title-o=%<text%>
 AF=%<object%>
 root-AF=%<object%>
+root-supplemental-file=%<file name%>
 AFinline=%<text%>
 AFinline-o=%<text%>
 texsource=%<text%>
 lang=%<lang id%>
 ref=%<label1,label2,...%>}
 E=%<text%>
+phoneme=%<IPA text%>
 #endkeyvals
 
 \tagstructend

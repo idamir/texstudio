@@ -116,14 +116,6 @@ bool programStopped = false;
 Texstudio *txsInstance = nullptr;
 QCache<QString, QIcon> iconCache;
 
-// workaround needed on OSX due to https://bugreports.qt.io/browse/QTBUG-49576
-void hideSplash()
-{
-#ifdef Q_OS_MAC
-	if (txsInstance)
-		txsInstance->hideSplash();
-#endif
-}
 /*!
  * \brief constructor
  *
@@ -159,8 +151,6 @@ Texstudio::Texstudio(QWidget *parent, Qt::WindowFlags flags, QSplashScreen *spla
 	editors = nullptr;
 	m_languages = nullptr; //initial state to avoid crash on OSX
     currentSection=nullptr;
-
-	connect(&buildManager, SIGNAL(hideSplash()), this, SLOT(hideSplash()));
 
 	readSettings();
 
@@ -356,7 +346,8 @@ Texstudio::Texstudio(QWidget *parent, Qt::WindowFlags flags, QSplashScreen *spla
         resetDocks();
     }
 #ifdef Q_OS_MAC
-    if(qApp->primaryScreen()->size().height()<=900){
+    bool disable_OSX_workaround=config->value("texmaker/Editor/Disable_OSX_DockFallback",false).toBool();
+    if(qApp->primaryScreen()->size().height()<=900 && !disable_OSX_workaround){
         // on OSX only, force style to FUSION if style is MACOS (https://github.com/texstudio-org/texstudio/issues/3637)
         if(configManager.interfaceStyle.isEmpty() || configManager.interfaceStyle == "macOS"){
             configManager.interfaceStyle = "Fusion";
@@ -368,7 +359,7 @@ Texstudio::Texstudio(QWidget *parent, Qt::WindowFlags flags, QSplashScreen *spla
     if(checkDockSpread()){
 #ifdef Q_OS_MAC
         // on OSX only, force style to FUSION if style is MACOS (https://github.com/texstudio-org/texstudio/issues/3637)
-        if(configManager.interfaceStyle.isEmpty() || configManager.interfaceStyle == "macOS"){
+        if( (configManager.interfaceStyle.isEmpty() || configManager.interfaceStyle == "macOS")&& !disable_OSX_workaround){
             configManager.interfaceStyle = "Fusion";
             configManager.setInterfaceStyle();
         }
@@ -492,9 +483,18 @@ Texstudio::Texstudio(QWidget *parent, Qt::WindowFlags flags, QSplashScreen *spla
 	connectWithAdditionalArguments(this, SIGNAL(infoAfterTypeset()), this, "runScripts", QList<QVariant>() << Macro::ST_AFTER_TYPESET);
 	connectWithAdditionalArguments(&buildManager, SIGNAL(endRunningCommands(QString, bool, bool, bool)), this, "runScripts", QList<QVariant>() << Macro::ST_AFTER_COMMAND_RUN);
 
+    QString txsLastStartupCompletion=config->value("texmaker/startupCompletion","new").toString();
+    if(txsLastStartupCompletion=="restoreSession"){
+        // last txs start failed in restore, don't restore this time
+        ConfigManager::dontRestoreSession=true;
+    }
 	if (configManager.sessionRestore && !ConfigManager::dontRestoreSession) {
+        config->setValue("texmaker/startupCompletion","restoreSession");
+        config->sync();
 		fileRestoreSession(false, false);
 	}
+    config->setValue("texmaker/startupCompletion","complete");
+    config->sync();
 	splashscreen = nullptr;
 }
 /*!
@@ -1358,7 +1358,7 @@ void Texstudio::setupMenus()
 	act->trigger(); // initialize menu for specified type
 
 	//  User
-        newManagedMenu("main/macros", tr("Ma&cros"));
+    newManagedMenu("main/macros", tr("Ma&cros"));
 	updateUserMacros();
 	scriptengine::macros = &configManager.completerConfig->userMacros;
 
@@ -1403,9 +1403,10 @@ void Texstudio::setupMenus()
         }
     }
 
-	newManagedAction(menu, "enlargePDF", tr("Show embedded PDF large"), SLOT(enlargeEmbeddedPDFViewer()));
-	newManagedAction(menu, "shrinkPDF", tr("Show embedded PDF small"), SLOT(shrinkEmbeddedPDFViewer()));
-
+	act=newManagedAction(menu, "enlargePDF", tr("Show embedded PDF large"), SLOT(enlargeEmbeddedPDFViewer()));
+	act->setEnabled(false);
+	act=newManagedAction(menu, "shrinkPDF", tr("Show embedded PDF small"), SLOT(shrinkEmbeddedPDFViewer()));
+	act->setEnabled(false);
 	newManagedAction(menu, "closeelement", tr("Close Element"), SLOT(viewCloseElement()), Qt::Key_Escape);
 
 	menu->addSeparator();
@@ -1506,6 +1507,7 @@ void Texstudio::setupMenus()
 	newManagedAction(menu, "checkinstall", tr("Check LaTeX Installation"), SLOT(checkLatexInstall()));
 	newManagedAction(menu, "checkcwls", tr("Check Active Completion Files"), SLOT(checkCWLs()));
     newManagedAction(menu, "checklt", tr("Check LanguageTool"), SLOT(checkLanguageTool()));
+    newManagedAction(menu, "showsettings", tr("Show settings"), SLOT(showSettings()));
 	newManagedAction(menu, "bugreport", tr("Bugs Report/Feature Request"), SLOT(openBugsAndFeatures()));
 	newManagedAction(menu, "appinfo", tr("About TeXstudio..."), SLOT(helpAbout()), 0, APPICON)->setMenuRole(QAction::AboutRole);
 
@@ -3524,7 +3526,7 @@ void Texstudio::viewDocumentList()
 	int i = 0;
 	QStringList names;
 	foreach (LatexEditorView *edView, editorList) {
-		names << edView->displayName();
+        names << edView->document->getFileName();
 		if (!configManager.mruDocumentChooser && edView == curEdView) curIndex = i;
 		i++;
 	}
@@ -3538,7 +3540,7 @@ void Texstudio::viewDocumentOpenFromChoosen(const QString &doc, int duplicate, i
 {
 	if (duplicate < 0) return;
 	foreach (LatexEditorView *edView, editors->editors()) {
-		QString  name = edView->displayName();
+        QString  name = edView->document->getFileName();
 		if (name == doc) {
 			duplicate -= 1;
 			if (duplicate < 0) {
@@ -4777,6 +4779,56 @@ void Texstudio::restoreDefaultSettings()
 	}
 }
 
+void Texstudio::showSettings()
+{
+    QFile f(configManager.configFileName);
+    if (f.exists()) {
+        LatexEditorView *edView=load(f.fileName());
+        const QString fn=QDir::tempPath() + QDir::separator()+"texstudio_settings.txt";
+
+        fileSaveAs(fn,true); // rename to avoid accidental overwrite
+        // blank some sensitive info
+        QString completeText=edView->document->text();
+        completeText=completeText.replace(QRegularExpression("AIchat\\\\APIKEY=.+"),"AIchat\\APIKEY=...");
+        // filter out default values
+        const QString lineEnd=edView->document->lineEndingString();
+        QStringList lines=completeText.split(lineEnd);
+        completeText.clear();
+        bool texmakerRegion=false;
+        for(QString &line:lines){
+            if(line=="[texmaker]"){
+                texmakerRegion=true;
+                completeText+=line+"\n";
+                continue;
+            } else if(line.startsWith("[")){
+                texmakerRegion=false;
+            }
+            if(!texmakerRegion) continue;
+            QString key=line.section('=',0,0);
+            key=key.replace("\\","/");
+            key=key.replace("%20"," ");
+            // skip some keys
+            const QStringList skipKeys={"Tools/","qttwp","MainWindow","Preview","Geometries","InsertGraphics","Files"};
+            bool skip=false;
+            for(const QString &skipKey:skipKeys){
+                if(key.startsWith(skipKey)){
+                    skip=true;
+                    break;
+                }
+            }
+            if(skip) continue;
+            QVariant def=configManager.getDefault(key);
+            QVariant val=configManager.getOption(key);
+            if(def!=val){
+                completeText+=line+"\n";
+            }
+        }
+        edView->document->setText(completeText,false);
+    } else {
+        UtilsUi::txsWarning(tr("Settings file does not exist"));
+    }
+}
+
 ////////////////// STRUCTURE ///////////////////
 void Texstudio::updateStructure(bool initial, LatexDocument *doc, bool hidden)
 {
@@ -5565,7 +5617,6 @@ void Texstudio::quickGraphics(const QString &graphicsFile)
 
 	delete graphicsDlg;
 }
-
 void Texstudio::quickMath()
 {
 #ifdef Q_OS_WIN
@@ -5574,7 +5625,7 @@ void Texstudio::quickMath()
 #endif
 }
 
-void Texstudio::aiChat()
+void Texstudio::aiChat(const QString queryText)
 {
     if(configManager.ai_apikey.isEmpty() && configManager.ai_provider<2){
         // message box for now, only for external ai provider
@@ -5596,7 +5647,14 @@ void Texstudio::aiChat()
         }
     }
     aiChatDlg->clearConversation();
+    if(!queryText.isEmpty()){
+        aiChatDlg->setQueryText(queryText);
+    }
     aiChatDlg->show();
+    if(!queryText.isEmpty()){
+        // in case of preset query, execute query
+        aiChatDlg->executeQuery();
+    }
 }
 
 void Texstudio::quickTabbing()
@@ -5778,6 +5836,9 @@ void Texstudio::execMacro(const Macro &m, const MacroExecContext &context, bool 
 {
 	if (m.type == Macro::Script) {
 		runScript(m.script(), context, allowWrite);
+    } else if (m.type == Macro::AIQuery) {
+        // perform ai query
+        aiChat(m.snippet());
 	} else {
 		if (currentEditorView()) {
 			currentEditorView()->insertSnippet(m.snippet());
@@ -6097,6 +6158,7 @@ bool Texstudio::runCommandAsync(const QString &commandline, const char * returnC
     QObject *obj=sender();
     QString finame = documents.getTemporaryCompileFileName();
     ProcessX *proc = buildManager.firstProcessOfDirectExpansion(commandline, QFileInfo(finame));
+    if(!proc) return false;
     setStatusMessageProcess(tr("  Running this command: ") + proc->getCommandLine());
     connect(proc, SIGNAL(finished(int,QProcess::ExitStatus)), obj, returnCMD);
     QString *buffer=new QString();
@@ -6215,9 +6277,9 @@ void Texstudio::runInternalPdfViewer(const QFileInfo &master, const QString &opt
 			viewer->setStateEnlarged(true);
             centralVSplitter->hide();
 		}
-
 		if (preserveDuplicates) break;
 	}
+	setEnabledMenusEnlargeShrink(embedded && !configManager.viewerEnlarged, embedded && configManager.viewerEnlarged);
 #if defined Q_OS_MAC
 	if (embedded)
 		setMenuBar(configManager.menuParentsBar);
@@ -6427,12 +6489,14 @@ void Texstudio::beginRunningSubCommand(ProcessX *p, const QString &commandMain, 
 
 void Texstudio::endRunningSubCommand(ProcessX *p, const QString &commandMain, const QString &subCommand, const RunCommandFlags &flags)
 {
+#ifndef Q_OS_OSX //deactivate this code as pop-up messes with the extra started eventloop (#4070)
 	if (p->exitCode() && (flags & RCF_COMPILES_TEX) && !logExists()) {
 		if (!QFileInfo(QFileInfo(documents.getTemporaryCompileFileName()).absolutePath()).isWritable())
 			UtilsUi::txsWarning(tr("You cannot compile the document in a non writable directory."));
 		else
 			UtilsUi::txsWarning(tr("Could not start %1.").arg( buildManager.getCommandInfo(commandMain).displayName + ":" + buildManager.getCommandInfo(subCommand).displayName + ":\n" + p->getCommandLine()));
 	}
+#endif
 	if ((flags & RCF_CHANGE_PDF)  && !(flags & RCF_WAITFORFINISHED) && (runningPDFAsyncCommands > 0)) {
 		runningPDFAsyncCommands--;
 #ifndef NO_POPPLER_PREVIEW
@@ -7229,13 +7293,6 @@ void Texstudio::executeCommandLine(const QStringList &args, bool realCmdLine)
     return;
 }
 /*!
- * \brief hide splash screen again
- */
-void Texstudio::hideSplash()
-{
-	if (splashscreen) splashscreen->hide();
-}
-/*!
  * \brief execute self tests
  * \param command line arguments which may influence the behavior of this method
  * options are:
@@ -7739,6 +7796,7 @@ void Texstudio::pdfClosed()
 	PDFDocument *from = qobject_cast<PDFDocument *>(sender());
 	if (from) {
 		if (from->embeddedMode) {
+			setEnabledMenusEnlargeShrink(false, false);
 			shrinkEmbeddedPDFViewer(true);
 			QList<int> sz = mainHSplitter->sizes(); // set widths to 50%, eventually restore user setting
 			int sum = 0;
@@ -8249,6 +8307,7 @@ void Texstudio::gotoLine(LatexDocument *doc, int line, int col)
  */
 void Texstudio::gotoLine(QTreeWidgetItem *item, int)
 {
+    shrinkEmbeddedPDFViewer();
     StructureEntry *se=item->data(0,Qt::UserRole).value<StructureEntry *>();
     if(!se){
         // sepcial treatment for doc header
@@ -8987,13 +9046,14 @@ void Texstudio::showPreview(const QString &text)
 	QStringList header;
 	for (int l = 0; l < m_endingLine; l++)
 		header << edView->editor->document()->line(l).text();
-	if (buildManager.dvi2pngMode == BuildManager::DPM_EMBEDDED_PDF || buildManager.dvi2pngMode == BuildManager::DPM_LUA_EMBEDDED_PDF || buildManager.dvi2pngMode == BuildManager::DPM_XE_EMBEDDED_PDF) {
+	BuildManager::Dvi2PngMode dvi2pngModeDerived = buildManager.guessDvi2PngMode();
+    if (dvi2pngModeDerived>=BuildManager::DPM_EMBEDDED_PDF) {
 		header << "\\usepackage[active,tightpage]{preview}"
 		       << "\\usepackage{varwidth}"
 		       << "\\AtBeginDocument{\\begin{preview}\\begin{varwidth}{\\linewidth}}"
 		       << "\\AtEndDocument{\\end{varwidth}\\end{preview}}";
 	}
-	header << "\\pagestyle{empty}";// << "\\begin{document}";
+	header << "\\pagestyle{empty}";
 	buildManager.preview(header.join("\n"), PreviewSource(text, -1, -1, true), documents.getCompileFileName(), edView->editor->document()->codec());
 }
 
@@ -9087,14 +9147,14 @@ QStringList Texstudio::makePreviewHeader(const LatexDocument *rootDoc)
 			header << newLine;
 		}
 	}
-	if ((buildManager.dvi2pngMode == BuildManager::DPM_EMBEDDED_PDF || buildManager.dvi2pngMode == BuildManager::DPM_LUA_EMBEDDED_PDF || buildManager.dvi2pngMode == BuildManager::DPM_XE_EMBEDDED_PDF)
-			&& configManager.previewMode != ConfigManager::PM_EMBEDDED) {
+	BuildManager::Dvi2PngMode dvi2pngModeDerived = buildManager.guessDvi2PngMode();
+    if (dvi2pngModeDerived>=BuildManager::DPM_EMBEDDED_PDF && configManager.previewMode != ConfigManager::PM_EMBEDDED) {
 		header << "\\usepackage[active,tightpage]{preview}"
 			<< "\\usepackage{varwidth}"
 			<< "\\AtBeginDocument{\\begin{preview}\\begin{varwidth}{\\linewidth}}"
 			<< "\\AtEndDocument{\\end{varwidth}\\end{preview}}";
 	}
-	header << "\\pagestyle{empty}";// << "\\begin{document}";
+	header << "\\pagestyle{empty}";
 	return header;
 }
 
@@ -10072,44 +10132,63 @@ void Texstudio::addRowCB()
 {
 	if (!currentEditorView()) return;
 	QDocumentCursor cur = currentEditorView()->editor->cursor();
-	if (!LatexTables::inTableEnv(cur)) return;
-	int cols = LatexTables::getNumberOfColumns(cur);
-	if (cols < 1) return;
-	LatexTables::addRow(cur, cols);
+    LatexDocument *doc=dynamic_cast<LatexDocument*>(cur.document());
+    StackEnvironment stackEnv;
+    doc->getEnv(cur.lineNumber(),stackEnv);
+    int i=LatexTables::inTableEnv(stackEnv);
+    if (i<0) return;
+    Environment env=stackEnv[i];
+    if(!doc->isEnvClosed(env)) return; // don't work on unclosed envs
+    LatexTables::addRow(cur, env);
 }
 
 void Texstudio::addColumnCB()
 {
 	if (!currentEditorView()) return;
 	QDocumentCursor cur = currentEditorView()->editor->cursor();
-	if (!LatexTables::inTableEnv(cur)) return;
-	int col = LatexTables::getColumn(cur) + 1;
+    LatexDocument *doc=dynamic_cast<LatexDocument*>(cur.document());
+    StackEnvironment stackEnv;
+    doc->getEnv(cur.lineNumber(),stackEnv);
+    int i=LatexTables::inTableEnv(stackEnv);
+    if (i<0) return;
+    Environment env=stackEnv.at(i);
+    if(!doc->isEnvClosed(env)) return; // don't work on unclosed envs
+    int col = LatexTables::getColumn(cur,env) + 1;
 	if (col < 1) return;
 	if (col == 1 && cur.atLineStart()) col = 0;
-	LatexTables::addColumn(currentEditorView()->document, currentEditorView()->editor->cursor().lineNumber(), col);
+    //LatexTables::addColumn(currentEditorView()->document, currentEditorView()->editor->cursor().lineNumber(), col);
+    LatexTables::addColumn(env, currentEditorView()->editor->cursor().lineNumber(), col);
 }
 
 void Texstudio::removeColumnCB()
 {
 	if (!currentEditorView()) return;
 	QDocumentCursor cur = currentEditorView()->editor->cursor();
-	if (!LatexTables::inTableEnv(cur)) return;
+    LatexDocument *doc=dynamic_cast<LatexDocument*>(cur.document());
+    StackEnvironment stackEnv;
+    doc->getEnv(cur.lineNumber(),stackEnv);
+    int i=LatexTables::inTableEnv(stackEnv);
+    if (i<0) return;
+    Environment env=stackEnv[i];
+    if(!doc->isEnvClosed(env)) return; // don't work on unclosed envs
 	// check if cursor has selection
 	int numberOfColumns = 1;
-	int col = LatexTables::getColumn(cur);
+    int col = LatexTables::getColumn(cur,env);
 	if (cur.hasSelection()) {
 		// if selection span within one row, romove all touched columns
 		QDocumentCursor c2(cur.document(), cur.anchorLineNumber(), cur.anchorColumnNumber());
-		if (!LatexTables::inTableEnv(c2)) return;
+        i=LatexTables::inTableEnv(c2);
+        if (i<0) return;
+        env=stackEnv[i];
 		QString res = cur.selectedText();
 		if (res.contains("\\\\")) return;
-		int col2 = LatexTables::getColumn(c2);
+        int col2 = LatexTables::getColumn(c2,env);
 		numberOfColumns = abs(col - col2) + 1;
 		if (col2 < col) col = col2;
 	}
 	int ln = cur.lineNumber();
-	for (int i = 0; i < numberOfColumns; i++) {
-	        LatexTables::removeColumn(currentEditorView()->document, ln, col, nullptr);
+    for (int j = 0; j < numberOfColumns; j++) {
+            LatexTables::removeColumn(env, ln, col, nullptr);
 	}
 }
 
@@ -10117,41 +10196,55 @@ void Texstudio::removeRowCB()
 {
 	if (!currentEditorView()) return;
 	QDocumentCursor cur = currentEditorView()->editor->cursor();
-	if (!LatexTables::inTableEnv(cur)) return;
-	LatexTables::removeRow(cur);
+    LatexDocument *doc=dynamic_cast<LatexDocument*>(cur.document());
+    StackEnvironment stackEnv;
+    doc->getEnv(cur.lineNumber(),stackEnv);
+    int i=LatexTables::inTableEnv(stackEnv);
+    if (i<0) return;
+    Environment env=stackEnv[i];
+    if(!doc->isEnvClosed(env)) return; // don't work on unclosed envs
+    LatexTables::removeRow(cur,env);
 }
 
 void Texstudio::cutColumnCB()
 {
 	if (!currentEditorView()) return;
 	QDocumentCursor cur = currentEditorView()->editor->cursor();
-	if (!LatexTables::inTableEnv(cur)) return;
+    LatexDocument *doc=dynamic_cast<LatexDocument*>(cur.document());
+    StackEnvironment stackEnv;
+    doc->getEnv(cur.lineNumber(),stackEnv);
+    int i=LatexTables::inTableEnv(stackEnv);
+    if (i<0) return;
+    Environment env=stackEnv[i];
+    if(!doc->isEnvClosed(env)) return; // don't work on unclosed envs
 	// check if cursor has selection
 	int numberOfColumns = 1;
-	int col = LatexTables::getColumn(cur);
+    int col = LatexTables::getColumn(cur,env);
 	if (cur.hasSelection()) {
 		// if selection span within one row, romove all touched columns
 		QDocumentCursor c2(cur.document(), cur.anchorLineNumber(), cur.anchorColumnNumber());
-		if (!LatexTables::inTableEnv(c2)) return;
+        i=LatexTables::inTableEnv(c2);
+        if (i<0) return;
+        env=stackEnv[i];
 		QString res = cur.selectedText();
 		if (res.contains("\\\\")) return;
-		int col2 = LatexTables::getColumn(c2);
+        int col2 = LatexTables::getColumn(c2,env);
 		numberOfColumns = abs(col - col2) + 1;
 		if (col2 < col) col = col2;
 	}
 	int ln = cur.lineNumber();
 	m_columnCutBuffer.clear();
 	QStringList lst;
-	for (int i = 0; i < numberOfColumns; i++) {
-		lst.clear();
-		LatexTables::removeColumn(currentEditorView()->document, ln, col, &lst);
+    for (int j = 0; j < numberOfColumns; j++) {
+        lst.clear();
+        LatexTables::removeColumn(env, ln, col, &lst);
 		if (m_columnCutBuffer.isEmpty()) {
 			m_columnCutBuffer = lst;
 		} else {
-			for (int i = 0; i < m_columnCutBuffer.size(); i++) {
-				QString add = "&";
+            for (int l = 0; l < m_columnCutBuffer.size(); l++) {
+                QString add = l>0 ? "&" : ""; // no & in first line as it is the preamble
 				if (!lst.isEmpty()) add += lst.takeFirst();
-				m_columnCutBuffer[i] += add;
+                m_columnCutBuffer[l] += add;
 			}
 		}
 	}
@@ -10162,26 +10255,43 @@ void Texstudio::pasteColumnCB()
 {
 	if (!currentEditorView()) return;
 	QDocumentCursor cur = currentEditorView()->editor->cursor();
-	if (!LatexTables::inTableEnv(cur)) return;
-	int col = LatexTables::getColumn(cur) + 1;
-	if (col == 1 && cur.atLineStart()) col = 0;
-	LatexTables::addColumn(currentEditorView()->document, currentEditorView()->editor->cursor().lineNumber(), col, &m_columnCutBuffer);
+    LatexDocument *doc=dynamic_cast<LatexDocument*>(cur.document());
+    StackEnvironment stackEnv;
+    doc->getEnv(cur.lineNumber(),stackEnv);
+    int i=LatexTables::inTableEnv(stackEnv);
+    if (i<0) return;
+    Environment env=stackEnv[i];
+    if(!doc->isEnvClosed(env)) return; // don't work on unclosed envs
+    int col = LatexTables::getColumn(cur,env) + 1;
+    if (col < 1) return;
+    if (col == 1 && cur.atLineStart()) col = 0;
+    LatexTables::addColumn(env, currentEditorView()->editor->cursor().lineNumber(), col, &m_columnCutBuffer);
 }
 
 void Texstudio::addHLineCB()
 {
 	if (!currentEditorView()) return;
-	QDocumentCursor cur = currentEditorView()->editor->cursor();
-	if (!LatexTables::inTableEnv(cur)) return;
-	LatexTables::addHLine(cur);
+    QDocumentCursor cur = currentEditorView()->editor->cursor();
+    LatexDocument *doc=dynamic_cast<LatexDocument*>(cur.document());
+    StackEnvironment stackEnv;
+    doc->getEnv(cur.lineNumber(),stackEnv);
+    int i=LatexTables::inTableEnv(stackEnv);
+    if (i<0) return;
+    Environment env=stackEnv[i];
+    LatexTables::addHLine(cur,env);
 }
 
 void Texstudio::remHLineCB()
 {
 	if (!currentEditorView()) return;
-	QDocumentCursor cur = currentEditorView()->editor->cursor();
-	if (!LatexTables::inTableEnv(cur)) return;
-	LatexTables::addHLine(cur, -1, true);
+    QDocumentCursor cur = currentEditorView()->editor->cursor();
+    LatexDocument *doc=dynamic_cast<LatexDocument*>(cur.document());
+    StackEnvironment stackEnv;
+    doc->getEnv(cur.lineNumber(),stackEnv);
+    int i=LatexTables::inTableEnv(stackEnv);
+    if (i<0) return;
+    Environment env=stackEnv[i];
+    LatexTables::addHLine(cur,env, true);
 }
 
 void Texstudio::findWordRepetions()
@@ -11379,6 +11489,7 @@ void Texstudio::enlargeEmbeddedPDFViewer()
 	enlargedViewer=true;
 	pdfConfig->followFromScroll=false;
 	viewer->setStateEnlarged(true);
+	setEnabledMenusEnlargeShrink(false, true);
 #endif
 }
 /*!
@@ -11403,9 +11514,18 @@ void Texstudio::shrinkEmbeddedPDFViewer(bool preserveConfig)
 		enlargedViewer=false;
 	}
 	viewer->setStateEnlarged(false);
+	setEnabledMenusEnlargeShrink(true, false);
 #else
 	Q_UNUSED(preserveConfig)
 #endif
+}
+
+void Texstudio::setEnabledMenusEnlargeShrink(bool enabledEnlarge, bool enabledShrink)
+{
+	QAction *act=configManager.getManagedAction("main/view/enlargePDF");
+	act->setEnabled(enabledEnlarge);
+	act=configManager.getManagedAction("main/view/shrinkPDF");
+	act->setEnabled(enabledShrink);
 }
 
 void Texstudio::showStatusbar()

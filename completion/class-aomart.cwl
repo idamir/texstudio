@@ -1,11 +1,12 @@
 # aomart class
-# Matthew Bertucci 2024/06/11 for v1.28
+# Matthew Bertucci 2025/05/13 for v1.34
 
 #include:class-amsart
 #include:fancyhdr
 #include:lastpage
 #include:ifpdf
 #include:graphicx
+#include:zref-savepos
 #include:environ
 #include:yhmath
 #include:cmtiup
@@ -82,7 +83,16 @@ twoside
 \arxivnumber{number}
 \oldsubsections#*
 \widebar{arg}#m
-\EditorialComment{comment%todo}#D
+\EditorialComment{comments%todo}#D
+\EditorialComment{comments%todo}[voffset]#D
+\EditorialComment[audience]{comments%todo}#D
+\EditorialComment[audience]{comments%todo}[voffset]#D
+\Highlight{text}
+\Highlight[audience]{text}
+\ECSelect{audiences}
+\ECSelect[color]{audiences}
+\HSelect{audience}
+\HSelect[color]{audience}
 \fullref{word%text}{label}#r
 \pfullref{word%text}{label}#r
 \bfullref{word%text}{label}#r
@@ -91,6 +101,8 @@ twoside
 \fullpageref[prefix text%text]{label}#r
 \newtheorem[code]{envname}{caption}#*N
 \newtheorem*[code]{envname}{caption}#*N
+\includecolorgraphics{color file%imagefile}{bw file%imagefile}#g
+\includecolorgraphics[options%keyvals]{color file%imagefile}{bw file%imagefile}#g
 \funding{sponsor}{grant-id}
 \funding[text]{sponsor}{grant-id}
 \doi{DOI%URL}#U

@@ -1,5 +1,5 @@
 # xcharter-otf package
-# Matthew Bertucci 2024/10/28 for v0.64
+# Matthew Bertucci 2025/02/16 for v0.67
 
 #include:iftex
 #include:unicode-math
@@ -7,6 +7,7 @@
 
 #keyvals:\usepackage/xcharter-otf#c
 no-text
+fakedscripts
 tight
 loose
 fulloldstyle
@@ -14,6 +15,7 @@ math-style=#ISO,TeX,french,upright
 bold-style=#ISO,TeX,upright
 nabla=#italic,upright,literal
 partial=#italic,upright,literal
+CharacterVariant=%<number%>
 CharacterVariant={%<glyph num list%>:%<variety num%>}
 StylisticSet=#4,5,6
 Style=#upint,leqslant,smaller,subsetneq,parallelslant
@@ -48,6 +50,7 @@ Scale=%<factor%>
 \doublecap#m
 \doublecup#m
 \downdasharrow#m
+\downrightcurvedarrow#m
 \enleadertwodots#m
 \eqqslantgtr#m
 \eqqslantless#m
@@ -66,6 +69,7 @@ Scale=%<factor%>
 \leadsto#m
 \leftcurvedarrow#m
 \leftdasharrow#m
+\leftdowncurvedarrow#m
 \leqqslant#m
 \lesseqqslantgtr#m
 \lesseqslantgtr#m
@@ -166,6 +170,7 @@ Scale=%<factor%>
 \upbackepsilon#m
 \updasharrow#m
 \updigamma#*m
+\uprightcurvearrow#m
 \varemptyset#m
 \varpropto#m
 \varsubsetneq#m

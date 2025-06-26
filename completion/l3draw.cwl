@@ -1,5 +1,5 @@
 # l3draw package
-# Matthew Bertucci 2024/12/21
+# Matthew Bertucci 2025/05/19
 
 \draw_baseline:n {%<⟨length⟩%>}#/%expl3
 \draw_begin:#/%expl3
@@ -81,6 +81,11 @@
 \draw_xvec:n {%<⟨point⟩%>}#/%expl3
 \draw_yvec:n {%<⟨point⟩%>}#/%expl3
 \draw_zvec:n {%<⟨point⟩%>}#/%expl3
+\g_draw_bb_xmax_dim#/%expl3
+\g_draw_bb_xmin_dim#/%expl3
+\g_draw_bb_ymax_dim#/%expl3
+\g_draw_bb_ymin_dim#/%expl3
+\g_draw_id_int#/%expl3
 \l_draw_bb_update_bool#/%expl3
 \l_draw_default_linewidth_dim#/%expl3
 \l_draw_layers_clist#/%expl3

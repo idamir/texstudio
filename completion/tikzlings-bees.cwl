@@ -1,5 +1,5 @@
 # tikzlings-bees package
-# Matthew Bertucci 2024/12/12 for v2.1
+# Matthew Bertucci 2025/03/25 for v2.3
 
 #include:tikz
 #include:tikzlings-addons
@@ -10,11 +10,12 @@
 #keyvals:\bee#c
 body=#%color
 antennas=#%color
-eye=#%color
+eyes=#%color
 mouth=#%color
 wings=#%color
 hands=#%color
 stripes=#%color
+openmouth
 back
 3D
 contour
@@ -90,6 +91,8 @@ milkshake=#%color
 wine
 wine=#%color
 cocktail
+randomhead
+randomaccessories
 banana
 banana=#%color
 cricket
@@ -147,11 +150,12 @@ xshift=##L
 yshift=##L
 #endkeyvals
 
-\beehookbackground#*
-\beehookbelly#*
-\beehookbody#*
-\beehookforeground#*
-\tikzlinghookbackground#*
-\tikzlinghookbelly#*
-\tikzlinghookbody#*
-\tikzlinghookforeground#*
+# deprecated
+\beehookbackground#S
+\beehookbelly#S
+\beehookbody#S
+\beehookforeground#S
+\tikzlinghookbackground#S
+\tikzlinghookbelly#S
+\tikzlinghookbody#S
+\tikzlinghookforeground#S

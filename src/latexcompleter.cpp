@@ -159,7 +159,8 @@ public:
                 cwCmd=rxm.captured(0);
             }
             bool inMath=false;
-            if(cw.lines.size()==1 && completer->latexParser.possibleCommands["math"].contains(cwCmd)){
+            bool isPotentialMathCommand=(cw.environmentRestriction.isEmpty() || cw.environmentRestriction=="math" );
+            if(cw.lines.size()==1 && isPotentialMathCommand && completer->latexParser.possibleCommands["math"].contains(cwCmd)){
                 LatexEditorView *view = editor->property("latexEditor").value<LatexEditorView *>();
                 Q_ASSERT(view);
                 inMath=view->isInMathHighlighting(cursor);
@@ -187,7 +188,7 @@ public:
 			//  cursor.setColumnNumber(curStart);
 			CodeSnippet::PlaceholderMode phMode = (LatexCompleter::config && LatexCompleter::config->usePlaceholders) ? CodeSnippet::PlacehodersActive : CodeSnippet::PlaceholdersRemoved;
 
-            if(cw.lines.size()==1 && completer->latexParser.possibleCommands["math"].contains(cwCmd)){
+            if(cw.lines.size()==1 && isPotentialMathCommand && completer->latexParser.possibleCommands["math"].contains(cwCmd)){
                 if(!inMath && LatexCompleter::config && LatexCompleter::config->autoInsertMathDelimiters){
                     // add $$ to mathcommand outsiode math env
                     cw.lines.first().prepend(LatexCompleter::config->startMathDelimiter);
@@ -1906,6 +1907,14 @@ void LatexCompleter::complete(QEditor *newEditor, const CompletionFlags &flags)
 				break;
 			}
 		}
+        if(i<0){
+            start=0; // take complete text if no eow is detected (#3966)
+            // skip spaces at the beginning
+            i = c.columnNumber() - 1;
+            while(start<lineText.length() && lineText.at(start)==' ' && start<i){
+                ++start;
+            }
+        }
 		QString path;
 		if (flags & CF_FORCE_GRAPHIC) {
 			QString fn = lineText.mid(start, c.columnNumber() - start);

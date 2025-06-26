@@ -25,6 +25,7 @@
 #include "encoding.h"
 #include "latexparser/latexparser.h"
 #include <QtMath>
+#include <QSysInfo>
 
 // returns the number of chars/columns from column to the next tab location
 // for a given tabstop periodicity
@@ -227,7 +228,6 @@ inline static void setPainterLineWidth(QPainter *p, int width) {
  *	DisableLineCache            = 0x04,
  *	ForceQTextLayout            = 0x08,
  *  ForceSingleCharacterDrawing = 0x10,
- *  QImageCache = 0x20
  */
 void QDocument::setWorkAround(QDocument::WorkAroundFlag workAround, bool newValue){
 	QDocumentPrivate::setWorkAround(workAround, newValue);
@@ -1391,12 +1391,13 @@ void QDocument::clearWidthConstraint()
 	\brief Set a new width constraint
 	\param width maximum width to allow
 
-	Passing a value inferior (or equal) to zero clear the width constraint, if any.
+    Width <=0 are ignored as they are invalid.
+    To clear width constraint, use clearWidthConstraint()
 */
 void QDocument::setWidthConstraint(int width)
 {
-	if ( m_impl )
-        m_impl->setWidth(qMax(0, width));
+    if ( m_impl && width>0)
+        m_impl->setWidth(width);
 }
 
 void QDocument::markFormatCacheDirty(){
@@ -3606,7 +3607,15 @@ void QDocumentLineHandle::drawBorders(QPainter *p, qreal yStart, qreal yEnd) con
 	if (d->hardLineWrap() || d->lineWidthConstraint()) {
 		QColor linescolor = QDocumentPrivate::m_formatScheme->format("background").linescolor;
 		if (!linescolor.isValid()) {
+#ifdef Q_OS_WIN
+			// workaround for windows10 only
+			if (QSysInfo::productVersion() == "10") {
+				linescolor = QColor("lightGray").rgb();
+			}
+			else return;
+#else
 			return;
+#endif
 		}
 		p->save();
 		p->setPen(linescolor);
@@ -3672,8 +3681,10 @@ void QDocumentLineHandle::draw(int lineNr,	QPainter *p,
                     const qreal endX = QDocumentPrivate::m_leftPadding + lineWidth - xOffset;
 
                     QRectF area(endX, lineSpacing * i, vWidth - endX, lineSpacing);
-
+                    p->save();
+                    p->setRenderHint(QPainter::Antialiasing,false);
 					p->fillRect(area, fmt.background());
+                    p->restore();
 				}
 
 				selections << range;
@@ -3688,16 +3699,22 @@ void QDocumentLineHandle::draw(int lineNr,	QPainter *p,
 	} else if ( m_text.isEmpty() ) {
 		// enforce selection drawing on empty lines
 		if ( selectionBoundaries.count() == 1 ){
+            p->save();
+            p->setRenderHint(QPainter::Antialiasing,false);
             p->fillRect(QRectF(qMax(xOffset, QDocumentPrivate::m_leftPadding),0,vWidth,QDocumentPrivate::m_lineSpacing),
 						pal.highlight()
 						);
+            p->restore();
 		}else{
 			if(!fullSel){
 				//QDocumentPrivate *d = m_doc->impl();
 				foreach(QFormatRange overlay,m_overlays){
 					QFormat format=QDocumentPrivate::m_formatScheme->format(overlay.format);
 					if(format.wrapAround){
+                        p->save();
+                        p->setRenderHint(QPainter::Antialiasing,false);
                         p->fillRect(QRectF(qMax(xOffset, QDocumentPrivate::m_leftPadding),0,vWidth,QDocumentPrivate::m_lineSpacing),format.background);
+                        p->restore();
 					}
 				}
 			}
@@ -3793,11 +3810,13 @@ void QDocumentLineHandle::draw(int lineNr,	QPainter *p,
 				if ( fmt & FORMAT_SELECTION )
 				{
 					// finish selection
+                    p->save();
+                    p->setRenderHint(QPainter::Antialiasing,false);
 					p->fillRect(
                         QRectF(xpos, ypos,maxDocWidth - xpos, QDocumentPrivate::m_lineSpacing),
 						pal.highlight()
 					);
-
+                    p->restore();
 				}
 
 				++wrap;
@@ -3811,11 +3830,13 @@ void QDocumentLineHandle::draw(int lineNr,	QPainter *p,
 				if ( r.format & FORMAT_SELECTION )
 				{
 					// finish selection
+                    p->save();
+                    p->setRenderHint(QPainter::Antialiasing,false);
 					p->fillRect(
                         QRectF(QDocumentPrivate::m_leftPadding, ypos, xpos, QDocumentPrivate::m_lineSpacing),
 						pal.highlight()
 					);
-
+                    p->restore();
 				}
 			}
 			if ( ypos < yStart ) continue;
@@ -3900,9 +3921,12 @@ void QDocumentLineHandle::draw(int lineNr,	QPainter *p,
 			if ( currentSelected )
 			{
 				p->setPen(highlightedTextColor);
+                p->save();
+                p->setRenderHint(QPainter::Antialiasing,false);
                 p->fillRect(QRectF(xpos, ypos,rwidth, QDocumentPrivate::m_lineSpacing),
 					pal.highlight()
 				);
+                p->restore();
 			} else {
                 QColor fg(pal.text().color());
                 int priority=-100;
@@ -3924,9 +3948,12 @@ void QDocumentLineHandle::draw(int lineNr,	QPainter *p,
                 }
                 }
                 if(priority>-100){
+                    p->save();
+                    p->setRenderHint(QPainter::Antialiasing,false);
                     p->fillRect(QRectF(xpos, ypos,rwidth,QDocumentPrivate::m_lineSpacing),
                         bg
                     );
+                    p->restore();
                 }
 
 			}
@@ -4200,7 +4227,10 @@ void QDocumentLineHandle::draw(int lineNr,	QPainter *p,
 				QFormat format = m_doc->impl()->m_formatScheme->format(wrapAroundHighlight);
 				brush = QBrush(format.background);
 			}
+            p->save();
+            p->setRenderHint(QPainter::Antialiasing,false);
             p->fillRect(QRectF(xpos, ypos, maxDocWidth - xpos, QDocumentPrivate::m_lineSpacing), brush);
+            p->restore();
 		}
 	}
 	drawBorders(p, yStart, yEnd);
@@ -6872,7 +6902,10 @@ void QDocumentPrivate::drawTextLine(QPainter *p, QDocument::PaintContext &cxt, D
         }
 
         qreal y = m_lineSpacing*(wrap+1-pseudoWrap) + (reservedHeight - pm.height()) / 2.;
+        p->save();
+        p->setRenderHint(QPainter::Antialiasing,false);
         p->fillRect(QRectF(x - PICTURE_BORDER, y - PICTURE_BORDER, pm.width() + 2*PICTURE_BORDER, pm.height() + 2* PICTURE_BORDER), Qt::white);
+        p->restore();
         p->drawPixmap(QPointF(x, y), pm);
 
 		dlh->lockForWrite();
@@ -6884,8 +6917,6 @@ void QDocumentPrivate::drawTextLine(QPainter *p, QDocument::PaintContext &cxt, D
 
 	bool useLineCache = !currentLine && !(m_workArounds & QDocument::DisableLineCache);
 
-	bool imageCache = (m_workArounds & QDocument::QImageCache);
-
 	if(
 		useLineCache
 		&& !dlh->hasFlag(QDocumentLine::LayoutDirty)
@@ -6893,44 +6924,25 @@ void QDocumentPrivate::drawTextLine(QPainter *p, QDocument::PaintContext &cxt, D
 		&&  (m_LineCache.contains(dlh) || m_LineCacheAlternative.contains(dlh))
 	) {
 		// cache is activated, available, and up-to-date: simply draw the cached object
-		if (imageCache) {
-            p->drawImage(QPointF(m_lineCacheXOffset, 0), *m_LineCacheAlternative.object(dlh));
-		} else {
-            p->drawPixmap(QPointF(m_lineCacheXOffset, 0), *m_LineCache.object(dlh));
-		}
+        p->drawPixmap(QPointF(m_lineCacheXOffset, 0), *m_LineCache.object(dlh));
 	} else {
         qreal ht = m_lineSpacing*(wrap+1 - pseudoWrap);
 		QImage *image = nullptr;
 		QPixmap *pixmap = nullptr;
 		QPainter *pr = nullptr;
 		if (useLineCache) {
-			if (imageCache) {
+            qreal pixelRatio = p->device()->devicePixelRatio();
+            pixmap = new QPixmap(qCeil(pixelRatio * m_lineCacheWidth), qCeil(pixelRatio * ht));
+            pixmap->setDevicePixelRatio(pixelRatio);
+            // TODO: The pixmap always has a logicalDpi of the primary screen. This needs to be fixed for
+            // correct drawing on secondary screens with different scaling factors.
 
-                qreal pixelRatio = p->device()->devicePixelRatio();
-                image = new QImage(qCeil(pixelRatio * m_lineCacheWidth), qCeil(pixelRatio * ht), QImage::Format_RGB888);
-                image->setDevicePixelRatio(pixelRatio);
-
-				if (fullSelection) {
-					image->fill(selectionBackground.color().rgb());
-				}else{
-					image->fill(background.color().rgb());
-				}
-				pr = new QPainter(image);
-			} else {
-
-                qreal pixelRatio = p->device()->devicePixelRatio();
-                pixmap = new QPixmap(qCeil(pixelRatio * m_lineCacheWidth), qCeil(pixelRatio * ht));
-				pixmap->setDevicePixelRatio(pixelRatio);
-				// TODO: The pixmap always has a logicalDpi of the primary screen. This needs to be fixed for
-				// correct drawing on secondary screens with different scaling factors.
-
-				if (fullSelection) {
-					pixmap->fill(selectionBackground.color());
-				} else {
-					pixmap->fill(background.color());
-				}
-				pr = new QPainter(pixmap);
-			}
+            if (fullSelection) {
+                pixmap->fill(selectionBackground.color());
+            } else {
+                pixmap->fill(background.color());
+            }
+            pr = new QPainter(pixmap);
 			pr->setRenderHints(p->renderHints());
 			pr->setFont(p->font());
 		} else {
@@ -6938,6 +6950,8 @@ void QDocumentPrivate::drawTextLine(QPainter *p, QDocument::PaintContext &cxt, D
 		}
 
 		// draw the background
+        pr->save();
+        pr->setRenderHint(QPainter::Antialiasing, false);
 		if (useLineCache) {
 			pr->translate(-cxt.xoffset,0);
             pr->fillRect(QRectF(0, 0, m_leftPadding, ht), background);
@@ -6946,6 +6960,7 @@ void QDocumentPrivate::drawTextLine(QPainter *p, QDocument::PaintContext &cxt, D
             pr->fillRect(QRectF(m_leftPadding, 0, m_width - m_leftPadding, ht), selectionBackground);
 		} else
             pr->fillRect(QRectF(0, 0, m_width, ht), background);
+        pr->restore();
 
         qreal y = 0;
 		if (!useLineCache && lcxt.visiblePos > lcxt.pos)
@@ -6959,15 +6974,9 @@ void QDocumentPrivate::drawTextLine(QPainter *p, QDocument::PaintContext &cxt, D
         dlh->draw(lcxt.docLineNr, pr, cxt.xoffset, m_lineCacheWidth, selectionBoundaries, cxt.palette, fullSelection,y,ht);
 
 		if (useLineCache) {
-			if(imageCache) {
-                p->drawImage(QPointF(cxt.xoffset, 0.), *image);
-				delete pr;
-				m_LineCacheAlternative.insert(dlh, image);
-			}else{
-                p->drawPixmap(QPointF(cxt.xoffset, 0), *pixmap);
-				delete pr;
-				m_LineCache.insert(dlh, pixmap);
-			}
+            p->drawPixmap(QPointF(cxt.xoffset, 0), *pixmap);
+            delete pr;
+            m_LineCache.insert(dlh, pixmap);
 		} else {
 			m_LineCache.remove(dlh);
 			m_LineCacheAlternative.remove(dlh);

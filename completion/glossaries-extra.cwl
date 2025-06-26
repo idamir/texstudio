@@ -1,5 +1,5 @@
 # glossaries-extra package
-# Matthew Bertucci 2023/04/25 for v1.51
+# Matthew Bertucci 2025/04/14 for v1.6
 
 #include:glossaries
 
@@ -1590,6 +1590,7 @@ theHvalue=%<<prefix><location>%>
 \glsxtrinitwrglosstrue#*
 \glsxtrinitwrglossfalse#*
 \glsxtrsupphypernumber{location}#*
+\glspdfsentencecase{text}#*
 
 ## Entries in Sectioning Titles, Headers, Captions and Contents ##
 \glsxtrRevertMarks
@@ -1761,6 +1762,7 @@ theHvalue=%<<prefix><location>%>
 ## Hyperlinks ##
 \glsxtrtarget{label}{text}#*
 \glsxtrtargetfield#*
+\glsxtrtargetdup{label}{text}#*r
 
 ## Label Prefixes ##
 \glsxtrnewgls{prefix}{cmd}#*d
@@ -1793,6 +1795,7 @@ theHvalue=%<<prefix><location>%>
 \GlsXtrSetDefaultRangeFormat{encap}
 \GlsXtrAutoAddOnFormat{format list}{glsadd options%keyvals}
 \GlsXtrAutoAddOnFormat[label]{format list}{glsadd options%keyvals}
+\GlsXtrClearAutoAddOnFormat
 \glsxtrdowrglossaryhook{label}#*
 \glsentryindexcount{label}#*r
 \glsifindexed{label}{true}{false}#*r
@@ -1904,6 +1907,32 @@ theHvalue=%<<prefix><location>%>
 \GlsXtrIfFieldEqXpStr*{field}{label}{text}{true}{false}#*r
 \GlsXtrIfXpFieldEqXpStr{field}{label}{text}{true}{false}#*r
 \GlsXtrIfXpFieldEqXpStr*{field}{label}{text}{true}{false}#*r
+
+## LaTeX3 Commands ##
+\glossaries_if_field_exists:nnTF {%<⟨entry label⟩%>} {%<⟨field label⟩%>} {%<⟨true code⟩%>} {%<⟨false code⟩%>}#/%expl3
+\glossaries_if_field_exists:nnT {%<⟨entry label⟩%>} {%<⟨field label⟩%>} {%<⟨true code⟩%>}#/%expl3
+\glossaries_if_field_exists:nnF {%<⟨entry label⟩%>} {%<⟨field label⟩%>} {%<⟨false code⟩%>}#/%expl3
+\glossaries_if_field_exists_p:nn {%<⟨entry label⟩%>} {%<⟨field label⟩%>}#/%expl3
+\glossaries_if_field_set:nnTF {%<⟨entry label⟩%>} {%<⟨field label⟩%>} {%<⟨true code⟩%>} {%<⟨false code⟩%>}#/%expl3
+\glossaries_if_field_set:nnT {%<⟨entry label⟩%>} {%<⟨field label⟩%>} {%<⟨true code⟩%>}#/%expl3
+\glossaries_if_field_set:nnF {%<⟨entry label⟩%>} {%<⟨field label⟩%>} {%<⟨false code⟩%>}#/%expl3
+\glossaries_if_field_set_p:nn {%<⟨entry label⟩%>} {%<⟨field label⟩%>}#/%expl3
+\glossaries_if_field_eq:nnNTF {%<⟨entry label⟩%>} {%<⟨field label⟩%>} %<⟨tl var⟩%> {%<⟨true code⟩%>} {%<⟨false code⟩%>}#/%expl3
+\glossaries_if_field_eq:nnNT {%<⟨entry label⟩%>} {%<⟨field label⟩%>} %<⟨tl var⟩%> {%<⟨true code⟩%>}#/%expl3
+\glossaries_if_field_eq:nnNF {%<⟨entry label⟩%>} {%<⟨field label⟩%>} %<⟨tl var⟩%> {%<⟨false code⟩%>}#/%expl3
+\glossaries_if_field_eq_p:nnN {%<⟨entry label⟩%>} {%<⟨field label⟩%>} %<⟨tl var⟩%>#/%expl3
+\glossaries_if_field_eq:nnnTF {%<⟨entry label⟩%>} {%<⟨field label⟩%>} {%<⟨tokens⟩%>} {%<⟨true code⟩%>} {%<⟨false code⟩%>}#/%expl3
+\glossaries_if_field_eq:nnnT {%<⟨entry label⟩%>} {%<⟨field label⟩%>} {%<⟨tokens⟩%>} {%<⟨true code⟩%>}#/%expl3
+\glossaries_if_field_eq:nnnF {%<⟨entry label⟩%>} {%<⟨field label⟩%>} {%<⟨tokens⟩%>} {%<⟨false code⟩%>}#/%expl3
+\glossaries_if_field_eq_field:nnnTF {%<⟨entry label⟩%>} {%<⟨field1 label⟩%>} {%<⟨field2 label⟩%>} {%<⟨true code⟩%>} {%<⟨false code⟩%>}#/%expl3
+\glossaries_if_field_eq_field:nnnT {%<⟨entry label⟩%>} {%<⟨field1 label⟩%>} {%<⟨field2 label⟩%>} {%<⟨true code⟩%>}#/%expl3
+\glossaries_if_field_eq_field:nnnF {%<⟨entry label⟩%>} {%<⟨field1 label⟩%>} {%<⟨field2 label⟩%>} {%<⟨false code⟩%>}#/%expl3
+\glossaries_if_field_eq_field_p:nnn {%<⟨entry label⟩%>} {%<⟨field1 label⟩%>} {%<⟨field2 label⟩%>}#/%expl3
+\glossaries_if_field_eq_field:nnnnTF {%<⟨entry1 label⟩%>} {%<⟨field1 label⟩%>} {%<⟨entry2 label⟩%>} {%<⟨field2 label⟩%>} {%<⟨true code⟩%>} {%<⟨false code⟩%>}#/%expl3
+\glossaries_if_field_eq_field:nnnnT {%<⟨entry1 label⟩%>} {%<⟨field1 label⟩%>} {%<⟨entry2 label⟩%>} {%<⟨field2 label⟩%>} {%<⟨true code⟩%>}#/%expl3
+\glossaries_if_field_eq_field:nnnnF {%<⟨entry1 label⟩%>} {%<⟨field1 label⟩%>} {%<⟨entry2 label⟩%>} {%<⟨field2 label⟩%>} {%<⟨false code⟩%>}#/%expl3
+\glossaries_if_field_eq_field_p:nnnn {%<⟨entry1 label⟩%>} {%<⟨field1 label⟩%>} {%<⟨entry2 label⟩%>} {%<⟨field2 label⟩%>}#/%expl3
+\glossaries_use_field:nn {%<⟨entry label⟩%>} {%<⟨field label⟩%>}#/%expl3
 
 ### 6 Counting References ###
 \GlsXtrEnableEntryCounting{category-list}{value}#*
@@ -2326,21 +2355,33 @@ leveloffset=%<<n> or ++<n>%>
 
 ## Standalone Entry Items ##
 \glsxtrglossentry{label}#*r
+\Glsxtrglossentry{label}#*r
 \GlsXtrStandaloneGlossaryType#*
 \GlsXtrStandaloneSubEntryItem{label}#*r
 \GlsXtrStandaloneEntryName{label}#*r
+\GlsXtrStandaloneEntryNameFirstUc{label}#*r
 \glsxtractivatenopost#*
 \glsxtrglossentryother{header}{label}{field}#*r
+\Glsxtrglossentryother{header}{label}{field}#*r
 \GlsXtrStandaloneEntryOther{label}{field}#*r
+\GlsXtrStandaloneEntryOtherFirstUc{label}{field}#*r
 \GlsXtrStandaloneEntryPdfName{label}#*r
 \GlsXtrStandaloneEntryHeadName{label}#*r
+\GlsXtrStandaloneEntryPdfNameFirstUc{label}#*r
+\GlsXtrStandaloneEntryHeadNameFirstUc{label}#*r
 \GlsXtrStandaloneEntryPdfOther{label}{field}#*r
 \GlsXtrStandaloneEntryHeadOther{label}{field}#*r
+\GlsXtrStandaloneEntryPdfOtherFirstUc{label}{field}#*r
+\GlsXtrStandaloneEntryHeadOtherFirstUc{label}{field}#*r
 
 ## Glossary Style Modifications ##
 \glsxtrpreglossarystyle#*
 \glsentrypdfsymbol{label}#*r
 \glossentrynameother{label}{field}#*r
+\Glossentrynameother{label}{field}#*r
+\GLOSSentrynameother{label}{field}#*r
+\GlossEntryNameOther{label}{field}#*r
+\glsxtrprenamehook{label}#*r
 \glsxtrpostnamehook{label}#*r
 \glsdefpostname{category}{definition}#*
 \glsextrapostnamehook{label}#*r
@@ -2557,12 +2598,13 @@ topicmcols
 \glsifcategoryattributehasitem{category}{attribute}{item}{true}{false}#*
 
 ### 11 bib2gls: Managing Reference Databases ###
-\glsxtrresourcefile{filename%file}
-\glsxtrresourcefile[options%keyvals]{filename%file}
+\BibGlsOptions{options}
 \GlsXtrLoadResources
 \GlsXtrLoadResources[options%keyvals]
+\glsbibdata{bib list}
+\glsbibdata[options%keyvals]{bib list}
 
-#keyvals:\glsxtrresourcefile#c,\GlsXtrLoadResources#c
+#keyvals:\GlsXtrLoadResources#c,\glsbibdata#c
 charset=%<encoding name%>
 locale=%<lang tag%>
 interpret-preamble#true,false
@@ -3029,5 +3071,7 @@ compound-write-def=#none,all,ref
 \mglsWriteSeparateRefsTrue#S
 
 # deprecated
+\glsxtrresourcefile{filename%file}#S
+\glsxtrresourcefile[options%keyvals]{filename%file}#S
 \preglossarypreamble{text}#S
 \preglossarypreamble[type]{text}#S

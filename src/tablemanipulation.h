@@ -3,6 +3,7 @@
 
 #include "mostQtHeaders.h"
 #include "qdocument.h"
+#include "syntaxcheck.h"
 
 class QEditor;
 class LatexEditorView;
@@ -10,20 +11,26 @@ class LatexEditorView;
 class LatexTables
 {
 public:
-	static void addRow(QDocumentCursor &c, const int numberOfColumns );
-    static void addColumn(QDocument *doc, const int lineNumber, const int afterColumn, QStringList *cutBuffer = nullptr);
-    static void removeColumn(QDocument *doc, const int lineNumber, const int column, QStringList *cutBuffer = nullptr);
+    static void addRow(QDocumentCursor &c, Environment env );
+    static void addColumn(Environment env, const int lineNumber, const int afterColumn, QStringList *cutBuffer = nullptr);
+    static void removeColumn(Environment env, const int lineNumber, const int column, QStringList *cutBuffer = nullptr);
 	static void removeRow(QDocumentCursor &c);
+    static void removeRow(QDocumentCursor &c,Environment env);
 	static int findNextToken(QDocumentCursor &cur, QStringList tokens, bool keepAnchor = false, bool backwards = false);
-	static int getColumn(QDocumentCursor &cur);
+    static Token findColumn(QDocumentCursor &cur,Environment env);
+    static bool findNextColumn(QDocumentCursor &cur,Token &tk);
+    enum NextRowAvailable { RowAvailable, RowNotAvailable, RowNotAvailableLazyNewLine };
+    static NextRowAvailable findRow(QDocumentCursor &cur,Environment env);
+    static bool checkEndEnv(const TokenList &tl, int pos,const Environment &env);
+    static int getColumn(const QDocumentCursor &cur, const Environment env);
 	static QString getDef(QDocumentCursor &cur);
+    static Token getDef(TokenList &tl, Environment env, int &ln, int &nextLine, int &nextCol, QDocument *doc);
 	static QString getSimplifiedDef(QDocumentCursor &cur);
-	static int getNumberOfColumns(QDocumentCursor &cur);
-	static int getNumberOfColumns(QStringList values);
 	static bool inTableEnv(QDocumentCursor &cur);
+    static int inTableEnv(StackEnvironment &stackEnv);
     static int getNumOfColsInMultiColumn(const QString &str, QString *outAlignment = nullptr, QString *outText = nullptr);
 	static int incNumOfColsInMultiColumn(const QString &str, int add);
-	static void addHLine(QDocumentCursor &c, const int numberOfLines = -1, const bool remove = false);
+    static void addHLine(QDocumentCursor &c, const Environment &env, const bool remove = false);
     static QStringList splitColDef(QString def);
 	static void simplifyColDefs(QStringList &colDefs);
 	static void executeScript(QString script, LatexEditorView *edView);

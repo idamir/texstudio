@@ -1,8 +1,7 @@
 # enumext package
-# Matthew Bertucci 2024/11/17 for v1.1
+# Matthew Bertucci 2025/06/12 for v1.5
 
 #include:multicol
-#include:scontents
 
 \begin{enumext}
 \begin{enumext}[keyvals]
@@ -88,6 +87,9 @@ align=#left,right,center
 wrap-label={%<code%>}
 wrap-label*={%<code%>}
 ref=%<code%>
+beginpenalty=%<integer%>
+midpenalty=%<integer%>
+endpenalty=%<integer%>
 show-length#true,false
 topsep=##L
 parsep=##L

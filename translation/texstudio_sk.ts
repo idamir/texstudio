@@ -18,9 +18,9 @@
     </message>
     <message>
         <location filename="../src/aichatassistant.cpp" line="49"/>
-        <location filename="../src/aichatassistant.cpp" line="137"/>
-        <location filename="../src/aichatassistant.cpp" line="373"/>
-        <location filename="../src/aichatassistant.cpp" line="419"/>
+        <location filename="../src/aichatassistant.cpp" line="154"/>
+        <location filename="../src/aichatassistant.cpp" line="415"/>
+        <location filename="../src/aichatassistant.cpp" line="461"/>
         <source>Send Query to AI provider</source>
         <translation type="unfinished"/>
     </message>
@@ -40,39 +40,54 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/aichatassistant.cpp" line="225"/>
+        <location filename="../src/aichatassistant.cpp" line="243"/>
         <source>Stop current query !</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/aichatassistant.cpp" line="301"/>
+        <location filename="../src/aichatassistant.cpp" line="330"/>
+        <source>System prompt can&apos;t be altered mid-conversation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/aichatassistant.cpp" line="334"/>
         <source>System prompt</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/aichatassistant.cpp" line="315"/>
+        <location filename="../src/aichatassistant.cpp" line="349"/>
+        <source>-</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/aichatassistant.cpp" line="350"/>
+        <source>Temperature not supported for local models</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/aichatassistant.cpp" line="354"/>
         <source>Values between 0 and %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/aichatassistant.cpp" line="322"/>
+        <location filename="../src/aichatassistant.cpp" line="362"/>
         <source>Stream results</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/aichatassistant.cpp" line="411"/>
-        <location filename="../src/aichatassistant.cpp" line="448"/>
+        <location filename="../src/aichatassistant.cpp" line="453"/>
+        <location filename="../src/aichatassistant.cpp" line="490"/>
         <source>Execute as macro</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/aichatassistant.cpp" line="413"/>
-        <location filename="../src/aichatassistant.cpp" line="450"/>
+        <location filename="../src/aichatassistant.cpp" line="455"/>
+        <location filename="../src/aichatassistant.cpp" line="492"/>
         <source>Insert into text</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/aichatassistant.cpp" line="317"/>
+        <location filename="../src/aichatassistant.cpp" line="357"/>
         <source>Temperature</source>
         <translation type="unfinished"/>
     </message>
@@ -80,24 +95,24 @@
 <context>
     <name>AIQueryStorageModel</name>
     <message>
-        <location filename="../src/aiquerystoragemodel.cpp" line="140"/>
-        <location filename="../src/aiquerystoragemodel.cpp" line="142"/>
-        <location filename="../src/aiquerystoragemodel.cpp" line="182"/>
+        <location filename="../src/aiquerystoragemodel.cpp" line="141"/>
+        <location filename="../src/aiquerystoragemodel.cpp" line="143"/>
+        <location filename="../src/aiquerystoragemodel.cpp" line="185"/>
         <source>Today</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/aiquerystoragemodel.cpp" line="182"/>
+        <location filename="../src/aiquerystoragemodel.cpp" line="185"/>
         <source>Last Week</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/aiquerystoragemodel.cpp" line="182"/>
+        <location filename="../src/aiquerystoragemodel.cpp" line="185"/>
         <source>Last Month</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/aiquerystoragemodel.cpp" line="201"/>
+        <location filename="../src/aiquerystoragemodel.cpp" line="204"/>
         <source>Older</source>
         <translation type="unfinished"/>
     </message>
@@ -514,7 +529,7 @@ Balíček mathtools podporuje alignedat, matrix*, pmatrix*, bmatrix*, Bmatrix*, 
     <message>
         <location filename="../src/buildmanager.cpp" line="122"/>
         <location filename="../src/buildmanager.cpp" line="144"/>
-        <location filename="../src/buildmanager.cpp" line="2015"/>
+        <location filename="../src/buildmanager.cpp" line="2046"/>
         <source>&lt;unknown&gt;</source>
         <translation>&lt;unknown&gt;</translation>
     </message>
@@ -790,12 +805,12 @@ Zmeňte, prosím, svoje nastavenie a stanovte zoznamy príkazov iba vo Voľby �
         <translation>Základný príkaz</translation>
     </message>
     <message>
-        <location filename="../src/buildmanager.cpp" line="1981"/>
+        <location filename="../src/buildmanager.cpp" line="2012"/>
         <source>Internal Pdf Viewer</source>
         <translation>Interný prehliadač PDF</translation>
     </message>
     <message>
-        <location filename="../src/buildmanager.cpp" line="2278"/>
+        <location filename="../src/buildmanager.cpp" line="2310"/>
         <source>You have used a dde:// command with two slashes, which is deprecated. Please change it to a triple slash command dde:/// by adding another slash.</source>
         <translation>Použil ste príkaz dde:// s dvoma lomkami, čo bude v budúcnosti nepodporované. Zmeňte to, prosím, na príkaz s troma lomkami dde:/// pridaním ďalšej lomky.</translation>
     </message>
@@ -888,7 +903,7 @@ Zmeňte, prosím, svoje nastavenie a stanovte zoznamy príkazov iba vo Voľby �
     </message>
     <message>
         <location filename="../src/configdialog.ui" line="182"/>
-        <location filename="../src/configdialog.ui" line="4911"/>
+        <location filename="../src/configdialog.ui" line="4909"/>
         <source>Color Scheme:</source>
         <translation>Farebná schéma:</translation>
     </message>
@@ -899,7 +914,7 @@ Zmeňte, prosím, svoje nastavenie a stanovte zoznamy príkazov iba vo Voľby �
     </message>
     <message>
         <location filename="../src/configdialog.ui" line="238"/>
-        <location filename="../src/configdialog.ui" line="3839"/>
+        <location filename="../src/configdialog.ui" line="3832"/>
         <source>Language:</source>
         <translation>Jazyk:</translation>
     </message>
@@ -926,7 +941,7 @@ Zmeňte, prosím, svoje nastavenie a stanovte zoznamy príkazov iba vo Voľby �
     <message>
         <location filename="../src/configdialog.ui" line="283"/>
         <location filename="../src/configdialog.ui" line="1808"/>
-        <location filename="../src/configdialog.ui" line="4939"/>
+        <location filename="../src/configdialog.ui" line="4937"/>
         <source>Font Size:</source>
         <translation>Veľkosť písma:</translation>
     </message>
@@ -1146,7 +1161,7 @@ Zmeňte, prosím, svoje nastavenie a stanovte zoznamy príkazov iba vo Voľby �
     <message>
         <location filename="../src/configdialog.ui" line="872"/>
         <location filename="../src/configdialog.ui" line="2317"/>
-        <location filename="../src/configdialog.ui" line="4120"/>
+        <location filename="../src/configdialog.ui" line="4150"/>
         <source>Never</source>
         <translation>Nikdy</translation>
     </message>
@@ -1231,7 +1246,7 @@ Premenné sú zapísané ako: $MYVAR. Rozlišuje sa veľkosť písmen.
     </message>
     <message>
         <location filename="../src/configdialog.ui" line="1073"/>
-        <location filename="../src/configdialog.cpp" line="540"/>
+        <location filename="../src/configdialog.cpp" line="541"/>
         <source>Shortcuts</source>
         <translation>Skratky</translation>
     </message>
@@ -1301,7 +1316,7 @@ Potom môžete vybrať novú klávesovú skratku jedným z nasledujúcich spôso
     </message>
     <message>
         <location filename="../src/configdialog.ui" line="1176"/>
-        <location filename="../src/configdialog.cpp" line="541"/>
+        <location filename="../src/configdialog.cpp" line="542"/>
         <source>Menus</source>
         <translation>Ponuky</translation>
     </message>
@@ -1317,7 +1332,7 @@ Potom môžete vybrať novú klávesovú skratku jedným z nasledujúcich spôso
     </message>
     <message>
         <location filename="../src/configdialog.ui" line="1201"/>
-        <location filename="../src/configdialog.cpp" line="529"/>
+        <location filename="../src/configdialog.cpp" line="530"/>
         <source>Command</source>
         <translation>Príkaz</translation>
     </message>
@@ -1426,8 +1441,8 @@ Potom môžete vybrať novú klávesovú skratku jedným z nasledujúcich spôso
     </message>
     <message>
         <location filename="../src/configdialog.ui" line="1629"/>
-        <location filename="../src/configdialog.cpp" line="544"/>
-        <location filename="../src/configmanager.cpp" line="1528"/>
+        <location filename="../src/configdialog.cpp" line="545"/>
+        <location filename="../src/configmanager.cpp" line="1538"/>
         <source>Editor</source>
         <translation>Editor</translation>
     </message>
@@ -1478,7 +1493,7 @@ Potom môžete vybrať novú klávesovú skratku jedným z nasledujúcich spôso
     </message>
     <message>
         <location filename="../src/configdialog.ui" line="1711"/>
-        <location filename="../src/configdialog.ui" line="4925"/>
+        <location filename="../src/configdialog.ui" line="4923"/>
         <source>Font Family:</source>
         <translation>Rodina písma:</translation>
     </message>
@@ -1519,8 +1534,8 @@ Potom môžete vybrať novú klávesovú skratku jedným z nasledujúcich spôso
     </message>
     <message>
         <location filename="../src/configdialog.ui" line="1789"/>
-        <location filename="../src/configdialog.ui" line="4201"/>
-        <location filename="../src/configdialog.ui" line="4298"/>
+        <location filename="../src/configdialog.ui" line="4123"/>
+        <location filename="../src/configdialog.ui" line="4296"/>
         <source>%</source>
         <translation>%</translation>
     </message>
@@ -2137,63 +2152,58 @@ Keďže Unicode nie je natívne podporovaný LaTeXom, musíte do svojho dokument
         <translation>Pokúsiť sa automaticky vybrať najlepšiu možnosť zobrazenia</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="2877"/>
+        <location filename="../src/configdialog.ui" line="2896"/>
         <source>Render Mode:</source>
         <translation>Režim vykreslenia:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="2885"/>
+        <location filename="../src/configdialog.ui" line="2872"/>
         <source>QCE (recommended)</source>
         <translation>QCE (odporúčané)</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="2890"/>
+        <location filename="../src/configdialog.ui" line="2877"/>
         <source>Qt</source>
         <translation>Qt</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="2895"/>
+        <location filename="../src/configdialog.ui" line="2882"/>
         <source>Single Letter</source>
         <translation>Jedno písmeno</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="2903"/>
+        <location filename="../src/configdialog.ui" line="2917"/>
         <source>If the cache of rendered lines is enabled, rendered lines are stored in a cache, so they do not have to be rendered again. Leading to a speed improvement (especially on Mac), at the cost of a higher memory usage.</source>
         <translation>Ak je povolená vyrovnávacia pamäť vykreslovaných riadkov, sú vykreslované riadky ukladané do vyrovnávacej pamäti, takže nie je nutné ich vykreslovať nanovo. To vedie to k zlepšeniu v rýchlosti (špeciálne na systéme Mac) za cenu vyššieho používania pamäti.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="2906"/>
+        <location filename="../src/configdialog.ui" line="2920"/>
         <source>Disable cache of rendered lines</source>
         <translation>Zakázať vyrovnávaciu pamäť vykreslovaných riadkov</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="2913"/>
+        <location filename="../src/configdialog.ui" line="2903"/>
         <source>Disable fixed pitch mode</source>
         <translation>Vypnúť režim pevnej šírky písmen</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="2920"/>
+        <location filename="../src/configdialog.ui" line="2910"/>
         <source>Disable cache of character width</source>
         <translation>Vypnúť vyrovnávaciu pamäť pre pevné šírky písmen</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="2927"/>
-        <source>Use QImage as cache type</source>
-        <translation>Použiť QImage ako typ vyrovnávacej pamäti</translation>
-    </message>
-    <message>
-        <location filename="../src/configdialog.ui" line="2990"/>
+        <location filename="../src/configdialog.ui" line="2983"/>
         <source>Formats</source>
         <translation>Formáty</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3019"/>
-        <location filename="../src/configdialog.cpp" line="547"/>
+        <location filename="../src/configdialog.ui" line="3012"/>
+        <location filename="../src/configdialog.cpp" line="548"/>
         <source>Completion</source>
         <translation>Doplnenie</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3025"/>
+        <location filename="../src/configdialog.ui" line="3018"/>
         <source>Allows in-place substitution of commands. Example:&lt;br&gt;
 &lt;code&gt;\textbf{foo}&lt;/code&gt;
 &lt;ul&gt;
@@ -2212,118 +2222,118 @@ Keďže Unicode nie je natívne podporovaný LaTeXom, musíte do svojho dokument
 &lt;/ul&gt;</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3035"/>
+        <location filename="../src/configdialog.ui" line="3028"/>
         <source>Auto Replace Latex-Commands</source>
         <translation>Automaticky nahradiť latexové príkazy</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3042"/>
+        <location filename="../src/configdialog.ui" line="3035"/>
         <source>Insert Arguments</source>
         <translation>Vložiť argumenty</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3052"/>
+        <location filename="../src/configdialog.ui" line="3045"/>
         <source>Shows a tooltip with target text for labels/bibitem, previews colors or images</source>
         <translation>Ukáže tip s cieľovým textom pre labels/bibitem, spraví náhľad farieb alebo obrázkov</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3055"/>
+        <location filename="../src/configdialog.ui" line="3048"/>
         <source>ToolTip-Preview</source>
         <translation>Nástrojový tip (tooltip)-Náhľad</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3062"/>
+        <location filename="../src/configdialog.ui" line="3055"/>
         <source>Arguments as Placeholders</source>
         <translation>Argumenty ako zástupné znaky</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3072"/>
+        <location filename="../src/configdialog.ui" line="3065"/>
         <source>Shows a tooltip with a description of the selected completer command</source>
         <translation>Ukáže tip s popisom vybraného príkazu pre doplňovač</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3075"/>
+        <location filename="../src/configdialog.ui" line="3068"/>
         <source>ToolTip-Help</source>
         <translation>Nástrojový tip-Pomoc</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3085"/>
+        <location filename="../src/configdialog.ui" line="3078"/>
         <source>Starts the completer as soon as &apos;\&apos; is typed. Alternatively the completer can always be started manually by Ctrl+Space.</source>
         <translation>Spustí doplňovač, len čo je napísané &apos;\&apos;. Prípadne sa dá doplňovač spustiť ručne skratkou Ctrl+Space.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3088"/>
+        <location filename="../src/configdialog.ui" line="3081"/>
         <source>Automatically start completer when typing LaTeX-Commands</source>
         <translation>Automaticky spustiť doplňovanie pri písaní LaTeXových príkazov</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3097"/>
+        <location filename="../src/configdialog.ui" line="3090"/>
         <source>Size of the tab bar at the bottom or top of the completer</source>
         <translation>Veľkosť pruhu s kartami na spodku alebo na vrchu doplňovača</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3100"/>
+        <location filename="../src/configdialog.ui" line="3093"/>
         <source>Tab Bar Size</source>
         <translation>Veľkosť karty</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3110"/>
+        <location filename="../src/configdialog.ui" line="3103"/>
         <source>Size of the command set tabs at the bottom or top of the completer</source>
         <translation>Veľkosť kariet so sadami príkazov na spodku alebo na vrchu doplňovača</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3144"/>
+        <location filename="../src/configdialog.ui" line="3137"/>
         <source>Complete selected text when non-word character is pressed</source>
         <translation>Doplniť vybraný text, keď je zadaný neslovný znak</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3154"/>
+        <location filename="../src/configdialog.ui" line="3147"/>
         <source>If all completer suggestions have the next characters in common, you can use &lt;Tab&gt; to automatically insert them.</source>
         <translation>Ak majú všetky návrhy doplňovača ďalšie znaky spoločné, môžete použiť &lt;Tab&gt; na ich automatické vloženie.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3157"/>
+        <location filename="../src/configdialog.ui" line="3150"/>
         <source>Auto Complete Common Prefix</source>
         <translation>Automaticky doplniť spoločnú predponu</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3169"/>
+        <location filename="../src/configdialog.ui" line="3162"/>
         <source>Preferred Commands Set:</source>
         <translation>Uprednostňovaná sada príkazov:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3177"/>
+        <location filename="../src/configdialog.ui" line="3170"/>
         <source>Typical</source>
         <translation>Typické</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3182"/>
+        <location filename="../src/configdialog.ui" line="3175"/>
         <source>Most Used</source>
         <translation>Najpoužívanejšie</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3187"/>
+        <location filename="../src/configdialog.ui" line="3180"/>
         <source>Fuzzy</source>
         <translation>Nejasné</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3192"/>
+        <location filename="../src/configdialog.ui" line="3185"/>
         <source>All</source>
         <translation>Všetko</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3215"/>
+        <location filename="../src/configdialog.ui" line="3208"/>
         <source>If a math command is inserted via completion outside any math environment, $$ is inserted automatically.</source>
         <translation>Ak je matematický výraz vložený cez doplnenie mimo matematického prostredia, znaky $$ sú automaticky pridané.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3218"/>
+        <location filename="../src/configdialog.ui" line="3211"/>
         <source>Auto Insert Math Delimiters where needed</source>
         <translation>Automaticky vložiť matematické oddelovacie znaky kde treba</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3230"/>
-        <location filename="../src/configdialog.ui" line="3268"/>
+        <location filename="../src/configdialog.ui" line="3223"/>
+        <location filename="../src/configdialog.ui" line="3261"/>
         <source>TXS tries to automatically load completion files for packages if a
 \usepackage{} command is found. These automatically included files
 are not shown here. Checking additional packages here is usually not
@@ -2337,567 +2347,572 @@ určenie zlyhá alebo chcete zahrnúť zvláštne uživateľské doplňovacie s�
 môžete ich použitie vynútiť ich zaškrtnutím tu.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3238"/>
+        <location filename="../src/configdialog.ui" line="3231"/>
         <source>Permanently active completion files:</source>
         <translation>Trvalo aktívne doplňovacie slová:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3248"/>
+        <location filename="../src/configdialog.ui" line="3241"/>
         <source>Filter list below</source>
         <translation>Filtruj zonam dole:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3359"/>
+        <location filename="../src/configdialog.ui" line="3352"/>
         <source>Spell Check</source>
         <translation>Overenie pravopisu</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3365"/>
+        <location filename="../src/configdialog.ui" line="3358"/>
         <source>Default Language:</source>
         <translation>Predvolený jazyk:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3392"/>
+        <location filename="../src/configdialog.ui" line="3385"/>
         <source>Spelling Dictionary Directories:</source>
         <translation>Adresáre pre pravopisné slovníky:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3399"/>
+        <location filename="../src/configdialog.ui" line="3392"/>
         <source>Folders with Hunspell dictionaries separated by semicolon. The special keywords [txs-settings-dir] and [txs-app-dir] will be resolved to the respective directories.</source>
         <translation>Adresáre s Hunspeel slovníkmi oddelené bodkočiarkou. Špeciálne kľúčové slová [txs-settings-dir] a [txs-app-dir] budú vyriešené do daných adresároch.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3409"/>
+        <location filename="../src/configdialog.ui" line="3402"/>
         <source>*.dat</source>
         <translation>*.dat</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3416"/>
+        <location filename="../src/configdialog.ui" line="3409"/>
         <source>Thesaurus Database:</source>
         <translation>Slovníkova databáza:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3446"/>
+        <location filename="../src/configdialog.ui" line="3439"/>
         <source>TextLabel</source>
         <translation>Textová menovka</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3459"/>
+        <location filename="../src/configdialog.ui" line="3452"/>
         <source>Import Dictionary...</source>
         <translation>Importovať slovník...</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3469"/>
+        <location filename="../src/configdialog.ui" line="3462"/>
         <source>Internal Grammar Check</source>
         <translation>Interná kontrola gramatiky</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3475"/>
+        <location filename="../src/configdialog.ui" line="3468"/>
         <source>Words repeated within a paragraph will be highlighted.</source>
         <translation>Slova opakované v rámci odstavca budú zvýraznené.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3478"/>
+        <location filename="../src/configdialog.ui" line="3471"/>
         <source>Check for Word Repetitions</source>
         <translation>Preveriť opakovanie slov</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3485"/>
+        <location filename="../src/configdialog.ui" line="3478"/>
         <source>Words Between Repetitions:</source>
         <translation>Slová medzi opakovaniami:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3495"/>
+        <location filename="../src/configdialog.ui" line="3488"/>
         <source>Equal words are marked as repetition if there are no more than this number of words between them.</source>
         <translation>Rovnaké slová sú označené ako opakovanie, ak medzi nimi nie je väčší než tento počet slov.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3505"/>
+        <location filename="../src/configdialog.ui" line="3498"/>
         <source>Equal, longer words are marked as long range repetition if there are no more than this number of words between them.</source>
         <translation>Rovnaké, dlhšie slová sú označené ako opakovanie s dlhým dosahom, ak medzi nimi nie je väčší než tento počet slov.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3515"/>
+        <location filename="../src/configdialog.ui" line="3508"/>
         <source>Only words with have this length are checked for long range repetitions.</source>
         <translation>Len slová majúcu túto dĺžku sú skontrolované na opakovánie s dlhým dosahom.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3525"/>
+        <location filename="../src/configdialog.ui" line="3518"/>
         <source>Long Range Repetitions:</source>
         <translation>Opakovanie s dlhým dosahom:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3535"/>
+        <location filename="../src/configdialog.ui" line="3528"/>
         <source>Min Length of Words with Long Repetition:</source>
         <translation>Najmenšia dĺžka slov s dlhým opakováním:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3545"/>
+        <location filename="../src/configdialog.ui" line="3538"/>
         <source>Wordlist Directory:</source>
         <translation>Adresár so zoznamom slov:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3552"/>
+        <location filename="../src/configdialog.ui" line="3545"/>
         <source>Certain informal or weak words will be highlighted.</source>
         <translation>Niektoré bežné alebo nevýrazné slová budú zvýraznené.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3555"/>
+        <location filename="../src/configdialog.ui" line="3548"/>
         <source>Check for Bad Words</source>
         <translation>Preveriť zlé slová</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3562"/>
+        <location filename="../src/configdialog.ui" line="3555"/>
         <source>Directory containing the lists which words are &quot;bad&quot; or may be repeated.</source>
         <translation>Adresár obsahujúci zoznam slov, ktoré sú &quot;zlé&quot; alebo sa smú opakovať.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3589"/>
+        <location filename="../src/configdialog.ui" line="3582"/>
         <source>Store the conversation with AI provider on disk to allow later retrieval</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3592"/>
+        <location filename="../src/configdialog.ui" line="3585"/>
         <source>AI chat assistant</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3659"/>
+        <location filename="../src/configdialog.ui" line="3652"/>
         <source>Local Model</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3599"/>
+        <location filename="../src/configdialog.ui" line="3592"/>
         <source>open-mistral-7b</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3604"/>
+        <location filename="../src/configdialog.ui" line="3597"/>
         <source>open-mixtral-8x7b</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3609"/>
+        <location filename="../src/configdialog.ui" line="3602"/>
         <source>mistral-small-latest</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3614"/>
+        <location filename="../src/configdialog.ui" line="3607"/>
         <source>mistral-medium-latest</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3619"/>
+        <location filename="../src/configdialog.ui" line="3612"/>
         <source>mistral-large-latest</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3649"/>
+        <location filename="../src/configdialog.ui" line="3642"/>
         <source>Mistral AI</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3654"/>
+        <location filename="../src/configdialog.ui" line="3647"/>
         <source>OpenAI</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3627"/>
+        <location filename="../src/configdialog.ui" line="3620"/>
         <source>AI provider:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3674"/>
+        <location filename="../src/configdialog.ui" line="3667"/>
         <source>Preferred model:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3641"/>
+        <location filename="../src/configdialog.ui" line="3634"/>
         <source>API key:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3667"/>
+        <location filename="../src/configdialog.ui" line="3660"/>
         <source>Record Conversation</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3634"/>
+        <location filename="../src/configdialog.ui" line="3627"/>
         <source>Retrieve list of models</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3687"/>
+        <location filename="../src/configdialog.ui" line="3680"/>
         <source>API URL:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3694"/>
+        <location filename="../src/configdialog.ui" line="3687"/>
         <source>Default</source>
         <translation>Predvolený</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3704"/>
+        <location filename="../src/configdialog.ui" line="3697"/>
         <source>LanguageTool</source>
         <translation>Nástroj pre jazyk</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3710"/>
+        <location filename="../src/configdialog.ui" line="3703"/>
         <source>Path containing the LanguageTool java archive.</source>
         <translation>Cesta obsahujúca archív Java s LanguageTool (jazykovým nástrojom).</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3717"/>
+        <location filename="../src/configdialog.ui" line="3710"/>
         <source>LT Path:</source>
         <translation>Cesta LT:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3724"/>
+        <location filename="../src/configdialog.ui" line="3717"/>
         <source>Start LanguageTool if not running</source>
         <translation>Spustiť LanguageTool (jazykový nástroj), ak nebeží</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3731"/>
+        <location filename="../src/configdialog.ui" line="3724"/>
         <source>Server URL: </source>
         <translation>Adresa servera (URL):</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3738"/>
+        <location filename="../src/configdialog.ui" line="3731"/>
         <source>Comma separated list of LanguageTool rules which will not be highlighted as errors.</source>
         <translation>Čiarkou oddelený zoznam pravidiel pre LanguageTool (jazykového nástroja), ktoré nebudú zvýraznené ako chyby.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3762"/>
+        <location filename="../src/configdialog.ui" line="3755"/>
         <source>Ignored Rules:</source>
         <translation>Ignorované pravidlá:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3769"/>
-        <location filename="../src/configdialog.ui" line="3779"/>
-        <location filename="../src/configdialog.ui" line="3789"/>
-        <location filename="../src/configdialog.ui" line="3819"/>
+        <location filename="../src/configdialog.ui" line="3762"/>
+        <location filename="../src/configdialog.ui" line="3772"/>
+        <location filename="../src/configdialog.ui" line="3782"/>
+        <location filename="../src/configdialog.ui" line="3812"/>
         <source>Comma separated list of LanguageTool rules which will highlighted in a special format.</source>
         <translation>Čiarkou oddelený zoznam pravidiel LanguageTool (jazykového nástroja), ktoré budú zvýraznené vo zvláštnom formáte.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3799"/>
+        <location filename="../src/configdialog.ui" line="3792"/>
         <source>Special Rules 3:</source>
         <translation>Špeciálne pravidlá 3:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3809"/>
+        <location filename="../src/configdialog.ui" line="3802"/>
         <source>Special Rules 2:</source>
         <translation>Špeciálne pravidlá 2:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3829"/>
+        <location filename="../src/configdialog.ui" line="3822"/>
         <source>Special Rules 1:</source>
         <translation>Špeciálne pravidlá 1:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3846"/>
+        <location filename="../src/configdialog.ui" line="3839"/>
         <source>Special Rules 4:</source>
         <translation>Špeciálne pravidlá 4:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3856"/>
+        <location filename="../src/configdialog.ui" line="3849"/>
         <source>Will be inferred from the language of the spell checker used in the document.</source>
         <translation>Bude odvodené od jazyka overovača pravopisu použitého v dokumente.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3863"/>
+        <location filename="../src/configdialog.ui" line="3856"/>
         <source>Java executable, used to start LanguageTool, if it is not running.</source>
         <translation>Spustiteľný súbor Java, používaný pre spustenie LanguageToolu (jazykového nástroja), ak tento nebeží.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3870"/>
+        <location filename="../src/configdialog.ui" line="3863"/>
         <source>Java:</source>
         <translation>Java:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3877"/>
-        <location filename="../src/configdialog.ui" line="3925"/>
+        <location filename="../src/configdialog.ui" line="3870"/>
+        <location filename="../src/configdialog.ui" line="3918"/>
         <source>Arguments passed when starting LanguageTool. This option does only have an effect if LanguageTool is started from TeXstudio (i.e. not for an already running server).</source>
         <translation>Argumenty, ktoré sa predávajú pri spustení LanguageTool. Táto voľba funguje len v prípade, že sa LanguageTool spúšťa priamo z TexStudia (t.j. napríklad neplatí pre už bežiací server).</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3880"/>
+        <location filename="../src/configdialog.ui" line="3873"/>
         <source>LT Arguments:</source>
         <translation>Argumenty pre LanguageTool:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3904"/>
-        <location filename="../src/configdialog.ui" line="3932"/>
+        <location filename="../src/configdialog.ui" line="3897"/>
+        <location filename="../src/configdialog.ui" line="3925"/>
         <source>Restore Default</source>
         <translation>Obnoviť predvolené</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="3918"/>
+        <location filename="../src/configdialog.ui" line="3911"/>
         <source>Url to connect to LanguageTool. </source>
         <translation>Adresa (URL) pre spojenie s LanguageTool (jazykovým nástrojom).</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4015"/>
+        <location filename="../src/configdialog.ui" line="4008"/>
         <source>Command:</source>
         <translation>Príkaz:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4026"/>
+        <location filename="../src/configdialog.ui" line="4024"/>
         <source>Preview with dvipng</source>
         <translation>Náhľad s dvipng</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4031"/>
+        <location filename="../src/configdialog.ui" line="4029"/>
         <source>Preview with dvipng --follow (parallel)</source>
         <translation>Náhľad s dvipng --follow (parallel)</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4036"/>
+        <location filename="../src/configdialog.ui" line="4034"/>
         <source>Preview with dvips/ghostscript</source>
         <translation>Náhľad s dvips/ghostscript</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4041"/>
+        <location filename="../src/configdialog.ui" line="4039"/>
         <source>Preview with pdflatex</source>
         <translation>Náhľad pomocou pdflatex</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4046"/>
+        <location filename="../src/configdialog.ui" line="4044"/>
         <source>Preview with lualatex</source>
         <translation>Náhľad pomocou lualatex</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4051"/>
+        <location filename="../src/configdialog.ui" line="4049"/>
         <source>Preview with xelatex</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4059"/>
+        <location filename="../src/configdialog.ui" line="4057"/>
         <source>Display Mode:</source>
         <translation>Režim zobrazenia:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4069"/>
+        <location filename="../src/configdialog.ui" line="4067"/>
         <source>When the mode is changed, the preview on formulas is displayed accordingly (but for Inline it&apos;s still a tooltip).</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4076"/>
+        <location filename="../src/configdialog.ui" line="4074"/>
         <source>Show preview as tooltip if panel is hidden</source>
         <translation>Ukázať náhľad ako tip k nástroju, ak je panel neviditeľný</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4081"/>
+        <location filename="../src/configdialog.ui" line="4079"/>
         <source>Always show preview in preview panel</source>
         <translation>Ukázať náhľad v náhľadovom paneli vždy</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4086"/>
+        <location filename="../src/configdialog.ui" line="4084"/>
         <source>Always show preview as tool tip</source>
         <translation>Ukázať náhľad vždy ako tip k nástroju</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4091"/>
+        <location filename="../src/configdialog.ui" line="4089"/>
         <source>Always show both</source>
         <translation>Ukázať vždy oboje</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4096"/>
+        <location filename="../src/configdialog.ui" line="4094"/>
         <source>Inline</source>
         <translation>V riadku</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4101"/>
+        <location filename="../src/configdialog.ui" line="4099"/>
         <source>Show in embedded viewer</source>
         <extracomment>Only available if pdflatex is used for compilation</extracomment>
         <translation>Ukázať vo vloženom prehliadači</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4109"/>
+        <location filename="../src/configdialog.ui" line="4139"/>
         <source>Update the preview on text change</source>
         <translation>Obnoviť náhľad pri zmene textu</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4112"/>
+        <location filename="../src/configdialog.ui" line="4142"/>
         <source>Auto Update:</source>
         <translation>Automatická aktualizácia:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4125"/>
+        <location filename="../src/configdialog.ui" line="4155"/>
         <source>Previously previewed text</source>
         <translation>Predtým prehliadaný text</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4133"/>
+        <location filename="../src/configdialog.ui" line="4163"/>
         <source>Auto Update Delay:</source>
         <translation>Oneskorenie automatickej aktualizácie:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4143"/>
+        <location filename="../src/configdialog.ui" line="4173"/>
         <source> ms</source>
         <translation>ms</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4159"/>
+        <location filename="../src/configdialog.ui" line="4189"/>
         <source>Replace beamer class by article</source>
         <translation>Nahradiť triedu beamer triedou article</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4172"/>
+        <location filename="../src/configdialog.ui" line="4202"/>
         <source>Precompile Preamble</source>
         <translation>Predkompilovať preambulu</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4188"/>
-        <location filename="../src/configdialog.ui" line="4311"/>
+        <location filename="../src/configdialog.ui" line="4110"/>
+        <location filename="../src/configdialog.ui" line="4309"/>
         <source>Scaling:</source>
         <translation>Škálovanie:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4283"/>
-        <location filename="../src/configdialog.cpp" line="550"/>
+        <location filename="../src/configdialog.ui" line="4019"/>
+        <source>Preview with default compiler</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/configdialog.ui" line="4281"/>
+        <location filename="../src/configdialog.cpp" line="551"/>
         <source>Internal PDF Viewer</source>
         <translation>Interný prehliadač PDF</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4318"/>
+        <location filename="../src/configdialog.ui" line="4316"/>
         <source>Load Strategy:</source>
         <translation>Postup nahrania:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4328"/>
+        <location filename="../src/configdialog.ui" line="4326"/>
         <source>Auto-recompile document on changes</source>
         <translation>Automaticky prekompilovať dokument pri zmene</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4335"/>
+        <location filename="../src/configdialog.ui" line="4333"/>
         <source>Cache Size:</source>
         <translation>Veľkosť vyrovnávacej pamäti:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4345"/>
-        <location filename="../src/configdialog.ui" line="4710"/>
+        <location filename="../src/configdialog.ui" line="4343"/>
+        <location filename="../src/configdialog.ui" line="4708"/>
         <source> px</source>
         <translation> px</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4367"/>
+        <location filename="../src/configdialog.ui" line="4365"/>
         <source>Infinite</source>
         <translation>Nekonečné</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4386"/>
+        <location filename="../src/configdialog.ui" line="4384"/>
         <source> dpi</source>
         <translation> dpi</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4396"/>
+        <location filename="../src/configdialog.ui" line="4394"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Defines how a PDF is loaded:&lt;/p&gt;&lt;p&gt;&lt;b&gt;Buffered:&lt;/b&gt; Load the file into a buffer and check for completeness. Then pass the data on to poppler. This was primarily introduced as a speedup for old poppler versions (&amp;lt;0.24) which were not thread-safe. It has been reported that poppler may crash when loading large buffers. Therefore this option is deprecated.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Direct:&lt;/b&gt; Use native poppler file loading. This is fastest, but does not allow checking for incomplete files.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Hybrid (recommended):&lt;/b&gt; First load file into buffer and check for completeness. Use that buffer for small documents (&amp;lt; 50MB). Large files are loaded using native poppler file loading. This combines file-checking while preventing problems with large PDF files.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stanovuje, akým zpôsobom je PDF nahráno:&lt;/p&gt;&lt;p&gt;&lt;b&gt;Uložený vo vyrovnávacej pamäti:&lt;/b&gt; Nahrať súbor do vyrovnávacej pamäti a overiť úplnosť. Potom dáta predať poppleru. Toto bolo v prvom rade zavedené ako zrýchlenie pre staršie verzie poppleru (&amp;lt;0.24), ktoré neboli &quot;thread-safe&quot;. bolo hlásené, že poppler môže pri nahrávaní veľkých objemov dát uložených do vyrovnávacej pamäti spadnúť. Z toho dôvodu je táto voľba zamietnutá.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Priamy:&lt;/b&gt; Používa vlastné funkcie poppleru pre nahrávanie zo súborov. Toto je najrýchlejšia cesta, ale neumožňuje preskúšanie neúplných súborov.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Zmiešaný (odporúčané):&lt;/b&gt; Najprv súbor nahrá do vyrovnávacej pamäti a preskúša ho na úplnosť. U malých súborov (&amp;lt; 50MB) sú dáta predané ďalej priamo poppleru.Veľké súbory sú nahrané pomocou vlastných funkcií poppleru pre nahrávanie súborov. Tento postup podporuje preskúšanie súborov na úplnosť a zabraňuje možným problémom spojených s pádmi veľkých súborov PDF.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4406"/>
+        <location filename="../src/configdialog.ui" line="4404"/>
         <source>Buffered</source>
         <translation>Uložený vo vyrovnávacej pamäti</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4411"/>
+        <location filename="../src/configdialog.ui" line="4409"/>
         <source>Direct</source>
         <translation>Priamy</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4416"/>
+        <location filename="../src/configdialog.ui" line="4414"/>
         <source>Hybrid</source>
         <translation>Hybridný</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4424"/>
+        <location filename="../src/configdialog.ui" line="4422"/>
         <source>Highlight Duration</source>
         <translation>Zvýrazniť dobu trvania</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4434"/>
+        <location filename="../src/configdialog.ui" line="4432"/>
         <source>Specify as hexadecimal RGBA value. Note: The transparency is required because the highlighting is drawn on top of the text due to technical limitations.</source>
         <translation>Stanoviť ako šestnástkovú hodnotu RGBA. Je vyžadovaná priehľadnosť, pretože zvýraznenie sa kvôli technickým obmedzeniam kreslí navrchu textu.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4437"/>
+        <location filename="../src/configdialog.ui" line="4435"/>
         <source>\#HHHHHHHH;_</source>
         <translation>\#HHHHHHHH;_</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4451"/>
+        <location filename="../src/configdialog.ui" line="4449"/>
         <source>Rectangle</source>
         <translation>Obdĺžnik</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4456"/>
+        <location filename="../src/configdialog.ui" line="4454"/>
         <source>Circle</source>
         <translation>Kruhová</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4477"/>
+        <location filename="../src/configdialog.ui" line="4475"/>
         <source>Highlight Color</source>
         <translation>Zvýrazniť farbu</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4487"/>
+        <location filename="../src/configdialog.ui" line="4485"/>
         <source>Default background color. Specify as hexadecimal RGB value. Note: This will only affect PDFs loaded after the change of the option. The paper color of already open PDFs is not modified.</source>
         <translation>Predvolená farba pozadia. Definuj ako hexadecimálnu RGB hodnotu. Poznámka: Toto ovplyvní len PDF súbory načítané po tejto zmene. Farba papiera už otvorených PDF súborov nebude modifikovaná.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4512"/>
+        <location filename="../src/configdialog.ui" line="4510"/>
         <source>Border</source>
         <translation>Okraj</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4519"/>
+        <location filename="../src/configdialog.ui" line="4517"/>
         <source>Shadow</source>
         <translation>Tieň</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4542"/>
+        <location filename="../src/configdialog.ui" line="4540"/>
         <source>Original Size</source>
         <translation>Pôvodná veľkosť</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4547"/>
+        <location filename="../src/configdialog.ui" line="4545"/>
         <source>Fit to Window Width</source>
         <translation>Umiestniť do šírky okna</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4552"/>
+        <location filename="../src/configdialog.ui" line="4550"/>
         <source>Fit to Window Size</source>
         <translation>Umiestniť do veľkosti okna</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4557"/>
+        <location filename="../src/configdialog.ui" line="4555"/>
         <source>Scaled Size</source>
         <translation>Zmenená veľkosť</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4562"/>
+        <location filename="../src/configdialog.ui" line="4560"/>
         <source>Fit to Text Width</source>
         <translation>Prispôsobiť šírke textu</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4570"/>
+        <location filename="../src/configdialog.ui" line="4568"/>
         <source> MB</source>
         <translation> MB</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4592"/>
+        <location filename="../src/configdialog.ui" line="4590"/>
         <source>Synchronized Files Types:</source>
         <translation>Typy synchronizovaných súborov:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4602"/>
+        <location filename="../src/configdialog.ui" line="4600"/>
         <source>Paper Color</source>
         <translation>Farba papieru</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4612"/>
-        <location filename="../src/configdialog.ui" line="4666"/>
+        <location filename="../src/configdialog.ui" line="4610"/>
+        <location filename="../src/configdialog.ui" line="4664"/>
         <source>The Render Backend used by the PDF library poppler.
 'Splash' is the default and suitable for most situations.
 If there are rendering issues, you may try the alternative 'Arthur' backend.
@@ -2908,123 +2923,123 @@ Ak sa pri vykreslovaní objavujú problémy, môžete vyskúšať náhradné jad
 Poznámka: Zmena tohto nastavenia ovplyvní len následne otvorené dokumenty.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4618"/>
+        <location filename="../src/configdialog.ui" line="4616"/>
         <source>Render Backend:</source>
         <translation>Vykreslovacie jadro:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4628"/>
+        <location filename="../src/configdialog.ui" line="4626"/>
         <source>Presentation Laser Pointer Size:</source>
         <translation>Veľkosť laserového ukazovátka pri prezentácií</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4635"/>
+        <location filename="../src/configdialog.ui" line="4633"/>
         <source>Note: Windowed/embedded mode is configured at Build -&gt; PDF Viewer</source>
         <translation>Poznámka: Oknový/Vložený režim je nastavený v Zostavenie → Prehliadač PDF</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4642"/>
+        <location filename="../src/configdialog.ui" line="4640"/>
         <source>Disable horizontal scrolling for &quot;Fit to Text Width&quot;</source>
         <translation>Zakázať vodorovné posunovanie pre Prispôsobiť šírke textu</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4652"/>
+        <location filename="../src/configdialog.ui" line="4650"/>
         <source>Scale Option:</source>
         <translation>Možnosť škálovania:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4659"/>
+        <location filename="../src/configdialog.ui" line="4657"/>
         <source>Magnifier Shape:</source>
         <translation>Tvar lupy:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4689"/>
+        <location filename="../src/configdialog.ui" line="4687"/>
         <source>Magnifier Size:</source>
         <translation>Veľkosť lupy:</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4696"/>
+        <location filename="../src/configdialog.ui" line="4694"/>
         <source>Auto-hide Toolbars in Embedded Mode</source>
         <translation>V režimu Vložené automaticky skryť nástrojové pruhy</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4703"/>
+        <location filename="../src/configdialog.ui" line="4701"/>
         <source>Presentation Laser Pointer Color:</source>
         <translation>Farba laserového ukazovátka pri prezentácií</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4793"/>
+        <location filename="../src/configdialog.ui" line="4791"/>
         <source>Use SVN</source>
         <translation>Použiť SVN</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4798"/>
+        <location filename="../src/configdialog.ui" line="4796"/>
         <source>Use GIT</source>
         <translation>Použiť GIT</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4806"/>
+        <location filename="../src/configdialog.ui" line="4804"/>
         <source>Select how txs checks in saved files</source>
         <translation>Vyberte, ako txs zapisuje v uložených súboroch</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4810"/>
+        <location filename="../src/configdialog.ui" line="4808"/>
         <source>No automatic check-in after save</source>
         <translation>Žiadne automatické zapisovanie po uložení</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4815"/>
+        <location filename="../src/configdialog.ui" line="4813"/>
         <source>Check-in after File/Save only</source>
         <translation>Zapísania len po Súbor/Uložiť</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4820"/>
+        <location filename="../src/configdialog.ui" line="4818"/>
         <source>Check-in after all save operations, i.e. also before compiles.</source>
         <translation>Zapísania po všetkých operáciach ukladania, t.j. i pred kompiláciou.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4828"/>
+        <location filename="../src/configdialog.ui" line="4826"/>
         <source>Use SVN/GIT revisions to undo before last saved version</source>
         <translation>Použi revízie SVN/GIT na vrátenie späť pred poslednú uloženú verziu</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4835"/>
+        <location filename="../src/configdialog.ui" line="4833"/>
         <source>on svn add executes svn propset svn:keywords &quot;Date Author Revision HeadURL&quot;</source>
         <translation>pri svn add vykoná svn propset svn:keywords &quot;Date Author Revision HeadURL&quot;</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4838"/>
+        <location filename="../src/configdialog.ui" line="4836"/>
         <source>Substitute Keywords with Properties (on svn add)</source>
         <translation>Nahradiť kľúčová slová vlastnosťami (pri svn add)</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4847"/>
+        <location filename="../src/configdialog.ui" line="4845"/>
         <source>SVN Directory Search Depth: </source>
         <translation>Hĺbka prehľadávania adresára SVN: </translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4905"/>
-        <location filename="../src/configdialog.cpp" line="553"/>
+        <location filename="../src/configdialog.ui" line="4903"/>
+        <location filename="../src/configdialog.cpp" line="554"/>
         <source>Internal Terminal</source>
         <translation>Vbudovaný príkazový riadok</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4956"/>
+        <location filename="../src/configdialog.ui" line="4954"/>
         <source>Shell:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="5012"/>
+        <location filename="../src/configdialog.ui" line="5010"/>
         <source>Show Advanced Options</source>
         <translation>Ukázať pokročilé možnosti</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="5038"/>
+        <location filename="../src/configdialog.ui" line="5036"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="5048"/>
+        <location filename="../src/configdialog.ui" line="5046"/>
         <source>Cancel</source>
         <translation>Zrušiť</translation>
     </message>
@@ -3068,231 +3083,231 @@ chcete nastaviť?</translation>
         <translation>Stiahnuť dodatečné slovníky z %1 alebo %2</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="500"/>
+        <location filename="../src/configdialog.cpp" line="501"/>
         <source>Here the syntax highlighting for various commands, environments and selections can be changed.</source>
         <translation>Tu sa dá zmeniť zvýrazňovanie skladby rôznych príkazov, prostredí a výberov.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="501"/>
+        <location filename="../src/configdialog.cpp" line="502"/>
         <source>Basic highlighting</source>
         <translation>Základné zvýrazňovanie</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="502"/>
+        <location filename="../src/configdialog.cpp" line="503"/>
         <source>LaTeX checking</source>
         <translation>Kontrola LaTeXu</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="503"/>
+        <location filename="../src/configdialog.cpp" line="504"/>
         <source>Language checking</source>
         <translation>Kontrola jazyka</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="504"/>
+        <location filename="../src/configdialog.cpp" line="505"/>
         <source>Line highlighting</source>
         <translation>Zvýrazňovanie riadkov</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="505"/>
+        <location filename="../src/configdialog.cpp" line="506"/>
         <source>Search</source>
         <translation>Hľadať</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="506"/>
+        <location filename="../src/configdialog.cpp" line="507"/>
         <source>Diff</source>
         <translation>Rozdiely</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4009"/>
-        <location filename="../src/configdialog.cpp" line="507"/>
-        <location filename="../src/configdialog.cpp" line="549"/>
+        <location filename="../src/configdialog.ui" line="4002"/>
+        <location filename="../src/configdialog.cpp" line="508"/>
+        <location filename="../src/configdialog.cpp" line="550"/>
         <source>Preview</source>
         <translation>Náhľad</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="508"/>
+        <location filename="../src/configdialog.cpp" line="509"/>
         <source>DTX files</source>
         <translation>Súbory DTX</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="509"/>
+        <location filename="../src/configdialog.cpp" line="510"/>
         <source>Sweave / Pweave</source>
         <translation>Sweave/Pweave</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="510"/>
+        <location filename="../src/configdialog.cpp" line="511"/>
         <source>Asymptote</source>
         <translation>Asymptote</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="511"/>
+        <location filename="../src/configdialog.cpp" line="512"/>
         <source>Lua</source>
         <translation>Lua</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="512"/>
+        <location filename="../src/configdialog.cpp" line="513"/>
         <source>QtScript</source>
         <translation>QtScript</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="529"/>
+        <location filename="../src/configdialog.cpp" line="530"/>
         <source>Default Shortcut</source>
         <translation>Predvolená skratka</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="529"/>
+        <location filename="../src/configdialog.cpp" line="530"/>
         <source>Current Shortcut</source>
         <translation>Súčasná skratka</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="529"/>
+        <location filename="../src/configdialog.cpp" line="530"/>
         <source>Additional Shortcut</source>
         <translation>Doplnková skratka</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="537"/>
+        <location filename="../src/configdialog.cpp" line="538"/>
         <source>General</source>
         <translation>Všeobecné</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="538"/>
+        <location filename="../src/configdialog.cpp" line="539"/>
         <source>Commands</source>
         <translation>Príkazy</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="539"/>
+        <location filename="../src/configdialog.cpp" line="540"/>
         <source>Build</source>
         <translation>Zostavenie</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="542"/>
+        <location filename="../src/configdialog.cpp" line="543"/>
         <source>Toolbars</source>
         <translation>Nástrojové pruhy</translation>
     </message>
     <message>
         <location filename="../src/configdialog.ui" line="1370"/>
-        <location filename="../src/configdialog.cpp" line="543"/>
+        <location filename="../src/configdialog.cpp" line="544"/>
         <source>GUI Scaling</source>
         <translation>GUI škálovanie</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="545"/>
+        <location filename="../src/configdialog.cpp" line="546"/>
         <source>Adv. Editor</source>
         <translation>Pokročilý editor</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="546"/>
+        <location filename="../src/configdialog.cpp" line="547"/>
         <source>Syntax Highlighting</source>
         <translation>Zvýrazňovanie syntaxu</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="548"/>
+        <location filename="../src/configdialog.cpp" line="549"/>
         <source>Language Checking</source>
         <translation>Kontrola jazyka</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.ui" line="4786"/>
-        <location filename="../src/configdialog.cpp" line="551"/>
+        <location filename="../src/configdialog.ui" line="4784"/>
+        <location filename="../src/configdialog.cpp" line="552"/>
         <source>SVN/GIT</source>
         <translation>SVN/GIT</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="591"/>
+        <location filename="../src/configdialog.cpp" line="592"/>
         <source>(option filter)</source>
         <translation>(filter volieb)</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="851"/>
+        <location filename="../src/configdialog.cpp" line="845"/>
         <source>Select thesaurus database</source>
         <translation>Vybrať slovníkovú databázu</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="856"/>
+        <location filename="../src/configdialog.cpp" line="850"/>
         <source>Select the grammar word lists dir</source>
         <translation>Vybrať adresár so zoznamom slov gramatiky</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="861"/>
+        <location filename="../src/configdialog.cpp" line="855"/>
         <source>Select the LanguageTool jar</source>
         <translation>Vybrať jar LanguageTool</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="866"/>
+        <location filename="../src/configdialog.cpp" line="860"/>
         <source>Select java</source>
         <translation>Vybrať Javu</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="879"/>
+        <location filename="../src/configdialog.cpp" line="873"/>
         <source>Select dictionary directory</source>
         <translation>Vybrať adresár pre slovník</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="884"/>
+        <location filename="../src/configdialog.cpp" line="878"/>
         <source>Search Path for Logs</source>
         <translation>Vyhľadávacia cesta pre logy</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="889"/>
+        <location filename="../src/configdialog.cpp" line="883"/>
         <source>Search Path .bib Files</source>
         <translation>Vyhľadávacia cesta pre súbory .bib</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="894"/>
+        <location filename="../src/configdialog.cpp" line="888"/>
         <source>Search Path for Images</source>
         <translation>Vyhľadávacia cesta pre obrázky</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="899"/>
+        <location filename="../src/configdialog.cpp" line="893"/>
         <source>Search Path for PDFs</source>
         <translation>Vyhľadávacia cesta pre PDF</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="904"/>
+        <location filename="../src/configdialog.cpp" line="898"/>
         <source>Search Path for Commands</source>
         <translation>Vyhľadávacia cesta pre príkazy</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="950"/>
+        <location filename="../src/configdialog.cpp" line="944"/>
         <source>&lt;unknown&gt;</source>
         <translation>&lt;unknown&gt;</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="1230"/>
+        <location filename="../src/configdialog.cpp" line="1224"/>
         <source>Load Other Icon</source>
         <translation>Nahrať inú ikonu</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="1231"/>
+        <location filename="../src/configdialog.cpp" line="1225"/>
         <source>Insert Separator</source>
         <translation>Vložiť oddeľovač</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="1239"/>
+        <location filename="../src/configdialog.cpp" line="1233"/>
         <source>You need to add an action to the toolbar (from the list of actions on the right side), before you can load an icon for that item.</source>
         <translation>Je treba, aby ste do pruhu s nástrojmi pridali činnosť (zo zoznamu činností na pravej strane) predtým, než budete pre túto položku môcť nahrať ikonu.</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="1242"/>
+        <location filename="../src/configdialog.cpp" line="1236"/>
         <source>Select a File</source>
         <translation>Vybrať súbor</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="1242"/>
+        <location filename="../src/configdialog.cpp" line="1236"/>
         <source>Images</source>
         <translation>Obrázky</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="1300"/>
+        <location filename="../src/configdialog.cpp" line="1294"/>
         <source>Import Dictionary</source>
         <translation>Importovať slovník</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="1300"/>
+        <location filename="../src/configdialog.cpp" line="1294"/>
         <source>OpenOffice Dictionary</source>
         <translation>Slovník OpenOffice</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="1311"/>
+        <location filename="../src/configdialog.cpp" line="1305"/>
         <source>The dictionary files have been imported to
 %1.
 However this path is not contained in the dictionary path list. Do you want to add it?</source>
@@ -3301,7 +3316,7 @@ However this path is not contained in the dictionary path list. Do you want to a
 Táto cesta ale nie je obsiahnutá v zozname ciest ku slovníkom. Chcete ju pridať?</translation>
     </message>
     <message>
-        <location filename="../src/configdialog.cpp" line="1409"/>
+        <location filename="../src/configdialog.cpp" line="1403"/>
         <source>You have enabled the advanced options. This allows one to
 configure TXS in great detail. Disable the advanced
 options again to only view the most common settings.</source>
@@ -3310,7 +3325,7 @@ podrobnejšie. Zakážte znovu pokročilé voľby, ak chcete
 vidieť len najbežnejšie nastavenie.</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1529"/>
+        <location filename="../src/configmanager.cpp" line="1539"/>
         <source>Basic Key Mapping</source>
         <translation>Základné priradenia kláves</translation>
     </message>
@@ -4446,164 +4461,164 @@ vidieť len najbežnejšie nastavenie.</translation>
         <translation>Odkaz na stranu - \pageref{〈kľúč〉}</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1100"/>
-        <location filename="../src/configmanager.cpp" line="1106"/>
-        <location filename="../src/configmanager.cpp" line="1122"/>
-        <location filename="../src/configmanager.cpp" line="1127"/>
+        <location filename="../src/configmanager.cpp" line="1099"/>
+        <location filename="../src/configmanager.cpp" line="1105"/>
+        <location filename="../src/configmanager.cpp" line="1121"/>
+        <location filename="../src/configmanager.cpp" line="1126"/>
         <source>Key replacement: %1 %2</source>
         <translation>Nahradenia kláves: %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1100"/>
-        <location filename="../src/configmanager.cpp" line="1122"/>
+        <location filename="../src/configmanager.cpp" line="1099"/>
+        <location filename="../src/configmanager.cpp" line="1121"/>
         <source>before word</source>
         <translation>pred slovom</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1106"/>
-        <location filename="../src/configmanager.cpp" line="1127"/>
+        <location filename="../src/configmanager.cpp" line="1105"/>
+        <location filename="../src/configmanager.cpp" line="1126"/>
         <source>after word</source>
         <translation>za slovom</translation>
     </message>
     <message>
+        <location filename="../src/configmanager.cpp" line="1447"/>
         <location filename="../src/configmanager.cpp" line="1448"/>
-        <location filename="../src/configmanager.cpp" line="1449"/>
-        <location filename="../src/configmanager.cpp" line="1632"/>
-        <location filename="../src/configmanager.cpp" line="1916"/>
-        <location filename="../src/configmanager.cpp" line="1924"/>
+        <location filename="../src/configmanager.cpp" line="1642"/>
+        <location filename="../src/configmanager.cpp" line="1931"/>
+        <location filename="../src/configmanager.cpp" line="1939"/>
         <source>default</source>
         <translation>Predvolené</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1506"/>
+        <location filename="../src/configmanager.cpp" line="1516"/>
         <source>Menus</source>
         <translation>Ponuky</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1514"/>
+        <location filename="../src/configmanager.cpp" line="1524"/>
         <source>Menus PDF-Viewer</source>
         <translation>Ponuky prehliadača PDF</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1550"/>
-        <location filename="../src/configmanager.cpp" line="2801"/>
+        <location filename="../src/configmanager.cpp" line="1560"/>
+        <location filename="../src/configmanager.cpp" line="2816"/>
         <source>&lt;none&gt;</source>
         <translation>&lt;none&gt;</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1596"/>
+        <location filename="../src/configmanager.cpp" line="1606"/>
         <source>Insert New Menu Item (before)</source>
         <translation>Vložiť novú položku ponuky (pred)</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1599"/>
+        <location filename="../src/configmanager.cpp" line="1609"/>
         <source>Insert New Sub Menu (before)</source>
         <translation>Vložiť novú položku do podponuky (pred)</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1602"/>
+        <location filename="../src/configmanager.cpp" line="1612"/>
         <source>Revert/Remove User Menu Item</source>
         <translation>Vrátiť/odstrániť položku menu používateľov</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1620"/>
+        <location filename="../src/configmanager.cpp" line="1630"/>
         <source>Latex/Math menus</source>
         <translation>Ponuky Latex/Matematika</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1621"/>
+        <location filename="../src/configmanager.cpp" line="1631"/>
         <source>All menus</source>
         <translation>Všetky ponuky</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1622"/>
+        <location filename="../src/configmanager.cpp" line="1632"/>
         <source>Special Tags</source>
         <translation>Špeciálne značky</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1716"/>
+        <location filename="../src/configmanager.cpp" line="1726"/>
         <source>You have enabled auto quote replacement. However, there are macros with trigger string (?language:latex)(?&lt;=\s|^) or (?language:latex)(?&lt;=\S) which will override the new quote replacement.
 Do you want to remove them?</source>
         <translation>Povolili ste automatické nahradenie úvodzoviek. Sú tu však makra so spúšťacím reťazcom (?language:latex)(?&lt;=\s|^) alebo (?language:latex)(?&lt;=\S), ktoré zruší nové nahradenia úvodzoviek.
 hcete ich odstrániť?</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="1999"/>
+        <location filename="../src/configmanager.cpp" line="2014"/>
         <source>To fully utilize the internal pdf-viewer, synctex has to be activated. Shall TeXstudio do it now?</source>
         <translation>Pre úplné využitie interného prehliadača PDF je potrebné, aby bol zapnutý synctex. Má to teraz TeXstudio spraviť?</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="2014"/>
+        <location filename="../src/configmanager.cpp" line="2029"/>
         <source>Recent &apos;Master Document&apos; %1</source>
         <translation>Posledný Hlavný dokument %1</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="2017"/>
+        <location filename="../src/configmanager.cpp" line="2032"/>
         <source>Recent File %1</source>
         <translation>Naposledy otvorený súbor %1</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="2018"/>
+        <location filename="../src/configmanager.cpp" line="2033"/>
         <source>Clear file list</source>
         <translation>Vyprázdniť zoznam súborov</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="2019"/>
+        <location filename="../src/configmanager.cpp" line="2034"/>
         <source>File list</source>
         <translation>Zoznam súborov</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="2020"/>
+        <location filename="../src/configmanager.cpp" line="2035"/>
         <source>Open first non-open file</source>
         <translation>Otvoriť prvý neotvorený súbor</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="2021"/>
+        <location filename="../src/configmanager.cpp" line="2036"/>
         <source>&amp;* Open all files</source>
         <translation>&amp;* Otvoriť všetky súbory</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="2031"/>
+        <location filename="../src/configmanager.cpp" line="2046"/>
         <source>Root Document: </source>
         <translation>Koreňový dokument:</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="2802"/>
+        <location filename="../src/configmanager.cpp" line="2817"/>
         <source>&lt;default&gt;</source>
         <translation>&lt;default&gt;</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="3061"/>
+        <location filename="../src/configmanager.cpp" line="3076"/>
         <source>Configure</source>
         <translation>Nastaviť</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="3068"/>
+        <location filename="../src/configmanager.cpp" line="3083"/>
         <source>Select Program</source>
         <translation>Vybrať program</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="3075"/>
+        <location filename="../src/configmanager.cpp" line="3090"/>
         <source>Restore Default</source>
         <translation>Obnoviť predvolené</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="3122"/>
+        <location filename="../src/configmanager.cpp" line="3137"/>
         <source>Repeat contained compilation commands</source>
         <translation>Opakovať obsiahnuté príkazy na kompiláciu</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="3170"/>
+        <location filename="../src/configmanager.cpp" line="3185"/>
         <source>Add</source>
         <translation>Pridať</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="3253"/>
+        <location filename="../src/configmanager.cpp" line="3268"/>
         <source>Browse program</source>
         <translation>Prehliadač</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="3592"/>
+        <location filename="../src/configmanager.cpp" line="3607"/>
         <source>text is restored after restart</source>
         <translation>Text je obnovený po reštarte</translation>
     </message>
@@ -4894,23 +4909,23 @@ Musíte sa uistiť, že kódovanie súboru a hodnota poslaná balíčku inputenc
 <context>
     <name>GrammarCheck</name>
     <message>
-        <location filename="../src/grammarcheck.cpp" line="324"/>
+        <location filename="../src/grammarcheck.cpp" line="332"/>
         <source>Word repetition</source>
         <translation>Opakovanie slov</translation>
     </message>
     <message>
-        <location filename="../src/grammarcheck.cpp" line="334"/>
+        <location filename="../src/grammarcheck.cpp" line="342"/>
         <source>Word repetition. Distance %1</source>
         <translation>Opakovanie slov. Vzdialenosť %1</translation>
     </message>
     <message>
-        <location filename="../src/grammarcheck.cpp" line="336"/>
+        <location filename="../src/grammarcheck.cpp" line="344"/>
         <source>Long range word repetition. Distance %1</source>
         <translation>Opakovanie slov s dlhým dosahom. Vzdialenosť %1</translation>
     </message>
     <message>
-        <location filename="../src/grammarcheck.cpp" line="346"/>
-        <location filename="../src/grammarcheck.cpp" line="348"/>
+        <location filename="../src/grammarcheck.cpp" line="354"/>
+        <location filename="../src/grammarcheck.cpp" line="356"/>
         <source>Bad word</source>
         <translation>Zlé slovo</translation>
     </message>
@@ -4918,7 +4933,7 @@ Musíte sa uistiť, že kódovanie súboru a hodnota poslaná balíčku inputenc
 <context>
     <name>Help</name>
     <message>
-        <location filename="../src/help.cpp" line="89"/>
+        <location filename="../src/help.cpp" line="97"/>
         <source>texdoc not found.</source>
         <translation>Texdoc nenájdený.</translation>
     </message>
@@ -5163,52 +5178,52 @@ Sprievodca nepodporuje príkaz </translation>
 <context>
     <name>LatexCompleter</name>
     <message>
-        <location filename="../src/latexcompleter.cpp" line="1484"/>
-        <location filename="../src/latexcompleter.cpp" line="1494"/>
+        <location filename="../src/latexcompleter.cpp" line="1500"/>
+        <location filename="../src/latexcompleter.cpp" line="1510"/>
         <source>typical</source>
         <translation>Typický</translation>
     </message>
     <message>
-        <location filename="../src/latexcompleter.cpp" line="1485"/>
-        <location filename="../src/latexcompleter.cpp" line="1495"/>
+        <location filename="../src/latexcompleter.cpp" line="1501"/>
+        <location filename="../src/latexcompleter.cpp" line="1511"/>
         <source>most used</source>
         <translation>Často používaný</translation>
     </message>
     <message>
-        <location filename="../src/latexcompleter.cpp" line="1486"/>
-        <location filename="../src/latexcompleter.cpp" line="1496"/>
+        <location filename="../src/latexcompleter.cpp" line="1502"/>
+        <location filename="../src/latexcompleter.cpp" line="1512"/>
         <source>fuzzy</source>
         <translation>Nejasné</translation>
     </message>
     <message>
-        <location filename="../src/latexcompleter.cpp" line="1487"/>
-        <location filename="../src/latexcompleter.cpp" line="1497"/>
+        <location filename="../src/latexcompleter.cpp" line="1503"/>
+        <location filename="../src/latexcompleter.cpp" line="1513"/>
         <source>all</source>
         <translation>Vše</translation>
     </message>
     <message>
-        <location filename="../src/latexcompleter.cpp" line="1488"/>
-        <location filename="../src/latexcompleter.cpp" line="1498"/>
+        <location filename="../src/latexcompleter.cpp" line="1504"/>
+        <location filename="../src/latexcompleter.cpp" line="1514"/>
         <source>press shift+space to change view</source>
         <translation>Stlačiť klávesu Shift+medzeru pre zmenu pohľadu</translation>
     </message>
     <message>
-        <location filename="../src/latexcompleter.cpp" line="1699"/>
+        <location filename="../src/latexcompleter.cpp" line="1715"/>
         <source> (Usertag)</source>
         <translation> (Užívateľská značka)</translation>
     </message>
     <message>
-        <location filename="../src/latexcompleter.cpp" line="2073"/>
+        <location filename="../src/latexcompleter.cpp" line="2106"/>
         <source>label missing!</source>
         <translation>Štítok chýba!</translation>
     </message>
     <message>
-        <location filename="../src/latexcompleter.cpp" line="2075"/>
+        <location filename="../src/latexcompleter.cpp" line="2108"/>
         <source>label defined multiple times!</source>
         <translation>Štítok viackrát definovaný!</translation>
     </message>
     <message>
-        <location filename="../src/latexcompleter.cpp" line="2085"/>
+        <location filename="../src/latexcompleter.cpp" line="2118"/>
         <source>&lt;p style='white-space:pre'&gt;&lt;b&gt;Filename: %1&lt;/b&gt;
 </source>
         <translation>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Súborový názov: %1&lt;/b&gt;
@@ -5223,225 +5238,230 @@ Sprievodca nepodporuje príkaz </translation>
         <translation>Neznáma chyba. Možnosť spadnutia aplikácie. Radíme TeXstudio spustiť znova.</translation>
     </message>
     <message>
-        <location filename="../src/latexdocument.cpp" line="2631"/>
+        <location filename="../src/latexdocument.cpp" line="2659"/>
         <source>Root file not found</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/latexdocument.cpp" line="2636"/>
+        <location filename="../src/latexdocument.cpp" line="2664"/>
         <source>Invalid codec</source>
         <translation>Neplatný kodek</translation>
     </message>
     <message>
-        <location filename="../src/latexdocument.cpp" line="2650"/>
+        <location filename="../src/latexdocument.cpp" line="2678"/>
         <source>Missing value for -job-name</source>
         <translation>Chýba hodnota pre -job-name</translation>
     </message>
     <message>
-        <location filename="../src/latexdocument.cpp" line="2653"/>
+        <location filename="../src/latexdocument.cpp" line="2681"/>
         <source>Unknown magic comment</source>
         <translation>Neznámy magický komentár</translation>
+    </message>
+    <message>
+        <location filename="../src/tests/structureview_t.cpp" line="15"/>
+        <source>LABELS</source>
+        <translation>LABELS</translation>
     </message>
 </context>
 <context>
     <name>LatexEditorView</name>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="316"/>
+        <location filename="../src/latexeditorview.cpp" line="399"/>
         <source>Could not open url:</source>
         <translation>Nepodarilo sa otvoriť adresu (URL):</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="396"/>
+        <location filename="../src/latexeditorview.cpp" line="479"/>
         <source>Copy Image</source>
         <translation>Kopírovať obrázok</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="397"/>
+        <location filename="../src/latexeditorview.cpp" line="480"/>
         <source>Save Image As...</source>
         <translation>Uložiť obrázok ako...</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="456"/>
+        <location filename="../src/latexeditorview.cpp" line="539"/>
         <source>Spelling</source>
         <translation>Pravopis</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="470"/>
+        <location filename="../src/latexeditorview.cpp" line="553"/>
         <source>New BibTeX Entry %1</source>
         <translation>Nový záznam BibTeX %1</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="496"/>
+        <location filename="../src/latexeditorview.cpp" line="579"/>
         <source>Open %1</source>
         <translation>Otvoriť %1</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="503"/>
+        <location filename="../src/latexeditorview.cpp" line="586"/>
         <source>Open Bibliography</source>
         <translation>Otvoriť bibliografiu</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="512"/>
-        <location filename="../src/latexeditorview.cpp" line="528"/>
-        <location filename="../src/latexeditorview.cpp" line="541"/>
+        <location filename="../src/latexeditorview.cpp" line="595"/>
+        <location filename="../src/latexeditorview.cpp" line="611"/>
+        <location filename="../src/latexeditorview.cpp" line="624"/>
         <source>Open package documentation</source>
         <translation>Otvoriť dokumentáciu k balíčku</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="549"/>
+        <location filename="../src/latexeditorview.cpp" line="632"/>
         <source>Go to Definition</source>
         <translation>Ísť na definíciu</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="555"/>
+        <location filename="../src/latexeditorview.cpp" line="638"/>
         <source>Find Usages</source>
         <translation>Nájsť použitia</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="562"/>
+        <location filename="../src/latexeditorview.cpp" line="645"/>
         <source>Thesaurus...</source>
         <translation>Slovník...</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="589"/>
+        <location filename="../src/latexeditorview.cpp" line="672"/>
         <source>use yours</source>
         <translation>Použiť vašu</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="593"/>
+        <location filename="../src/latexeditorview.cpp" line="676"/>
         <source>use other&apos;s</source>
         <translation>Použiť inú</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="613"/>
+        <location filename="../src/latexeditorview.cpp" line="696"/>
         <source>Go to PDF</source>
         <translation>Ísť na PDF</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="1214"/>
+        <location filename="../src/latexeditorview.cpp" line="1303"/>
         <source>untitled</source>
         <translation>Bez názvu</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2382"/>
+        <location filename="../src/latexeditorview.cpp" line="2492"/>
         <source>Delete</source>
         <translation>Zmazať</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2415"/>
+        <location filename="../src/latexeditorview.cpp" line="2525"/>
         <source>Add to Dictionary</source>
         <translation>Pridať do slovníka</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2417"/>
+        <location filename="../src/latexeditorview.cpp" line="2527"/>
         <source>Ignore all</source>
         <translation>Ignorovať všetky</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2682"/>
+        <location filename="../src/latexeditorview.cpp" line="2792"/>
         <source>label missing!</source>
         <translation>Štítok chýba!</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2684"/>
-        <location filename="../src/latexeditorview.cpp" line="2704"/>
+        <location filename="../src/latexeditorview.cpp" line="2794"/>
+        <location filename="../src/latexeditorview.cpp" line="2814"/>
         <source>label defined multiple times!</source>
         <translation>Štítok definovaný viackrát!</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2693"/>
-        <location filename="../src/latexeditorview.cpp" line="2768"/>
+        <location filename="../src/latexeditorview.cpp" line="2803"/>
+        <location filename="../src/latexeditorview.cpp" line="2880"/>
         <source>&lt;p style='white-space:pre'&gt;&lt;b&gt;Filename: %1&lt;/b&gt;
 </source>
         <translation>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Súborový názov: %1&lt;/b&gt;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/latexeditorview.cpp" line="2707"/>
+        <location filename="../src/latexeditorview.cpp" line="2817"/>
         <source>%n reference(s) to this label</source>
         <translation><numerusform>%n odkaz k tomuto štítku</numerusform><numerusform>%n odkazy k tomuto štítku</numerusform><numerusform>%n odkazov k tomuto štítku</numerusform><numerusform>%n odkazov k tomuto štítku</numerusform></translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2712"/>
+        <location filename="../src/latexeditorview.cpp" line="2822"/>
         <source>Class</source>
         <translation>Trieda</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2712"/>
+        <location filename="../src/latexeditorview.cpp" line="2822"/>
         <source>Package</source>
         <translation>Balík</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2716"/>
+        <location filename="../src/latexeditorview.cpp" line="2826"/>
         <source>Beamer Theme</source>
         <translation>Téma Beameru</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2726"/>
+        <location filename="../src/latexeditorview.cpp" line="2838"/>
         <source>not found</source>
         <translation>nenájdené</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2743"/>
+        <location filename="../src/latexeditorview.cpp" line="2855"/>
         <source>Citation correct (reading ...)</source>
         <translation>Správná citácia (načítava sa...)</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2749"/>
+        <location filename="../src/latexeditorview.cpp" line="2861"/>
         <source>Citation missing</source>
         <translation>Citácia chýba</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2752"/>
+        <location filename="../src/latexeditorview.cpp" line="2864"/>
         <source>Warning:</source>
         <translation>Varovanie:</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="2752"/>
+        <location filename="../src/latexeditorview.cpp" line="2864"/>
         <source>BibTeX ID ends with space. Trailing spaces are not ignored by BibTeX.</source>
         <translation>ID BibTeXu končí medzerou. Medzery na konci nie sú BibTeXom ignorované.</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="3157"/>
+        <location filename="../src/latexeditorview.cpp" line="3269"/>
         <source>Save Preview Image</source>
         <translation>Uložiť obrázok náhľadu</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="3157"/>
+        <location filename="../src/latexeditorview.cpp" line="3269"/>
         <source>Images</source>
         <translation>Obrázky</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="3291"/>
+        <location filename="../src/latexeditorview.cpp" line="3403"/>
         <source>Remove Bookmark</source>
         <translation>Odstrániť záložku</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="3299"/>
+        <location filename="../src/latexeditorview.cpp" line="3411"/>
         <source>Unnamed Bookmark</source>
         <translation>Nepomenovaná záložka</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="3305"/>
+        <location filename="../src/latexeditorview.cpp" line="3417"/>
         <source>Bookmark</source>
         <translation>Záložka</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="3332"/>
+        <location filename="../src/latexeditorview.cpp" line="3444"/>
         <source>Collapse All</source>
         <translation>Zložiť všetko</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="3336"/>
+        <location filename="../src/latexeditorview.cpp" line="3448"/>
         <source>Collapse Level %1</source>
         <translation>Zložiť úroveň %1</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="3341"/>
+        <location filename="../src/latexeditorview.cpp" line="3453"/>
         <source>Expand All</source>
         <translation>Rozbaliť všetko</translation>
     </message>
     <message>
-        <location filename="../src/latexeditorview.cpp" line="3345"/>
+        <location filename="../src/latexeditorview.cpp" line="3457"/>
         <source>Expand Level %1</source>
         <translation>Rozbaliť úroveň %1</translation>
     </message>
@@ -5660,6 +5680,14 @@ Sprievodca nepodporuje príkaz </translation>
         <location filename="../src/letterdialog.ui" line="122"/>
         <source>Cancel</source>
         <translation>Zrušiť</translation>
+    </message>
+</context>
+<context>
+    <name>LogHighlighter</name>
+    <message>
+        <location filename="../src/loghighlighter.cpp" line="38"/>
+        <source>Process started:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5994,440 +6022,446 @@ Chcete ju prepísať?</translation>
 <context>
     <name>PDFDocument</name>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2924"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2961"/>
         <source>Toolbar</source>
         <translation>Panel s nástrojmi</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2978"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3015"/>
         <source>&amp;File</source>
         <translation>&amp;Súbor</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2979"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3016"/>
         <source>&amp;Edit</source>
         <translation>&amp;Upraviť</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2980"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3017"/>
         <source>&amp;View</source>
         <translation>&amp;Pohľad</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2981"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3018"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3019"/>
         <source>Grid</source>
         <translation>Mriežka</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2982"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3020"/>
         <source>&amp;Window</source>
         <translation>&amp;Okno</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2983"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3021"/>
         <source>&amp;Configure</source>
         <translation>&amp;Nastavenie</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2984"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3022"/>
         <source>&amp;Help</source>
         <translation>&amp;Nápoveda</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2990"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3028"/>
         <source>User &amp;Manual...</source>
         <translation>&amp;Užívateľská príručka...</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2993"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3031"/>
         <source>About</source>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2994"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3032"/>
         <source>&amp;Open...</source>
         <translation>&amp;Otvoriť...</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2995"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3033"/>
         <source>Split &amp;&amp; Merge...</source>
         <translation>Rozdeliť a spojiť...</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2996"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3034"/>
         <source>&amp;Close</source>
         <translation>&amp;Zavrieť</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2998"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3036"/>
         <source>&amp;Quit TeXstudio</source>
         <translation>&amp;Ukončiť TeXstudio</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2999"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3037"/>
         <source>&amp;Configure TeXstudio</source>
         <translation>&amp;Nastaviť TeXstudio</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3001"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3039"/>
         <source>Scrolling follows cursor</source>
         <translation>Posúvanie obrazu nasleduje kurzor</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3003"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3041"/>
         <source>Cursor follows scrolling</source>
         <translation>Kurzor nasleduje posúvanie obrazu</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3005"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3043"/>
         <source>Synchronize multiple views</source>
         <translation>Synchronizovať viacero pohľadov</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3007"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3045"/>
         <source>Ignore for synchronization</source>
         <translation>Ignorovať synchronizáciu</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3010"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3048"/>
         <source>Invert Colors</source>
         <translation>Obrátiť farby</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3012"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3050"/>
         <source>Grayscale</source>
         <translation>Odtiene šedej</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3016"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3054"/>
         <source>&amp;Magnify</source>
         <translation>&amp;Zväčšiť</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3019"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3057"/>
         <source>&amp;Scroll</source>
         <translation>&amp;Skrolovať</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3024"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3062"/>
         <source>&amp;First Page</source>
         <translation>&amp;Prvá strana</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3025"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3063"/>
         <source>Back</source>
         <translation>Späť</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3026"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3064"/>
         <source>&amp;Previous Page</source>
         <translation>Pred&amp;chádzajúca strana</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3027"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3065"/>
         <source>&amp;Next Page</source>
         <translation>&amp;Ďalšia strana</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3028"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3066"/>
         <source>Forward</source>
         <translation>Vpred</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3029"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3067"/>
         <source>&amp;Last Page</source>
         <translation>Pos&amp;ledná strana</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3031"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3069"/>
         <source>&amp;Go to Page...</source>
         <translation>&amp;Ísť na stranu...</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3033"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3071"/>
         <source>Zoom &amp;In</source>
         <translation>&amp;Priblížiť</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3034"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3072"/>
         <source>Zoom &amp;Out</source>
         <translation>&amp;Vzdialiť</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3035"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3073"/>
         <source>&amp;Actual Size</source>
         <translation>&amp;Skutočná veľkosť</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3036"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3074"/>
         <source>Fit to Wi&amp;dth</source>
         <translation>Prispôsobiť šír&amp;ke</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3038"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3076"/>
         <source>Fit to &amp;Text Width</source>
         <translation>Prispôsobiť šírke &amp;textu</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3040"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3078"/>
         <source>Fit to &amp;Window</source>
         <translation>Prispôsobiť &amp;oknu</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3042"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3080"/>
         <source>&amp;Continuous</source>
         <translation>&amp;Súvislý</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3047"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3085"/>
         <source>Full &amp;Screen</source>
         <translation>Na celú &amp;obrazovku</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3048"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3086"/>
         <source>Presentation</source>
         <translation>Prezentácia</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3049"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3087"/>
         <source>External Viewer</source>
         <translation>Externý prehliadač</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3050"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3088"/>
         <source>Enlarge Viewer</source>
         <translation>Zväčšiť prehliadač</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3051"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3089"/>
         <source>Shrink Viewer</source>
         <translation>Zmenšiť prehliadač</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3052"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3090"/>
         <source>Windowed/Embedded</source>
         <translation>V okne/Vložené</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3053"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3091"/>
         <source>Auto-hide Toolbar</source>
         <translation>Automaticky skryť nástrojový pruh</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3069"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3108"/>
         <source>Custom...</source>
         <translation>Vlastné...</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3074"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3115"/>
         <source>Single Page Step</source>
         <translation>Jednoduchý stránkový krok</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3077"/>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3079"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3119"/>
+        <source>Start Column</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3122"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3124"/>
         <source>&amp;Close something</source>
         <translation>&amp;Zavrieť niečo</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3082"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3127"/>
         <source>Stac&amp;k</source>
         <translation>Klásť &amp;na seba</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3083"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3128"/>
         <source>&amp;Tile</source>
         <translation>Klásť jedno &amp;vedľa druhého</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3084"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3129"/>
         <source>&amp;Side by Side</source>
         <translation>&amp;Vedľa seba</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3086"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3131"/>
         <source>&amp;Go to Source</source>
         <translation>&amp;Ísť na zdrojový text</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3087"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3132"/>
         <source>Focus Editor</source>
         <translation>Zamerať editor</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3089"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3134"/>
         <source>New Window</source>
         <translation>Nové okno</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3090"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3135"/>
         <source>&amp;Find</source>
         <translation>&amp;Nájsť</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3091"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3136"/>
         <source>Find &amp;again</source>
         <translation>Hľadať &amp;znovu</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3093"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3138"/>
         <source>Quick Build</source>
         <translation>Rýchly preklad</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3142"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3187"/>
         <source>Show</source>
         <translation>Ukázať</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3165"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3209"/>
         <source>Windowed Viewer</source>
         <translation>Okenný prehliadač</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3168"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3212"/>
         <source>Embedded Viewer</source>
         <translation>Vložený prehliadač</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3232"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3276"/>
         <source>of</source>
         <comment>separator for page number: 1 of 3</comment>
         <translation>z</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3255"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3299"/>
         <source>Scale</source>
         <translation>Zmena veľkosti</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3273"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3317"/>
         <source>Zoom Out</source>
         <translation>Oddialiť</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3283"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3327"/>
         <source>Zoom</source>
         <translation>Zväčšenie</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3292"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3336"/>
         <source>Zoom In</source>
         <translation>Priblížiť</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3320"/>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3323"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3364"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3367"/>
         <source>Annotations</source>
         <translation>Vysvetlivky</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3463"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3523"/>
         <source>Page Down</source>
         <translation>Ďalšia strana</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3467"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3527"/>
         <source>Page Up</source>
         <translation>Predchádzajúca strana</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3657"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3717"/>
         <source>Retry</source>
         <translation>Opakovať</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3660"/>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4855"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3720"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4937"/>
         <source>Close</source>
         <translation>Zavrieť</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3663"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3723"/>
         <source>%1
 does not look like a valid PDF document. Either the file is corrupt or it is in the process of creation. Retrying every two seconds.</source>
         <translation>%1
 nevyzerá ako platný dokument PDF. Buď je súbor poškodený, alebo sa práve vytvára. Opakovanie každé dve sekundy.</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3677"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3737"/>
         <source>Failed to find file &quot;%1&quot;; perhaps it has been deleted.</source>
         <translation>Nepodarilo sa nájsť súbor &quot;%1&quot;; možno bol zmazaný.</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3680"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3740"/>
         <source>Failed to load file &quot;%1&quot;; perhaps it is not a valid PDF document.</source>
         <translation>Nepodarilo sa nahrať súbor &quot;%1&quot;; možno nie je platným dokumentom PDF.</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3683"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3743"/>
         <source>Failed to load file &quot;%1&quot; due to a bad alloc; perhaps it is not a valid PDF document.</source>
         <translation>Nepodarilo sa nahrať súbor &quot;%1&quot; kvôli &quot;zlej alokácií&quot;; možno nie je platným dokumentom PDF.</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3686"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3746"/>
         <source>Failed to load file &quot;%1&quot; due to an exception; perhaps it is not a valid PDF document.</source>
         <translation>Nepodarilo sa nahrať súbor &quot;%1&quot; kvôli výnimke; možno nie je platným dokumentom PDF.</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3689"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3749"/>
         <source>PDF file &quot;%1&quot; is locked.</source>
         <translation>Súbor PDF &quot;%1&quot; je zamknutý.</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3691"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3751"/>
         <source>PDF password</source>
         <translation>Heslo k PDF</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3691"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="3751"/>
         <source>PDF file &quot;%1&quot; is locked.
 You can now enter the password:</source>
         <translation>Súbor PDF %1 je zamknutý.
 Teraz môžete zadať heslo:</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4080"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4156"/>
         <source>Searching for</source>
         <translation>Hľadám</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4192"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4268"/>
         <source>No SyncTeX data available</source>
         <translation>Nie sú dostupné žiadna dáta SyncTeX</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4194"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4270"/>
         <source>SyncTeX: &quot;%1&quot;</source>
         <translation>SyncTeX: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4289"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4365"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4376"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4452"/>
         <source>Page %1 of %2</source>
         <translation>Strana %1 z %2</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4377"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4453"/>
         <source>Pages %1 to %2 of %3</source>
         <translation>Strany %1 až %2 z %3</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4402"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4478"/>
         <source>Open PDF</source>
         <translation>Otvoriť PDF</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4677"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4759"/>
         <source>Print</source>
         <translation>Tlač</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4856"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="4938"/>
         <source>Close Message</source>
         <translation>Zavrieť správu</translation>
     </message>
@@ -6673,42 +6707,42 @@ Teraz môžete zadať heslo:</translation>
         <translation>Prispôsobiť oknu</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="1434"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="1437"/>
         <source>Opening external files is currently only supported for PDFs.</source>
         <translation>Otváranie externých súborov je v súčasnosti podporované len pre PDF.</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="1453"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="1456"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="1453"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="1456"/>
         <source>Could not open link:</source>
         <translation>Nepodarilo sa otvoriť odkaz:</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="1569"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="1572"/>
         <source>Go to Source</source>
         <translation>Ísť na zdrojový text</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2377"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2412"/>
         <source>Go to Page</source>
         <translation>Ísť na stranu</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2378"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2413"/>
         <source>Page number:</source>
         <translation>Číslo strany:</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2767"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2805"/>
         <source>Calculating text width</source>
         <translation>Počíta sa šírka textu</translation>
     </message>
     <message>
-        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2767"/>
+        <location filename="../src/pdfviewer/PDFDocument.cpp" line="2805"/>
         <source>Cancel</source>
         <translation>Zrušiť</translation>
     </message>
@@ -6744,42 +6778,42 @@ Teraz môžete zadať heslo:</translation>
 <context>
     <name>ProcessX</name>
     <message>
-        <location filename="../src/buildmanager.cpp" line="2376"/>
+        <location filename="../src/buildmanager.cpp" line="2408"/>
         <source>The specified stdout redirection is not supported: &quot;%1&quot;. Please see the manual for details.</source>
         <translation>Zadané presmerovanie stdout nie je podporované: &quot;%1&quot;. Prosím, viď manuál pre podrobnosti.</translation>
     </message>
     <message>
-        <location filename="../src/buildmanager.cpp" line="2385"/>
+        <location filename="../src/buildmanager.cpp" line="2417"/>
         <source>The specified stderr redirection is not supported: &quot;%1&quot;. Please see the manual for details.</source>
         <translation>Zadané presmerovanie stderr nie je podporované: &quot;%1&quot;. Prosím, viď manuál pre podrobnosti.</translation>
     </message>
     <message>
-        <location filename="../src/buildmanager.cpp" line="2582"/>
+        <location filename="../src/buildmanager.cpp" line="2614"/>
         <source>Process started: %1</source>
         <translation>Proces spustený: %1</translation>
     </message>
     <message>
-        <location filename="../src/buildmanager.cpp" line="2588"/>
+        <location filename="../src/buildmanager.cpp" line="2620"/>
         <source>Error: Could not start the command: %1</source>
         <translation>Chyba: Nepodarilo sa spustiť príkaz: %1</translation>
     </message>
     <message>
-        <location filename="../src/buildmanager.cpp" line="2591"/>
+        <location filename="../src/buildmanager.cpp" line="2623"/>
         <source>&lt;b&gt;Make sure that you have installed a (La)TeX distribution&lt;/b&gt; e.g. MiKTeX or TeX Live, and have set the correct paths to this distribution on the command configuration page.&lt;br&gt;A (La)TeX editor like TeXstudio cannot work without the (La)TeX commands provided by such a distribution.</source>
         <translation>&lt;b&gt;Uistite sa, že je nainštalovaná (La)TeXová distribúcia&lt;/b&gt;, napr. MiKTeX alebo TeX Live. Ak je tomu tak, preverte cestu na stránku s nastaveniami: Voľby -&gt; Príkazy.&lt;br&gt;(La)TeXový editor ako TeXstudio nedokáže bez inštalácie (La)TeX vytvárať žiadne dokumenty.</translation>
     </message>
     <message>
-        <location filename="../src/buildmanager.cpp" line="2595"/>
+        <location filename="../src/buildmanager.cpp" line="2627"/>
         <source>Error: Command crashed: %1</source>
         <translation>Chyba: Príkaz spadol: %1</translation>
     </message>
     <message>
-        <location filename="../src/buildmanager.cpp" line="2602"/>
+        <location filename="../src/buildmanager.cpp" line="2634"/>
         <source>Process exited with error(s)</source>
         <translation>Proces skončil s chybou(ami)</translation>
     </message>
     <message>
-        <location filename="../src/buildmanager.cpp" line="2605"/>
+        <location filename="../src/buildmanager.cpp" line="2637"/>
         <source>Process exited normally</source>
         <translation>Proces skončil normálne</translation>
     </message>
@@ -6809,6 +6843,17 @@ Teraz môžete zadať heslo:</translation>
         <location filename="../src/qcodeedit/lib/qcodecompletionengine.cpp" line="63"/>
         <source>&amp;Trigger completion</source>
         <translation>&amp;Spustiť doplnenie</translation>
+    </message>
+</context>
+<context>
+    <name>QDocument</name>
+    <message>
+        <location filename="../src/qcodeedit/lib/document/qdocument.cpp" line="840"/>
+        <source>Writing the document to file
+%1
+failed.</source>
+        <translation>Nepodarilo sa zapísať dokument do súboru
+%1.</translation>
     </message>
 </context>
 <context>
@@ -7198,319 +7243,319 @@ Poznámky:
         <translation>Unix</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4759"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4760"/>
         <source>None</source>
         <translation>Žiadny</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4760"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4761"/>
         <source>Invalid</source>
         <translation>Neplatný</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4762"/>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4782"/>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4802"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4763"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4783"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4803"/>
         <source>Internal</source>
         <translation>Interný</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4764"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4765"/>
         <source>Move cursor up</source>
         <translation>Posunúť kurzor nahor</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4765"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4766"/>
         <source>Move cursor down</source>
         <translation>Posunúť kurzor nadol</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4766"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4767"/>
         <source>Move cursor left (1 character)</source>
         <translation>Posunúť kurzor doľava (jeden znak)</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4767"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4768"/>
         <source>Move cursor right (1 character)</source>
         <translation>Posunúť kurzor doprava (jeden znak)</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4768"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4769"/>
         <source>Move cursor left (1 word)</source>
         <translation>Posunúť kurzor doľava (jedno slovo)</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4769"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4770"/>
         <source>Move cursor right (1 word)</source>
         <translation>Posunúť kurzor doprava (jedno slovo)</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4770"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4771"/>
         <source>Move cursor to line start</source>
         <translation>Posunúť kurzor na začiatok riadku</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4771"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4772"/>
         <source>Move cursor to first character in line</source>
         <translation>Posunúť kurzor k prvému znaku riadku</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4772"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4773"/>
         <source>Move cursor to line end</source>
         <translation>Posunúť kurzor na koniec riadku</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4773"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4774"/>
         <source>Move cursor to document start</source>
         <translation>Posunúť kurzor na začiatok dokumentu</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4774"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4775"/>
         <source>Move cursor to document end</source>
         <translation>Posunúť kurzor na koniec dokumentu</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4776"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4777"/>
         <source>Move cursor one page up</source>
         <translation>Posunúť kurzor o jednu stranu nahor</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4777"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4778"/>
         <source>Move cursor one page down</source>
         <translation>Posunúť kurzor o jednu stranu nadol</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4779"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4780"/>
         <source>Move cursor to next block</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4780"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4781"/>
         <source>Move cursor to previous block</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4784"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4785"/>
         <source>Select up</source>
         <translation>Vybrať hore</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4785"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4786"/>
         <source>Select down</source>
         <translation>Vybrať dole</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4786"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4787"/>
         <source>Select left (1 character)</source>
         <translation>Vybrať vľavo (jeden znak)</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4787"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4788"/>
         <source>Select right (1 character)</source>
         <translation>Vybrať vpravo (jeden znak)</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4788"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4789"/>
         <source>Select left (1 word)</source>
         <translation>Vybrať vľavo (jedno slovo)</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4789"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4790"/>
         <source>Select right (1 word)</source>
         <translation>Vybrať vpravo (jedno slovo)</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4790"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4791"/>
         <source>Select to line start</source>
         <translation>Vybrať až po začiatok riadku</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4791"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4792"/>
         <source>Select to first character in line</source>
         <translation>Vybrať až po prvý znak riadku</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4792"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4793"/>
         <source>Select to line end</source>
         <translation>Vybrať až po koniec riadku</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4793"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4794"/>
         <source>Select to document start</source>
         <translation>Vybrať až po začiatok dokumentu</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4794"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4795"/>
         <source>Select to document end</source>
         <translation>Vybrať až po koniec dokumentu</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4796"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4797"/>
         <source>Select page up</source>
         <translation>Vybrať stranu nahor</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4797"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4798"/>
         <source>Select page down</source>
         <translation>Vybrať stranu nadol</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4799"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4800"/>
         <source>Select to next block</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4800"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4801"/>
         <source>Select to previous block</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4804"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4805"/>
         <source>Delete left character</source>
         <translation>Zmazať ľavé písmeno</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4805"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4806"/>
         <source>Delete right character</source>
         <translation>Zmazať pravé písmeno</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4806"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4807"/>
         <source>Delete left word</source>
         <translation>Zmazať ľavé slovo</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4807"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4808"/>
         <source>Delete right word</source>
         <translation>Zmazať pravé slovo</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4808"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4809"/>
         <source>New line</source>
         <translation>Nový riadok</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4810"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4811"/>
         <source>Change overwrite mode</source>
         <translation>Zmeniť prepisovací režim</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4811"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4812"/>
         <source>Undo</source>
         <translation>Späť</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4812"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4813"/>
         <source>Redo</source>
         <translation>Znovu</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4813"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4814"/>
         <source>Copy</source>
         <translation>Kopírovať</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4814"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4815"/>
         <source>Paste</source>
         <translation>Vložit</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4815"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4816"/>
         <source>Cut</source>
         <translation>Vystrihnúť</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4816"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4817"/>
         <source>Print</source>
         <translation>Tlač</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4817"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4818"/>
         <source>Select all</source>
         <translation>Vybrať všetko</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4818"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4819"/>
         <source>Find</source>
         <translation>Nájsť</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4819"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4820"/>
         <source>Find next</source>
         <translation>Nájsť ďalší</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4820"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4821"/>
         <source>Find previous</source>
         <translation>Nájsť predchádzajúci</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4821"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4822"/>
         <source>Replace</source>
         <translation>Nahradiť</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4823"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4824"/>
         <source>Create cursor mirror up</source>
         <translation>Vytvoriť zrkadlový kurzor nahor</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4824"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4825"/>
         <source>Create cursor mirror down</source>
         <translation>Vytvoriť zrkadlový kurzor nadol</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4825"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4826"/>
         <source>Next placeholder</source>
         <translation>Ďalší zástupný znak</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4826"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4827"/>
         <source>Previous placeholder</source>
         <translation>Predchádzajúci zástupný znak</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4827"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4828"/>
         <source>Next placeholder or one word right</source>
         <translation>Ďalší zástupný znak alebo slovo doprava</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4828"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4829"/>
         <source>Previous placeholder or one word left</source>
         <translation>Predchádzajúci zástupný znak alebo slovo doľava</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4829"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4830"/>
         <source>Next placeholder or character</source>
         <translation>Ďalší zástupný znak alebo znak</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4830"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4831"/>
         <source>Previous placeholder or character</source>
         <translation>Predchádzajúci zástupný znak alebo znak</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4831"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4832"/>
         <source>Tab or Indent selection</source>
         <translation>Zarážka alebo odsadiť výber</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4832"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4833"/>
         <source>Insert tab</source>
         <translation>Vložiť zarážku</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4833"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4834"/>
         <source>Indent selection</source>
         <translation>Odsadiť výber</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4834"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4835"/>
         <source>Unindent selection</source>
         <translation>Zrušiť odsadenie výberu</translation>
     </message>
     <message>
-        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4837"/>
+        <location filename="../src/qcodeedit/lib/qeditor.cpp" line="4838"/>
         <source>Unknown</source>
         <translation>Neznámý</translation>
     </message>
@@ -8104,12 +8149,18 @@ Chcete, aby boli uložené?</translation>
     <message>
         <location filename="../src/codesnippet.cpp" line="255"/>
         <location filename="../src/codesnippet.cpp" line="257"/>
+        <location filename="../src/tests/codesnippet_t.cpp" line="56"/>
+        <location filename="../src/tests/codesnippet_t.cpp" line="358"/>
+        <location filename="../src/tests/latexcompleter_t.cpp" line="321"/>
         <source>*environment-name*</source>
         <translation>*Názov prostredia*</translation>
     </message>
     <message>
         <location filename="../src/codesnippet.cpp" line="256"/>
         <location filename="../src/codesnippet.cpp" line="282"/>
+        <location filename="../src/tests/codesnippet_t.cpp" line="140"/>
+        <location filename="../src/tests/codesnippet_t.cpp" line="437"/>
+        <location filename="../src/tests/latexcompleter_t.cpp" line="322"/>
         <source>content...</source>
         <translation>Obsah...</translation>
     </message>
@@ -8139,7 +8190,7 @@ Chcete, aby boli uložené?</translation>
         <translation>Chyba: </translation>
     </message>
     <message>
-        <location filename="../src/usermacro.cpp" line="298"/>
+        <location filename="../src/usermacro.cpp" line="343"/>
         <source>Macro read-in failed
 Error: </source>
         <translation>Načítanie makra zlyhalo
@@ -8393,72 +8444,72 @@ ako prvý znak na riadku, \t = zarážka, \\ = \</translation>
 <context>
     <name>QuickDocumentDialog</name>
     <message>
-        <location filename="../src/quickdocumentdialog.cpp" line="59"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="94"/>
         <source>Quick Start</source>
         <translation>Pomocník pre nový dokument</translation>
     </message>
     <message>
-        <location filename="../src/quickdocumentdialog.cpp" line="308"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="343"/>
         <source>Mathematical symbols from AMS</source>
         <translation>Matematické znaky z balíka AMS</translation>
     </message>
     <message>
-        <location filename="../src/quickdocumentdialog.cpp" line="309"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="344"/>
         <source>Graphics package, easily include images (s. Insert Graphic Wizard)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/quickdocumentdialog.cpp" line="310"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="345"/>
         <source>Support for hyperlinks in your document</source>
         <translation>Podpora pre hyperlinky vo vašom dokumente</translation>
     </message>
     <message>
-        <location filename="../src/quickdocumentdialog.cpp" line="311"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="346"/>
         <source>Extension package to amsmath incl. fixes for bugs in amsmath, loads amsmath</source>
         <translation>Rozširujúci balík pre amsmath, vrátane opravenia chýb v amsmath, načíta amsmath</translation>
     </message>
     <message>
-        <location filename="../src/quickdocumentdialog.cpp" line="312"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="347"/>
         <source>Define your theorem like env., has to be loaded after amsmath</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/quickdocumentdialog.cpp" line="313"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="348"/>
         <source>Reference to names of chapters, sections, ..., loaded by hyperref</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/quickdocumentdialog.cpp" line="314"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="349"/>
         <source>Extension package to amsthm</source>
         <translation>Rozširujúci balík pre amsmath</translation>
     </message>
     <message>
-        <location filename="../src/quickdocumentdialog.cpp" line="315"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="350"/>
         <source>Sophisticated package for colors, with table option to use colors in tables</source>
         <translation>Sofistikovaný balík na farby, s možnosťou table pre používanie farieb v tabuľkách</translation>
     </message>
     <message>
-        <location filename="../src/quickdocumentdialog.cpp" line="501"/>
-        <location filename="../src/quickdocumentdialog.cpp" line="512"/>
-        <location filename="../src/quickdocumentdialog.cpp" line="523"/>
-        <location filename="../src/quickdocumentdialog.cpp" line="534"/>
-        <location filename="../src/quickdocumentdialog.cpp" line="545"/>
-        <location filename="../src/quickdocumentdialog.cpp" line="564"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="536"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="547"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="558"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="569"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="580"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="599"/>
         <source>New:</source>
         <translation>Nový:</translation>
     </message>
     <message>
-        <location filename="../src/quickdocumentdialog.cpp" line="568"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="603"/>
         <source>Hint</source>
         <translation>Nápoveda</translation>
     </message>
     <message>
-        <location filename="../src/quickdocumentdialog.cpp" line="568"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="603"/>
         <source>Package %1 is already defined.</source>
         <translation>Balík %1 je už definovaný.</translation>
     </message>
     <message>
-        <location filename="../src/quickdocumentdialog.cpp" line="581"/>
+        <location filename="../src/quickdocumentdialog.cpp" line="616"/>
         <source>All packages that have the checkbox checked will appear in a new document within \usepackage commands after pressing OK.</source>
         <translation>Všetky balíky ktoré majú zaškrtnuté políčko sa v novom dokumente objavia vnútri príkazov \usepackage po stlačení tlačidla OK.</translation>
     </message>
@@ -9101,17 +9152,17 @@ ako prvý znak na riadku, \t = zarážka, \\ = \</translation>
         <translation>Najpoužívanejšie</translation>
     </message>
     <message>
-        <location filename="../src/symbolpanel/symbolwidget.cpp" line="138"/>
+        <location filename="../src/symbolpanel/symbolwidget.cpp" line="139"/>
         <source>Search</source>
         <translation>Hľadať</translation>
     </message>
     <message>
-        <location filename="../src/symbolpanel/symbolwidget.cpp" line="142"/>
+        <location filename="../src/symbolpanel/symbolwidget.cpp" line="143"/>
         <source>Category</source>
         <translation>Skupina</translation>
     </message>
     <message>
-        <location filename="../src/symbolpanel/symbolwidget.cpp" line="153"/>
+        <location filename="../src/symbolpanel/symbolwidget.cpp" line="154"/>
         <source>All</source>
         <translation>Všetko</translation>
     </message>
@@ -9119,92 +9170,92 @@ ako prvý znak na riadku, \t = zarážka, \\ = \</translation>
 <context>
     <name>SyntaxCheck</name>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="237"/>
+        <location filename="../src/syntaxcheck.cpp" line="261"/>
         <source>no error</source>
         <translation>Žiadna chyba</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="238"/>
+        <location filename="../src/syntaxcheck.cpp" line="262"/>
         <source>unrecognized environment</source>
         <translation>Nerozpoznané prostredie</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="239"/>
+        <location filename="../src/syntaxcheck.cpp" line="263"/>
         <source>unrecognized command</source>
         <translation>Nerozpoznaný príkaz</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="240"/>
+        <location filename="../src/syntaxcheck.cpp" line="264"/>
         <source>unrecognized math command</source>
         <translation>Nerozpoznaný matematický príkaz</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="241"/>
+        <location filename="../src/syntaxcheck.cpp" line="265"/>
         <source>unrecognized tabular command</source>
         <translation>Nerozpoznaný tabuľkový príkaz</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="242"/>
+        <location filename="../src/syntaxcheck.cpp" line="266"/>
         <source>tabular command outside tabular env</source>
         <translation>Tabuľkový príkaz mimo tabuľkového prostredia</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="243"/>
+        <location filename="../src/syntaxcheck.cpp" line="267"/>
         <source>math command outside math env</source>
         <translation>Matematický príkaz mimo matematického prostredia</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="244"/>
+        <location filename="../src/syntaxcheck.cpp" line="268"/>
         <source>tabbing command outside tabbing env</source>
         <translation>Zarážkový príkaz mimo zarážkového prostredia</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="245"/>
+        <location filename="../src/syntaxcheck.cpp" line="269"/>
         <source>more cols in tabular than specified</source>
         <translation>Viac stĺpcov v tabuľke než zadané</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="246"/>
+        <location filename="../src/syntaxcheck.cpp" line="270"/>
         <source>cols in tabular missing</source>
         <translation>Stĺpce v tabuľke chýbajú</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="247"/>
+        <location filename="../src/syntaxcheck.cpp" line="271"/>
         <source>\\ missing</source>
         <translation>\\ chýba</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="248"/>
+        <location filename="../src/syntaxcheck.cpp" line="272"/>
         <source>closing environment which has not been opened</source>
         <translation>Zatvára sa prostredie, ktoré nebolo otvorené</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="249"/>
+        <location filename="../src/syntaxcheck.cpp" line="273"/>
         <source>environment not closed</source>
         <translation>Prostredie nezavreté</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="250"/>
+        <location filename="../src/syntaxcheck.cpp" line="274"/>
         <source>unrecognized key in key option</source>
         <translation>Nerozpoznaný kľúč v kľúčových možnostiach</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="251"/>
+        <location filename="../src/syntaxcheck.cpp" line="275"/>
         <source>unrecognized value in key option</source>
         <translation>Nerozpoznaná hodnota v kľúčových možnostiach</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="252"/>
+        <location filename="../src/syntaxcheck.cpp" line="276"/>
         <source>command outside suitable env</source>
         <translation>Príkaz mimo vhodného prostredia</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="253"/>
+        <location filename="../src/syntaxcheck.cpp" line="277"/>
         <source>spelling</source>
         <translation>Pravopis</translation>
     </message>
     <message>
-        <location filename="../src/syntaxcheck.cpp" line="256"/>
+        <location filename="../src/syntaxcheck.cpp" line="280"/>
         <source>unknown</source>
         <translation>Neznámý</translation>
     </message>
@@ -9657,7 +9708,7 @@ template to edit individual files.</source>
 <context>
     <name>TexdocDialog</name>
     <message>
-        <location filename="../src/texdocdialog.cpp" line="272"/>
+        <location filename="../src/texdocdialog.cpp" line="250"/>
         <source>No Documentation Available</source>
         <translation>Nie je dostupná žiadna dokumentácia</translation>
     </message>
@@ -9830,1672 +9881,1677 @@ template to edit individual files.</source>
         <translation>XML</translation>
     </message>
     <message>
-        <location filename="../src/configmanager.cpp" line="2175"/>
+        <location filename="../src/configmanager.cpp" line="2190"/>
         <source>Edit &amp;Macros...</source>
         <translation>Upraviť &amp;makra...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="383"/>
-        <location filename="../src/texstudio.cpp" line="6408"/>
+        <location filename="../src/texstudio.cpp" line="384"/>
+        <location filename="../src/texstudio.cpp" line="6519"/>
         <source>Ready</source>
         <translation>Pripravený</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="457"/>
+        <location filename="../src/texstudio.cpp" line="458"/>
         <source>TeX files</source>
         <translation>Súbory TeX</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="458"/>
+        <location filename="../src/texstudio.cpp" line="459"/>
         <source>LilyPond files</source>
         <translation>Súbory LilyPond</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="459"/>
+        <location filename="../src/texstudio.cpp" line="460"/>
         <source>Plaintext files</source>
         <translation>Súbory prostého textu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="460"/>
+        <location filename="../src/texstudio.cpp" line="461"/>
         <source>Pweave files</source>
         <translation>Súbory Pweave</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="461"/>
+        <location filename="../src/texstudio.cpp" line="462"/>
         <source>Sweave files</source>
         <translation>Sweave súbory</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="462"/>
+        <location filename="../src/texstudio.cpp" line="463"/>
         <source>Asymptote files</source>
         <translation>Súbory Asymptote</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="463"/>
+        <location filename="../src/texstudio.cpp" line="464"/>
         <source>PDF files</source>
         <translation>Súbory PDF</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="464"/>
-        <location filename="../src/texstudio.cpp" line="9960"/>
-        <location filename="../src/texstudio.cpp" line="9967"/>
+        <location filename="../src/texstudio.cpp" line="465"/>
+        <location filename="../src/texstudio.cpp" line="10074"/>
+        <location filename="../src/texstudio.cpp" line="10081"/>
         <source>All files</source>
         <translation>Všetky súbory</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="666"/>
+        <location filename="../src/texstudio.cpp" line="667"/>
         <source>Macros</source>
         <translation>Makra</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="685"/>
+        <location filename="../src/texstudio.cpp" line="686"/>
         <source>Side Panel</source>
         <translation>Postranný panel</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="704"/>
+        <location filename="../src/texstudio.cpp" line="705"/>
         <source>Structure</source>
         <translation>Stavba</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="723"/>
+        <location filename="../src/texstudio.cpp" line="724"/>
         <source>Bookmarks</source>
         <translation>Záložky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="733"/>
+        <location filename="../src/texstudio.cpp" line="734"/>
         <source>Symbols</source>
         <translation>Symboly</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="761"/>
+        <location filename="../src/texstudio.cpp" line="762"/>
         <source>Left/Right Brackets</source>
         <translation>Ľavé/Pravé zátvorky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="763"/>
+        <location filename="../src/texstudio.cpp" line="764"/>
         <source>MetaPost Commands</source>
         <translation>Príkazy Metapost</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="762"/>
+        <location filename="../src/texstudio.cpp" line="763"/>
         <source>PSTricks Commands</source>
         <translation>Príkazy PSTricks</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="715"/>
+        <location filename="../src/texstudio.cpp" line="716"/>
         <source>TOC</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="764"/>
+        <location filename="../src/texstudio.cpp" line="765"/>
         <source>TikZ Commands</source>
         <translation>Príkazy TikZ</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="765"/>
+        <location filename="../src/texstudio.cpp" line="766"/>
         <source>Asymptote Commands</source>
         <translation>Príkazy Asymptote</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="766"/>
+        <location filename="../src/texstudio.cpp" line="767"/>
         <source>Beamer Commands</source>
         <translation>Príkazy Beamer</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="767"/>
+        <location filename="../src/texstudio.cpp" line="768"/>
         <source>XY Commands</source>
         <translation>Príkazy XY</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="898"/>
+        <location filename="../src/texstudio.cpp" line="899"/>
         <source>&amp;File</source>
         <translation>&amp;Súbor</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="900"/>
+        <location filename="../src/texstudio.cpp" line="901"/>
         <source>&amp;New</source>
         <translation>&amp;Nový</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="901"/>
+        <location filename="../src/texstudio.cpp" line="902"/>
         <source>New From &amp;Template...</source>
         <translation>Nový z &amp;predlohy...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="902"/>
+        <location filename="../src/texstudio.cpp" line="903"/>
         <source>&amp;Open...</source>
         <translation>&amp;Otvoriť...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="904"/>
+        <location filename="../src/texstudio.cpp" line="905"/>
         <source>Open &amp;Recent</source>
         <translation>Otvoriť &amp;nedávný</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="906"/>
+        <location filename="../src/texstudio.cpp" line="907"/>
         <source>Session</source>
         <translation>Sedenie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="907"/>
+        <location filename="../src/texstudio.cpp" line="908"/>
         <source>Load Session...</source>
         <translation>Nahrať sedenie...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="908"/>
+        <location filename="../src/texstudio.cpp" line="909"/>
         <source>Save Session...</source>
         <translation>Uložit sedenie...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="909"/>
+        <location filename="../src/texstudio.cpp" line="910"/>
         <source>Restore Previous Session</source>
         <translation>Obnoviť predchádzajúce sedenie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="918"/>
+        <location filename="../src/texstudio.cpp" line="919"/>
         <source>&amp;Save</source>
         <translation>&amp;Uložiť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="919"/>
+        <location filename="../src/texstudio.cpp" line="920"/>
         <source>Save &amp;As...</source>
         <translation>Uložiť &amp;ako...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="920"/>
+        <location filename="../src/texstudio.cpp" line="921"/>
         <source>Save A&amp;ll</source>
         <translation>Uložiť &amp;všetko</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="921"/>
+        <location filename="../src/texstudio.cpp" line="922"/>
         <source>&amp;Make Template...</source>
         <translation>&amp;Vytvoriť predlohu...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="924"/>
+        <location filename="../src/texstudio.cpp" line="925"/>
         <source>Fifi&amp;x</source>
         <translation>Fifi&amp;x</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="925"/>
+        <location filename="../src/texstudio.cpp" line="926"/>
         <source>Save renamed/&amp;moved file...</source>
         <translation>Uložiť premenovaný/&amp;presunutý súbor...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="926"/>
+        <location filename="../src/texstudio.cpp" line="927"/>
         <source>Save copied file...</source>
         <translation>Uložiť skopírovaný súbor...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="927"/>
+        <location filename="../src/texstudio.cpp" line="928"/>
         <source>&amp;Delete file</source>
         <translation>&amp;Zmazať súbor</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="928"/>
+        <location filename="../src/texstudio.cpp" line="929"/>
         <source>Set &amp;permissions...</source>
         <translation>Nastaviť &amp;oprávnenie...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="930"/>
+        <location filename="../src/texstudio.cpp" line="931"/>
         <source>&amp;Revert to saved...</source>
         <translation>&amp;Vrátiť na posledný uložený stav...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="932"/>
+        <location filename="../src/texstudio.cpp" line="933"/>
         <source>Copy filename to &amp;clipboard</source>
         <translation>Kopírovať názov súboru do s&amp;chránky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="935"/>
+        <location filename="../src/texstudio.cpp" line="936"/>
         <source>S&amp;VN/GIT...</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="936"/>
+        <location filename="../src/texstudio.cpp" line="937"/>
         <source>Check &amp;in...</source>
         <translation>&amp;Zapísať (SVN)...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="937"/>
+        <location filename="../src/texstudio.cpp" line="938"/>
         <source>SVN &amp;update...</source>
         <translation>&amp;Aktualizácia SVN...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="938"/>
+        <location filename="../src/texstudio.cpp" line="939"/>
         <source>SVN update &amp;work directory</source>
         <translation>&amp;Pracovný adresár pre aktualizáciu SVN</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="939"/>
+        <location filename="../src/texstudio.cpp" line="940"/>
         <source>Sh&amp;ow old Revisions</source>
         <translation>&amp;Ukázať staré revízie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="940"/>
+        <location filename="../src/texstudio.cpp" line="941"/>
         <source>Lock &amp;PDF</source>
         <translation>Zamknúť &amp;PDF</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="941"/>
+        <location filename="../src/texstudio.cpp" line="942"/>
         <source>Check in P&amp;DF</source>
         <translation>Zapísať &amp;PDF</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="942"/>
+        <location filename="../src/texstudio.cpp" line="943"/>
         <source>Show difference between two files</source>
         <translation>Ukázať rozdiely medzi dvoma súbormi</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="943"/>
+        <location filename="../src/texstudio.cpp" line="944"/>
         <source>Show difference between two files in relation to base file</source>
         <translation>Ukázať rozdiely medzi dvoma súbormi vzhľadom k základnému súboru</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="944"/>
+        <location filename="../src/texstudio.cpp" line="945"/>
         <source>Check SVN Conflict</source>
         <translation>Skontrolovať konflikt v SVN</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="945"/>
+        <location filename="../src/texstudio.cpp" line="946"/>
         <source>Try to merge differences</source>
         <translation>Skúsiť zlúčiť rozdiely</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="946"/>
+        <location filename="../src/texstudio.cpp" line="947"/>
         <source>Remove Difference-Markers</source>
         <translation>Odstrániť rozdielové značky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="947"/>
+        <location filename="../src/texstudio.cpp" line="948"/>
         <source>Declare Conflict Resolved</source>
         <translation>Prehlásiť konflikt za vyriešený</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="948"/>
+        <location filename="../src/texstudio.cpp" line="949"/>
         <source>Jump to next difference</source>
         <translation>Skočiť na ďalší rozdiel</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="949"/>
+        <location filename="../src/texstudio.cpp" line="950"/>
         <source>Jump to previous difference</source>
         <translation>Skočiť na predchádzajúci rozdiel</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="952"/>
-        <location filename="../src/texstudio.cpp" line="10161"/>
+        <location filename="../src/texstudio.cpp" line="953"/>
+        <location filename="../src/texstudio.cpp" line="10275"/>
         <source>&amp;Close</source>
         <translation>&amp;Zavrieť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="953"/>
+        <location filename="../src/texstudio.cpp" line="954"/>
         <source>Clos&amp;e All</source>
         <translation>Z&amp;avrieť všetko</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="956"/>
+        <location filename="../src/texstudio.cpp" line="957"/>
         <source>Print Source Code...</source>
         <translation>Vytlačiť zdrojový kód...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="959"/>
+        <location filename="../src/texstudio.cpp" line="960"/>
         <source>Exit</source>
         <translation>Ukončiť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="962"/>
+        <location filename="../src/texstudio.cpp" line="963"/>
         <source>&amp;Edit</source>
         <translation>Úp&amp;ravy</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="963"/>
+        <location filename="../src/texstudio.cpp" line="964"/>
         <source>&amp;Undo</source>
         <translation>&amp;Späť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="964"/>
+        <location filename="../src/texstudio.cpp" line="965"/>
         <source>&amp;Redo</source>
         <translation>&amp;Znovu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="966"/>
+        <location filename="../src/texstudio.cpp" line="967"/>
         <source>Debug undo stack</source>
         <translation>Debugovať undo zásobník</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="970"/>
+        <location filename="../src/texstudio.cpp" line="971"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopírovať</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="969"/>
+        <location filename="../src/texstudio.cpp" line="970"/>
         <source>C&amp;ut</source>
         <translation>&amp;Vystrihnúť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="753"/>
+        <location filename="../src/texstudio.cpp" line="754"/>
         <source>Insert filename</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="758"/>
+        <location filename="../src/texstudio.cpp" line="759"/>
         <source>Files</source>
         <translation>Súbory</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="933"/>
+        <location filename="../src/texstudio.cpp" line="934"/>
         <source>Copy root filename to clipboard</source>
         <translation>Skopírovať názov koreňového súboru do schránky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="971"/>
+        <location filename="../src/texstudio.cpp" line="972"/>
         <source>&amp;Paste</source>
         <translation>&amp;Vložiť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="973"/>
+        <location filename="../src/texstudio.cpp" line="974"/>
         <source>&amp;Selection</source>
         <translation>&amp;Výber</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="974"/>
+        <location filename="../src/texstudio.cpp" line="975"/>
         <source>Select &amp;All</source>
         <translation>Vybrať &amp;všetko</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="975"/>
+        <location filename="../src/texstudio.cpp" line="976"/>
         <source>Select All &amp;Occurrences</source>
         <translation>Vybrať všetky &amp;výskyty</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="976"/>
+        <location filename="../src/texstudio.cpp" line="977"/>
         <source>Select &amp;Prev Occurrence</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="977"/>
+        <location filename="../src/texstudio.cpp" line="978"/>
         <source>Select &amp;Next Occurrence</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="978"/>
+        <location filename="../src/texstudio.cpp" line="979"/>
         <source>Also Select Prev Occurrence</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="979"/>
+        <location filename="../src/texstudio.cpp" line="980"/>
         <source>Also Select Next Occurrence</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="980"/>
+        <location filename="../src/texstudio.cpp" line="981"/>
         <source>Expand Selection to Word</source>
         <translation>Rozbaliť výber po slovo</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="981"/>
+        <location filename="../src/texstudio.cpp" line="982"/>
         <source>Expand Selection to Line</source>
         <translation>Rozbaliť výber po riadok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="983"/>
+        <location filename="../src/texstudio.cpp" line="984"/>
         <source>&amp;Line Operations</source>
         <translation>Ria&amp;dkové operácie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="984"/>
+        <location filename="../src/texstudio.cpp" line="985"/>
         <source>Delete &amp;Line</source>
         <translation>Zmazať riad&amp;ok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="987"/>
-        <location filename="../src/texstudio.cpp" line="989"/>
+        <location filename="../src/texstudio.cpp" line="988"/>
+        <location filename="../src/texstudio.cpp" line="990"/>
         <source>Delete To &amp;End Of Line</source>
         <translation>Zmazať až po &amp;koniec riadku</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="991"/>
+        <location filename="../src/texstudio.cpp" line="992"/>
         <source>Delete From &amp;Start Of Line</source>
         <translation>Zmazať od &amp;začiatku riadku</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="992"/>
+        <location filename="../src/texstudio.cpp" line="993"/>
         <source>Move Line &amp;Up</source>
         <translation>Posunúť riadok &amp;nahor</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="993"/>
+        <location filename="../src/texstudio.cpp" line="994"/>
         <source>Move Line &amp;Down</source>
         <translation>Posunúť riadok &amp;nadol</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="994"/>
+        <location filename="../src/texstudio.cpp" line="995"/>
         <source>Du&amp;plicate Line</source>
         <translation>Z&amp;dvojiť riadok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="995"/>
+        <location filename="../src/texstudio.cpp" line="996"/>
         <source>S&amp;ort Lines</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="996"/>
+        <location filename="../src/texstudio.cpp" line="997"/>
         <source>&amp;Align Cursors</source>
         <translation>&amp;Zarovnať kurzory</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="998"/>
+        <location filename="../src/texstudio.cpp" line="999"/>
         <source>&amp;Text Operations</source>
         <translation>Operácie s &amp;textom</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="999"/>
+        <location filename="../src/texstudio.cpp" line="1000"/>
         <source>To Lowercase</source>
         <translation>Malé písmená</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1000"/>
+        <location filename="../src/texstudio.cpp" line="1001"/>
         <source>To Uppercase</source>
         <translation>Veľké písmená</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1001"/>
+        <location filename="../src/texstudio.cpp" line="1002"/>
         <source>To Titlecase (strict)</source>
         <translation>Veľké písmená na začiatku slova (striktne)</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1002"/>
+        <location filename="../src/texstudio.cpp" line="1003"/>
         <source>To Titlecase (smart)</source>
         <translation>Veľké písmená na začiatku slova (chytré)</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1006"/>
+        <location filename="../src/texstudio.cpp" line="1007"/>
         <source>&amp;Searching</source>
         <translation>&amp;Hľadanie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1007"/>
+        <location filename="../src/texstudio.cpp" line="1008"/>
         <source>&amp;Find</source>
         <translation>&amp;Nájsť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1008"/>
+        <location filename="../src/texstudio.cpp" line="1009"/>
         <source>Find &amp;Next</source>
         <translation>Nájsť &amp;ďalší</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1009"/>
+        <location filename="../src/texstudio.cpp" line="1010"/>
         <source>Find &amp;Prev</source>
         <translation>Nájsť &amp;predchádzajúci</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1010"/>
+        <location filename="../src/texstudio.cpp" line="1011"/>
         <source>Continue F&amp;ind</source>
         <translation>Pokračovať v h&amp;ľadaní</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1011"/>
+        <location filename="../src/texstudio.cpp" line="1012"/>
         <source>&amp;Count</source>
         <translation>P&amp;očet</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1012"/>
+        <location filename="../src/texstudio.cpp" line="1013"/>
         <source>&amp;Select all matches...</source>
         <translation>&amp;Vybrať všetky zhody...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1014"/>
+        <location filename="../src/texstudio.cpp" line="1015"/>
         <source>&amp;Replace</source>
         <translation>&amp;Nahradiť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1015"/>
+        <location filename="../src/texstudio.cpp" line="1016"/>
         <source>Replace Next</source>
         <translation>Nahradiť ďalší</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1016"/>
+        <location filename="../src/texstudio.cpp" line="1017"/>
         <source>Replace Prev</source>
         <translation>Nahradiť predchádzajúci</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1017"/>
+        <location filename="../src/texstudio.cpp" line="1018"/>
         <source>Replace &amp;All</source>
         <translation>Nahradiť vš&amp;etko</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1020"/>
+        <location filename="../src/texstudio.cpp" line="1021"/>
         <source>Go to</source>
         <translation>Ísť na</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1022"/>
-        <location filename="../src/texstudio.cpp" line="7880"/>
-        <location filename="../src/texstudio.cpp" line="7905"/>
-        <location filename="../src/texstudio.cpp" line="7925"/>
+        <location filename="../src/texstudio.cpp" line="1023"/>
+        <location filename="../src/texstudio.cpp" line="7992"/>
+        <location filename="../src/texstudio.cpp" line="8017"/>
+        <location filename="../src/texstudio.cpp" line="8037"/>
         <source>Line</source>
         <translation>Riadok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1023"/>
+        <location filename="../src/texstudio.cpp" line="1024"/>
         <source>Previous Change</source>
         <translation>Predchádzajúca zmena</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1025"/>
-        <location filename="../src/texstudio.cpp" line="1027"/>
+        <location filename="../src/texstudio.cpp" line="1026"/>
+        <location filename="../src/texstudio.cpp" line="1028"/>
         <source>Next Change</source>
         <translation>Ďalšia zmena</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1030"/>
+        <location filename="../src/texstudio.cpp" line="1031"/>
         <source>Previous mark</source>
         <translation>Predchádzajúca značka</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1031"/>
+        <location filename="../src/texstudio.cpp" line="1032"/>
         <source>Next mark</source>
         <translation>Ďalšia značka</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1034"/>
+        <location filename="../src/texstudio.cpp" line="1035"/>
         <source>Go Back</source>
         <translation>Ísť späť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1035"/>
+        <location filename="../src/texstudio.cpp" line="1036"/>
         <source>Go Forward</source>
         <translation>Ísť vpred</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1038"/>
+        <location filename="../src/texstudio.cpp" line="1039"/>
         <source>Goto Bookmark</source>
         <translation>Ísť na záložku</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1051"/>
-        <location filename="../src/texstudio.cpp" line="1060"/>
-        <location filename="../src/texstudio.cpp" line="1064"/>
+        <location filename="../src/texstudio.cpp" line="1052"/>
+        <location filename="../src/texstudio.cpp" line="1061"/>
+        <location filename="../src/texstudio.cpp" line="1065"/>
         <source>Bookmark %1</source>
         <translation>Záložka %1</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1055"/>
+        <location filename="../src/texstudio.cpp" line="1056"/>
         <source>Toggle Bookmark</source>
         <translation>Prepnúť záložku</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1058"/>
-        <location filename="../src/texstudio.cpp" line="1062"/>
+        <location filename="../src/texstudio.cpp" line="1059"/>
+        <location filename="../src/texstudio.cpp" line="1063"/>
         <source>Unnamed Bookmark</source>
         <translation>Nepomenovaná záložka</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1069"/>
+        <location filename="../src/texstudio.cpp" line="1070"/>
         <source>Line Ending</source>
         <translation>Koniec riadku</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1071"/>
+        <location filename="../src/texstudio.cpp" line="1072"/>
         <source>DOS/Windows (CR LF)</source>
         <translation>DOS/Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1075"/>
+        <location filename="../src/texstudio.cpp" line="1076"/>
         <source>Unix (LF)</source>
         <translation>Unix (LF)</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1079"/>
+        <location filename="../src/texstudio.cpp" line="1080"/>
         <source>Old Mac (CR)</source>
         <translation>Starý Mac (CR)</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1085"/>
+        <location filename="../src/texstudio.cpp" line="1086"/>
         <source>Setup Encoding...</source>
         <translation>Nastaviť kódovanie znakov...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1087"/>
-        <location filename="../src/texstudio.cpp" line="1089"/>
+        <location filename="../src/texstudio.cpp" line="1088"/>
+        <location filename="../src/texstudio.cpp" line="1090"/>
         <source>Insert Unicode Character...</source>
         <translation>Vložiť znak Unicode...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1095"/>
+        <location filename="../src/texstudio.cpp" line="1096"/>
         <source>&amp;Idefix</source>
         <translation>&amp;Idefix</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1096"/>
+        <location filename="../src/texstudio.cpp" line="1097"/>
         <source>Erase &amp;Word/Cmd/Env</source>
         <translation>Vymazať &amp;slovo/príkaz/prostredie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1099"/>
+        <location filename="../src/texstudio.cpp" line="1100"/>
         <source>Pas&amp;te as LaTeX</source>
         <translation>Vloži&amp;ť ako LaTeX</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1100"/>
+        <location filename="../src/texstudio.cpp" line="1101"/>
         <source>Co&amp;nvert to LaTeX</source>
         <translation>&amp;Konvertovať na LaTeX</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1103"/>
+        <location filename="../src/texstudio.cpp" line="1104"/>
         <source>Pre&amp;view Selection/Parentheses</source>
         <translation>&amp;Náhľad výberu/zátvoriek</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1104"/>
+        <location filename="../src/texstudio.cpp" line="1105"/>
         <source>C&amp;lear Inline Preview</source>
         <translation>Z&amp;mazať náhľad v riadku</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1106"/>
+        <location filename="../src/texstudio.cpp" line="1107"/>
         <source>Preview Dis&amp;play Mode</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1108"/>
+        <location filename="../src/texstudio.cpp" line="1109"/>
         <source>Show preview as tooltip if panel is hidden</source>
         <translation>Ukázať náhľad ako tip k nástroju, ak je panel neviditeľný</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1112"/>
+        <location filename="../src/texstudio.cpp" line="1113"/>
         <source>Always show preview in preview panel</source>
         <translation>Ukázať náhľad v náhľadovom paneli vždy</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1116"/>
+        <location filename="../src/texstudio.cpp" line="1117"/>
         <source>Always show preview as tool tip</source>
         <translation>Ukázať náhľad vždy ako tip k nástroju</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1120"/>
+        <location filename="../src/texstudio.cpp" line="1121"/>
         <source>Always show both</source>
         <translation>Ukázať vždy oboje</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1124"/>
+        <location filename="../src/texstudio.cpp" line="1125"/>
         <source>Inline</source>
         <translation>V riadku</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1130"/>
+        <location filename="../src/texstudio.cpp" line="1131"/>
         <source>Show in embedded viewer</source>
         <translation>Ukázať vo vloženom prehliadači</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1139"/>
+        <location filename="../src/texstudio.cpp" line="1140"/>
         <source>Toggle &amp;Comment</source>
         <translation>Prepnúť &amp;komentár</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1140"/>
+        <location filename="../src/texstudio.cpp" line="1141"/>
         <source>&amp;Comment</source>
         <translation>&amp;Komentár</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1141"/>
+        <location filename="../src/texstudio.cpp" line="1142"/>
         <source>&amp;Uncomment</source>
         <translation>&amp;Zrušiť komentár</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1142"/>
+        <location filename="../src/texstudio.cpp" line="1143"/>
         <source>&amp;Indent</source>
         <translation>&amp;Odsadiť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1143"/>
+        <location filename="../src/texstudio.cpp" line="1144"/>
         <source>Unin&amp;dent</source>
         <translation>&amp;Zrušiť odsadenie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1144"/>
+        <location filename="../src/texstudio.cpp" line="1145"/>
         <source>Hard Line &amp;Break...</source>
         <translation>Tvrdé &amp;zalomenie riadkov...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1145"/>
+        <location filename="../src/texstudio.cpp" line="1146"/>
         <source>R&amp;epeat Hard Line Break</source>
         <translation>&amp;Opakovať tvrdé zalomenie riadkov</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1148"/>
+        <location filename="../src/texstudio.cpp" line="1149"/>
         <source>&amp;Go to</source>
         <translation>&amp;Ísť na</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1150"/>
+        <location filename="../src/texstudio.cpp" line="1151"/>
         <source>Previous Error</source>
         <translation>Predchádzajúca chyba</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1150"/>
         <location filename="../src/texstudio.cpp" line="1151"/>
+        <location filename="../src/texstudio.cpp" line="1152"/>
         <source>No LaTeX errors detected !</source>
         <translation>Nenájdené žiadne LaTeXové chyby!</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1151"/>
+        <location filename="../src/texstudio.cpp" line="1152"/>
         <source>Next Error</source>
         <translation>Ďalšia chyba</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1152"/>
+        <location filename="../src/texstudio.cpp" line="1153"/>
         <source>Previous Warning</source>
         <translation>Predchádzajúce varovanie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1152"/>
         <location filename="../src/texstudio.cpp" line="1153"/>
+        <location filename="../src/texstudio.cpp" line="1154"/>
         <source>No LaTeX warnings detected !</source>
         <translation>Nenájdené žiadne LaTeXové varovania!</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1153"/>
+        <location filename="../src/texstudio.cpp" line="1154"/>
         <source>Next Warning</source>
         <translation>Ďalšie varovanie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1154"/>
+        <location filename="../src/texstudio.cpp" line="1155"/>
         <source>Previous Bad Box</source>
         <translation>Predchádzajúci zlý box</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1154"/>
         <location filename="../src/texstudio.cpp" line="1155"/>
+        <location filename="../src/texstudio.cpp" line="1156"/>
         <source>No bad boxes detected !</source>
         <translation>Nenájdené žiadne zlé boxy!</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1155"/>
+        <location filename="../src/texstudio.cpp" line="1156"/>
         <source>Next Bad Box</source>
         <translation>Ďalší zlý box</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1158"/>
+        <location filename="../src/texstudio.cpp" line="1159"/>
         <source>Definition</source>
         <translation>Definícia</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1161"/>
+        <location filename="../src/texstudio.cpp" line="1162"/>
         <source>Re&amp;name Environment</source>
         <translation>&amp;Premenovať prostredie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1163"/>
+        <location filename="../src/texstudio.cpp" line="1164"/>
         <source>Parenthesis</source>
         <translation>Zátvorky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1165"/>
-        <location filename="../src/texstudio.cpp" line="1175"/>
+        <location filename="../src/texstudio.cpp" line="1166"/>
+        <location filename="../src/texstudio.cpp" line="1176"/>
         <source>Jump to Match</source>
         <translation>Skočiť na zhodu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1166"/>
-        <location filename="../src/texstudio.cpp" line="1176"/>
+        <location filename="../src/texstudio.cpp" line="1167"/>
+        <location filename="../src/texstudio.cpp" line="1177"/>
         <source>Select Inner</source>
         <translation>Vybrať vnútorné</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1167"/>
-        <location filename="../src/texstudio.cpp" line="1177"/>
+        <location filename="../src/texstudio.cpp" line="1168"/>
+        <location filename="../src/texstudio.cpp" line="1178"/>
         <source>Select Outer</source>
         <translation>Vybrať vonkajšie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1168"/>
-        <location filename="../src/texstudio.cpp" line="1178"/>
+        <location filename="../src/texstudio.cpp" line="1169"/>
+        <location filename="../src/texstudio.cpp" line="1179"/>
         <source>Select Command</source>
         <translation>Vybrať príkaz</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1169"/>
-        <location filename="../src/texstudio.cpp" line="1179"/>
+        <location filename="../src/texstudio.cpp" line="1170"/>
+        <location filename="../src/texstudio.cpp" line="1180"/>
         <source>Select Line</source>
         <translation>Vybrať riadok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1170"/>
-        <location filename="../src/texstudio.cpp" line="1180"/>
+        <location filename="../src/texstudio.cpp" line="1171"/>
+        <location filename="../src/texstudio.cpp" line="1181"/>
         <source>Select Inverting</source>
         <translation>Vybrať invertujúce</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1173"/>
-        <location filename="../src/texstudio.cpp" line="1183"/>
+        <location filename="../src/texstudio.cpp" line="1174"/>
+        <location filename="../src/texstudio.cpp" line="1184"/>
         <source>Find Mismatch</source>
         <translation>Nájsť nesúlad</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1186"/>
+        <location filename="../src/texstudio.cpp" line="1187"/>
         <source>Complete</source>
         <translation>Doplniť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1187"/>
+        <location filename="../src/texstudio.cpp" line="1188"/>
         <source>Normal</source>
         <translation>Normálne</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1188"/>
+        <location filename="../src/texstudio.cpp" line="1189"/>
         <source>\begin{ Completion</source>
         <translation>\begin{ doplnenie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1189"/>
+        <location filename="../src/texstudio.cpp" line="1190"/>
         <source>Normal Text</source>
         <translation>Normálny text</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1190"/>
+        <location filename="../src/texstudio.cpp" line="1191"/>
         <source>Close latest open environment</source>
         <translation>Zavrieť naposledy otvorené prostredie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1193"/>
+        <location filename="../src/texstudio.cpp" line="1194"/>
         <source>update TOC</source>
         <translation>Aktualizovať obsah</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1194"/>
+        <location filename="../src/texstudio.cpp" line="1195"/>
         <source>Refresh Structure</source>
         <translation>Obnoviť stavbu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1195"/>
+        <location filename="../src/texstudio.cpp" line="1196"/>
         <source>Refresh Language Model</source>
         <translation>Obnoviť model jazyka</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1196"/>
+        <location filename="../src/texstudio.cpp" line="1197"/>
         <source>Force an update of the dynamic language model used for highlighting and folding. Likely, you do not need to call this because updates are usually automatic.</source>
         <translation>Vynutí obnovenie modelu dynamického jazyka, ktorý sa používa pre zvýrazňovanie syntaxu. Pravdepodobne nie je nutné volať - obnovovanie prebieha automaticky.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1197"/>
+        <location filename="../src/texstudio.cpp" line="1198"/>
         <source>Remove Placeholders</source>
         <translation>Odstrániť zástupné znaky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1198"/>
+        <location filename="../src/texstudio.cpp" line="1199"/>
         <source>Remove Current Placeholder</source>
         <translation>Odstrániť súčasný zástupný znak</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1203"/>
+        <location filename="../src/texstudio.cpp" line="1204"/>
         <source>&amp;Tools</source>
         <translation>&amp;Nástroje</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1205"/>
+        <location filename="../src/texstudio.cpp" line="1206"/>
         <source>&amp;Build &amp;&amp; View</source>
         <translation>&amp;Zostavenie a zobrazenie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1206"/>
+        <location filename="../src/texstudio.cpp" line="1207"/>
         <source>&amp;Compile</source>
         <translation>&amp;Kompilácia</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1207"/>
+        <location filename="../src/texstudio.cpp" line="1208"/>
         <source>Stop Compile</source>
         <translation>Zastaviť kompiláciu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1211"/>
-        <location filename="../src/texstudio.cpp" line="1366"/>
+        <location filename="../src/texstudio.cpp" line="1212"/>
+        <location filename="../src/texstudio.cpp" line="1367"/>
         <source>&amp;View</source>
         <translation>&amp;Pohľad</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1212"/>
-        <location filename="../src/texstudio.cpp" line="1313"/>
+        <location filename="../src/texstudio.cpp" line="1213"/>
+        <location filename="../src/texstudio.cpp" line="1314"/>
         <source>&amp;Bibliography</source>
         <translation>&amp;Bibliografia</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1213"/>
+        <location filename="../src/texstudio.cpp" line="1214"/>
         <source>&amp;Glossary</source>
         <translation>&amp;Slovník</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1214"/>
+        <location filename="../src/texstudio.cpp" line="1215"/>
         <source>&amp;Index</source>
         <translation>&amp;Index</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1217"/>
+        <location filename="../src/texstudio.cpp" line="1218"/>
         <source>&amp;Commands</source>
         <comment>menu</comment>
         <translation>&amp;Príkazy</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1218"/>
+        <location filename="../src/texstudio.cpp" line="1219"/>
         <source>&amp;Latexmk</source>
         <translation>&amp;Latexmk</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1220"/>
-        <location filename="../src/texstudio.cpp" line="1270"/>
+        <location filename="../src/texstudio.cpp" line="1221"/>
+        <location filename="../src/texstudio.cpp" line="1271"/>
         <source>&amp;LaTeX</source>
         <translation>&amp;LaTeX</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1221"/>
+        <location filename="../src/texstudio.cpp" line="1222"/>
         <source>&amp;PDFLaTeX</source>
         <translation>&amp;PDFLaTeX</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1225"/>
+        <location filename="../src/texstudio.cpp" line="1226"/>
         <source>DVI-&gt;PS</source>
         <translation>DVI-&gt;PS</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1226"/>
+        <location filename="../src/texstudio.cpp" line="1227"/>
         <source>P&amp;S-&gt;PDF</source>
         <translation>P&amp;S-&gt;PDF</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1227"/>
+        <location filename="../src/texstudio.cpp" line="1228"/>
         <source>DV&amp;I-&gt;PDF</source>
         <translation>DV&amp;I-&gt;PDF</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1229"/>
+        <location filename="../src/texstudio.cpp" line="1230"/>
         <source>View &amp;DVI</source>
         <translation>Zobraziť &amp;DVI</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1230"/>
+        <location filename="../src/texstudio.cpp" line="1231"/>
         <source>Vie&amp;w PS</source>
         <translation>Zobraz&amp;iť PS</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1231"/>
+        <location filename="../src/texstudio.cpp" line="1232"/>
         <source>View PD&amp;F</source>
         <translation>Zobraziť PD&amp;F</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1233"/>
+        <location filename="../src/texstudio.cpp" line="1234"/>
         <source>&amp;Bibtex</source>
         <translation>&amp;Bibtex</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1234"/>
+        <location filename="../src/texstudio.cpp" line="1235"/>
         <source>&amp;Bibtex 8-Bit</source>
         <translation>&amp;Bibtex 8-Bit</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1235"/>
+        <location filename="../src/texstudio.cpp" line="1236"/>
         <source>Bibe&amp;r</source>
         <translation>Bibe&amp;r</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1237"/>
+        <location filename="../src/texstudio.cpp" line="1238"/>
         <source>&amp;MakeIndex</source>
         <translation>&amp;MakeIndex</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1238"/>
+        <location filename="../src/texstudio.cpp" line="1239"/>
         <source>&amp;TexIndy</source>
         <translation>&amp;TexIndy</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1239"/>
+        <location filename="../src/texstudio.cpp" line="1240"/>
         <source>&amp;Xindex</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1240"/>
+        <location filename="../src/texstudio.cpp" line="1241"/>
         <source>&amp;Makeglossaries</source>
         <translation>&amp;Makeglossaries</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1242"/>
+        <location filename="../src/texstudio.cpp" line="1243"/>
         <source>&amp;MetaPost</source>
         <translation>&amp;MetaPost</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1243"/>
+        <location filename="../src/texstudio.cpp" line="1244"/>
         <source>&amp;Asymptote</source>
         <translation>&amp;Asymptote</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1245"/>
+        <location filename="../src/texstudio.cpp" line="1246"/>
         <source>&amp;User</source>
         <comment>menu</comment>
         <translation>&amp;Užívateľ</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1248"/>
+        <location filename="../src/texstudio.cpp" line="1249"/>
         <source>Cle&amp;an Auxiliary Files...</source>
         <translation>Zmaz&amp;ať pomocné súbory...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1249"/>
+        <location filename="../src/texstudio.cpp" line="1250"/>
         <source>Open External &amp;Terminal</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1251"/>
+        <location filename="../src/texstudio.cpp" line="1252"/>
         <source>View &amp;Log</source>
         <translation>Zobraziť &amp;log</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1252"/>
+        <location filename="../src/texstudio.cpp" line="1253"/>
         <source>Show Log Markers</source>
         <translation>Ukázať logovacie značky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1256"/>
+        <location filename="../src/texstudio.cpp" line="1257"/>
         <source>C&amp;onvert to Html...</source>
         <translation>&amp;Konvertovať na HTML...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1257"/>
+        <location filename="../src/texstudio.cpp" line="1258"/>
         <source>C&amp;onvert Source to Html...</source>
         <translation>&amp;konvertovať zdrojový text na HTML...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1259"/>
+        <location filename="../src/texstudio.cpp" line="1260"/>
         <source>Convert to Abridged Plaintext</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1260"/>
+        <location filename="../src/texstudio.cpp" line="1261"/>
         <source>A&amp;nalyse Text...</source>
         <translation>&amp;Analyzuj text...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1261"/>
+        <location filename="../src/texstudio.cpp" line="1262"/>
         <source>Generate &amp;Random Text...</source>
         <translation>Generovať &amp;náhodný text...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1263"/>
+        <location filename="../src/texstudio.cpp" line="1264"/>
         <source>Check Spelling...</source>
         <translation>Kontrola pravopisu...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1264"/>
+        <location filename="../src/texstudio.cpp" line="1265"/>
         <source>Thesaurus...</source>
         <translation>Slovník...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1265"/>
+        <location filename="../src/texstudio.cpp" line="1266"/>
         <source>Find Word Repetitions...</source>
         <translation>Nájsť opakovanie slov...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1272"/>
+        <location filename="../src/texstudio.cpp" line="1273"/>
         <source>Insert \ref to Next Label</source>
         <translation>Vložiť \ref k ďalšiemu štítku</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1273"/>
+        <location filename="../src/texstudio.cpp" line="1274"/>
         <source>Insert \ref to Previous Label</source>
         <translation>Vložiť \ref k predchádzajúcemu štítku</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1274"/>
+        <location filename="../src/texstudio.cpp" line="1275"/>
         <source>Manipulate Tables</source>
         <comment>table</comment>
         <translation>Manipulovať s tabuľkami</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1275"/>
+        <location filename="../src/texstudio.cpp" line="1276"/>
         <source>Add Row</source>
         <comment>table</comment>
         <translation>Pridať riadok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1276"/>
+        <location filename="../src/texstudio.cpp" line="1277"/>
         <source>Add Column</source>
         <comment>table</comment>
         <translation>Pridať stĺpec</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1277"/>
+        <location filename="../src/texstudio.cpp" line="1278"/>
         <source>Remove Row</source>
         <comment>table</comment>
         <translation>Odstrániť riadok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1278"/>
+        <location filename="../src/texstudio.cpp" line="1279"/>
         <source>Remove Column</source>
         <comment>table</comment>
         <translation>Odstrániť stĺpec</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1279"/>
+        <location filename="../src/texstudio.cpp" line="1280"/>
         <source>Cut Column</source>
         <comment>table</comment>
         <translation>Vystrihnúť stĺpec</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1280"/>
+        <location filename="../src/texstudio.cpp" line="1281"/>
         <source>Paste Column</source>
         <comment>table</comment>
         <translation>Vložiť stĺpec</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1281"/>
+        <location filename="../src/texstudio.cpp" line="1282"/>
         <source>Add \hline</source>
         <comment>table</comment>
         <translation>Pridať \hline</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1282"/>
+        <location filename="../src/texstudio.cpp" line="1283"/>
         <source>Remove \hline</source>
         <comment>table</comment>
         <translation>Odstrániť \hline</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1283"/>
+        <location filename="../src/texstudio.cpp" line="1284"/>
         <source>Remodel Table Using Template</source>
         <comment>table</comment>
         <translation>Prerobiť tabuľku podľa predlohy</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1284"/>
+        <location filename="../src/texstudio.cpp" line="1285"/>
         <source>Align Columns</source>
         <translation>Zarovnať stĺpce</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1285"/>
+        <location filename="../src/texstudio.cpp" line="1286"/>
         <source>Add magic comments ...</source>
         <translation>Pridať magické komentáre ...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1286"/>
+        <location filename="../src/texstudio.cpp" line="1287"/>
         <source>Insert root document name as TeX comment</source>
         <translation>Vložiť názov koreňového dokumentu ako komentár TeXu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1287"/>
-        <location filename="../src/texstudio.cpp" line="1696"/>
+        <location filename="../src/texstudio.cpp" line="1288"/>
+        <location filename="../src/texstudio.cpp" line="1699"/>
         <source>Insert language as TeX comment</source>
         <translation>Vložiť jazyk ako komentár TeXu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1288"/>
+        <location filename="../src/texstudio.cpp" line="1289"/>
         <source>Insert document coding as TeX comment</source>
         <translation>Vložiť kódovanie dokumentu ako komentár TeXu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1289"/>
+        <location filename="../src/texstudio.cpp" line="1290"/>
         <source>Insert program as TeX comment</source>
         <translation>Vložiť program ako komentár TeXu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1290"/>
+        <location filename="../src/texstudio.cpp" line="1291"/>
         <source>Insert bibliography tool as TeX comment</source>
         <translation>Vložiť bibliografický nástroj ako komentár TeXu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1292"/>
+        <location filename="../src/texstudio.cpp" line="1293"/>
         <source>&amp;Math</source>
         <translation>&amp;Matematika</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1296"/>
+        <location filename="../src/texstudio.cpp" line="1297"/>
         <source>&amp;Wizards</source>
         <translation>Sprievo&amp;dci</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1297"/>
+        <location filename="../src/texstudio.cpp" line="1298"/>
         <source>Quick &amp;Start...</source>
         <translation>Pomocník pre &amp;nový dokument...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1298"/>
+        <location filename="../src/texstudio.cpp" line="1299"/>
         <source>Quick &amp;Beamer Presentation...</source>
         <translation>Rýchla &amp;Beamer Prezentácia...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1299"/>
+        <location filename="../src/texstudio.cpp" line="1300"/>
         <source>Quick &amp;Letter...</source>
         <translation>Pomocník pre &amp;list...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1302"/>
+        <location filename="../src/texstudio.cpp" line="1303"/>
         <source>AI &amp;Chat...</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1305"/>
+        <location filename="../src/texstudio.cpp" line="1306"/>
         <source>Quick &amp;Tabular...</source>
         <translation>Pomocník pre &amp;tabuľky...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1306"/>
+        <location filename="../src/texstudio.cpp" line="1307"/>
         <source>Quick T&amp;abbing...</source>
         <translation>Pomocník pre &amp;zarážky...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1307"/>
+        <location filename="../src/texstudio.cpp" line="1308"/>
         <source>Quick &amp;Array...</source>
         <translation>Pomocník pre &amp;pole...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1308"/>
+        <location filename="../src/texstudio.cpp" line="1309"/>
         <source>Insert &amp;Graphic...</source>
         <translation>Vložiť &amp;obrázok...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1310"/>
+        <location filename="../src/texstudio.cpp" line="1311"/>
         <source>Math Assistant...</source>
         <translation>Pomocník pre matematický režim...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1338"/>
+        <location filename="../src/texstudio.cpp" line="1339"/>
         <source>&amp;Clean</source>
         <translation>&amp;Vyčistiť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1340"/>
+        <location filename="../src/texstudio.cpp" line="1341"/>
         <source>&amp;Insert Bibliography Entry...</source>
         <translation>&amp;Vložiť bibliografický záznam...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1342"/>
+        <location filename="../src/texstudio.cpp" line="1343"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1346"/>
-        <location filename="../src/texstudio.cpp" line="1356"/>
+        <location filename="../src/texstudio.cpp" line="1347"/>
+        <location filename="../src/texstudio.cpp" line="1357"/>
         <source>BibTeX</source>
         <translation>BibTeX</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1351"/>
-        <location filename="../src/texstudio.cpp" line="1357"/>
+        <location filename="../src/texstudio.cpp" line="1352"/>
+        <location filename="../src/texstudio.cpp" line="1358"/>
         <source>BibLaTeX</source>
         <translation>BibLaTeX</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1361"/>
+        <location filename="../src/texstudio.cpp" line="1362"/>
         <source>Ma&amp;cros</source>
         <translation>Ma&amp;kra</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1367"/>
+        <location filename="../src/texstudio.cpp" line="1368"/>
         <source>Previous Document</source>
         <translation>Predchádzajúci dokument</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1368"/>
+        <location filename="../src/texstudio.cpp" line="1369"/>
         <source>Next Document</source>
         <translation>Ďalší dokument</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1369"/>
+        <location filename="../src/texstudio.cpp" line="1370"/>
         <source>Open Documents</source>
         <translation>Otvoriť dokumenty</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1370"/>
+        <location filename="../src/texstudio.cpp" line="1371"/>
         <source>List Of Open Documents</source>
         <translation>Zoznam otvorených dokumentov</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1371"/>
+        <location filename="../src/texstudio.cpp" line="1372"/>
         <source>List Of Hidden Documents</source>
         <translation>Zoznam skrytých dokumentov</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1373"/>
+        <location filename="../src/texstudio.cpp" line="1374"/>
         <source>Focus Editor</source>
         <translation>Focusový editor</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1374"/>
+        <location filename="../src/texstudio.cpp" line="1375"/>
         <source>Focus Viewer</source>
         <translation>Focusový prehliadač</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1377"/>
+        <location filename="../src/texstudio.cpp" line="1378"/>
         <source>Show</source>
         <translation>Ukázať</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1380"/>
+        <location filename="../src/texstudio.cpp" line="1381"/>
         <source>Statusbar</source>
         <translation>Stavový riadok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1383"/>
+        <location filename="../src/texstudio.cpp" line="1384"/>
         <source>Reset Sidepanel/docks</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1406"/>
+        <location filename="../src/texstudio.cpp" line="1407"/>
         <source>Show embedded PDF large</source>
         <translation>Ukázať vložené PDF veľké</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1407"/>
+        <location filename="../src/texstudio.cpp" line="1409"/>
         <source>Show embedded PDF small</source>
         <translation>Ukázať vložené PDF malé</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1409"/>
+        <location filename="../src/texstudio.cpp" line="1411"/>
         <source>Close Element</source>
         <translation>Zavrieť prvok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1412"/>
+        <location filename="../src/texstudio.cpp" line="1414"/>
         <source>Collapse</source>
         <translation>Zložiť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1413"/>
-        <location filename="../src/texstudio.cpp" line="1418"/>
+        <location filename="../src/texstudio.cpp" line="1415"/>
+        <location filename="../src/texstudio.cpp" line="1420"/>
         <source>Everything</source>
         <translation>Všetko</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1414"/>
-        <location filename="../src/texstudio.cpp" line="1419"/>
+        <location filename="../src/texstudio.cpp" line="1416"/>
+        <location filename="../src/texstudio.cpp" line="1421"/>
         <source>Nearest Block</source>
         <translation>Najbližší blok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1416"/>
-        <location filename="../src/texstudio.cpp" line="1421"/>
+        <location filename="../src/texstudio.cpp" line="1418"/>
+        <location filename="../src/texstudio.cpp" line="1423"/>
         <source>Level %1</source>
         <translation>Úroveň %1</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1417"/>
+        <location filename="../src/texstudio.cpp" line="1419"/>
         <source>Expand</source>
         <translation>Rozbaliť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1423"/>
+        <location filename="../src/texstudio.cpp" line="1425"/>
         <source>Grammar errors</source>
         <translation>Gramatické chyby</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1426"/>
+        <location filename="../src/texstudio.cpp" line="1428"/>
         <source>Word Repetition</source>
         <translation>Opakovanie slov</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1427"/>
+        <location filename="../src/texstudio.cpp" line="1429"/>
         <source>Long-range Word Repetition</source>
         <translation>Opakovanie slova s dlhým dosahom</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1428"/>
+        <location filename="../src/texstudio.cpp" line="1430"/>
         <source>Bad words</source>
         <translation>Zlé slová</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1429"/>
+        <location filename="../src/texstudio.cpp" line="1431"/>
         <source>Grammar Mistake</source>
         <translation>Gramatický omyl</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1431"/>
+        <location filename="../src/texstudio.cpp" line="1433"/>
         <source>Grammar Mistake Special %1</source>
         <translation>Špeciálny gramatický omyl %1</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1440"/>
+        <location filename="../src/texstudio.cpp" line="1442"/>
         <source>Editor Zoom</source>
         <translation>Zväčšenie editoru</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1441"/>
+        <location filename="../src/texstudio.cpp" line="1443"/>
         <source>Zoom In</source>
         <translation>Priblížiť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1442"/>
+        <location filename="../src/texstudio.cpp" line="1444"/>
         <source>Zoom Out</source>
         <translation>Oddialiť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1443"/>
+        <location filename="../src/texstudio.cpp" line="1445"/>
         <source>Reset Zoom</source>
         <translation>Resetovať zväčšenie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1445"/>
+        <location filename="../src/texstudio.cpp" line="1447"/>
         <source>Full &amp;Screen</source>
         <translation>Na celú &amp;obrazovku</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1452"/>
+        <location filename="../src/texstudio.cpp" line="1454"/>
         <source>Highlighting</source>
         <translation>Zvýraznenie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1476"/>
+        <location filename="../src/texstudio.cpp" line="1478"/>
         <source>&amp;Options</source>
         <translation>&amp;Voľby</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1477"/>
+        <location filename="../src/texstudio.cpp" line="1479"/>
         <source>&amp;Configure TeXstudio...</source>
         <translation>&amp;Nastaviť TeXstudio...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1480"/>
+        <location filename="../src/texstudio.cpp" line="1482"/>
         <source>Load &amp;Profile...</source>
         <translation>Nahrať &amp;profil...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1481"/>
+        <location filename="../src/texstudio.cpp" line="1483"/>
         <source>S&amp;ave Profile...</source>
         <translation>&amp;Uložiť profil...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1482"/>
+        <location filename="../src/texstudio.cpp" line="1484"/>
         <source>Save &amp;Current Settings</source>
         <comment>menu</comment>
         <translation>Uložiť &amp;súčasné nastavenie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1483"/>
+        <location filename="../src/texstudio.cpp" line="1485"/>
         <source>Restore &amp;Default Settings...</source>
         <translation>Obnoviť &amp;predvolené nastavenie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1486"/>
+        <location filename="../src/texstudio.cpp" line="1488"/>
         <source>Root Document</source>
         <comment>menu</comment>
         <translation>Koreňový dokument</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1489"/>
+        <location filename="../src/texstudio.cpp" line="1491"/>
         <source>Detect &amp;Automatically</source>
         <translation>Rozpoznať &amp;automaticky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1497"/>
+        <location filename="../src/texstudio.cpp" line="1499"/>
         <source>Set Current Document As Explicit Root</source>
         <translation>Nastaviť súčasný dokument ako koreňový dokument</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1500"/>
+        <location filename="../src/texstudio.cpp" line="1502"/>
         <source>&amp;Help</source>
         <translation>&amp;Pomoc</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1501"/>
+        <location filename="../src/texstudio.cpp" line="1503"/>
         <source>LaTeX Reference...</source>
         <translation>LaTeXový odkaz...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1502"/>
+        <location filename="../src/texstudio.cpp" line="1504"/>
         <source>User Manual...</source>
         <translation>Užívateľská príručka...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1503"/>
+        <location filename="../src/texstudio.cpp" line="1505"/>
         <source>Packages Help...</source>
         <translation>Pomoc k balíkom...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1506"/>
+        <location filename="../src/texstudio.cpp" line="1508"/>
         <source>Check LaTeX Installation</source>
         <translation>Skontrolovať inštalíciu LaTeXu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1507"/>
+        <location filename="../src/texstudio.cpp" line="1509"/>
         <source>Check Active Completion Files</source>
         <translation>Preveriť aktívne doplňovanie slov</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1508"/>
+        <location filename="../src/texstudio.cpp" line="1510"/>
         <source>Check LanguageTool</source>
         <translation>Preveriť jazykový nástroj</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1509"/>
+        <location filename="../src/texstudio.cpp" line="1511"/>
+        <source>Show settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/texstudio.cpp" line="1512"/>
         <source>Bugs Report/Feature Request</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1510"/>
+        <location filename="../src/texstudio.cpp" line="1513"/>
         <source>About TeXstudio...</source>
         <translation>O programe TeXstudio...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1679"/>
-        <location filename="../src/texstudio.cpp" line="5921"/>
+        <location filename="../src/texstudio.cpp" line="1682"/>
+        <location filename="../src/texstudio.cpp" line="6031"/>
         <source>show more entries ...</source>
         <translation>Ukáž viac položiek ...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1687"/>
+        <location filename="../src/texstudio.cpp" line="1690"/>
         <source>Default</source>
         <translation>Predvolený</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1721"/>
+        <location filename="../src/texstudio.cpp" line="1724"/>
         <source>Connected to LanguageTool at %1</source>
         <translation>Spojené s LanguageTool (jazykovým nástrojom) na %1</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1725"/>
+        <location filename="../src/texstudio.cpp" line="1728"/>
         <source>No LanguageTool server found at %1</source>
         <translation>Na %1 nenájdený žiadny server LanguageTool</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1729"/>
+        <location filename="../src/texstudio.cpp" line="1732"/>
         <source>LanguageTool status unknown</source>
         <translation>Neznámý stav LanguageTool</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1733"/>
+        <location filename="../src/texstudio.cpp" line="1736"/>
         <source>Inline grammar checking disabled by user!</source>
         <translation>Overovanie pravopisu pri písaní zakázané užívateľom!</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1796"/>
+        <location filename="../src/texstudio.cpp" line="1799"/>
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1808"/>
-        <location filename="../src/texstudio.cpp" line="1809"/>
-        <location filename="../src/texstudio.cpp" line="5951"/>
-        <location filename="../src/texstudio.cpp" line="5954"/>
-        <location filename="../src/texstudio.cpp" line="5955"/>
+        <location filename="../src/texstudio.cpp" line="1811"/>
+        <location filename="../src/texstudio.cpp" line="1812"/>
+        <location filename="../src/texstudio.cpp" line="6061"/>
+        <location filename="../src/texstudio.cpp" line="6064"/>
+        <location filename="../src/texstudio.cpp" line="6065"/>
         <source>Encoding</source>
         <translation>Kódovanie znakov</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1831"/>
+        <location filename="../src/texstudio.cpp" line="1834"/>
         <source>More Encodings...</source>
         <translation>Ďalšie kódovanie...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1839"/>
+        <location filename="../src/texstudio.cpp" line="1842"/>
         <source>Insert encoding as TeX comment</source>
         <translation>Vložiť kódovanie ako komentár TeXu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1853"/>
+        <location filename="../src/texstudio.cpp" line="1856"/>
         <source>Go to bookmark</source>
         <translation>Ísť na záložku</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1895"/>
+        <location filename="../src/texstudio.cpp" line="1898"/>
         <source>Automatic</source>
         <translation>Automaticky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1896"/>
+        <location filename="../src/texstudio.cpp" line="1899"/>
         <source>Automatic root document detection active</source>
         <translation>Automatické rozpoznávanie koreňového dokumentu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1901"/>
+        <location filename="../src/texstudio.cpp" line="1904"/>
         <source>&amp;Explicit</source>
         <translation>&amp;Explicitné</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1902"/>
+        <location filename="../src/texstudio.cpp" line="1905"/>
         <source>Root</source>
         <comment>explicit root document</comment>
         <translation>Koreň</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="1903"/>
+        <location filename="../src/texstudio.cpp" line="1906"/>
         <source>Explict root document:
 %1</source>
         <translation>Explicitný koreňový dokument:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2214"/>
+        <location filename="../src/texstudio.cpp" line="2217"/>
         <source>Do you want to debug a SyncTeX file?</source>
         <translation>Chcete debugovať SyncTeX súbor?</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2313"/>
-        <location filename="../src/texstudio.cpp" line="4251"/>
-        <location filename="../src/texstudio.cpp" line="6005"/>
-        <location filename="../src/texstudio.cpp" line="6058"/>
-        <location filename="../src/texstudio.cpp" line="6624"/>
-        <location filename="../src/texstudio.cpp" line="6805"/>
-        <location filename="../src/texstudio.cpp" line="6807"/>
-        <location filename="../src/texstudio.cpp" line="6817"/>
-        <location filename="../src/texstudio.cpp" line="6819"/>
-        <location filename="../src/texstudio.cpp" line="10640"/>
+        <location filename="../src/texstudio.cpp" line="2316"/>
+        <location filename="../src/texstudio.cpp" line="4267"/>
+        <location filename="../src/texstudio.cpp" line="6115"/>
+        <location filename="../src/texstudio.cpp" line="6169"/>
+        <location filename="../src/texstudio.cpp" line="6735"/>
+        <location filename="../src/texstudio.cpp" line="6916"/>
+        <location filename="../src/texstudio.cpp" line="6918"/>
+        <location filename="../src/texstudio.cpp" line="6928"/>
+        <location filename="../src/texstudio.cpp" line="6930"/>
+        <location filename="../src/texstudio.cpp" line="10754"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2313"/>
+        <location filename="../src/texstudio.cpp" line="2316"/>
         <source>You do not have read permission to the file %1.</source>
         <translation>Nemáte oprávnenie na čítanie súbora %1.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2365"/>
+        <location filename="../src/texstudio.cpp" line="2368"/>
         <source>A crash recover file from %1 has been found for &quot;%2&quot;.
 Do you want to restore it?</source>
         <translation>Súbor s obnovou po páde %1 bol nájdený pre &quot;%2&quot;.
 Chcete ho obnoviť?</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2371"/>
+        <location filename="../src/texstudio.cpp" line="2374"/>
         <source>Failed to open recover file &quot;%1&quot;.</source>
         <translation>Nepodarilo sa otvoriť obnovovací súbor &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2521"/>
+        <location filename="../src/texstudio.cpp" line="2524"/>
         <source>%1 has been compiled with Qt %2, but is running with Qt %3.
 Please get the correct runtime library (e.g. .dll or .so files).
 Otherwise there might be random errors and crashes.</source>
@@ -11504,46 +11560,46 @@ Získajte, prosím, správnu behovú knižnicu (napr. súbory .dll, alebo .so).
 V opačnomm prípade by sa mohli objaviť náhodné chyby a pády.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2611"/>
+        <location filename="../src/texstudio.cpp" line="2614"/>
         <source>Could not write template data:</source>
         <translation>Nepodarilo sa zapísať dáta predlohy:</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2643"/>
+        <location filename="../src/texstudio.cpp" line="2646"/>
         <source>Could not write template meta data:</source>
         <translation>Nepodarilo sa zapísať meta dáta k predlohe:</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2694"/>
-        <location filename="../src/texstudio.cpp" line="2758"/>
+        <location filename="../src/texstudio.cpp" line="2697"/>
+        <location filename="../src/texstudio.cpp" line="2761"/>
         <source>File not found:</source>
         <translation>Súbor nenájdený:</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2698"/>
-        <location filename="../src/texstudio.cpp" line="2762"/>
+        <location filename="../src/texstudio.cpp" line="2701"/>
+        <location filename="../src/texstudio.cpp" line="2765"/>
         <source>You do not have read permission to this file:</source>
         <translation>Nemáte oprávnenie na čítanie tohto súboru:</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2879"/>
-        <location filename="../src/texstudio.cpp" line="10469"/>
+        <location filename="../src/texstudio.cpp" line="2882"/>
+        <location filename="../src/texstudio.cpp" line="10583"/>
         <source>Open Files</source>
         <translation>Otvoriť súbory</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2897"/>
-        <location filename="../src/texstudio.cpp" line="2904"/>
+        <location filename="../src/texstudio.cpp" line="2900"/>
+        <location filename="../src/texstudio.cpp" line="2907"/>
         <source>Loading of last session failed.</source>
         <translation>Nahratie posledného sedenia sa nepodarilo.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2970"/>
+        <location filename="../src/texstudio.cpp" line="2973"/>
         <source>Save As</source>
         <translation>Uložiť ako</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="2988"/>
+        <location filename="../src/texstudio.cpp" line="2991"/>
         <source>Saving under the name
 %1
 is currently not possible because a modified version of a file
@@ -11556,183 +11612,183 @@ verzia súboru s týmto názvom. Tento iný súbor musíte uložiť alebo
 zavrieť, predtým než ho budete môcť prepísať.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3006"/>
+        <location filename="../src/texstudio.cpp" line="3009"/>
         <source>This pdf cannot be synchronized with the tex source any more because the source file has been renamed due to a Save As operation. You should recompile the renamed file and view its result.</source>
         <translation>Toto PDF nelze seřídit se zdrojovým textem, protože zdrojový soubor byl pomocí Uložit jako přejmenován. Pro opětovné zapnutí seřizování se musí přejmenovaný zdrojový soubor přeložit znovu.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3106"/>
+        <location filename="../src/texstudio.cpp" line="3116"/>
         <source>Rename/Move</source>
         <translation>Premenovať/Presunúť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3106"/>
-        <location filename="../src/texstudio.cpp" line="12089"/>
+        <location filename="../src/texstudio.cpp" line="3116"/>
+        <location filename="../src/texstudio.cpp" line="12213"/>
         <source>Copy</source>
         <translation>Kopírovať</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3121"/>
+        <location filename="../src/texstudio.cpp" line="3131"/>
         <source>Do you really want to delete the file &quot;%1&quot;?</source>
         <translation>Naozaj chcete zmazať súbor &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3130"/>
+        <location filename="../src/texstudio.cpp" line="3140"/>
         <source>Do you really want to revert the file &quot;%1&quot;?</source>
         <translation>Naozaj chcete vrátiť súbor &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3157"/>
+        <location filename="../src/texstudio.cpp" line="3167"/>
         <source>Numeric permissions</source>
         <translation>Numerick0 oprávnenia</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3158"/>
+        <location filename="../src/texstudio.cpp" line="3168"/>
         <source>Verbose permissions</source>
         <translation>Podrobná oprávnenia</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3291"/>
+        <location filename="../src/texstudio.cpp" line="3301"/>
         <source>The document &quot;%1&quot; contains unsaved work. Do you want to save it before closing?</source>
         <translation>Dokument &quot;%1&quot; bol zmenený, a tak obsahuje neuloženou práci. Chcete ju pred ukončením programu uložiť?</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3418"/>
-        <location filename="../src/texstudio.cpp" line="3477"/>
-        <location filename="../src/texstudio.cpp" line="3557"/>
+        <location filename="../src/texstudio.cpp" line="3434"/>
+        <location filename="../src/texstudio.cpp" line="3493"/>
+        <location filename="../src/texstudio.cpp" line="3573"/>
         <source>The file &quot;%1&quot; does not exist anymore. Do you want to remove it from the recent file list?</source>
         <translation>Súbor &quot;%1&quot; už neexistuje. Chcete ho odstrániť zo zoznamu naposledy použitých súborov?</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3570"/>
+        <location filename="../src/texstudio.cpp" line="3586"/>
         <source>Loading of session failed.</source>
         <translation>Nahrávanie sedenia sa nepodarilo.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3587"/>
+        <location filename="../src/texstudio.cpp" line="3603"/>
         <source>Load Session</source>
         <translation>Nahrať sedenie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3587"/>
-        <location filename="../src/texstudio.cpp" line="3605"/>
+        <location filename="../src/texstudio.cpp" line="3603"/>
+        <location filename="../src/texstudio.cpp" line="3621"/>
         <source>TeXstudio Session</source>
         <translation>TeXstudio sedenie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3605"/>
+        <location filename="../src/texstudio.cpp" line="3621"/>
         <source>Save Session</source>
         <translation>Uložiť sedenie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3611"/>
+        <location filename="../src/texstudio.cpp" line="3627"/>
         <source>Saving of session failed.</source>
         <translation>Uloženie sedenia sa nepodarilo.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3687"/>
+        <location filename="../src/texstudio.cpp" line="3703"/>
         <source>The following files could not be loaded:</source>
         <translation>Následujúce súbory sa nepodarilo nahrať:</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3852"/>
+        <location filename="../src/texstudio.cpp" line="3868"/>
         <source>Image Formats (%1)</source>
         <translation>Obrázkové formáty (%1)</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3854"/>
+        <location filename="../src/texstudio.cpp" line="3870"/>
         <source>Save Image</source>
         <translation>Uložiť obrázok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3859"/>
+        <location filename="../src/texstudio.cpp" line="3875"/>
         <source>Could not save the image file.</source>
         <translation>Nepodarilo sa uložiť súbor s obrázkom.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3947"/>
+        <location filename="../src/texstudio.cpp" line="3963"/>
         <source>Ascending</source>
         <translation>Rastúce</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3947"/>
+        <location filename="../src/texstudio.cpp" line="3963"/>
         <source>Descending</source>
         <translation>Klesajúce</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3947"/>
+        <location filename="../src/texstudio.cpp" line="3963"/>
         <source>No Sorting</source>
         <translation>Žiadne usporiadanie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3947"/>
+        <location filename="../src/texstudio.cpp" line="3963"/>
         <source>Random (Shuffle)</source>
         <translation>Náhodne (Zamiešaj)</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3953"/>
+        <location filename="../src/texstudio.cpp" line="3969"/>
         <source>Sorting</source>
         <translation>Usporiadanie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3954"/>
+        <location filename="../src/texstudio.cpp" line="3970"/>
         <source>Complete Lines</source>
         <translation>Celé riadky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3955"/>
+        <location filename="../src/texstudio.cpp" line="3971"/>
         <source>Case Sensitive</source>
         <translation>Závisí od veľkosti znakov</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="3956"/>
+        <location filename="../src/texstudio.cpp" line="3972"/>
         <source>Remove Duplicates</source>
         <translation>Odstráň opakujúce sa</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="4214"/>
+        <location filename="../src/texstudio.cpp" line="4230"/>
         <source>Insert hard line breaks after so many characters:</source>
         <translation>Vložiť tvrdé zalomenie riadku po toľkoto znakoch:</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="4215"/>
+        <location filename="../src/texstudio.cpp" line="4231"/>
         <source>Smart scope selecting</source>
         <translation>Chytrý výber oblasti</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="4216"/>
+        <location filename="../src/texstudio.cpp" line="4232"/>
         <source>Join lines before wrapping</source>
         <translation>Spojiť riadky pred zalomením</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="4230"/>
-        <location filename="../src/texstudio.cpp" line="6501"/>
-        <location filename="../src/texstudio.cpp" line="6558"/>
+        <location filename="../src/texstudio.cpp" line="4246"/>
+        <location filename="../src/texstudio.cpp" line="6612"/>
+        <location filename="../src/texstudio.cpp" line="6669"/>
         <source>No document open</source>
         <translation>Neotvorený žiadny dokument</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="4236"/>
+        <location filename="../src/texstudio.cpp" line="4252"/>
         <source>No dictionary available.</source>
         <translation>Nie je dostupný žiadny slovník.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="4251"/>
+        <location filename="../src/texstudio.cpp" line="4267"/>
         <source>Can&apos;t load Thesaurus Database</source>
         <translation>Nedá sa nahrať slovníkovú databázu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="4664"/>
+        <location filename="../src/texstudio.cpp" line="4680"/>
         <source>Storing session failed</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="4664"/>
+        <location filename="../src/texstudio.cpp" line="4680"/>
         <source>Storing session information into %1 failed. File exists but is not writeable.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="4750"/>
+        <location filename="../src/texstudio.cpp" line="4766"/>
         <source>This will reset all settings to their defaults. At the end, TeXstudio will be closed. Please start TeXstudio manually anew afterwards.
 
 Do you want to continue?</source>
@@ -11741,96 +11797,101 @@ Do you want to continue?</source>
 Naozaj chcete pokračovať?</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="4760"/>
+        <location filename="../src/texstudio.cpp" line="4776"/>
         <source>Unable to write to settings file %1</source>
         <translation>Nepodarilo sa zapísať súbor s nastavením %1</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="5533"/>
+        <location filename="../src/texstudio.cpp" line="4829"/>
+        <source>Settings file does not exist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/texstudio.cpp" line="5633"/>
         <source>AI Chat</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="5533"/>
+        <location filename="../src/texstudio.cpp" line="5633"/>
         <source>Please set the API key in the settings.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="5621"/>
+        <location filename="../src/texstudio.cpp" line="5728"/>
         <source>Quick Start</source>
         <translation>Pomocník pre nový dokument</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="5643"/>
+        <location filename="../src/texstudio.cpp" line="5750"/>
         <source>Quick Beamer Presentation</source>
         <translation>Rýchla Beamer prezentácia</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="5680"/>
+        <location filename="../src/texstudio.cpp" line="5787"/>
         <source>&lt;Current File&gt;</source>
         <translation>&lt;Súčasný súbor&gt;</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="5712"/>
+        <location filename="../src/texstudio.cpp" line="5819"/>
         <source>Type: %1</source>
         <translation>Typ: %1</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="5754"/>
+        <location filename="../src/texstudio.cpp" line="5864"/>
         <source>Edit User &amp;Tags</source>
         <translation>Upraviť užívateľské &amp;značky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="5816"/>
+        <location filename="../src/texstudio.cpp" line="5926"/>
         <source>empty</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="5820"/>
+        <location filename="../src/texstudio.cpp" line="5930"/>
         <source>Labels:</source>
         <translation>Štítky:</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="5908"/>
+        <location filename="../src/texstudio.cpp" line="6018"/>
         <source>show less entries ...</source>
         <translation>Ukáž menej položiek ...</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="5949"/>
+        <location filename="../src/texstudio.cpp" line="6059"/>
         <source>Encoding Aliases: </source>
         <translation>Prezývky kódovania: </translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6005"/>
+        <location filename="../src/texstudio.cpp" line="6115"/>
         <source>Can't detect the file name.
 You have to save a document before you can compile it.</source>
         <translation>Nedá sa zistiť názov súboru.
 Predtým, než budete môcť zostaviť dokument, ho musíte uložiť.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6013"/>
+        <location filename="../src/texstudio.cpp" line="6123"/>
         <source>Can&apos;t detect the file name</source>
         <translation>Nedá sa zistiť názov súboru</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6052"/>
+        <location filename="../src/texstudio.cpp" line="6163"/>
         <source>  Running this command: </source>
         <translation>Spušťa sa nasledujúci program:</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6058"/>
+        <location filename="../src/texstudio.cpp" line="6169"/>
         <source>could not start the command</source>
         <translation>Nepodarilo sa spustiť príkaz</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6181"/>
+        <location filename="../src/texstudio.cpp" line="6292"/>
         <source>You have called the command to open the internal pdf viewer.
 However, you are using a version of TeXstudio that was compiled without the internal pdf viewer.</source>
         <translation>Zavolali ste príkaz k otvoreniu interného prehliadača PDF.
 Používate však verziu programu TeXstudio, ktorá bola zostavena bez interného prehliadača PDF.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6201"/>
+        <location filename="../src/texstudio.cpp" line="6312"/>
         <source>The document &quot;%1&quot; wants to override the command &quot;%2&quot; with &quot;%3&quot;.
 
 Do you want to allow and run the new, overriding command?
@@ -11847,222 +11908,222 @@ Chcete to dovoliť a spustiť nový, hlavní príkaz?
 (c) Ne, nepoužívat príkaz &quot;%3&quot; a spustiť predvolení príkaz &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6285"/>
+        <location filename="../src/texstudio.cpp" line="6396"/>
         <source>Unknown internal command: %1</source>
         <translation>Neznámý interný príkaz: %1</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6320"/>
+        <location filename="../src/texstudio.cpp" line="6431"/>
         <source>%!TeX program used: %1</source>
         <translation>Používaný %!TeX program: %1</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6323"/>
+        <location filename="../src/texstudio.cpp" line="6434"/>
         <source>%!TeX program not recognized! (%1). Using default.</source>
         <translation>%!TeX program nerozpoznaný! (%1). Používa sa predvolený.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6384"/>
+        <location filename="../src/texstudio.cpp" line="6495"/>
         <source>You cannot compile the document in a non writable directory.</source>
         <translation>Dokument nemôžete zostaviť v nezapisovatelnom adresári.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6386"/>
+        <location filename="../src/texstudio.cpp" line="6497"/>
         <source>Could not start %1.</source>
         <translation>Nepodarilo sa spustiť %1.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6415"/>
+        <location filename="../src/texstudio.cpp" line="6526"/>
         <source>Error:</source>
         <translation>Chyba:</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6491"/>
+        <location filename="../src/texstudio.cpp" line="6602"/>
         <source>No open project or tex file to clean.</source>
         <translation>Žiadny otvorený projekt alebo súbor TeX na zmazanie.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6562"/>
+        <location filename="../src/texstudio.cpp" line="6673"/>
         <source>Text Analysis</source>
         <translation>Rozbor textu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6586"/>
+        <location filename="../src/texstudio.cpp" line="6697"/>
         <source>The random text generator constructs new texts from existing words, so you have to open some text files</source>
         <translation>Generátor náhodného textu stavia nové texty z existujúcich slov, takže musíte otvoriť nejaké textové súbory</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6624"/>
+        <location filename="../src/texstudio.cpp" line="6735"/>
         <source>File must be saved and compiling before you can view the log</source>
         <translation>Súbor musí být uložený a zostavený, prv než si budete môcť prezrieť zápis</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6805"/>
-        <location filename="../src/texstudio.cpp" line="6817"/>
+        <location filename="../src/texstudio.cpp" line="6916"/>
+        <location filename="../src/texstudio.cpp" line="6928"/>
         <source>File not found</source>
         <translation>Súbor nebol nájdený</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="6807"/>
-        <location filename="../src/texstudio.cpp" line="6819"/>
+        <location filename="../src/texstudio.cpp" line="6918"/>
+        <location filename="../src/texstudio.cpp" line="6930"/>
         <source>Could not open browser</source>
         <translation>Nepodarilo sa otvoriť prehliadač</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="7135"/>
+        <location filename="../src/texstudio.cpp" line="7246"/>
         <source>%1 is an invalid TeX project directory.</source>
         <translation>%1 nie je platný adresár TeXového projektu.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="7428"/>
+        <location filename="../src/texstudio.cpp" line="7539"/>
         <source>You have to save the file before it can be defined as root document.</source>
         <translation>Súbor sa musí uložiť, predtým než sa môže použiť ako koreňový dokument.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="7883"/>
+        <location filename="../src/texstudio.cpp" line="7995"/>
         <source>Label</source>
         <translation>Štítok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="7885"/>
-        <location filename="../src/texstudio.cpp" line="7907"/>
+        <location filename="../src/texstudio.cpp" line="7997"/>
+        <location filename="../src/texstudio.cpp" line="8019"/>
         <source>Beyond end of document.</source>
         <translation>Za koncom dokumentu.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="7888"/>
-        <location filename="../src/texstudio.cpp" line="7909"/>
+        <location filename="../src/texstudio.cpp" line="8000"/>
+        <location filename="../src/texstudio.cpp" line="8021"/>
         <source>In Appendix.</source>
         <translation>V dodatku.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="7927"/>
+        <location filename="../src/texstudio.cpp" line="8039"/>
         <source>File not found.</source>
         <translation>Súbor nebol nájdený.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="7942"/>
+        <location filename="../src/texstudio.cpp" line="8054"/>
         <source> (Line %1)</source>
         <translation> (Riadok %1)</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="9256"/>
+        <location filename="../src/texstudio.cpp" line="9370"/>
         <source>commit comment:</source>
         <translation>Odoslať komentár:</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="9260"/>
+        <location filename="../src/texstudio.cpp" line="9374"/>
         <source>check in whole directory ?</source>
         <translation>Zapísať celý adresár?</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="9262"/>
+        <location filename="../src/texstudio.cpp" line="9376"/>
         <source>Push to repository ?</source>
         <translation>Pushnúť do repozitára?</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="9620"/>
+        <location filename="../src/texstudio.cpp" line="9734"/>
         <source>Attention: dialog is automatically closed if the text is manually edited!</source>
         <translation>Pozor: Dialog je automaticky zavrený, ak je text ručne upravovaný!</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="9921"/>
+        <location filename="../src/texstudio.cpp" line="10035"/>
         <source>Unable to open file &quot;%1&quot;.</source>
         <translation>Nepodarilo sa otvoriť súbor &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="9923"/>
+        <location filename="../src/texstudio.cpp" line="10037"/>
         <source>The file &quot;%1&quot; does not exist.
 Do you want to create it?</source>
         <translation>Súbor &quot;%1&quot; neexistuje.
 Chcete ho vytvoriť?</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="9960"/>
+        <location filename="../src/texstudio.cpp" line="10074"/>
         <source>Save Profile</source>
         <translation>Uložiť profil</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="9960"/>
-        <location filename="../src/texstudio.cpp" line="9967"/>
+        <location filename="../src/texstudio.cpp" line="10074"/>
+        <location filename="../src/texstudio.cpp" line="10081"/>
         <source>TXS Profile</source>
         <comment>filter</comment>
         <translation>Profil TXS</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="9967"/>
+        <location filename="../src/texstudio.cpp" line="10081"/>
         <source>Load Profile</source>
         <translation>Nahrať profil</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10020"/>
+        <location filename="../src/texstudio.cpp" line="10134"/>
         <source>Failed to read profile file %1.</source>
         <translation>Nepodarilo sa prečítať súbor s profilom %1.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10143"/>
+        <location filename="../src/texstudio.cpp" line="10257"/>
         <source>Problem</source>
         <translation>Problém</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10143"/>
+        <location filename="../src/texstudio.cpp" line="10257"/>
         <source>Finding word repetitions only works with activated online spell checking !</source>
         <translation>Opakovanie slov je hľadané len pri zapnutom overovaní pravopisu!</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10148"/>
+        <location filename="../src/texstudio.cpp" line="10262"/>
         <source>Find Word Repetitions</source>
         <translation>Nájsť opakovanie slov</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10157"/>
+        <location filename="../src/texstudio.cpp" line="10271"/>
         <source>&amp;Find Next</source>
         <translation>&amp;Nájsť ďalšie</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10159"/>
+        <location filename="../src/texstudio.cpp" line="10273"/>
         <source>&amp;Find Previous</source>
         <translation>Nájsť &amp;predchádzajúce</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10210"/>
+        <location filename="../src/texstudio.cpp" line="10324"/>
         <source>Reached beginning of text.</source>
         <translation>Dosiahnutý začiatok textu.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10210"/>
+        <location filename="../src/texstudio.cpp" line="10324"/>
         <source>Reached end of text.</source>
         <translation>Dosiahnutý koniec textu.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10469"/>
-        <location filename="../src/texstudio.cpp" line="10680"/>
-        <location filename="../src/texstudio.cpp" line="10683"/>
+        <location filename="../src/texstudio.cpp" line="10583"/>
+        <location filename="../src/texstudio.cpp" line="10794"/>
+        <location filename="../src/texstudio.cpp" line="10797"/>
         <source>LaTeX Files (*.tex);;All Files (*)</source>
         <translation>Súbory LaTeX (*.tex);;Všetky súbory (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10640"/>
+        <location filename="../src/texstudio.cpp" line="10754"/>
         <source>You do not have read permission to this file.</source>
         <translation>Nemáte dostatočné oprávnenie pre čítanie tohto súboru.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10680"/>
+        <location filename="../src/texstudio.cpp" line="10794"/>
         <source>Open Compare File</source>
         <translation>Otvoriť porovnávaný súbor</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10683"/>
+        <location filename="../src/texstudio.cpp" line="10797"/>
         <source>Open Base File</source>
         <translation>Otvoriť základný súbor</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10764"/>
+        <location filename="../src/texstudio.cpp" line="10878"/>
         <source>SVN Conflict!</source>
         <translation>Konflikt v SVN!</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10765"/>
+        <location filename="../src/texstudio.cpp" line="10879"/>
         <source>%1is conflicted with repository.
 Press &quot;OK&quot; to show differences instead of the generated source by subversion
 Press &quot;Cancel&quot;to do nothing.
@@ -12072,14 +12133,14 @@ Stiskněte OK pro ukázání rozdílů místo subversion vytvořeného zdroje
 Stiskněte Zrušit, aby se nedělalo nic.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10862"/>
-        <location filename="../src/texstudio.cpp" line="10953"/>
-        <location filename="../src/texstudio.cpp" line="10959"/>
+        <location filename="../src/texstudio.cpp" line="10976"/>
+        <location filename="../src/texstudio.cpp" line="11067"/>
+        <location filename="../src/texstudio.cpp" line="11073"/>
         <source>TeXstudio Emergency</source>
         <translation>Mimoriadna udalosť TeXstudia</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10866"/>
+        <location filename="../src/texstudio.cpp" line="10980"/>
         <source>A backtrace was written to
 %1
 Please provide this file if you send a bug report.
@@ -12089,7 +12150,7 @@ Please provide this file if you send a bug report.
 Poskytnite, prosím, tento súbor, ak posielate správu o chybe.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10869"/>
+        <location filename="../src/texstudio.cpp" line="10983"/>
         <source>TeXstudio has CRASHED due to a %1.
 
 %2Do you want to keep TeXstudio running? This may cause data corruption.</source>
@@ -12098,18 +12159,18 @@ Poskytnite, prosím, tento súbor, ak posielate správu o chybe.</translation>
 %2Chcete nechať TeXstudio bežať? To môže spôsobiť poškodenie dát.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10870"/>
+        <location filename="../src/texstudio.cpp" line="10984"/>
         <source>Yes, try to recover</source>
         <translation>Áno, skúsiť obnoviť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10871"/>
-        <location filename="../src/texstudio.cpp" line="10876"/>
+        <location filename="../src/texstudio.cpp" line="10985"/>
+        <location filename="../src/texstudio.cpp" line="10990"/>
         <source>No, kill the program</source>
         <translation>Nie, zabiť program</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10873"/>
+        <location filename="../src/texstudio.cpp" line="10987"/>
         <source>TeXstudio has been paused due to a possible endless loop.
 
 %1Do you want to keep the program running? This may cause data corruption.</source>
@@ -12118,17 +12179,17 @@ Poskytnite, prosím, tento súbor, ak posielate správu o chybe.</translation>
 %1Chcete program nechat bežať? To môže spôsobiť poškodenie dát.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10874"/>
+        <location filename="../src/texstudio.cpp" line="10988"/>
         <source>Yes, stop the loop and try to recover</source>
         <translation>Áno, zastaviť slučku a skúsiť obnoviť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10875"/>
+        <location filename="../src/texstudio.cpp" line="10989"/>
         <source>Yes, continue the loop</source>
         <translation>Áno, pokračovať v slučke</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10954"/>
+        <location filename="../src/texstudio.cpp" line="11068"/>
         <source>TeXstudio has CRASHED due to a %1 in thread %2.
 The thread has been stopped.
 Do you want to keep TeXstudio running? This may cause data corruption.</source>
@@ -12137,60 +12198,60 @@ Vlákno bolo zastavené.
 Chcete nechať TeXstudio bežať? To môže spôsobiť poškodenie dát.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10959"/>
+        <location filename="../src/texstudio.cpp" line="11073"/>
         <source>I tried to die, but nothing happened.</source>
         <translation>Pokúsil som sa zomrieť, ale nič sa nestalo.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="10991"/>
+        <location filename="../src/texstudio.cpp" line="11105"/>
         <source>System Report</source>
         <translation>Správa systému</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11129"/>
+        <location filename="../src/texstudio.cpp" line="11243"/>
         <source>LT Report</source>
         <translation>Správa LT</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11155"/>
+        <location filename="../src/texstudio.cpp" line="11269"/>
         <source>process failed to start
 </source>
         <translation>Proces sa nepodarilo spustiť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11158"/>
+        <location filename="../src/texstudio.cpp" line="11272"/>
         <source>process crashed
 </source>
         <translation>Proces spadol</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11168"/>
+        <location filename="../src/texstudio.cpp" line="11282"/>
         <source>Real-time checking is enabled.
 </source>
         <translation>Overovanie v reálnom čase je povolené.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11170"/>
+        <location filename="../src/texstudio.cpp" line="11284"/>
         <source>Real-time checking is disabled!!!
 </source>
         <translation>Overovanie v reálnom čase je zakázené!</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11173"/>
+        <location filename="../src/texstudio.cpp" line="11287"/>
         <source>Grammar checking is enabled.
 
 </source>
         <translation>Overovanie pravopisu je povolené.</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11175"/>
+        <location filename="../src/texstudio.cpp" line="11289"/>
         <source>Grammar checking is disabled!!!
 
 </source>
         <translation>Overovanie pravopisu je zakázané!</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11178"/>
+        <location filename="../src/texstudio.cpp" line="11292"/>
         <source>Tries to start automatically.
 
 </source>
@@ -12198,7 +12259,7 @@ Chcete nechať TeXstudio bežať? To môže spôsobiť poškodenie dát.</transl
 </translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11180"/>
+        <location filename="../src/texstudio.cpp" line="11294"/>
         <source>Autostart disabled.
 
 </source>
@@ -12206,203 +12267,203 @@ Chcete nechať TeXstudio bežať? To môže spôsobiť poškodenie dát.</transl
 </translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11185"/>
+        <location filename="../src/texstudio.cpp" line="11299"/>
         <source>LT current status: </source>
         <translation>Súčasný stav LT: </translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11188"/>
+        <location filename="../src/texstudio.cpp" line="11302"/>
         <source>working</source>
         <translation>Pracuje</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11191"/>
+        <location filename="../src/texstudio.cpp" line="11305"/>
         <source>error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11195"/>
+        <location filename="../src/texstudio.cpp" line="11309"/>
         <source>unknown</source>
         <translation>Neznámy</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11198"/>
+        <location filename="../src/texstudio.cpp" line="11312"/>
         <source>LT-URL: %1
 </source>
         <translation>LT-URL: %1
 </translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11502"/>
+        <location filename="../src/texstudio.cpp" line="11626"/>
         <source>Error when communicating with LT: %1</source>
         <translation>Chyba pri spojení s LT: %1</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11793"/>
-        <location filename="../src/texstudio.cpp" line="12586"/>
+        <location filename="../src/texstudio.cpp" line="11917"/>
+        <location filename="../src/texstudio.cpp" line="12710"/>
         <source>untitled</source>
         <translation>Bez názvu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11803"/>
-        <location filename="../src/texstudio.cpp" line="12629"/>
+        <location filename="../src/texstudio.cpp" line="11927"/>
+        <location filename="../src/texstudio.cpp" line="12753"/>
         <source>TODO</source>
         <translation>TODO</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="11936"/>
-        <location filename="../src/texstudio.cpp" line="11944"/>
-        <location filename="../src/texstudio.cpp" line="11975"/>
+        <location filename="../src/texstudio.cpp" line="12060"/>
+        <location filename="../src/texstudio.cpp" line="12068"/>
+        <location filename="../src/texstudio.cpp" line="12099"/>
         <source>Document: </source>
         <translation>Dokument:</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12028"/>
+        <location filename="../src/texstudio.cpp" line="12152"/>
         <source>Close document</source>
         <translation>Zavrieť dokument</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12029"/>
+        <location filename="../src/texstudio.cpp" line="12153"/>
         <source>Set as explicit root document</source>
         <translation>Nastaviť ako explicitný koreňový dokument</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12030"/>
+        <location filename="../src/texstudio.cpp" line="12154"/>
         <source>Open all related documents</source>
         <translation>Otvoriť všetky súvisiace dokumenty</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12031"/>
+        <location filename="../src/texstudio.cpp" line="12155"/>
         <source>Close all related documents</source>
         <translation>Zavrieť všetky súvisiace dokumenty</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12033"/>
+        <location filename="../src/texstudio.cpp" line="12157"/>
         <source>Remove explicit root document role</source>
         <translation>Odstrániť úlohu explicitného koreňového dokumentu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12035"/>
+        <location filename="../src/texstudio.cpp" line="12159"/>
         <source>Show all open documents in this tree</source>
         <translation>Ukázať všetky otvorené dokumenty v tomto strome</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12037"/>
+        <location filename="../src/texstudio.cpp" line="12161"/>
         <source>Show only current document in this tree</source>
         <translation>Ukázať v tomto strome len súčasný dokument</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12050"/>
+        <location filename="../src/texstudio.cpp" line="12174"/>
         <source>Copy filename</source>
         <translation>Skopírovať názov súboru</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12051"/>
+        <location filename="../src/texstudio.cpp" line="12175"/>
         <source>Copy file path</source>
         <translation>Skopírovať cestu k súboru</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12060"/>
+        <location filename="../src/texstudio.cpp" line="12184"/>
         <source>Insert</source>
         <translation>Vložiť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12061"/>
-        <location filename="../src/texstudio.cpp" line="12062"/>
+        <location filename="../src/texstudio.cpp" line="12185"/>
+        <location filename="../src/texstudio.cpp" line="12186"/>
         <source>Insert as %1</source>
         <translation>Vložiť ako %1</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12064"/>
+        <location filename="../src/texstudio.cpp" line="12188"/>
         <source>Find Usages</source>
         <translation>Nájsť použitia</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12075"/>
+        <location filename="../src/texstudio.cpp" line="12199"/>
         <source>Insert Label</source>
         <translation>Vložiť štítok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12079"/>
+        <location filename="../src/texstudio.cpp" line="12203"/>
         <source>Insert %1 to Label</source>
         <comment>autoreplaced, e.g.: Insert <byte value="xd"/>ef to Label</comment>
         <translation>Vložiť %1 ku štítku</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12083"/>
+        <location filename="../src/texstudio.cpp" line="12207"/>
         <source>Create Label</source>
         <translation>Vytvoriť štítok</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12087"/>
+        <location filename="../src/texstudio.cpp" line="12211"/>
         <source>Cut</source>
         <translation>Vystrihnúť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12091"/>
+        <location filename="../src/texstudio.cpp" line="12215"/>
         <source>Paste Before</source>
         <translation>Vložiť pred</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12093"/>
+        <location filename="../src/texstudio.cpp" line="12217"/>
         <source>Paste After</source>
         <translation>Vložiť za</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12096"/>
+        <location filename="../src/texstudio.cpp" line="12220"/>
         <source>Indent Section</source>
         <translation>Odsadiť oblasť</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12098"/>
+        <location filename="../src/texstudio.cpp" line="12222"/>
         <source>Unindent Section</source>
         <translation>Zrušiť odsadenie oblasti</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12044"/>
-        <location filename="../src/texstudio.cpp" line="12102"/>
+        <location filename="../src/texstudio.cpp" line="12168"/>
+        <location filename="../src/texstudio.cpp" line="12226"/>
         <source>Expand Subitems</source>
         <translation>Rozbaliť podpoložky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="985"/>
+        <location filename="../src/texstudio.cpp" line="986"/>
         <source>C&amp;ut Line or Selection</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12045"/>
-        <location filename="../src/texstudio.cpp" line="12104"/>
+        <location filename="../src/texstudio.cpp" line="12169"/>
+        <location filename="../src/texstudio.cpp" line="12228"/>
         <source>Collapse Subitems</source>
         <translation>Zložiť podpoložky</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12117"/>
+        <location filename="../src/texstudio.cpp" line="12241"/>
         <source>Open Document</source>
         <translation>Otvoriť dokument</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12118"/>
-        <location filename="../src/texstudio.cpp" line="12125"/>
+        <location filename="../src/texstudio.cpp" line="12242"/>
+        <location filename="../src/texstudio.cpp" line="12249"/>
         <source>Go to Definition</source>
         <translation>Ísť na definíciu</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12613"/>
+        <location filename="../src/texstudio.cpp" line="12737"/>
         <source>BIBLIOGRAPHY</source>
         <translation>BIBLIOGRAPHY</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12621"/>
+        <location filename="../src/texstudio.cpp" line="12745"/>
         <source>MAGIC_COMMENTS</source>
         <translation>MAGIC_COMMENTS</translation>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12637"/>
+        <location filename="../src/texstudio.cpp" line="12761"/>
         <source>BLOCK</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/texstudio.cpp" line="12645"/>
+        <location filename="../src/texstudio.cpp" line="12769"/>
         <source>LABELS</source>
         <translation>LABELS</translation>
     </message>
@@ -12903,38 +12964,38 @@ zahrnúť dokument v %1</translation>
     <name>UserMenuDialog</name>
     <message>
         <location filename="../src/usermenudialog.cpp" line="50"/>
-        <location filename="../src/usermenudialog.cpp" line="471"/>
+        <location filename="../src/usermenudialog.cpp" line="475"/>
         <source>Export all macros</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/usermenudialog.cpp" line="354"/>
+        <location filename="../src/usermenudialog.cpp" line="358"/>
         <source>Folder is not empty.</source>
         <translation>Zložka nie je prázdna.</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.cpp" line="359"/>
+        <location filename="../src/usermenudialog.cpp" line="363"/>
         <source>Do you really want to delete the current macro(s)?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/usermenudialog.cpp" line="441"/>
-        <location filename="../src/usermenudialog.cpp" line="453"/>
+        <location filename="../src/usermenudialog.cpp" line="445"/>
+        <location filename="../src/usermenudialog.cpp" line="457"/>
         <source>txs macro files (*.txsMacro)</source>
         <translation>Súbory makier txs (*.txsMacro)</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.cpp" line="441"/>
+        <location filename="../src/usermenudialog.cpp" line="445"/>
         <source>Import macros</source>
         <translation>Importovať makrá</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.cpp" line="453"/>
+        <location filename="../src/usermenudialog.cpp" line="457"/>
         <source>Export macro</source>
         <translation>Export makra</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.cpp" line="585"/>
+        <location filename="../src/usermenudialog.cpp" line="594"/>
         <source> (col. %1)</source>
         <translation>(Stĺpec %1)</translation>
     </message>
@@ -12951,7 +13012,7 @@ zahrnúť dokument v %1</translation>
     </message>
     <message>
         <location filename="../src/usermenudialog.ui" line="65"/>
-        <location filename="../src/usermenudialog.ui" line="516"/>
+        <location filename="../src/usermenudialog.ui" line="523"/>
         <source>Shortcut</source>
         <translation>Klávesová skratka</translation>
     </message>
@@ -13065,83 +13126,88 @@ Môžete použiť zvláštnu hodnotu ?txs-start pre spustenie skriptu pri spúš
         <translation>Prostredie</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="431"/>
+        <location filename="../src/usermenudialog.ui" line="425"/>
         <source>Script</source>
         <translation>Skript</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="473"/>
+        <location filename="../src/usermenudialog.ui" line="438"/>
+        <source>AI Query</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/usermenudialog.ui" line="480"/>
         <source>Exec Macro</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="493"/>
+        <location filename="../src/usermenudialog.ui" line="500"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="500"/>
+        <location filename="../src/usermenudialog.ui" line="507"/>
         <source>Cancel</source>
         <translation>Zrušiť</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="509"/>
+        <location filename="../src/usermenudialog.ui" line="516"/>
         <source>Description</source>
         <translation>Popis</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="532"/>
+        <location filename="../src/usermenudialog.ui" line="539"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="537"/>
+        <location filename="../src/usermenudialog.ui" line="544"/>
         <source>Shift+F2</source>
         <translation>Shift+F2</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="542"/>
+        <location filename="../src/usermenudialog.ui" line="549"/>
         <source>Shift+F4</source>
         <translation>Shift+F4</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="547"/>
-        <location filename="../src/usermenudialog.ui" line="552"/>
+        <location filename="../src/usermenudialog.ui" line="554"/>
+        <location filename="../src/usermenudialog.ui" line="559"/>
         <source>Shift+F5</source>
         <translation>Shift+F5</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="557"/>
+        <location filename="../src/usermenudialog.ui" line="564"/>
         <source>Shift+F6</source>
         <translation>Shift+F6</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="562"/>
+        <location filename="../src/usermenudialog.ui" line="569"/>
         <source>Shift+F7</source>
         <translation>Shift+F7</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="567"/>
+        <location filename="../src/usermenudialog.ui" line="574"/>
         <source>Shift+F8</source>
         <translation>Shift+F8</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="572"/>
+        <location filename="../src/usermenudialog.ui" line="579"/>
         <source>Shift+F9</source>
         <translation>Shift+F9</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="577"/>
+        <location filename="../src/usermenudialog.ui" line="584"/>
         <source>Shift+F10</source>
         <translation>Shift+F10</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="582"/>
+        <location filename="../src/usermenudialog.ui" line="589"/>
         <source>Shift+F11</source>
         <translation>Shift+F11</translation>
     </message>
     <message>
-        <location filename="../src/usermenudialog.ui" line="587"/>
+        <location filename="../src/usermenudialog.ui" line="594"/>
         <source>Shift+F12</source>
         <translation>Shift+F12</translation>
     </message>

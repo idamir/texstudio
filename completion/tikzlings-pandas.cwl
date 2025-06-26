@@ -1,5 +1,5 @@
 # tikzlings-pandas package
-# Matthew Bertucci 2024/12/12 for v2.1
+# Matthew Bertucci 2025/03/25 for v2.3
 
 #include:tikz
 #include:tikzlings-addons
@@ -9,9 +9,10 @@
 
 #keyvals:\panda#c
 body=#%color
-eye=#%color
-pupil=#%color
+eyes=#%color
+pupils=#%color
 mouth=#%color
+openmouth
 back
 3D
 contour
@@ -87,6 +88,8 @@ milkshake=#%color
 wine
 wine=#%color
 cocktail
+randomhead
+randomaccessories
 banana
 banana=#%color
 cricket
@@ -144,11 +147,12 @@ xshift=##L
 yshift=##L
 #endkeyvals
 
-\pandahookbackground#*
-\pandahookbelly#*
-\pandahookbody#*
-\pandahookforeground#*
-\tikzlinghookbackground#*
-\tikzlinghookbelly#*
-\tikzlinghookbody#*
-\tikzlinghookforeground#*
+# deprecated
+\pandahookbackground#S
+\pandahookbelly#S
+\pandahookbody#S
+\pandahookforeground#S
+\tikzlinghookbackground#S
+\tikzlinghookbelly#S
+\tikzlinghookbody#S
+\tikzlinghookforeground#S

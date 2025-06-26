@@ -1,5 +1,5 @@
 # tikzlings-hippos package
-# Matthew Bertucci 2024/12/12 for v2.1
+# Matthew Bertucci 2025/03/25 for v2.3
 
 #include:tikz
 #include:tikzlings-addons
@@ -9,9 +9,10 @@
 
 #keyvals:\hippo#c
 body=#%color
-eye=#%color
-pupil=#%color
+eyes=#%color
+pupils=#%color
 mouth=#%color
+openmouth
 toes=#%color
 back
 3D
@@ -88,6 +89,8 @@ milkshake=#%color
 wine
 wine=#%color
 cocktail
+randomhead
+randomaccessories
 banana
 banana=#%color
 cricket
@@ -145,11 +148,12 @@ xshift=##L
 yshift=##L
 #endkeyvals
 
-\hippohookbackground#*
-\hippohookbelly#*
-\hippohookbody#*
-\hippohookforeground#*
-\tikzlinghookbackground#*
-\tikzlinghookbelly#*
-\tikzlinghookbody#*
-\tikzlinghookforeground#*
+# deprecated
+\hippohookbackground#S
+\hippohookbelly#S
+\hippohookbody#S
+\hippohookforeground#S
+\tikzlinghookbackground#S
+\tikzlinghookbelly#S
+\tikzlinghookbody#S
+\tikzlinghookforeground#S

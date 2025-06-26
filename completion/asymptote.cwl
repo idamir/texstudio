@@ -1,9 +1,8 @@
 # asymptote package
-# Matthew Bertucci 2/4/2022 for v1.36
+# Matthew Bertucci 2025/02/18 for v1.38
 
 #include:keyval
 #include:ifthen
-#include:color
 #include:graphicx
 #include:ifpdf
 #include:ifxetex
@@ -39,11 +38,11 @@ inline#true,false
 \ASYanimategraphics{frame rate}{file}{first}{last}#*
 \ASYanimategraphics[options%keyvals]{frame rate}{file}{first}{last}#*
 
-#keyvals:\ASYanimategraphics#c
+#keyvals:\ASYanimategraphics
 label=%<label%>
 type=%<file ext%>
 poster
-poster=#first,last,none,%<number%>
+poster=#first,last,none,%<number%>#c
 every=%<number%>
 autopause
 autoplay
@@ -74,56 +73,53 @@ final
 nomouse
 method=#icon,widget,ocg
 measure
-alttext=#none,%<alt description%>
+alttext=#none,%<alt description%>#c
 begin={%<begin code%>}
 end={%<end code%>}
 timeline=%<file%>
 #endkeyvals
 
-\Asymptote#*
-\ASYbox#*
-\ASYdimen#*
-\theasy#*
-\AsyStream#*
-\AsyPreStream#*
-\ifASYinline#*
-\ASYinlinetrue#*
-\ASYinlinefalse#*
-\ifASYattach#*
-\ASYattachtrue#*
-\ASYattachfalse#*
-\ifASYkeepAspect#*
-\ASYkeepAspecttrue#*
-\ASYkeepAspectfalse#*
 \asylatexdir#*
 \asydir#*
-\ASYasydir#*
-\ASYlatexdir#*
-\ASYprefix#*
-\ifASYPDF#*
-\ASYPDFtrue#*
-\ASYPDFfalse#*
-\AsyExtension#*
-\WriteAsyLine{arg}#*
-\globalASYdefs#*
-\WriteGlobalAsyLine{arg}#*
-\ProcessAsymptote{arg}#*
-\CurrentAsymptote#*
-\xAsymptote#*
-\ProcessAsymptoteLine#*
-\ThisAsymptote#*
-\AsyFile#*
-\ASYwidth#*
-\ASYheight#*
-\ASYviewportwidth#*
-\ASYviewportheight#*
 
+# not documented
+\ASYasydir#S
+\ASYattachfalse#S
+\ASYattachtrue#S
+\ASYbox#S
+\ASYdimen#S
+\AsyExtension#S
+\AsyFile#S
+\ASYheight#S
+\ASYinlinefalse#S
+\ASYinlinetrue#S
+\ASYkeepAspectfalse#S
+\ASYkeepAspecttrue#S
+\ASYlatexdir#S
+\Asymptote#S
+\ASYPDFfalse#S
+\ASYPDFtrue#S
+\ASYprefix#S
+\AsyPreStream#S
+\AsyStream#S
+\ASYviewportheight#S
+\ASYviewportwidth#S
+\ASYwidth#S
 \csarg{arg1}{arg2}#S
-\unquoteJobname#S
-\rawJobname#S
+\CurrentAsymptote#S
 \fixstar#S
-\argtwo#S
-\asy#S
-\endasy#S
-\asydef#S
+\globalASYdefs#S
+\ifASYattach#S
+\ifASYinline#S
+\ifASYkeepAspect#S
+\ifASYPDF#S
 \Jobname#S
+\ProcessAsymptote{arg}#S
+\ProcessAsymptoteLine#S
+\rawJobname#S
+\theasy#S
+\ThisAsymptote#S
+\unquoteJobname#S
+\WriteAsyLine{arg}#S
+\WriteGlobalAsyLine{arg}#S
+\xAsymptote#S

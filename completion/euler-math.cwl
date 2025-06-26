@@ -1,5 +1,5 @@
 # euler-math package
-# Matthew Bertucci 2023/07/21 for v0.50
+# Matthew Bertucci 2025/02/16 for v0.62
 
 #include:iftex
 #include:unicode-math
@@ -19,7 +19,6 @@ Numbers=#Uppercase,UppercaseOff,Lowercase,LowercaseOff,Lining,LiningOff,OldStyle
 \blacktriangledown#m
 \cuberoot{arg}#m
 \cuberootsign{arg}#*m
-\digamma#m
 \doublebarwedge#m
 \downdasharrow#m
 \eqqslantgtr#m
@@ -90,7 +89,6 @@ Numbers=#Uppercase,UppercaseOff,Lowercase,LowercaseOff,Lining,LiningOff,OldStyle
 \Zbar#m
 
 # symbols added by package
-\muphbar#m
 \varemptyset#m
 \mbfwp#m
 \mbfdotlessi#m

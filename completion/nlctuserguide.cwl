@@ -1,5 +1,5 @@
 # nlctuserguide package
-# Matthew Bertucci 2024/11/09 for v1.11
+# Matthew Bertucci 2025/01/06 for v1.12
 
 #include:iftex
 #include:etoolbox
@@ -496,6 +496,7 @@ longpluralaccess=%<text%>
 \note{text}
 \oarg{arg}
 \oargm{arg}
+\oargnobr{arg}
 \opt{option}
 \opt{option}[suffix]#*
 \optdefsyntax{keyvals}{option}
@@ -545,6 +546,7 @@ longpluralaccess=%<text%>
 \settabcolsep{length}
 \shortargfmt{arg}
 \Slash
+\smcode{code}
 \starredcs{csname}
 \starredenv{envname}
 \sty{package}
@@ -617,7 +619,7 @@ link=%<link%>
 \nlctuserguidegls{commands}
 \nlctuserguidegls[bib2gls options%keyvals]{commands}
 
-#keyvals:\nlctuserguidegls
+#keyvals:\nlctuserguidegls#c
 charset=%<encoding name%>
 interpret-preamble#true,false
 write-preamble#true,false
@@ -1964,6 +1966,8 @@ style6#B
 \nlctindexlastmark#*
 \nlctprebookindex#*
 \nlctindexmarkfmt{arg}#*
+\exmarginfont#*
+\summarytagfill#*
 
 # from record=nameref option of glossaries-extra
 #include:glossaries-extra-bib2gls

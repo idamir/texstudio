@@ -94,6 +94,7 @@ public:
     friend class LatexEditorViewTest;
 	friend class ScriptEngineTest;
     friend class LatexDocumentTest;
+    friend class TableManipulationTest;
     friend class TexStudioTest;
 
 private:
@@ -190,6 +191,7 @@ public:
 
     void getEnv(int lineNumber, StackEnvironment &env) const; // get Environment for syntax checking, number of cols is now part of env
 	Q_INVOKABLE QString getLastEnvName(int lineNumber); // special function to use with javascript (insert "\item" from menu)
+    bool isEnvClosed(const Environment &env);
 
     void enableSyntaxCheck(bool enable);
     Q_INVOKABLE bool isSubfileRoot();

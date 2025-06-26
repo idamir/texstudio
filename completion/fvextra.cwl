@@ -1,16 +1,19 @@
 # fvextra package
-# Matthew Bertucci 2024/11/18 for v1.10.0
+# Matthew Bertucci 2025/05/15 for v1.13.0
 
 #include:etoolbox
 #include:fancyvrb
+#include:pdftexcmds
 #include:upquote
 #include:lineno
 
-#keyvals:\Verb,\Verb*,\DefineShortVerb,\begin{Verbatim},\begin{Verbatim*},\begin{BVerbatim},\begin{BVerbatim*},\begin{LVerbatim},\begin{LVerbatim*},\fvset,\DefineVerbatimEnvironment,\CustomVerbatimEnvironment,\RecustomVerbatimEnvironment,\CustomVerbatimCommand,\RecustomVerbatimCommand,\SaveVerb,\SaveVerb*,\UseVerb,\UseVerb*,\begin{SaveVerbatim},\UseVerbatim,\BUseVerbatim,\LUseVerbatim,\VerbatimInput,\BVerbatimInput,\LLVerbatimInput,\fvinlineset,\EscVerb,\EscVerb*,\begin{VerbEnv},\VerbatimInsertBuffer,\VerbatimClearBuffer,\RobustVerb,\RobustVerb*,\RobustUseVerb,\RobustUseVerb*,\RobustEscVerb,\RobustEscVerb*
+#keyvals:\Verb,\Verb*,\DefineShortVerb,\begin{Verbatim},\begin{Verbatim*},\begin{BVerbatim},\begin{BVerbatim*},\begin{LVerbatim},\begin{LVerbatim*},\fvset,\DefineVerbatimEnvironment,\CustomVerbatimEnvironment,\RecustomVerbatimEnvironment,\CustomVerbatimCommand,\RecustomVerbatimCommand,\SaveVerb,\SaveVerb*,\UseVerb,\UseVerb*,\begin{SaveVerbatim},\UseVerbatim,\BUseVerbatim,\LUseVerbatim,\VerbatimInput,\BVerbatimInput,\LLVerbatimInput,\fvinlineset,\EscVerb,\EscVerb*,\begin{VerbEnv},\VerbatimInsertBuffer,\VerbatimClearBuffer,\InsertBuffer,\ClearBuffer,\IterateBuffer,\RobustVerb,\RobustVerb*,\RobustUseVerb,\RobustUseVerb*,\RobustEscVerb,\RobustEscVerb*
 backgroundcolor=#%color
+backgroundcolorboxoverlap=##L
 backgroundcolorpadding=##L
 backgroundcolorvphantom=%<macro%>
 bgcolor=#%color
+bgcolorboxoverlap=##L
 bgcolorpadding=##L
 bgcolorvphantom=%<macro%>
 beameroverlays#true,false
@@ -68,12 +71,13 @@ breaksymbolseprightnchars=%<integer%>
 spacebreak=%<macro%>
 breakbytoken#true,false
 breakbytokenanywhere#true,false
+texcomments#true,false
 #endkeyvals
 
 \fvinlineset{options%keyvals}
 
 # keys from fancyvrb for fvextra commands
-#keyvals:\fvinlineset,\EscVerb,\EscVerb*,\begin{VerbEnv},\VerbatimInsertBuffer,\VerbatimClearBuffer,\RobustVerb,\RobustVerb*,\RobustUseVerb,\RobustUseVerb*,\RobustEscVerb,\RobustEscVerb*
+#keyvals:\fvinlineset,\EscVerb,\EscVerb*,\begin{VerbEnv},\VerbatimInsertBuffer,\VerbatimClearBuffer,\InsertBuffer,\ClearBuffer,\IterateBuffer,\RobustVerb,\RobustVerb*,\RobustUseVerb,\RobustUseVerb*,\RobustEscVerb,\RobustEscVerb*
 commentchar=%<single char%>
 gobble=%<integer%>
 formatcom=%<commands%>
@@ -157,8 +161,18 @@ writer=%<macro%>
 \VerbatimInsertBuffer[options%keyvals]
 \VerbatimClearBuffer
 \VerbatimClearBuffer[options%keyvals]
+\InsertBuffer
+\InsertBuffer[options%keyvals]
+\ClearBuffer
+\ClearBuffer[options%keyvals]
+\BufferMdfivesum
+\IterateBuffer{macro}
+\IterateBuffer[options%keyvals]{macro}
+\IterateBufferBreak#*
+\WriteBuffer
+\WriteBuffer[options%keyvals]
 
-#keyvals:\begin{VerbatimBuffer},\VerbatimInsertBuffer,\VerbatimClearBuffer,\fvset
+#keyvals:\begin{VerbatimBuffer},\VerbatimInsertBuffer,\VerbatimClearBuffer,\InsertBuffer,\ClearBuffer,\IterateBuffer,\fvset
 afterbuffer=%<macro%>
 bufferer=%<macro%>
 bufferlengthname=%<string%>
@@ -167,8 +181,11 @@ buffername=%<string%>
 globalbuffer#true,false
 #endkeyvals
 
-#keyvals:\VerbatimInsertBuffer
+#keyvals:\VerbatimInsertBuffer,\InsertBuffer
 insertenvname=%<string%>
+wrapperenvname=%<envname%>
+wrapperenvopt=%<optional argument%>
+wrapperenvarg=%<argument%>
 #endkeyvals
 
 \FancyVerbBreakStart#*
@@ -182,71 +199,77 @@ insertenvname=%<string%>
 
 FancyVerbHighlightColor#B
 
-\FVExtraDoSpecials#*
-\FVExtraReadOArgBeforeVArg{arg}#*
-\FVExtraReadOArgBeforeVArg[opt]{arg}#*
-\FVExtraReadOArgBeforeVEnv{arg}#*
-\FVExtraReadOArgBeforeVEnv[opt]{arg}#*
-\FVExtraReadVArg{arg}#*
-\FVExtraReadVArgSingleLine{arg}#*
-\FVExtrapdfstringdef{arg1}{arg2}#*
-\FVExtrapdfstringdefDisableCommands#*
 \FVExtraAlwaysUnexpanded{arg}#*
-\FVExtraRobustCommand{arg1}{arg2}#*
-\FVExtraUnexpandedReadStarOArgMArg{arg}#*
-\FVExtraUseVerbUnexpandedReadStarOArgMArg{arg}#*
-\FVExtraUnexpandedReadStarOArgBVArg{arg}#*
-\FVExtraUnexpandedReadStarOArgBEscVArg{arg}#*
-\FVExtraPDFStringEscapeChar{arg}#*
-\FVExtraPDFStringEscapeChars{arg}#*
-\FVExtraVerbatimDetokenize{arg}#*
-\FVExtraPDFStringVerbatimDetokenize{arg}#*
-\FVExtraEscapedVerbatimDetokenize{arg}#*
-\FVExtraPDFStringEscapedVerbatimDetokenize{arg}#*
-\FVExtraDetokenizeVArg{arg1}{arg2}#*
 \FVExtraDetokenizeEscVArg{arg1}{arg2}#*
 \FVExtraDetokenizeREscVArg{arg1}{arg2}#*
+\FVExtraDetokenizeVArg{arg1}{arg2}#*
+\FVExtraDoSpecials#*
+\FVExtraEscapedVerbatimDetokenize{arg}#*
+\FVExtraPDFStringEscapeChars{arg}#*
+\FVExtraPDFStringEscapeChar{arg}#*
+\FVExtraPDFStringEscapedVerbatimDetokenize{arg}#*
+\FVExtraPDFStringVerbatimDetokenize{arg}#*
+\FVExtraReadOArgBeforeVArg[opt]{arg}#*
+\FVExtraReadOArgBeforeVArg{arg}#*
+\FVExtraReadOArgBeforeVEnv[opt]{arg}#*
+\FVExtraReadOArgBeforeVEnv{arg}#*
+\FVExtraReadVArgSingleLine{arg}#*
+\FVExtraReadVArg{arg}#*
 \FVExtraRetokenizeVArg{macro%cmd}{code}{chars}#*d
+\FVExtraRobustCommand{arg1}{arg2}#*
+\FVExtraSaveCodes[package]{name}#*
+\FVExtraSaveCodes{name}#*
+\FVExtraUnexpandedReadStarOArgBEscVArg{arg}#*
+\FVExtraUnexpandedReadStarOArgBVArg{arg}#*
 \FVExtraUnexpandedReadStarOArgMArgBVArg{arg}#*
-\RobustVerb[options%keyvals]{verbatimSymbol}#S
-\RobustVerb|%<code%>|#*
-\RobustVerb[%<options%>]|%<code%>|#*
-\RobustVerb*[options%keyvals]{verbatimSymbol}#S
+\FVExtraUnexpandedReadStarOArgMArg{arg}#*
+\FVExtraUseCodes[package]{name}#*
+\FVExtraUseCodes{name}#*
+\FVExtraUseVerbUnexpandedReadStarOArgMArg{arg}#*
+\FVExtraVerbatimDetokenize{arg}#*
+\FVExtrapdfstringdefDisableCommands#*
+\FVExtrapdfstringdef{arg1}{arg2}#*
+\FancyVerbBackgroundColor#*
+\FancyVerbBackgroundColorPadding#*
+\FancyVerbBackgroundColorVPhantom#*
+\FancyVerbBeamerOverlays#*
+\FancyVerbBreakAfterSymbolPost#*
+\FancyVerbBreakAfterSymbolPre#*
+\FancyVerbBreakAnywhereSymbolPost#*
+\FancyVerbBreakAnywhereSymbolPre#*
+\FancyVerbBreakBeforeSymbolPost#*
+\FancyVerbBreakBeforeSymbolPre#*
+\FancyVerbBreakSymbolLeft#*
+\FancyVerbBreakSymbolLeftLogic{arg}#*
+\FancyVerbBreakSymbolRight#*
+\FancyVerbBreakSymbolRightLogic{arg}#*
+\FancyVerbBufferDepth#*
+\FancyVerbBufferIndex#*
+\FancyVerbBufferLengthName#*
+\FancyVerbCurlyQuotes#*
+\FancyVerbFillColor#*
+\FancyVerbHighlightColor#*
+\FancyVerbHighlightLineFirst{arg}#*
+\FancyVerbHighlightLineLast{arg}#*
+\FancyVerbHighlightLineMiddle{arg}#*
+\FancyVerbHighlightLineNormal{arg}#*
+\FancyVerbHighlightLineSingle{arg}#*
+\FancyVerbHighlightLine{arg}#*
+\FancyVerbMathEscape#*
+\FancyVerbRestoreCodes#*
+\FancyVerbSpaceBreak#*
+\RobustEscVerb*[options%keyvals]{backslash-escaped text}#*
+\RobustEscVerb*{backslash-escaped text}#*
+\RobustEscVerb[options%keyvals]{backslash-escaped text}#*
+\RobustEscVerb{backslash-escaped text}#*
+\RobustUseVerb*[options%keyvals]{name}#*
+\RobustUseVerb*{name}#*
+\RobustUseVerb[options%keyvals]{name}#*
+\RobustUseVerb{name}#*
 \RobustVerb*|%<code%>|#*
 \RobustVerb*[%<options%>]|%<code%>|#*
-\RobustUseVerb{name}#*
-\RobustUseVerb[options%keyvals]{name}#*
-\RobustUseVerb*{name}#*
-\RobustUseVerb*[options%keyvals]{name}#*
-\RobustEscVerb{backslash-escaped text}#*
-\RobustEscVerb[options%keyvals]{backslash-escaped text}#*
-\RobustEscVerb*{backslash-escaped text}#*
-\RobustEscVerb*[options%keyvals]{backslash-escaped text}#*
-\FancyVerbMathSpace#*
-\FancyVerbFillColor#*
-\FancyVerbMathEscape#*
-\FancyVerbBeamerOverlays#*
-\FancyVerbCurlyQuotes#*
-\FancyVerbHighlightColor#*
-\FancyVerbHighlightLine{arg}#*
-\FancyVerbHighlightLineNormal{arg}#*
-\FancyVerbHighlightLineFirst{arg}#*
-\FancyVerbHighlightLineMiddle{arg}#*
-\FancyVerbHighlightLineLast{arg}#*
-\FancyVerbHighlightLineSingle{arg}#*
-\FancyVerbBreakSymbolLeft#*
-\FancyVerbBreakSymbolRight#*
-\FancyVerbBreakSymbolLeftLogic{arg}#*
+\RobustVerb*[options%keyvals]{verbatimSymbol}#S
+\RobustVerb|%<code%>|#*
+\RobustVerb[%<options%>]|%<code%>|#*
+\RobustVerb[options%keyvals]{verbatimSymbol}#S
 \theFancyVerbLineBreakLast#*
-\FancyVerbBreakSymbolRightLogic{arg}#*
-\FancyVerbBreakAnywhereSymbolPre#*
-\FancyVerbBreakAnywhereSymbolPost#*
-\FancyVerbBreakBeforeSymbolPre#*
-\FancyVerbBreakBeforeSymbolPost#*
-\FancyVerbBreakAfterSymbolPre#*
-\FancyVerbBreakAfterSymbolPost#*
-\FancyVerbSpaceBreak#*
-\FancyVerbBackgroundColor#*
-\FancyVerbBackgroundColorVPhantom#*
-\FancyVerbBackgroundColorPadding#*
-\FancyVerbBufferIndex#*

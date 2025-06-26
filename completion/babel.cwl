@@ -1,6 +1,6 @@
 # babel.sty
 # available from ctan
-# tbraun 4.11.2008; Matthew Bertucci 2024/10/20 for v24.12
+# tbraun 4.11.2008; Matthew Bertucci 2025/06/10 for v25.10
 
 #keyvals:\usepackage/babel#c
 %<language%>
@@ -19,7 +19,7 @@ showlanguages
 silent
 hyphenmap=#off,first,select,other,other*
 bidi=#default,basic,basic-r,bidi-l,bidi-r
-layout=#sectioning,counters,counters*,contents,footnotes,captions,columns,graphics,extras
+layout=#sectioning,counters,counters*,lists,contents,footnotes,captions,columns,graphics,extras,pars,nopars
 provide=*
 provide+=*
 provide*=*
@@ -53,6 +53,8 @@ exclude=%<commands%>
 fontenc=%<encoding%>
 #endkeyvals
 
+\AfterBabelLanguage{option_name}{code}#*
+
 \shorthandon{characters}
 \shorthandoff{characters}
 \shorthandoff*{characters}
@@ -64,10 +66,6 @@ fontenc=%<encoding%>
 \babelshorthand{shorthand}
 \ifbabelshorthand{character}{true}{false}
 \textormath{text code}{math code%formula}#*
-
-#ifOption:base
-\AfterBabelLanguage{option_name}{code}
-#endif
 
 \babelfont{font_family}{font_name}
 \babelfont{font_family}[font_options%keyvals]{font_name}
@@ -88,6 +86,7 @@ BoldSlantedFont=%<font name%>
 BoldSwashFeatures={%<features%>}
 BoldSwashFont=%<font name%>
 CJKShape=#Traditional,Simplified,JIS1978,JIS1983,JIS1990,Expert,NLC
+CharacterVariant=%<number%>
 CharacterVariant={%<glyph num list%>:%<variety num%>}
 CharacterWidth=#Proportional,Full,Half,Thurd,Quarter,AlternateProportional,AlternateHalf,ResetAll
 Color=#%color
@@ -103,12 +102,14 @@ FontFace={%<series%>}{%<shape%>}{%<font name%>}
 Fractions=#On,Off,Reset,Alternate,ResetAll
 HyphenChar=%<character%>
 IgnoreFontspecFile
+Instance=%<instance%>
 ItalicFeatures={%<features%>}
 ItalicFont=%<font name%>
 Kerning=#On,Off,Reset,Uppercase,ResetAll
+KpseOnly
 Language=%<language%>
 LetterSpace=%<number%>
-Letters=#SmallCaps,PetiteCaps,UppercaseSmallCaps,UppercasePetiteCaps,Unicase,ResetAll
+Letters=#SmallCaps,PetiteCaps,UppercaseSmallCaps,UppercasePetiteCaps,Unicase,Uppercase,Lowercase,ResetAll
 Ligatures=#Required,Common,Contextual,Rare,Discretionary,Historic,TeX
 LocalForms=#On,Off,Reset
 NFSSFamily=%<font family%>
@@ -118,12 +119,14 @@ OpticalSize=%<size%>
 Ornament=
 Path=%<file path%>
 PunctuationSpace=%<number%>
+RawAxis={%<tag=number%>}
 RawFeature=%<feature tag%>
 Scale=%<number%>
 ScaleAgain=%<number%>
 Script=%<name%>
 Size=%<number%>
 SizeFeatures={%<features%>}
+Slant=%<number%>
 SlantedFeatures={%<features%>}
 SlantedFont=%<font name%>
 SmallCapsFeatures={%<features%>}
@@ -138,9 +141,12 @@ UprightFont=%<font name%>
 Variant=%<integer%>
 Vertical=#RotatedGlyphs,AlternatesForRotation,Alternates,KanaAlternates,Kerning,AlternateMetrics,HalfMetrics,ProportionalMetrics,ResetAll
 VerticalPosition=#Superior,Inferior,Numerator,Denominator,ScientificInferior,Ordinal,ResetAll
+Weight=%<number%>
+Width=%<number%>
 WordSpace=%<number%>
 Mapping=%<xetex-only feature%>
-Renderer=%<renderer%>
+Renderer=#Node,Base,Harfbuzz,OpenType,AAT,Graphite
+%fontspecfeature
 #endkeyvals
 
 \setlocalecaption{language}{caption_name}{string}#*
@@ -161,7 +167,7 @@ Alph=%<counter%>
 onchar=#ids,fonts,letters
 intraspace=%<base shrink stretch%>
 intrapenalty=%<penalty%>
-transforms=#transliteration.dad,digraphs.ligatures,hyphen.repeat,oneletter.nobreak,prehyphen.nobreak,diaeresis.hyphen,transliteration.omega,sigma.final,transliteration.hk,punctuation.space,digraphs.hyphen,danda.nobreak,letters.noj,letters.uv,transliteration.iast,transliteration.gajica,kashida.plain
+transforms=#digits.native,transliteration.dad,input.nospaces,spacing.basic,digraphs.ligatures,hyphen.repeat,oneletter.nobreak,diaeresis.hyphen,prehyphen.nobreak,punctuation.space,longs.unifraktur,transliteration.omega,sigma.final,transliteration.cj,justification.interletter,transliteration.hk,transliteration.iast,digraphs.hyphen,danda.nobreak,linebreak.strict,letters.noj,letters.uv,transliteration.gost779b,transliteration.gajica,kashida.plain,kashida.base
 justification=#kashida,elongated,unhyphenated,padding
 linebreaking=#kashida,elongated,unhyphenated,padding
 mapfont=
@@ -240,34 +246,45 @@ extension.u.tag.bcp47
 \babelprehyphenation[options%keyvals]{locale-name}{lua-pattern}{replacement}#*
 
 #keyvals:\babelposthyphenation#c,\babelprehyphenation#c
-label=#transliteration.dad,digraphs.ligatures,hyphen.repeat,oneletter.nobreak,prehyphen.nobreak,punctuation.space,diaeresis.hyphen,transliteration.omega,sigma.final,transliteration.hk,punctuation.space,digraphs.hyphen,danda.nobreak,letters.noj,letters.uv,transliteration.iast,transliteration.gajica,kashida.plain
+label=#digits.native,transliteration.dad,input.nospaces,spacing.basic,digraphs.ligatures,hyphen.repeat,oneletter.nobreak,diaeresis.hyphen,prehyphen.nobreak,punctuation.space,longs.unifraktur,transliteration.omega,sigma.final,transliteration.cj,justification.interletter,transliteration.hk,transliteration.iast,digraphs.hyphen,danda.nobreak,linebreak.strict,letters.noj,letters.uv,transliteration.gost779b,transliteration.gajica,kashida.plain,kashida.base
 fonts=%<tag1 tag2 ...%>
 attribute=%<attribute%>
+prepend
 #endkeyvals
 
 \enablelocaletransform{transform%keyvals}
 \disablelocaletransform{transform%keyvals}
 
 #keyvals:\enablelocaletransform,\disablelocaletransform
+digits.native
 transliteration.dad
+input.nospaces
+spacing.basic
 digraphs.ligatures
 hyphen.repeat
 oneletter.nobreak
-prehyphen.nobreak
 diaeresis.hyphen
+prehyphen.nobreak
+punctuation.space
+longs.unifraktur
 transliteration.omega
 sigma.final
+transliteration.cj
+justification.interletter
 transliteration.hk
-punctuation.space
+transliteration.iast
 digraphs.hyphen
 danda.nobreak
+linebreak.strict
 letters.noj
 letters.uv
-transliteration.iast
+transliteration.gost779b
 transliteration.gajica
 kashida.plain
+kashida.base
 #endkeyvals
 
+\ShowBabelTransforms{string}#*
 \localeprehyphenation{string}#*
 
 \babelcharclass{locale}{name}{char-list}#*
@@ -394,6 +411,7 @@ select.encoding=#off
 \BabelDatey{arg}#S
 \BabelDateyy{arg}#S
 \BabelDateyyyy{arg}#S
+\BabelDefinitionFile{arg1}{arg2}{arg3}#S
 \BabelLanguages#S
 \BabelLower{uccode}{lccode}#S
 \BabelLowerMM{uccode-from}{uccode-to}{step}{lccode}#S
@@ -2913,7 +2931,7 @@ SuppressWarning#true,false
 \decembername
 #endif
 
-### latin.ldf v4.0 (and associated classiclatin, ecclesiasticlatin, medievallatin) ###
+### latin.ldf v4.1 (and associated classicallatin, ecclesiasticallatin, medievallatin) ###
 #ifOption:latin
 \captionslatin#*
 \datelatin#*
@@ -2937,11 +2955,13 @@ SuppressWarning#true,false
 #repl:"| 
 #endif
 
-#ifOption:classiclatin
-\captionsclassiclatin#*
-\dateclassiclatin#*
-\extrasclassiclatin#*
-\noextrasclassiclatin#*
+#ifOption:classicallatin
+\captionsclassicallatin#*
+\dateclassicallatin#*
+\extrasclassicallatin#*
+\noextrasclassicallatin#*
+\ProsodicMarksOn
+\ProsodicMarksOff
 \prefacename#*
 \bibname#*
 \chaptername#*
@@ -2958,11 +2978,13 @@ SuppressWarning#true,false
 #repl:"| 
 #endif
 
-#ifOption:ecclesiasticlatin
-\captionsecclesiasticlatin#*
-\dateecclesiasticlatin#*
-\extrasecclesiasticlatin#*
-\noextrasecclesiasticlatin#*
+#ifOption:ecclesiasticallatin
+\captionsecclesiasticallatin#*
+\dateecclesiasticallatin#*
+\extrasecclesiasticallatin#*
+\noextrasecclesiasticallatin#*
+\ProsodicMarksOn
+\ProsodicMarksOff
 \prefacename#*
 \bibname#*
 \chaptername#*
@@ -2990,6 +3012,8 @@ SuppressWarning#true,false
 \datemedievallatin#*
 \extrasmedievallatin#*
 \noextrasmedievallatin#*
+\ProsodicMarksOn
+\ProsodicMarksOff
 \prefacename#*
 \bibname#*
 \chaptername#*
@@ -4472,7 +4496,24 @@ mexico-com
 \glossaryname#*
 #endif
 
-### slovene.ldf v1.2n ###
+### slovenian.ldf v1.2p ###
+#ifOption:slovenian
+\captionsslovenian#*
+\dateslovenian#*
+\extrasslovenian#*
+\noextrasslovenian#*
+\prefacename#*
+\bibname#*
+\chaptername#*
+\enclname#*
+\ccname#*
+\headtoname#*
+\pagename#*
+\seename#*
+\alsoname#*
+\proofname#*
+\glossaryname#*
+#endif
 #ifOption:slovene
 \captionsslovene#*
 \dateslovene#*

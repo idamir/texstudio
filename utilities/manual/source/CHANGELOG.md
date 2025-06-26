@@ -1,9 +1,38 @@
 # CHANGELOG
+## TeXstudio 4.8.8
+
+- improve handling tblr env for table manipulation
+- provide win-arm build
+- small bug fixes
+
+## TeXstudio 4.8.7
+
+- add "Start Column" (sets column of first page, same as Shift+Click) to Grid menu of pdf-viewer's context menu [#3974](https://github.com/texstudio-org/texstudio/pull/3974)
+- add preview with default compiler option [#3978](https://github.com/texstudio-org/texstudio/pull/3978)
+- shrink embedded pdf-viewer when an item of the Structure or TOC tree view is selected [#3989](https://github.com/texstudio-org/texstudio/pull/3989)
+- allow executing ai queries from macros [see manual](https://texstudio-org.github.io/advanced.html#ai-queries)
+- fix completion of empty key/val values [#4017](https://github.com/texstudio-org/texstudio/issues/4017)
+- add clear button to search fields of Packages Help (TeXdoc) dialog [#4041](https://github.com/texstudio-org/texstudio/pull/4041), Config dialog [#4043](https://github.com/texstudio-org/texstudio/pull/4043),
+	and Symbols side panel
+
 ## TeXstudio 4.8.6
 
 - provide command completion for expl3 commands
 - hide grammar errors in math/non-text environments (word repetition and language tool)
 - hide spelling errors in picture envs like tikzpicture
+- better handle \newtcbox [#3878](https://github.com/texstudio-org/texstudio/issues/3878)
+- fix rare crash [#3936](https://github.com/texstudio-org/texstudio/issues/3936)
+- repair user macro trigger (?highlight-as:...), still not usable for math env detection
+- add new user macro trigger (?inEnv:...)
+- add Grid menu to windowed and embedded pdf-viewer's context menu [#3942](https://github.com/texstudio-org/texstudio/pull/3942)
+- fix pdf-viewer's scrollbar with Fit to Width/Window and changing Continuous mode [#3928](https://github.com/texstudio-org/texstudio/pull/3928)
+- fix pdf-viewer's Custom Grid dialog not preset with current Grid settings in Continuous mode [#3929](https://github.com/texstudio-org/texstudio/pull/3929)
+- fix pfd-viewer's page display in non continuous mode [#3952](https://github.com/texstudio-org/texstudio/pull/3952)
+- fix pdf-viewer has a small issue when activating single page step [#3957](https://github.com/texstudio-org/texstudio/pull/3957)
+- add maximize button to Packages Help (Texdoc) dialog [#3911](https://github.com/texstudio-org/texstudio/pull/3911)
+- fix option 'all packages' no longer checked in Packages Help with no tex documents opened [#3917](https://github.com/texstudio-org/texstudio/pull/3917)
+- when context menu of a package name is used to open the Packages Help dialog then preset search filter with the name [#3918](https://github.com/texstudio-org/texstudio/pull/3918)
+- fix both View menu actions 'Show embedded PDF large/small' available, whether PDF area is large or small [#3931](https://github.com/texstudio-org/texstudio/pull/3931)
 
 ## TeXstudio 4.8.5
 
@@ -16,12 +45,13 @@
 - fix crash when %Tex root document was not found
 - class are used for completion in documentclass
 - class names are not used anymore for package name completion
-- local packages can provide local cwl files ,[see manual](https://texstudio-org.github.io/advanced.html#local-packages)
+- local packages can provide local cwl files, [see manual](https://texstudio-org.github.io/advanced.html#local-packages)
 - fix handling of user definition commands in subfiles [#3885](https://github.com/texstudio-org/texstudio/issues/3885)
 - fix crash in preview tooltip if no pdflatex is defined [#3875](https://github.com/texstudio-org/texstudio/issues/3875)
 - handle special columntypes (m[l],NiceMatrix) better [#3881](https://github.com/texstudio-org/texstudio/issues/3881)
 - handle key/val completion in frame environment better [#3846](https://github.com/texstudio-org/texstudio/issues/3846)
 - fix caching of newly defined colornames
+- fix not all log lines with 'Process started ...' are highlight [#3873](https://github.com/texstudio-org/texstudio/pull/3873)
 
 ## TeXstudio 4.8.4
 
@@ -169,7 +199,7 @@
 - show macro trigger and shortcut in configuration window ([#2635](https://github.com/texstudio-org/texstudio/issues/2635))
 - support import of several macros at once ([#2911](https://github.com/texstudio-org/texstudio/issues/2911))
 - fix wrong side panel title when changing grid size in config ([#2743](https://github.com/texstudio-org/texstudio/issues/2743))
-- preview/clear preview now use position of context menu as reference [(#2794](https://github.com/texstudio-org/texstudio/issues/2794))
+- preview/clear preview now use position of context menu as reference ([#2794](https://github.com/texstudio-org/texstudio/issues/2794))
 - add a Package Tab to the QuickStart Wizard ([#2831](https://github.com/texstudio-org/texstudio/issues/2831))
 - Editor option 'Show Only Monospaced Fonts' is now persistent ([#788](https://github.com/texstudio-org/texstudio/issues/788))
 - fix size of config dialog on low res screens ([#995](https://github.com/texstudio-org/texstudio/issues/995))
@@ -709,7 +739,7 @@ before changing to windowed mode (Bug #1876)
 - fix: clear replace highlights when search term is changed
 - fix: cancel in marco dialog (bug 1662)
 - fixed interpretation of % !BIB program = ... (bug 1667)
-- fix AltGr+F not typing [ on Croatian keyboard
+- fix AltGr+F not typing \[ on Croatian keyboard
 - fix cursor jumping to end of file when trying to jump from a non-matched bracket (bug 1668)
 - fix pasting columns over an existing selection (bug 1726)
 - fix broken language triggers (bug 1735)
@@ -1453,7 +1483,7 @@ texmaker file [-master] [-line xxx]
 
 ## Texmaker 1.2
 
-- Don't use anymore double-clic to open a file from the structure view (Qt-4.0.0 bug). A simple clic must be used now.
+- Don't use anymore double-click to open a file from the structure view (Qt-4.0.0 bug). A simple click must be used now.
 - Don't use anymore / to separate commands (quick build and users commands) but | to avoid confusion with the directories separator.
 - A selected icon is no more highlighted (trouble on windows and macosx - the selected icon was masked).
 - Added the option '-line' for the application.

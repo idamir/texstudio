@@ -1,5 +1,5 @@
 # tikzlings-cats package
-# Matthew Bertucci 2024/12/12 for v2.1
+# Matthew Bertucci 2025/03/25 for v2.3
 
 #include:tikz
 #include:tikzlings-addons
@@ -9,11 +9,12 @@
 
 #keyvals:\cat#c
 body=#%color
-eye=#%color
-pupil=#%color
+eyes=#%color
+pupils=#%color
 nose=#%color
 whiskers=#%color
 paws=#%color
+openmouth
 pupilwidth=%<number%>
 narrow pupils
 medium pupils
@@ -95,6 +96,8 @@ milkshake=#%color
 wine
 wine=#%color
 cocktail
+randomhead
+randomaccessories
 banana
 banana=#%color
 cricket
@@ -152,11 +155,12 @@ xshift=##L
 yshift=##L
 #endkeyvals
 
-\cathookbackground#*
-\cathookbelly#*
-\cathookbody#*
-\cathookforeground#*
-\tikzlinghookbackground#*
-\tikzlinghookbelly#*
-\tikzlinghookbody#*
-\tikzlinghookforeground#*
+# deprecated
+\cathookbackground#S
+\cathookbelly#S
+\cathookbody#S
+\cathookforeground#S
+\tikzlinghookbackground#S
+\tikzlinghookbelly#S
+\tikzlinghookbody#S
+\tikzlinghookforeground#S

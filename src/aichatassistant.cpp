@@ -109,6 +109,15 @@ void AIChatAssistant::setSelectedText(QString text)
     m_selectedText=text;
 }
 /*!
+ * \brief preset query text
+ * This comes typically from a macro
+ * \param text
+ */
+void AIChatAssistant::setQueryText(const QString &text)
+{
+    leEntry->setText(text);
+}
+/*!
  * \brief start a new conversation
  */
 void AIChatAssistant::clearConversation()
@@ -123,6 +132,14 @@ void AIChatAssistant::clearConversation()
     // append new filename to list of conversations
     AIQueryStorageModel *model=dynamic_cast<AIQueryStorageModel *>(treeView->model());
     model->addFileName(fileName);
+}
+/*!
+ * \brief execute query from outer level
+ * This is used when macros are involved
+ */
+void AIChatAssistant::executeQuery()
+{
+    slotSend();
 }
 /*!
  * \brief send question to ai provider
@@ -186,18 +203,18 @@ void AIChatAssistant::slotSend()
         m_timer->setInterval(100);
         connect(m_timer,&QTimer::timeout,this,&AIChatAssistant::slotUpdateResults);
     }
-    if(!config->ai_systemPrompt.isEmpty()){
+    if(ja_messages.isEmpty() and !config->ai_systemPrompt.isEmpty()){
         // add system prompt to query
         QJsonObject ja_message;
         ja_message["role"]="system";
-        ja_message["content"]=config->ai_systemPrompt;
+        QString msg=config->ai_systemPrompt;
+        msg.replace("%txsSelectedText%",m_selectedText);
+        ja_message["content"]=msg;
+        ja_messages.append(ja_message);
     }
     QJsonObject ja_message;
     ja_message["role"]="user";
     // prepend selected text to question
-    if(!m_selectedText.isEmpty()){
-        question="text=\"\"\""+m_selectedText+"\"\"\"\n"+question;
-    }
     ja_message["content"]=question;
 
     // for now single questions only
@@ -282,8 +299,17 @@ void AIChatAssistant::slotInsert()
             }
         }
     }else{
-        // insert whole text
-        emit insertText(m_response);
+        // check if text=""" ... """ is repeated
+        // this is used to manipulate selected text
+        const int i=m_response.indexOf("text=\"\"\"");
+        if(i>=0){
+            int l=m_response.indexOf("\"\"\"",i+8); // find second delimiter
+            m_response=m_response.mid(i+8,l-8-i);
+            emit insertText(m_response);
+        }else{
+            // insert whole text
+            emit insertText(m_response);
+        }
     }
 }
 /*!
@@ -296,9 +322,16 @@ void AIChatAssistant::slotOptions()
     QDialog dlg;
     auto *ly=new QVBoxLayout();
     auto *leSystemPrompt=new QTextEdit();
-    leSystemPrompt->setText(config->ai_systemPrompt);
-    if(config->ai_systemPrompt.isEmpty()){
-        leSystemPrompt->setPlaceholderText(tr("System prompt"));
+    if(!ja_messages.isEmpty()){
+        leSystemPrompt->setEnabled(false);
+        if(ja_messages.first()["role"]=="system")
+            leSystemPrompt->setText(ja_messages.first()["content"].toString());
+        leSystemPrompt->setToolTip(tr("System prompt can't be altered mid-conversation"));
+    }else{
+        leSystemPrompt->setText(config->ai_systemPrompt);
+        if(config->ai_systemPrompt.isEmpty()){
+            leSystemPrompt->setPlaceholderText(tr("System prompt"));
+        }
     }
     ly->addWidget(leSystemPrompt);
     auto *leTemp=new QLineEdit();
@@ -310,9 +343,15 @@ void AIChatAssistant::slotOptions()
         maxTemp=2.0;
         rx.setPattern("[01]\\.[0-9]*|2");
     }
-    auto *validator=new QRegularExpressionValidator(rx);
-    leTemp->setValidator(validator);
-    leTemp->setToolTip(tr("Values between 0 and %1").arg(maxTemp));
+    if(config->ai_provider==2){
+        leTemp->setEnabled(false);
+        leTemp->setText(tr("-"));
+        leTemp->setToolTip(tr("Temperature not supported for local models"));
+    }else{
+        auto *validator=new QRegularExpressionValidator(rx);
+        leTemp->setValidator(validator);
+        leTemp->setToolTip(tr("Values between 0 and %1").arg(maxTemp));
+    }
     // add label in front of slider
     auto *lblTemp=new QLabel(tr("Temperature"));
     auto *hl=new QHBoxLayout();
@@ -327,8 +366,10 @@ void AIChatAssistant::slotOptions()
                                      | QDialogButtonBox::Cancel);
 
     connect(buttonBox, &QDialogButtonBox::accepted,[&](){
-        config->ai_systemPrompt=leSystemPrompt->toPlainText();
-        config->ai_temperature=leTemp->text();
+        if(ja_messages.isEmpty())
+            config->ai_systemPrompt=leSystemPrompt->toPlainText();
+        if(config->ai_provider!=2)
+            config->ai_temperature=leTemp->text();
         config->ai_streamResults=cbStream->isChecked();
         dlg.close();
     });
@@ -451,6 +492,7 @@ void AIChatAssistant::onTreeViewClicked(const QModelIndex &index)
         }
     }else{
         // no query sent yet
+        ja_messages=QJsonArray();
         textBrowser->clear();
     }
 }

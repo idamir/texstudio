@@ -94,7 +94,6 @@ public:
 public slots:
 	LatexEditorView *load(const QString &f , bool asProject = false, bool recheck = true, bool dontAsk = false);
     void executeCommandLine(const QStringList &args, bool realCmdLine);
-	void hideSplash(); ///< hide splash screen
 	void startupCompleted();
 	void onOtherInstanceMessage(const QString &);  ///< For messages for the single instance
 	void fuzzCursorHistory();
@@ -410,6 +409,7 @@ private slots:
 	void readSettings(bool reread = false); ///< read configured/default settings from ini
 	void saveSettings(const QString &configName = ""); ///< save all setting to ini
 	void restoreDefaultSettings(); ///< restore default settings, removing all changed values
+    void showSettings(); ///< show settings ini in editor for bug reporting
 
 protected slots:
 	void showMarkTooltipForLogMessage(QList<int> errors);
@@ -484,7 +484,7 @@ protected slots:
 	void quickBeamer(); ///< start quick beamer wizard
 	void quickGraphics(const QString &graphicsFile = QString()); ///< start quick graphics wizard
 	void quickMath(); ///< start quick math wizard
-    void aiChat(); ///< start ai chat assistant
+    void aiChat(const QString queryText=""); ///< start ai chat assistant
 
 	bool checkProgramPermission(const QString &program, const QString &cmdId, LatexDocument *master);
 	void runInternalPdfViewer(const QFileInfo &master, const QString &options);
@@ -560,6 +560,7 @@ protected slots:
 	void focusViewer();
 	void enlargeEmbeddedPDFViewer();
 	void shrinkEmbeddedPDFViewer(bool preserveConfig = false);
+	void setEnabledMenusEnlargeShrink(bool enabledEnlarge, bool enabledShrink);
 
 	void showStatusbar();
 	void viewCloseElement();

@@ -53,6 +53,7 @@ LatexDocument::LatexDocument(QObject *parent): QDocument(parent), remeberAutoRel
     *lp= LatexParser::getInstance();
 
     updateSettings();
+    synChecker.setRUNAWAYLIMIT(ConfigManager::RUNAWAYLIMIT);
     synChecker.setLtxCommands(lp);
 
     connect(&synChecker, SIGNAL(checkNextLine(QDocumentLineHandle*,bool,int,int)), SLOT(checkNextLine(QDocumentLineHandle*,bool,int,int)), Qt::QueuedConnection);
@@ -793,12 +794,18 @@ void LatexDocument::interpretCommandArguments(QDocumentLineHandle *dlh, const in
             QString xarg=Parsing::getArg(args, Token::defXparseArg);
             if(!xarg.isEmpty()){
                 // xparse style defintion
+                if(lp->possibleCommands["%definition1"].contains(cmd)||ltxCommands.possibleCommands["%definition1"].contains(cmd)){
+                    xarg+="m"; // special treatment for newtcbox and similar. Automatically add one mandatory argument
+                }
                 QString arguments=interpretXArgs(xarg);
                 cmdName=cmdName+arguments;
             }else{
                 int optionCount = Parsing::getArg(args, Token::defArgNumber).toInt(); // results in 0 if there is no optional argument or conversion fails
                 if (optionCount > 9 || optionCount < 0) optionCount = 0; // limit number of options
                 def = !Parsing::getArg(args, Token::optionalArgDefinition).isEmpty();
+                if(lp->possibleCommands["%definition1"].contains(cmd)||ltxCommands.possibleCommands["%definition1"].contains(cmd)){
+                    ++optionCount; // special treatment for newtcbox and similar. Automatically add one mandatory argument
+                }
 
 
                 for (int j = 0; j < optionCount; j++) {
@@ -2494,11 +2501,11 @@ std::pair<bool,bool> LatexDocuments::addDocsToLoad(QStringList filenames, LatexD
             if(doc==nullptr){
                 doc=new LatexDocument();
                 doc->parent=this;
+                doc->setFileName(fn);
+                addDocument(doc,true);
                 if(!doc->restoreCachedData(getCachingFolder(),fn)){
                     doc->load(fn,QDocument::defaultCodec());
                 }
-                doc->setFileName(fn);
-                addDocument(doc,true);
                 doc->setLtxCommands(parentDocument->lp);
                 if(doc->isIncompleteInMemory()){
                     // gather all commands from all child documents
@@ -3487,6 +3494,38 @@ QString LatexDocument::getLastEnvName(int lineNumber)
 	if (env.isEmpty())
         return "";
     return env.top().name;
+}
+
+/*!
+ * \brief check if env is closed in document
+ * Take last line's StackEnv and check if given env is not present (i.e. closed somewhere earlier)
+ * \param env
+ * \return true if env was closed
+ */
+bool LatexDocument::isEnvClosed(const Environment &env)
+{
+    LatexDocument *doc = edView->document;
+
+    int lineCount = doc->lineCount();
+    if (lineCount < 1)
+        return false; // general error
+
+    StackEnvironment stackEnv_at_lastLine;
+    QDocumentLineHandle *dlh = doc->line(lineCount - 1).handle();
+    QVariant envVar = dlh->getCookieLocked(QDocumentLine::STACK_ENVIRONMENT_COOKIE);
+    if (envVar.isValid())
+        stackEnv_at_lastLine = envVar.value<StackEnvironment>();
+    else
+        return true; // no env, all closed
+
+    for(int i=0;i<stackEnv_at_lastLine.count();++i) {
+        const Environment &e = stackEnv_at_lastLine.at(i);
+        if (e.name==env.name && e.dlh==env.dlh && e.id==env.id && e.origName==env.origName && e.level==env.level) { //excessCol may change but name,id and dlh should be the same
+            // found the environment, so it is not closed
+            return false;
+        }
+    }
+    return true;
 }
 
 void LatexDocument::enableSyntaxCheck(bool enable)

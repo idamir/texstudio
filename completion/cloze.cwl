@@ -1,28 +1,29 @@
 # cloze package
-# Matthew Bertucci 11/26/2021 for v1.6
+# Matthew Bertucci 2025/06/19 for v1.8.1
 
 #include:luatex
-#include:fontspec
-#include:luatexbase
-#include:kvoptions
 #include:setspace
 #include:xcolor
-#include:stackengine
-#include:ulem
-#include:transparent
+#include:luakeys
 
 #keyvals:\usepackage/cloze#c
 align=#left,center,right
 boxheight=##L
+boxrule=##L
 boxwidth=##L
 distance=##L
 hide
 linecolor=#%color
 margin=##L
+minlines=%<integer%>
 spacing=%<number%>
+spread=%<number%>
 textcolor=#%color
 thickness=##L
 width=##L
+extension_count=%<integer%>
+extension_height=##L
+extension_width=##L
 #endkeyvals
 
 \cloze{text}
@@ -38,8 +39,8 @@ width=##L
 \begin{clozepar}
 \begin{clozepar}[options%keyvals]
 \end{clozepar}
-\clozeparcmd{text}
-\clozeparcmd[options%keyvals]{text}
+\clozeparplain{text}
+\clozeparcapture
 \begin{clozebox}
 \begin{clozebox}[options%keyvals]
 \begin{clozebox}*
@@ -60,7 +61,7 @@ width=##L
 \clozeshow
 \clozehide
 
-#keyvals:\cloze,\clozefix,\clozenol,\clozefil,\begin{clozepar},\clozeparcmd,\begin{clozebox},\begin{clozebox}*,\begin{clozespace},\clozeline,\clozelinefil,\clozestrike,\clozeset,\ClozeSetLocalOptions
+#keyvals:\cloze,\clozefix,\clozenol,\clozefil,\begin{clozepar},\begin{clozebox},\begin{clozebox}*,\begin{clozespace},\clozeline,\clozelinefil,\clozestrike,\clozeset,\ClozeSetLocalOptions
 show
 hide
 distance=##L
@@ -71,20 +72,32 @@ thickness=##L
 
 #keyvals:\clozefix,\clozeset
 align=#left,center,right
+#endkeyvals
+
+#keyvals:\clozefix,\clozeline,\clozeset
 width=##L
+#endkeyvals
+
+#keyvals:\begin{clozepar},\clozeset
+minlines=%<integer%>
 #endkeyvals
 
 #keyvals:\begin{clozebox},\begin{clozebox}*,\clozeset
 boxheight=##L
+boxrule=##L
 boxwidth=##L
 #endkeyvals
 
-#keyvals:\cloze,\clozefix,\clozefil,\clozeset
+#keyvals:\cloze,\clozefix,\clozenol,\clozefil,\clozeset
 margin=##L
 #endkeyvals
 
 #keyvals:\begin{clozespace},\clozeset
 spacing=%<number%>
+#endkeyvals
+
+#keyvals:\cloze,\clozenol,\clozeset
+spread=%<number%>
 #endkeyvals
 
 \ifclozeshow#*
@@ -100,5 +113,4 @@ spacing=%<number%>
 \clozefont#*
 \ClozeSetLocalOptions{options%keyvals}#*
 \ClozeTextColor{color}#*
-\ClozeStrikeLine#*
 \ClozeBox#*

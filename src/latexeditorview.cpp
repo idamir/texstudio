@@ -113,10 +113,78 @@ bool DefaultInputBinding::runMacros(QKeyEvent *event, QEditor *editor)
         // workaround for #2866 (tab as trigger in macro on osx)
         prev+="\t";
     }
+    const LatexDocument *doc = qobject_cast<LatexDocument *>(editor->document());
+    StackEnvironment env;
+
 	foreach (const Macro &m, completerConfig->userMacros) {
 		if (!m.isActiveForTrigger(Macro::ST_REGEX)) continue;
 		if (!m.isActiveForLanguage(language)) continue;
-		if (!(m.isActiveForFormat(line.getFormatAt(column)) || (column > 0 && m.isActiveForFormat(line.getFormatAt(column - 1))))) continue; //two checks, so it works at beginning and end of an environment
+        if(m.hasFormatTriggers()){
+            // check formats at column from overlays
+            QList<int> formats=m.getFormatExcludeTriggers();
+            if(!formats.isEmpty()){
+                QFormatRange fr = line.getOverlayAt(column, formats);
+                if(fr.isValid()){
+                    continue;
+                }
+            }
+            formats=m.getFormatTriggers();
+            if(!formats.isEmpty()){
+                QFormatRange fr = line.getOverlayAt(column, formats);
+                if(!fr.isValid()){
+                    continue;
+                }
+            }
+        }
+        QStringList envTriggers = m.getTriggerInEnvs();
+        if(!envTriggers.isEmpty()){
+            if(env.isEmpty()){
+                doc->getEnv(editor->cursor().lineNumber(),env);
+            }
+
+            // use topEnv as trigger env
+            const QStringList ignoreEnv = {"document","normal"};
+            bool inMath=false;
+            bool passed=false;
+            if(!env.isEmpty() && !ignoreEnv.contains(env.top().name)){
+                QString envName=env.top().name;
+                QStringList envAliases = doc->lp->environmentAliases.values(envName);
+                bool aliasFound=std::any_of(envAliases.cbegin(),envAliases.cend(),[&envTriggers](const QString &alias){
+                    return envTriggers.contains(alias);
+                });
+                if(envTriggers.contains(envName)|| aliasFound){
+                    passed=true;
+                    if(envName=="math"){
+                        // continued math mode from previous line
+                        passed=false;
+                        inMath=true;
+                    }
+                }
+            }
+            // special treatment for math env as that be be toggled with special symbols
+            if(!passed && envTriggers.contains("math")){
+                QVector<QParenthesis>parenthesis=line.parentheses();
+
+                for(int i=0;i<parenthesis.size();++i){
+                    QParenthesis &p=parenthesis[i];
+                    if(p.id==61){
+                        if(p.offset<column){
+                            inMath=(p.role & QParenthesis::Open)>0;
+                        }
+                        if(p.offset>=column){
+                            break;
+                        }
+                    }
+                }
+                if(!inMath){
+                    continue; // skip further trigger checks
+                }else{
+                    passed=true;
+                }
+            }
+            if(!passed)
+                continue; // skip further trigger checks, no valid env found
+        }
         const QRegularExpression &r = m.triggerRegex;
         QRegularExpressionMatch match=r.match(prev);
         if (match.hasMatch()) {
@@ -1826,7 +1894,6 @@ void LatexEditorView::updateSettings()
 	QDocument::setWorkAround(QDocument::DisableFixedPitchMode, config->hackDisableFixedPitch);
 	QDocument::setWorkAround(QDocument::DisableWidthCache, config->hackDisableWidthCache);
 	QDocument::setWorkAround(QDocument::DisableLineCache, config->hackDisableLineCache);
-	QDocument::setWorkAround(QDocument::QImageCache, config->hackQImageCache);
 
 	QDocument::setWorkAround(QDocument::ForceQTextLayout, config->hackRenderingMode == 1);
 	QDocument::setWorkAround(QDocument::ForceSingleCharacterDrawing, config->hackRenderingMode == 2);

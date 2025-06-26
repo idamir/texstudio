@@ -20,6 +20,10 @@ The conversation is stored on disk, so that results can be reused later on. This
 Local models can easily be set up via [llamafile](https://github.com/Mozilla-Ocho/llamafile). Please refer their help for details. TeXstudio expects the OpenAI API interface on 127.0.0.1:8080 to work which is the default for llamafile, hence the llamafile needs to be started manually next to TeXstudio.
 Local models do not leak information to providers. A powerful GPU is recommended to get reasonable response times.
 
+By default, the system prompt is `text:'''%txsSelectedText%'''`
+`%txsSelectedText%` will be replaced by txs by the actual selected text in the editor before sending it to the AI provider.
+The system prompt can be tweaked to deliver better results, however the construct `text:'''%txsSelectedText%'''` should be kept in the system prompt, otherwise the selected text is unknown to the AI.
+
 ### Usage
 
 The ai chat assistant is called via the menu "Wizards/AI chat...".
@@ -260,7 +264,7 @@ the following magic comments:
 
 Many users define personal commands, settings, colors, etc in a personal file which is included into the latex document via `\include` or `\input`.
 TeXstudio can read the files and take up the defined commands for completion but is does not have any understanding of the arguments like if they are labels, texts or math elements.
-The syntactital definition is given to TeXstudio via [cwl files](background.md#description-of-the-cwl-format). 
+The syntactical definition is given to TeXstudio via [cwl files](background.md#description-of-the-cwl-format). 
 TeXstudio searches for local cwl files for local packages. To notify TeXstudio that a package is local, the package name has to be given as a relative path, e.g. `\usepackage{./myPackage}`.
 TeXstudio looks for `./myPackage.cwl` and loads it if present.
 
@@ -356,6 +360,10 @@ inserted as:
 
 \end{environment}
 ```
+### AI queries
+
+These queries are sent to the ai chat assistant, see [here](#ai-chat-assistant). This allows to regular use standard request like `shorten text`.
+The query is directly executed, the result is shown on the chat assistant dialog, so that the user can decide to use or ignore it.
 
 ### Script Macros
 
@@ -502,6 +510,7 @@ The following table gives an overview on the provided commands.
 | app.createUIFromString(string, \[parent\]) | Creates a QWidget\* described in the string |
 | app.slowOperationStarted()/slowOperationEnded() | Notify txs about the start/end of a slow operation to temporary disable the endless loop detection. |
 | app.simulateKeyPress(shortcut) | Trigger a KeyPress event for the given shortcut, e.g. `app.simulateKeyPress("Shift+Up")`. *Note*: this is mainly intended for shortcuts and navigation. Currently, it does not support all functions of a KeyPress event. In particular, you cannot type any text. |
+| app.aiChat(query) | start the ai chat assistant. If query is not empty, query is executed and the result is shown in the chat assistant, like ai query macros, see [macro](#ai-queries) |
 | new UniversalInputDialog() | Creates a new dialog |
 | dialog.add(defaultValue, \[description, \[id\]\]) | Adds a new variable with the given default value, optional description and id to the dialog; and returns the corresponding qt component. A string default value becomes a QLineEdit, a number a QSpinBox and an array a QComboBox. |
 | dialog.get(nr/id) | Returns the current value of the nr-th added variable or the variable with a certain id. |
@@ -608,6 +617,7 @@ expression of the pattern `(?[scope-type]:...)`.
 | `(?language:...)`       | The macro is only active if the highlighting of the document matches the given language.<br> Example: `(?language:latex)` |
 | `(?highlighted-as:...)` | Restrict the macro to certain highlighted environments. The possible values correspond to the list on the syntax highlighting config page.<br>Example: `(?highlighted-as:numbers,math-delimiter,math-keyword)` |
 | `(?not-highlighted-as:...)` |  Similar to `(?highlighted-as:...)`, but the macro is deactivated in the given environments. |
+| `(?inEnv:...)` | Restrict the macro to certain environments. Only the latest environment is checked in case of nested environments. Environments are only detected in the lines between "\begin"/"\end", excluding the lines that contain those commands! It also checks for aliases, i.e. all math type environments are aliased as "math" as well. "math" is also detected in symbol started mathmode like $...$.<br>Example: `(?inEnv:math)` |
 
 You may combine `(?language:...)` and `(?highlighted-as:...)`
 expressions. However, combing `(?highlighted-as:...)` and

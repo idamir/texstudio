@@ -17,7 +17,7 @@ public:
 	                      ST_FILE_SAVED = 0x40, ST_FILE_CLOSED = 0x80, ST_MASTER_CHANGED = 0x100,
 	                      ST_AFTER_TYPESET = 0x200, ST_AFTER_COMMAND_RUN = 0x400
 	                    };
-	enum Type { Snippet, Environment, Script };
+    enum Type { Snippet, Environment, Script, AIQuery };
 
 	Q_DECLARE_FLAGS(SpecialTriggers, SpecialTrigger)
 	Macro();
@@ -54,7 +54,10 @@ public:
 	void parseTriggerLanguage(QLanguageFactory *langFactory);
 	bool isActiveForTrigger(SpecialTrigger trigger) const;
 	bool isActiveForLanguage(QLanguageDefinition *lang) const;
-	bool isActiveForFormat(int format) const;
+    bool hasFormatTriggers() const;
+    QList<int>getFormatTriggers() const;
+    QList<int>getFormatExcludeTriggers() const;
+    QStringList getTriggerInEnvs() const;
 
     bool load(const QString &fileName);
     bool loadFromText(const QString &text);
@@ -76,6 +79,8 @@ private:
 	QList<int> triggerFormats;
 	QString triggerFormatExcludesUnprocessed;
 	QList<int> triggerFormatExcludes;
+
+    QStringList triggerInEnvs;
 
     QString m_shortcut;
 };

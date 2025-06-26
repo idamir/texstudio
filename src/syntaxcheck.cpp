@@ -186,6 +186,17 @@ void SyntaxCheck::run()
 			//if excessCols has changed the subsequent lines need to be rechecked.
             // don't on initial check
             if (cookieChanged) {
+                // handle runAway arguments
+                for (int i = 0; i < activeEnv.size(); i++) {
+                    if (activeEnv[i].runAway == 0) {
+                        activeEnv.remove(i);
+                        --i;
+                    }else{
+                        if(activeEnv[i].runAway>0){
+                            activeEnv[i].runAway = activeEnv[i].runAway - 1;
+                        }
+                    }
+                }
 				QVariant env;
 				env.setValue(activeEnv);
 				newLine.dlh->setCookie(QDocumentLine::STACK_ENVIRONMENT_COOKIE, env);
@@ -762,7 +773,8 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
                 // invalidates math env as active
                 Environment env;
                 env.name = "text";
-                env.id = 1; // to be changed
+                env.id = 1;
+                env.runAway = mRUNAWAYLIMIT;
                 env.dlh = dlh;
                 env.ticket = ticket;
                 env.level = tk.level;
@@ -1167,7 +1179,22 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
                     }
 					continue;
 				}
-
+                // special treatment { \\ } in tblr (multirow cell)
+                if(word=="\\\\" && activeEnv.top().name=="tblr"){
+                    // check if this token lies with braces/none
+                    bool skipToken=false;
+                    for(int j=i-1;j>=0;--j){
+                        Token tk2=tl.at(j);
+                        if(tk2.type==Token::braces && tk2.subtype==Token::none && tk2.start+tk2.length>tk.start){
+                            // inside braces, ignore
+                            skipToken=true;
+                            break;
+                        }
+                    }
+                    if(skipToken){
+                        continue;
+                    }
+                }
 				if ((word == "\\\\") || (word == "\\tabularnewline")) {
 					if (activeEnv.top().excessCol < (activeEnv.top().id - 1)) {
 						Error elem;
@@ -1408,6 +1435,9 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
 					if(options.startsWith("#")){
 						continue; // ignore type keys, like width#L
 					}
+                    if(options.endsWith("#c")){
+                        continue; // ignore values for syntax checking (#c)
+                    }
                     if(options.startsWith("%")){
                         if (!ltxCommands->possibleCommands[options].contains(word)) {
                             // special treatement for %color (mix)

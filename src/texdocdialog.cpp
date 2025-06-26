@@ -23,6 +23,7 @@ TexdocDialog::TexdocDialog(QWidget *parent,Help *obj) :
     ui->splitter_2->setSizes(QList<int>{static_cast<int>(0.3*w),static_cast<int>(0.7*w)});
 
 	checkTimer.setSingleShot(true);
+	ui->lineEditSearch->setClearButtonEnabled(true);
 	connect(&checkTimer, SIGNAL(timeout()), SLOT(checkDockAvailable()));
 	connect(ui->lineEditSearch, SIGNAL(textChanged(QString)),SLOT(tableSearchTermChanged(QString)));
 	connect(ui->tbPackages, SIGNAL(currentItemChanged(QTableWidgetItem *, QTableWidgetItem *)), SLOT(itemChanged(QTableWidgetItem *)));
@@ -171,7 +172,7 @@ void TexdocDialog::itemChanged(QTableWidgetItem* item)
                 langButton->setCheckable(true);
                 buttonGroup.addButton(langButton);
                 ui->languagesLayout->addWidget(langButton);
-                connect(langButton,&QPushButton::toggled,this,[=](){
+                connect(langButton,&QPushButton::toggled,this,[=, this](){
                     ui->packageDescriptions->setHtml(description.text);
                 });
                 langButton->setChecked(true);

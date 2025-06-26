@@ -57,6 +57,7 @@ UserMenuDialog::UserMenuDialog(QWidget *parent,  QString name, QLanguageFactory 
 	connect(ui.radioButtonNormal, SIGNAL(clicked()), SLOT(changeType()));
 	connect(ui.radioButtonEnvironment, SIGNAL(clicked()), SLOT(changeType()));
 	connect(ui.radioButtonScript, SIGNAL(clicked()), SLOT(changeType()));
+    connect(ui.radioButtonAIQuery, SIGNAL(clicked()), SLOT(changeType()));
 
 	//editor options
 	ui.tagEdit->setLayout(new QVBoxLayout());
@@ -312,6 +313,9 @@ void UserMenuDialog::setLanguageFromType(QTreeWidgetItem *current)
 		} else if (m.type==Macro::Environment) {
 			languages->setLanguage(codeedit->editor(), "Plain text");
 			ui.radioButtonEnvironment->setChecked(true);
+        } else if (m.type==Macro::AIQuery) {
+            languages->setLanguage(codeedit->editor(), "Plain text");
+            ui.radioButtonAIQuery->setChecked(true);
 		} else {
 			languages->setLanguage(codeedit->editor(), "(La)TeX Macro");
 			ui.radioButtonNormal->setChecked(true);
@@ -502,6 +506,10 @@ void UserMenuDialog::changeType()
             m.setType(Macro::Environment);
             languages->setLanguage(codeedit->editor(), "Plain text");
         }
+        else if (ui.radioButtonAIQuery->isChecked()) {
+            m.setType(Macro::AIQuery);
+            languages->setLanguage(codeedit->editor(), "Plain text");
+        }
         else if (ui.radioButtonScript->isChecked()) {
             m.setType(Macro::Script);
             languages->setLanguage(codeedit->editor(), ".qs");
@@ -577,10 +585,11 @@ void UserMenuDialog::abbrevChanged()
 void UserMenuDialog::triggerChanged()
 {
     // check if trigger is a valid regex
-    const QStringList fixedTriggers{"?txs-start","?new-file","?new-from-template","?load-file","?load-this-file","?save-file","?close-file","?master-changed","?after-typeset","?after-command-run"};
+    const QStringList fixedTriggers{"?txs-start","?new-file","?new-from-template","?load-file","?load-this-file","?save-file","?close-file","?master-changed","?after-typeset","?after-command-run","?highlighted-as","?not-highlighted-as","?language","?inEnv"};
     const QString text=ui.triggerEdit->text();
     QRegularExpression re(text);
-    if(!re.isValid() && !fixedTriggers.contains(text)){
+    bool fixedTriggerFound=std::any_of(fixedTriggers.constBegin(),fixedTriggers.constEnd(),[&text](const QString elem){return text.contains(elem);});
+    if(!re.isValid() && !fixedTriggerFound){
         // syntax error in regex
         ui.triggerEdit->setToolTip(re.errorString()+tr(" (col. %1)").arg(re.patternErrorOffset()));
         ui.triggerEdit->setStyleSheet("QLineEdit { background: orange; color : black; }");

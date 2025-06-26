@@ -113,6 +113,13 @@ void Macro::init(const QString &nname, Macro::Type ntype, const QString &ntag, c
 			triggerFormatExcludesUnprocessed = realtrigger.mid(start, closing - start).replace(',', '|').replace(" ", ""); //handle later, when the formats are loaded
 			realtrigger.remove(0, closing + 1);
 		}
+        if (realtrigger.startsWith("(?inEnv:")) {
+            int start = realtrigger.indexOf(':') + 1;
+            int closing = realtrigger.indexOf(")");
+            QString envs= realtrigger.mid(start, closing - start).replace(',', '|').replace(" ", ""); //handle later, when the formats are loaded
+            triggerInEnvs = envs.split("|");
+            realtrigger.remove(0, closing + 1);
+        }
 
 	} while (lastLen != realtrigger.length());
 
@@ -149,6 +156,8 @@ QString Macro::snippet() const
 		return tag;
 	else if (type == Environment)
 		return "\\begin{" + tag + "}";
+    else if (type == AIQuery)
+        return tag;
 	return QString();
 }
 
@@ -185,6 +194,7 @@ QString Macro::typedTag() const
     case Snippet: return tag;
     case Environment: return "%" + tag;
     case Script: return "%SCRIPT\n" + tag;
+    case AIQuery: return "%AIQUERY\n" + tag;
 	default:
 		qDebug() << "unknown macro type" << type;
 	}
@@ -216,6 +226,9 @@ QString Macro::parseTypedTag(QString typedTag, Macro::Type &retType)
 	if (typedTag.startsWith("%SCRIPT\n")) {
 		retType = Script;
 		return typedTag.mid(8);
+    } else if (typedTag.startsWith("%AIQUERY\n")){
+        retType = AIQuery;
+        return typedTag.mid(9);
 	} else if (typedTag.startsWith('%') && (typedTag.length() == 1 || typedTag.at(1).isLetter())) {
 		// Note: while % is an empty environemnt, reserved sequences like %%, %<, %| are snippets.
 		retType = Environment;
@@ -248,11 +261,39 @@ bool Macro::isActiveForLanguage(QLanguageDefinition *lang) const
 	return triggerLanguage.isEmpty() || triggerLanguages.contains(lang);
 }
 
-bool Macro::isActiveForFormat(int format) const
+/*!
+ * \brief check if any format trigger are set
+ * Included or excluded formats are considered
+ * \return
+ */
+bool Macro::hasFormatTriggers() const
 {
-	if (!triggerFormatsUnprocessed.isEmpty() || !triggerFormatExcludesUnprocessed.isEmpty()) (const_cast<Macro *>(this))->initTriggerFormats();
-	// if no trigger format is specified, the macro is active for all formats.
-	return (triggerFormats.isEmpty() || triggerFormats.contains(format)) && (!triggerFormatExcludes.contains(format));
+    if (!triggerFormatsUnprocessed.isEmpty() || !triggerFormatExcludesUnprocessed.isEmpty()) (const_cast<Macro *>(this))->initTriggerFormats();
+    return !triggerFormats.isEmpty() || !triggerFormatExcludes.isEmpty();
+}
+/*!
+ * \brief return the list of format triggers
+ * \return
+ */
+QList<int> Macro::getFormatTriggers() const
+{
+    return triggerFormats;
+}
+/*!
+ * \brief return the list of format triggers which should be excluded
+ * \return
+ */
+QList<int> Macro::getFormatExcludeTriggers() const
+{
+    return triggerFormatExcludes;
+}
+/*!
+ * \brief return the list of environment trigger
+ * \return
+ */
+QStringList Macro::getTriggerInEnvs() const
+{
+    return triggerInEnvs;
 }
 
 bool Macro::save(const QString &fileName) const {
@@ -263,7 +304,11 @@ bool Macro::save(const QString &fileName) const {
     QJsonObject dd;
     dd.insert("formatVersion",2);
     dd.insert("name",name);
-    dd.insert("type", ( type==Script ? "Script" : ( type==Environment ? "Environment" : "Snippet" ) ) );
+    QString typeName=( type==Script ? "Script" : ( type==Environment ? "Environment" : "Snippet" ) );
+    if(type==AIQuery){
+        typeName="AIQuery";
+    }
+    dd.insert("type", typeName );
     dd.insert("tag",QJsonArray::fromStringList(tag.split("\n")));
     dd.insert("description",QJsonArray::fromStringList(description.split("\n")));
     dd.insert("abbrev",abbrev);
@@ -337,6 +382,9 @@ bool Macro::loadFromText(const QString &text)
       case 2: {
         QString qtype = rawData.value("type");
         typ = ( qtype=="Script" ? Script : ( qtype=="Environment" ? Environment : Snippet ) );
+        if(qtype=="AIQuery"){
+            typ=AIQuery;
+        }
         tag = rawData.value("tag");
         break;
       }

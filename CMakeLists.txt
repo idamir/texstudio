@@ -1,17 +1,29 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.10.0)
 
-project(TeXstudio VERSION 4.8.6 LANGUAGES C CXX)
+project(TeXstudio VERSION 4.8.8 LANGUAGES C CXX)
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 set(CMAKE_DEBUG_POSTFIX "d")
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-if(APPLE)
-set(CMAKE_CXX_STANDARD 20)
+
+option(TEXSTUDIO_ENABLE_CPP23_CRASH_HANDLER "Enable/Disable internal crash handler" OFF)
+if(${TEXSTUDIO_ENABLE_CPP23_CRASH_HANDLER})
+	message(STATUS "Use c++23 crash handler.")
+	set(CMAKE_CXX_STANDARD 23)
+	set(CMAKE_CXX_STANDARD_REQUIRED ON)
+	set(CMAKE_CXX_EXTENSIONS OFF)
+	set(CMAKE_CXX_FLAGS "-g1 -O2 -Wall -Wextra")
 else()
-set(CMAKE_CXX_STANDARD 17)
+    if(APPLE)
+    set(CMAKE_CXX_STANDARD 20)
+    else()
+    set(CMAKE_CXX_STANDARD 17)
+    endif()
 endif()
+
+
 
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -29,6 +41,7 @@ else()
 	set(VARPREFIX_WC_LATEST_TAG_LONG "${CMAKE_PROJECT_VERSION}+0+0")
 endif()
 include(cmake/project_version.cmake)
+include(GNUInstallDirs)
 
 if(MSVC)
 	set(ADDITIONAL_DEFINITIONS ${ADDITIONAL_DEFINITIONS} -D_CRT_SECURE_NO_WARNINGS -D_UNICODE -DUNICODE)
@@ -40,7 +53,7 @@ endif()
 
 if(WIN32 AND NOT MSVC)
         add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-fpermissive>)
-        add_compile_options(-Wa,-mbig-obj)
+        #add_compile_options(-Wa,-mbig-obj)
 endif()
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
@@ -225,9 +238,14 @@ endif()
 # Options
 if(NOT MSVC)
 	option(TEXSTUDIO_ENABLE_CRASH_HANDLER "Enable/Disable internal crash handler" ON)
-	if(NOT ${TEXSTUDIO_ENABLE_CRASH_HANDLER})
+	if(${TEXSTUDIO_ENABLE_CPP23_CRASH_HANDLER})
+	    set(ADDITIONAL_DEFINITIONS ${ADDITIONAL_DEFINITIONS} -DCPP_CRASH_HANDLER)
+	    set(ADDITIONAL_DEFINITIONS ${ADDITIONAL_DEFINITIONS} -DNO_CRASH_HANDLER)
+	else()
+	    if(NOT ${TEXSTUDIO_ENABLE_CRASH_HANDLER})
 		message(STATUS "Internal crash handler disabled as you wish.")
 		set(ADDITIONAL_DEFINITIONS ${ADDITIONAL_DEFINITIONS} -DNO_CRASH_HANDLER)
+	    endif()
 	endif()
 else()
 	set(ADDITIONAL_DEFINITIONS ${ADDITIONAL_DEFINITIONS} -DNO_CRASH_HANDLER)
@@ -344,6 +362,12 @@ else()
 endif()
 add_subdirectory(src/pdfviewer)
 
+# set prefix path on unix
+if(UNIX)
+    set(ADDITIONAL_DEFINITIONS ${ADDITIONAL_DEFINITIONS} -DPREFIX="${CMAKE_INSTALL_PREFIX}")
+    set(ADDITIONAL_DEFINITIONS ${ADDITIONAL_DEFINITIONS} -DCMAKE_INSTALL_DATADIR="${CMAKE_INSTALL_DATADIR}")
+endif()
+
 # Build texstudio application
 add_executable(texstudio ${SOURCE_FILES} ${HEADER_FILES} ${RESOURCE_FILES} ${FORM_FILES} ${OSX_FILES} ${manual} ${images} ${static} ${static_scripts} ${static_styles} ${design_static}
 )
@@ -365,6 +389,10 @@ endif()
 
 if(TEXSTUDIO_BUILD_ADWAITA)
     target_link_libraries(texstudio PRIVATE Qt${QT_VERSION_MAJOR}::DBus)
+endif()
+
+if(${TEXSTUDIO_ENABLE_CPP23_CRASH_HANDLER})
+    target_link_libraries(texstudio PRIVATE stdc++exp)
 endif()
 
 set_source_files_properties(${OSX_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
@@ -451,8 +479,6 @@ endif()
 
 ## installation
 
-include(GNUInstallDirs)
-
 install(TARGETS texstudio DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 if(UNIX AND NOT APPLE AND NOT HAIKU)
@@ -481,26 +507,26 @@ if(UNIX)
 		PATTERN *
 	)
 	install(DIRECTORY utilities/manual/build/html/
-		DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio
+                DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/texstudio
 		FILES_MATCHING
 		PATTERN *.html
 	)
 	install(DIRECTORY utilities/manual/build/html/_images
-		DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio
+                DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/texstudio
 		FILES_MATCHING
 		PATTERN *.webp
 	)
 	install(DIRECTORY utilities/manual/build/html/_sphinx_design_static
-		DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio
+                DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/texstudio
 	)
 	install(DIRECTORY utilities/manual/build/html/_static
-		DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio
+                DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/texstudio
 	)
-	install(FILES utilities/manual/build/html/searchindex.js DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
-	install(FILES utilities/latex2e.html DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
-	install(FILES utilities/latex2e.css DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
-	install(FILES utilities/list.png DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
-	install(FILES utilities/AUTHORS DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
-	install(FILES utilities/COPYING DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
-	install(FILES utilities/manual/source/CHANGELOG.md DESTINATION ${CMAKE_INSTALL_DATADIR}/texstudio)
+        install(FILES utilities/manual/build/html/searchindex.js DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/texstudio)
+        install(FILES utilities/latex2e.html DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/texstudio)
+        install(FILES utilities/latex2e.css DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/texstudio)
+        install(FILES utilities/list.png DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/texstudio)
+        install(FILES utilities/AUTHORS DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/texstudio)
+        install(FILES utilities/COPYING DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/texstudio)
+        install(FILES utilities/manual/source/CHANGELOG.md DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/texstudio)
 endif()

@@ -98,15 +98,32 @@ LatexEditorView *TxsTabWidget::editorAt(QPoint p) {
 void TxsTabWidget::setActive(bool active) {
 	if (active == m_active) return;
 	m_active = active;
-    QString baseStyle="";
-	if (active) {
-		setStyleSheet(baseStyle);// + " QTabBar {font-weight: bold;} QTabBar::tab:!selected {font-weight: normal;}");
-	} else {
-		setStyleSheet(baseStyle + " QTabBar {color: darkgrey;}");
-	}
+    updateStyle();
     if(active){
         if(currentEditor())
             currentEditor()->setFocus();
+    }
+}
+/*!
+ * \brief update style to change appearance of close buttons
+ */
+void TxsTabWidget::updateStyle()
+{
+    QString baseStyle="";
+#ifdef Q_OS_MACOS
+    if(interfaceStyle == "macOS" || interfaceStyle.isEmpty()){
+        // work-around on mac for disapearing close button on tabs
+        if(darkMode){
+            baseStyle = "QTabBar::close-button {image: url(:/images-ng/close-tab_dm.svg)} QTabBar::close-button:hover {image: url(:/images-ng/close-tab-hover.svgz)}";
+        }else{
+            baseStyle = "QTabBar::close-button {image: url(:/images-ng/close-tab.svgz)} QTabBar::close-button:hover {image: url(:/images-ng/close-tab-hover.svgz)}";
+        }
+    }
+#endif
+    if (m_active) {
+        setStyleSheet(baseStyle);// + " QTabBar {font-weight: bold;} QTabBar::tab:!selected {font-weight: normal;}");
+    } else {
+        setStyleSheet(baseStyle + " QTabBar {color: darkgrey;}");
     }
 }
 
@@ -127,6 +144,11 @@ bool TxsTabWidget::currentEditorViewIsFirst() const {
  */
 bool TxsTabWidget::currentEditorViewIsLast() const {
 	return (currentIndex() >= count()-1);
+}
+
+void TxsTabWidget::setInterfaceStyle(const QString style)
+{
+    interfaceStyle=style;
 }
 /*!
  * \brief activate tab to the right

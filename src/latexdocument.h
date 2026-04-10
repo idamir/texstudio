@@ -177,7 +177,7 @@ public:
 	QDocumentLine lineFromLineSnapshot(int lineNumber);
 	int lineToLineSnapshotLineNumber(const QDocumentLine &line);
 
-	bool remeberAutoReload; //remember whether doc is auto reloaded while hidden (and auto reload is always activated).
+	bool rememberAutoReload; //remember whether doc is auto reloaded while hidden (and auto reload is always activated).
 
 	bool mayHaveDiffMarkers;
 
@@ -192,6 +192,7 @@ public:
     void getEnv(int lineNumber, StackEnvironment &env) const; // get Environment for syntax checking, number of cols is now part of env
 	Q_INVOKABLE QString getLastEnvName(int lineNumber); // special function to use with javascript (insert "\item" from menu)
     bool isEnvClosed(const Environment &env);
+    QString getCmdfromSpecialArgToken(const Token &tk) const;
 
     void enableSyntaxCheck(bool enable);
     Q_INVOKABLE bool isSubfileRoot();
@@ -210,6 +211,8 @@ public:
         QStringList addedUserSnippets;
         QStringList lstFilesToLoad;
         QStringList removedIncludes;
+        QStringList removedLabels;
+        QStringList addedLabels;
         QList<LatexDocument *> addedIncludes;
         QStringList oldBibs;
         bool completerNeedsUpdate = false;
@@ -237,6 +240,9 @@ public:
 
     void setHideNonTextGrammarErrors(bool hide);
     void setGrammarFormats(const QList<int> &formats);
+
+    void enableRainbowDelimiters(bool enable);
+    void setDelimiterFormats(const QList<int> &formats);
 
 private:
 	QString fileName; //absolute
@@ -289,7 +295,8 @@ private:
     bool m_cachedDataOnly=false;
 
     bool m_hideNonTextGrammarErrors=true;
-    QList<int> m_grammarFormats;
+    bool m_enableRainbowDelimiters=true;
+    QList<int> m_grammarFormats,m_rainbowFormats;
 
 #ifndef QT_NO_DEBUG
 public:

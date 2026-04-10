@@ -202,6 +202,7 @@ QString findResourceFile(const QString &fileName, bool allowOverride, QStringLis
 	searchFiles << PREFIX"/share/texstudio/"; //X_11
 	searchFiles << QCoreApplication::applicationDirPath() + "/../share/texstudio/"; // relative path for appimage
     searchFiles << QCoreApplication::applicationDirPath() + "/../usr/share/texstudio/"; // relative path for appimage
+    searchFiles << QCoreApplication::applicationDirPath() + "/../usr/share/doc/texstudio/"; // relative path for appimage
 	if (fileName.endsWith(".html")) searchFiles << PREFIX"/share/doc/texstudio/html/"; //for Debian package
 	searchFiles << PREFIX"/share/doc/texstudio/"; //for Debian package
 #if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
@@ -262,6 +263,7 @@ QString quoteSpaces(const QString &s)
 int modernStyle;
 int iconTheme;
 bool darkMode;
+bool ignoreSystemPalette;
 bool useSystemTheme;
 
 /*!
@@ -324,7 +326,7 @@ QIcon getRealIcon(const QString &icon)
 {
 	if (icon.isEmpty()) return QIcon();
 	if (icon.startsWith(":/")) return QIcon(icon);
-	if (useSystemTheme && QIcon::hasThemeIcon(icon)) return QIcon::fromTheme(icon);
+    if (useSystemTheme && !ignoreSystemPalette && QIcon::hasThemeIcon(icon)) return QIcon::fromTheme(icon); // ignore system palette needs to use txs icons as the system icon are colored due to system palette
 	//return QIcon(getRealIconFile(icon.contains(".")?icon:(icon+".png")));
 	QString name = getRealIconFile(icon);
 	QIcon ic = QIcon(name);

@@ -16,6 +16,9 @@ struct PDFDocumentConfig;
 class GrammarCheckerConfig;
 class InternalTerminalConfig;
 
+inline const QString TXS_AUTO_REPLACE_QUOTE_OPEN = "TMX:Replace Quote Open";
+inline const QString TXS_AUTO_REPLACE_QUOTE_CLOSE = "TMX:Replace Quote Close";
+
 #ifdef Q_OS_WIN
 const QKeySequence::SequenceFormat SHORTCUT_FORMAT = QKeySequence::PortableText;
 #else
@@ -219,8 +222,19 @@ public:
     QStringList ai_knownModels;
     QString ai_systemPrompt;
     QString ai_temperature;
+    int ai_maxTokens;
     bool ai_recordConversation;
     bool ai_streamResults;
+    bool ai_useFunctions;
+    int ai_width;
+    int ai_height;
+    qreal ai_splitter;
+
+    // collaborative editing
+    int ce_tool;
+    QString ce_toolPath;
+    QString ce_clientPath; // folder where client data is located
+    QString ce_userName;
 
 	//debug
 #ifndef QT_NO_DEBUG

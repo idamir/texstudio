@@ -116,6 +116,14 @@ Line Wrapping
     They can also be wrapped after a defined number of characters which is not always the same horizontal width if the characters are not monospaced.
     Or hard line wrapping after a number of characters can be selected. This inserts a new line when the number of characters exceeds a defined values. This insertion is done when saving a document and only for changed lines.
 
+Show Indent Guides
+:   Shows indentation by drawing a line on the start column of indented lines.
+    These guides are common in programming editors and can be activated in txs as well. (default: on)
+
+Use Rainbow colored braces
+:   Txs color each level of brace with a different color, so that is easier to discern which opening and closing brace match.
+    Only braces are colored. (default: off)
+
 Auto save all files
 :   txs allows to automatically save all files every few minutes
 
@@ -247,6 +255,8 @@ Examples:
     document (identical to **%**).
 -   **?me** expands to the filename of the root document (e.g.
     example.tex).
+-   **?c:me** expands to the filename of the current document (e.g.
+    example.tex).
 -   **?p{pdf}:ame** expands to the absolute pathname of the output PDF
     file (e.g. /some/directory/mydocument.pdf).
 -   ?\*.aux expands once for each .aux file in the current directory.
@@ -275,15 +285,15 @@ Below you can find a list of commands for some common viewers. Of
 course, you have to replace *(your program path)* with the path of the
 program on your computer, if you want to use a command.
 
-#### Sumatra
+#### Sumatra (Windows only)
 
 Launch Sumatra from TeXstudio and configure Sumatra for inverse search
-: `"(your sumatra path)" -reuse-instance -inverse-search "\"*(your TeXstudio path)*\" \"%%f\" -line %%l" "?am.pdf"`
+: `"(your sumatra path)" -reuse-instance -forward-search "?c:am.tex" @ -inverse-search "\\"(your texstudio path)>\\" \\"%%f\\" -line %%l" "?am.pdf"`
 
-Jump to a line in a running Sumatra (Windows only):
+Jump to a line in a running Sumatra:
 : `dde:///SUMATRA/control/[ForwardSearch("?am.pdf","?c:am.tex",@,0,0,1)]`
 
-Launch Sumatra if it is not running and jump to a line in it (Windows only)
+Launch Sumatra if it is not running and jump to a line in it
 : `dde:///(your sumatra path):SUMATRA/control/[ForwardSearch("?am.pdf","?c:am.tex",@,0,0,1)]`
 
 Launch TeXstudio from Sumatra
@@ -876,3 +886,41 @@ This is a more interactive approach than choosing SVN revisions directly
 via a menu command, see [here](advanced.md#gitsvn-support).
 
 ![Configure SVN](images/configure_svn.webp)
+
+## Configuring collaboration
+
+TeXstudio allows collaborative editing (also known as pair programming) with the help of the program [teamtype](https://github.com/teamtype/teamtype).
+This program, available for macOS and linux needs to be downloaded and stored on your computer.
+
+\"Path\" needs to point to the teamtype program.
+
+\"Client Folder\" needs to be an empty or non-existent folder which can be used to sync other peoples data on your computer. It will copy all needed files from the host who invites for collaboration.
+
+\"User Name\" currently unused.
+
+![Configure Collaboration](images/configure_collaboration.webp)
+
+## Set-up scenarios
+### Separate build folder
+Some users prefer not to clutter the source folder with build files (aux files etc.).
+TexLive,Miktex and TeXstudio support this scenario but TeXstudio needs to be configured manually for this.
+
+The following configuration assumes pdflatex as compiler and places all build files in a subfolder "build" which sits in the source folder.
+
+1. add `--output-directory=build` to the pdflatex command (options/commands)
+1. add "build" as additional search folder into log-paths (options/build/build options:log file)
+1. add "build" as additional search folder into pdf-paths (options/build/build options:pdf file)
+
+The resulting configuration should look similar to this:
+![Command configuration](images/conf_commands_outputDirectory.png)
+
+![Build configuration](images/conf_build_outputDirectory.png)
+
+## Hidden settings
+Some very rarely needed settings are not available via GUI but only directly in the texstudio.ini file.
+Here is a list of some of those settings.
+
+| Setting name | Description | Default setting |
+| ------------ | ----------- | --- |
+| LogView\WarnIfFileSizeLargerMB | Give out a warning if the log file size is larger than limit | 2.0 (MB) |
+| RememberChoiceLargeFile | Remembers user choice what to do if the log file is large | 0 (ask) |

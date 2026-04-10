@@ -75,6 +75,7 @@ void SymbolWidget::setupData(SymbolListModel *model)
 	mostUsedProxyModel = new MostUsedProxyModel;
 	mostUsedProxyModel->setSourceModel(symbolListModel);
 	mostUsedProxyModel->setSortRole(SymbolListModel::UsageCountRole);
+    mostUsedProxyModel->sort(0, Qt::DescendingOrder);
 
 	categoryFilterProxyModel = new QSortFilterProxyModel;
 	categoryFilterProxyModel->setSourceModel(symbolListModel);
@@ -180,7 +181,7 @@ void SymbolWidget::initSymbolListView(SymbolListView *symbolListView){
 	connect(symbolListView, SIGNAL(clicked(QModelIndex)), this, SLOT(symbolClicked(QModelIndex)));
 	connect(symbolListView, SIGNAL(addToFavorites(QString)), symbolListModel, SLOT(addFavorite(QString)));
 	connect(symbolListView, SIGNAL(removeFromFavorites(QString)), symbolListModel, SLOT(removeFavorite(QString)));
-	connect(symbolListView, SIGNAL(insertSymbol(QString)), this, SIGNAL(insertSymbol(QString)));
+    connect(symbolListView, &SymbolListView::insertSymbol, this, &SymbolWidget::insertSymbolFromContext);
 }
 
 void SymbolWidget::addHLine(QVBoxLayout *vLayout)
@@ -231,17 +232,27 @@ void SymbolWidget::setCategoryFilterFromAction()
 	categoryFilterProxyModel->setFilterFixedString(act->data().toString());
 }
 
-void SymbolWidget::symbolClicked(const QModelIndex &index)
+void SymbolWidget::symbolClicked(const QModelIndex &index, QString command)
 {
-	QString command;
-	if (insertUnicode) command = index.model()->data(index, SymbolListModel::UnicodeRole).toString();
-	if (command.isEmpty()) command = index.model()->data(index, SymbolListModel::CommandRole).toString();
+    if(command.isEmpty()){
+        if (insertUnicode) command = index.model()->data(index, SymbolListModel::UnicodeRole).toString();
+        if (command.isEmpty()) command = index.model()->data(index, SymbolListModel::CommandRole).toString();
+    }
 	QString id = index.model()->data(index, SymbolListModel::IdRole).toString();
 	if (!id.isEmpty()) {
 		symbolListModel->incrementUsage(id);
 	}
 	emit insertSymbol(command);
-	mostUsedProxyModel->invalidate();
-	mostUsedProxyModel->sort(0, Qt::DescendingOrder);
+    //mostUsedProxyModel->invalidate();
+    mostUsedProxyModel->sort(0, Qt::DescendingOrder);
+}
+
+void SymbolWidget::insertSymbolFromContext(const QString &cmd)
+{
+    // find the index from symbol id
+    QModelIndex index=symbolListModel->indexFromCommand(cmd);
+    if(!index.isValid()) return;
+    // perform insertion via symbolClicked
+    symbolClicked(index,cmd);
 }
 

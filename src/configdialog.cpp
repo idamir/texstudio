@@ -11,7 +11,11 @@
 
 #include "qjsonarray.h"
 #ifdef INTERNAL_TERMINAL
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+#include <qtermwidget6/qtermwidget.h>
+#else
 #include <qtermwidget5/qtermwidget.h>
+#endif
 #endif
 
 #include "configdialog.h"
@@ -503,6 +507,7 @@ ConfigDialog::ConfigDialog(QWidget *parent): QDialog(parent,Qt::Dialog|Qt::Windo
 	fmConfig->addCategory(tr("LaTeX checking")) << "braceMatch" << "braceMismatch" << "latexSyntaxMistake" << "referencePresent" << "referenceMissing" << "referenceMultiple" << "citationPresent" << "citationMissing" << "packagePresent" << "packageMissing" << "temporaryCodeCompletion";
 	fmConfig->addCategory(tr("Language checking")) << "spellingMistake" << "wordRepetition" << "wordRepetitionLongRange" << "badWord" << "grammarMistake" << "grammarMistakeSpecial1" << "grammarMistakeSpecial2" << "grammarMistakeSpecial3" << "grammarMistakeSpecial4";
 	fmConfig->addCategory(tr("Line highlighting"))     << "line:error" << "line:warning" << "line:badbox" << "line:bookmark" << "line:bookmark0" << "line:bookmark1" << "line:bookmark2" << "line:bookmark3" << "line:bookmark4" << "line:bookmark5" << "line:bookmark6"  << "line:bookmark7" << "line:bookmark8" << "line:bookmark9" << "current";
+    fmConfig->addCategory(tr("Delimiter highlighting")) << "braceLevel0"  << "braceLevel1"  << "braceLevel2"  << "braceLevel3"  << "braceLevel4"  << "braceLevel5" << "braceLevel6" << "braceLevel7";
 	fmConfig->addCategory(tr("Search")) << "search" << "replacement" << "selection";
 	fmConfig->addCategory(tr("Diff")) << "diffDelete" << "diffAdd" << "diffReplace";
 	fmConfig->addCategory(tr("Preview")) << "previewSelection";
@@ -558,7 +563,8 @@ ConfigDialog::ConfigDialog(QWidget *parent): QDialog(parent,Qt::Dialog|Qt::Windo
 #else
 		CONTENTS_DISABLED
 #endif
-	);
+    );
+    createIcon(tr("Collaborative Editing"), getRealIcon("config_editor"));
     // tweak all comboboxes in adv. editor pane to not change on scroll wheel as it messes with scrolling through the pane (#2977)
     tweakFocusSettings(ui.scrollAreaWidgetContents_2->children());
 
@@ -607,6 +613,13 @@ ConfigDialog::ConfigDialog(QWidget *parent): QDialog(parent,Qt::Dialog|Qt::Windo
     connect(ui.pbResetAIURL, &QPushButton::clicked, this, &ConfigDialog::resetAIURL);
     // fill in the known models
     aiFillInKnownModels();
+    // enable/disable custom URL depending on aiProvider
+    enableCustomURLEditor(ui.cbAIProvider->currentIndex());
+
+    // collaborative editing
+    connect(ui.comboBoxCollaborativeTool, SIGNAL(currentIndexChanged(int)), this, SLOT(collaborativeEditingToolChanged(int))); // TODO: implement when needed
+    connect(ui.pbSelectCollaborativeToolPath, SIGNAL(clicked()), this, SLOT(browseCollaborativeToolPath()));
+    connect(ui.pbSelectClientFolder, &QPushButton::clicked, this, &ConfigDialog::browseCollaborativeClientFolder);
 
 }
 
@@ -683,33 +696,54 @@ void ConfigDialog::revertClicked()
  * \brief adapt model list depending on ai provider
  * \param[provider] 0: mistral
  * 1: openai
+ * 2: custom provider
  */
 void ConfigDialog::aiProviderChanged(int provider)
 {
-    bool activateCustomURL=false;
+    ui.cbAIPreferredModel->setEditable(true);
+    QLineEdit *modelLineEdit = ui.cbAIPreferredModel->lineEdit();
     switch(provider){
-    case 0:
+    case 1:
         ui.cbAIPreferredModel->clear();
-        ui.cbAIPreferredModel->addItem("open-mistral-7b");
-        ui.cbAIPreferredModel->addItem("open-mixtral-8x7b");
         ui.cbAIPreferredModel->addItem("mistral-small-latest");
         ui.cbAIPreferredModel->addItem("mistral-medium-latest");
         ui.cbAIPreferredModel->addItem("mistral-large-latest");
+        ui.cbAIPreferredModel->setCurrentIndex(0);
+        modelLineEdit->setPlaceholderText("Enter model name (e.g., open-mistral-7b)");
         break;
-    case 1:
+    case 2:
         ui.cbAIPreferredModel->clear();
         ui.cbAIPreferredModel->addItem("gpt-4o-mini");
         ui.cbAIPreferredModel->addItem("gpt-3.5-turbo");
         ui.cbAIPreferredModel->addItem("gpt-4");
         ui.cbAIPreferredModel->addItem("gpt-4o");
+        ui.cbAIPreferredModel->setCurrentIndex(0);
+        modelLineEdit->setPlaceholderText("Enter model name (e.g., gpt-4o)");
         break;
     default:
         ui.cbAIPreferredModel->clear();
-        activateCustomURL=true;
+        modelLineEdit->setPlaceholderText("Enter model name (e.g., llama-3.3-8B-Instruct)");
         break;
     }
-    ui.leAIAPIURL->setEnabled(activateCustomURL);
-    ui.pbResetAIURL->setEnabled(activateCustomURL);
+    enableCustomURLEditor(provider);
+}
+/*!
+ * \brief enable ui elements when provider is custom
+ * disable otherwise
+ * \param provider
+ */
+void ConfigDialog::enableCustomURLEditor(int provider)
+{
+    ui.leAIAPIURL->setEnabled(provider==3);
+    ui.pbResetAIURL->setEnabled(provider==3);
+    // make backgrond grey
+    QPalette palette = ui.leAIAPIURL->palette();
+    if(provider==3){
+        palette.setColor(QPalette::Base, palette.color(QPalette::Active, QPalette::Base));
+    }else{
+        palette.setColor(QPalette::Base,Qt::lightGray);
+    }
+    ui.leAIAPIURL->setPalette(palette);
 }
 /*!
  * \brief retieve the current list of available model from AI provider
@@ -717,30 +751,38 @@ void ConfigDialog::aiProviderChanged(int provider)
  */
 void ConfigDialog::retrieveModels()
 {
-    if(!ui.leAIAPIKey->text().isEmpty()){
-        QString provider=ui.cbAIProvider->currentText();
-        QString key=ui.leAIAPIKey->text();
-        QString url;
-        switch(ui.cbAIProvider->currentIndex()){
-        case 0:
-            url="https://api.mistral.ai/v1/models";
-            break;
-        case 1:
-            url="https://api.openai.com/v1/models";
-            break;
-        case 2:
-            url=ui.leAIAPIURL->text();
-            url=url.replace("chat/completions","models");
-            break;
-        default:
-            break;
-        }
-        QNetworkRequest request(url);
-        request.setRawHeader("Authorization",QString("Bearer "+key).toUtf8());
-        QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-        connect(manager,&QNetworkAccessManager::finished,this,&ConfigDialog::modelsRetrieved);
-        manager->get(request);
+
+    QString provider=ui.cbAIProvider->currentText();
+    QString key=ui.leAIAPIKey->text();
+    QString url;
+
+    switch(ui.cbAIProvider->currentIndex()){
+    case 1:
+        url="https://api.mistral.ai/v1/models";
+        break;
+    case 2:
+        url="https://api.openai.com/v1/models";
+        break;
+    case 3:
+        url=ui.leAIAPIURL->text();
+        url=url.replace("chat/completions","models");
+        break;
+    case 4:
+        url="https://api.anthropic.com/v1/models";
+        break;
+    case 5:
+        url="https://openrouter.ai/v1/models";
+        break;
+    default:
+        break;
     }
+    QNetworkRequest request(url);
+    if(!key.isEmpty()){
+        request.setRawHeader("Authorization",QString("Bearer "+key).toUtf8());
+    }
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    connect(manager,&QNetworkAccessManager::finished,this,&ConfigDialog::modelsRetrieved);
+    manager->get(request);
 }
 /*!
  * \brief reset custom ai api url to default
@@ -763,9 +805,17 @@ void ConfigDialog::modelsRetrieved(QNetworkReply *reply)
             models.append(value.toObject()["id"].toString());
         }
 
-        ui.cbAIPreferredModel->clear();
-        ui.cbAIPreferredModel->addItems(models);
         if(!models.isEmpty()){
+            QString currentText = ui.cbAIPreferredModel->currentText();
+            ui.cbAIPreferredModel->clear();
+            ui.cbAIPreferredModel->addItems(models);
+            ui.cbAIPreferredModel->setEditable(true);
+            
+            // Restore previous selection if it was custom
+            if(!currentText.isEmpty() && !models.contains(currentText)) {
+                ui.cbAIPreferredModel->setCurrentText(currentText);
+            }
+            
             ConfigManager *config = dynamic_cast<ConfigManager *>(ConfigManagerInterface::getInstance());
             if (config){
                 config->ai_knownModels=models;
@@ -785,6 +835,7 @@ void ConfigDialog::aiFillInKnownModels()
     if(!config->ai_knownModels.isEmpty()){
         ui.cbAIPreferredModel->clear();
         ui.cbAIPreferredModel->addItems(config->ai_knownModels);
+        ui.cbAIPreferredModel->setEditable(true);
         ui.cbAIPreferredModel->setCurrentText(config->ai_preferredModel);
     }
 }
@@ -896,6 +947,24 @@ void ConfigDialog::browsePathPdf()
 void ConfigDialog::browsePathCommands()
 {
 	UtilsUi::browse(ui.lineEditPathCommands, tr("Search Path for Commands"), "/", QDir::rootPath(), true);
+}
+
+void ConfigDialog::browseCollaborativeToolPath()
+{
+    UtilsUi::browse(ui.lineEditCollaborativeToolPath, tr("Search Path for Command"), "Executable (*)", QDir::rootPath(), false);
+}
+/*!
+ * \brief browse Collaborative Client Folder
+ */
+void ConfigDialog::browseCollaborativeClientFolder()
+{
+    UtilsUi::browse(ui.lineEditCollaborativeClientFolder, tr("Search Folder for Collaborative Client"), "/", QDir::rootPath(), false);
+}
+
+void ConfigDialog::collaborativeEditingToolChanged(int index)
+{
+    // no used
+    qDebug()<<"not implemented";
 }
 
 void ConfigDialog::updateDefaultDictSelection(const QString &dictPaths, const QString &newDefault)
@@ -1394,7 +1463,7 @@ void ConfigDialog::populateTerminalComboBoxFont(bool onlyMonospaced)
 
 void ConfigDialog::populateTerminalColorSchemes()
 {
-	ui.comboBoxTerminalColorScheme->addItems( QTermWidget::availableColorSchemes() );
+    ui.comboBoxTerminalColorScheme->addItems( QTermWidget::availableColorSchemes() );
 }
 #endif
 

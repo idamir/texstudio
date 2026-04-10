@@ -20,10 +20,13 @@ public:
 	void setCurrentEditor(LatexEditorView *edView);
 	LatexEditorView *editorAt(QPoint p);
 	void setActive(bool active);
+    void updateStyle();
 
 	bool isEmpty() const;
 	bool currentEditorViewIsFirst() const;
 	bool currentEditorViewIsLast() const;
+
+    void setInterfaceStyle(const QString style);
 
 signals:
 	void tabMoved(int from, int to);
@@ -57,6 +60,7 @@ private slots:
 
 private:
 	bool m_active;
+    QString interfaceStyle;
 };
 Q_DECLARE_METATYPE(TxsTabWidget *)
 

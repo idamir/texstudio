@@ -1,6 +1,6 @@
 # babel.sty
 # available from ctan
-# tbraun 4.11.2008; Matthew Bertucci 2025/06/10 for v25.10
+# tbraun 4.11.2008; Matthew Bertucci 2026/01/18 for v26.1
 
 #keyvals:\usepackage/babel#c
 %<language%>
@@ -20,16 +20,23 @@ silent
 hyphenmap=#off,first,select,other,other*
 bidi=#default,basic,basic-r,bidi-l,bidi-r
 layout=#sectioning,counters,counters*,lists,contents,footnotes,captions,columns,graphics,extras,pars,nopars
-provide=*
-provide+=*
-provide*=*
+provide=#*,!
+provide+=#*,!
+provide*=#*,!
 base
 ensureinfo=off
 #endkeyvals
 
 \selectlanguage{language}
+\selectlanguage[options%keyvals]{language}
 \begin{selectlanguage}{language}#*
+\begin{selectlanguage}[options%keyvals]{language}#*
 \end{selectlanguage}#*
+
+#keyvals:\selectlanguage,\begin{selectlanguage}
+nofiles
+#endkeyvals
+
 \foreignlanguage{language}{text}
 \foreignlanguage[options%keyvals]{language}{text}
 \begin{otherlanguage}{language}
@@ -37,8 +44,10 @@ ensureinfo=off
 \begin{otherlanguage*}{language}
 \begin{otherlanguage*}[options%keyvals]{language}
 \end{otherlanguage*}
+\otherlanguage*{language}
+\otherlanguage*[options%keyvals]{language}
 
-#keyvals:\foreignlanguage,\begin{otherlanguage*}
+#keyvals:\foreignlanguage,\begin{otherlanguage*},\otherlanguage*
 date
 captions
 #endkeyvals
@@ -68,9 +77,13 @@ fontenc=%<encoding%>
 \textormath{text code}{math code%formula}#*
 
 \babelfont{font_family}{font_name}
-\babelfont{font_family}[font_options%keyvals]{font_name}
+\babelfont{font_family}[font_options%keyvals]{font_name}#*
+\babelfont{font_family}{font_name}[font_options%keyvals]
+\babelfont{font_family}[font_options%keyvals]{font_name}[font_options%keyvals]#S
 \babelfont[lang1,lang2,...]{font_family}{font_name}
-\babelfont[lang1,lang2,...]{font_family}[font_options%keyvals]{font_name}
+\babelfont[lang1,lang2,...]{font_family}[font_options%keyvals]{font_name}#*
+\babelfont[lang1,lang2,...]{font_family}{font_name}[font_options%keyvals]
+\babelfont[lang1,lang2,...]{font_family}[font_options%keyvals]{font_name}[font_options%keyvals]#S
 
 #keyvals:\babelfont#c
 Alternate=%<feature%>
@@ -285,6 +298,7 @@ kashida.base
 #endkeyvals
 
 \ShowBabelTransforms{string}#*
+\SetTransformValue{locale}{variable}{value}#*
 \localeprehyphenation{string}#*
 
 \babelcharclass{locale}{name}{char-list}#*
@@ -399,6 +413,7 @@ select.encoding=#off
 \addto{cmd}{code}#S
 \AfterBabelCommands{code}#S
 \allowhyphens#S
+\BabelBeforeIni{arg1}{arg2}#S
 \BabelCJKGlue#S
 \BabelCJKSpace#S
 \BabelDated{arg}#S
@@ -433,7 +448,6 @@ select.encoding=#off
 \SetHyphenMap{to-lower-macros}#S
 \SetString{macro-name}{string}#S
 \SetStringLoop{macro-name}{string-list}#S
-\SetTransformValue{locale}{variable}{value}#S
 \StartBabelCommands*{language-list}{category}#S
 \StartBabelCommands*{language-list}{category}[selector]#S
 \StartBabelCommands{language-list}{category}#S
@@ -1176,7 +1190,7 @@ select.encoding=#off
 \glossaryname#*
 #endif
 
-### esperanto.ldf v1.4t ###
+### esperanto.ldf v1.5a ###
 #ifOption:esperanto
 \captionsesperanto#*
 \dateesperanto#*
@@ -1197,6 +1211,7 @@ select.encoding=#off
 \esper{counter}
 \hodiau
 \hodiaun
+\esperantolowhhatadj#*
 #repl:^c ĉ
 #repl:^C Ĉ
 #repl:^g ĝ
@@ -1279,14 +1294,13 @@ select.encoding=#off
 #repl:"> »
 #endif
 
-### french.ldf v3.6a (and associated acadian.ldf) ###
+### french.ldf v4.0d (and associated acadian.ldf) ###
 #ifOption:french
 \frenchsetup{options%keyvals}
 \frenchbsetup{options%keyvals}#S
 #keyvals:\frenchsetup,\frenchbsetup
 ShowOptions#true,false
 StandardLayout#true,false
-GlobalLayoutFrench#true,false
 IndentFirst#true,false
 PartNameFull#true,false
 ListItemsAsPar#true,false
@@ -1300,7 +1314,6 @@ ItemLabelii=
 ItemLabeliii=
 ItemLabeliv=
 StandardLists#true,false
-ListOldLayout#true,false
 FrenchFootnotes#true,false
 AutoSpaceFootnotes#true,false
 AutoSpacePunctuation#true,false
@@ -1316,12 +1329,11 @@ InnerGuillSingle#true,false
 ThinSpaceInFrenchNumbers#true,false
 SmallCapsFigTabCaptions#true,false
 CustomiseFigTabCaptions#true,false
-OldFigTabCaptions#true,false
 FrenchSuperscripts#true,false
 LowercaseSuperscripts#true,false
 SuppressWarning#true,false
+TocPartFullName#true,false
 #endkeyvals
-\AddThinSpaceBeforeFootnotes#*
 \alsoname#*
 \at
 \bibname#*
@@ -1334,7 +1346,6 @@ SuppressWarning#true,false
 \boi
 \bname{text}
 \bsc{text}
-\CaptionSeparator#*
 \captionsfrench#*
 \ccname#*
 \chaptername#*
@@ -1363,7 +1374,6 @@ SuppressWarning#true,false
 \FBFrenchFootnotesfalse#*
 \FBFrenchFootnotestrue#*
 \FBFrenchSuperscriptstrue#*
-\FBGlobalLayoutFrenchtrue#*
 \FBgspchar#*
 \FBguillopen#*
 \FBguillspace
@@ -1390,13 +1400,14 @@ SuppressWarning#true,false
 \FBthinspace
 \FBthousandsep#*
 \FBWarning{message%text}#*
+\FBtocpartsep#*
+\FBtocpartname{roman num}#*
 \fg
 \fgi#*
 \fgii#*
 \fprimo)
 \frenchdate{day}{month}{year}
 \FrenchEnumerate{arg}#*
-\FrenchFootnotes#*
 \FrenchLabelItem#*
 \frenchpartfirst#*
 \frenchpartsecond#*
@@ -1426,16 +1437,15 @@ SuppressWarning#true,false
 \ifFBfrench#*
 \ifFBFrenchFootnotes#*
 \ifFBFrenchSuperscripts#*
-\ifFBGlobalLayoutFrench#*
 \ifFBIndentFirst#*
 \ifFBINGuillSpace#*
 \ifFBListItemsAsPar#*
-\ifFBListOldLayout#*
 \ifFBLowercaseSuperscripts#*
-\ifFBLuaTeX#*
-\ifFBOldFigTabCaptions#*
 \ifFBOriginalTypewriter#*
 \ifFBPartNameFull#*
+\ifFBnewlists#*
+\ifFBnewfootnotes#*
+\ifFBTocPartNameFull#*
 \ifFBShowOptions#*
 \ifFBSmallCapsFigTabCaptions#*
 \ifFBStandardEnumerateEnv#*
@@ -1447,15 +1457,15 @@ SuppressWarning#true,false
 \ifFBSuppressWarning#*
 \ifFBThinColonSpace#*
 \ifFBThinSpaceInFrenchNumbers#*
-\ifFBunicode#*
-\ifFBXeTeX#*
 \ifLaTeXe#*
+\ifFBUnicodeNoBreakSpaces#*
 \kernFFN#*
 \labelindentFB#*
 \labelwidthFB#*
 \leftmarginFB#*
 \listfigurename#*
 \listindentFB#*
+\newfootnotemarkFB#*
 \No
 \no
 \NoAutoSpaceBeforeFDP#*
@@ -1483,13 +1493,13 @@ SuppressWarning#true,false
 \secundo
 \seename#*
 \sffamilyFB#*
-\StandardFootnotes#*
 \StandardMathComma
 \tertio
 \tild
 \ttfamilyFB#*
 \up{text}
 \xspace
+\setlistindentFB#*
 #endif
 
 #ifOption:acadian
@@ -1498,7 +1508,6 @@ SuppressWarning#true,false
 #keyvals:\frenchsetup,\frenchbsetup
 ShowOptions#true,false
 StandardLayout#true,false
-GlobalLayoutFrench#true,false
 IndentFirst#true,false
 PartNameFull#true,false
 ListItemsAsPar#true,false
@@ -1512,7 +1521,6 @@ ItemLabelii=
 ItemLabeliii=
 ItemLabeliv=
 StandardLists#true,false
-ListOldLayout#true,false
 FrenchFootnotes#true,false
 AutoSpaceFootnotes#true,false
 AutoSpacePunctuation#true,false
@@ -1528,14 +1536,13 @@ InnerGuillSingle#true,false
 ThinSpaceInFrenchNumbers#true,false
 SmallCapsFigTabCaptions#true,false
 CustomiseFigTabCaptions#true,false
-OldFigTabCaptions#true,false
 FrenchSuperscripts#true,false
 LowercaseSuperscripts#true,false
 SuppressWarning#true,false
+TocPartFullName#true,false
 #endkeyvals
 \acadiandate{day}{month}{year}
 \acadiantoday
-\AddThinSpaceBeforeFootnotes#*
 \alsoname#*
 \at
 \bibname#*
@@ -1548,7 +1555,6 @@ SuppressWarning#true,false
 \boi
 \bname{text}
 \bsc{text}
-\CaptionSeparator#*
 \captionsfrench#*
 \captionsacadian#*
 \ccname#*
@@ -1579,7 +1585,6 @@ SuppressWarning#true,false
 \FBFrenchFootnotesfalse#*
 \FBFrenchFootnotestrue#*
 \FBFrenchSuperscriptstrue#*
-\FBGlobalLayoutFrenchtrue#*
 \FBgspchar#*
 \FBguillopen#*
 \FBguillspace
@@ -1601,18 +1606,18 @@ SuppressWarning#true,false
 \FBStandardListstrue#*
 \FBsupR#*
 \FBsupS#*
-\FBtextellipsis#*
 \FBthickkern#*
 \FBthinspace
 \FBthousandsep#*
 \FBWarning{message%text}#*
+\FBtocpartsep#*
+\FBtocpartname{roman num}#*
 \fg
 \fgi#*
 \fgii#*
 \fprimo)
 \frenchdate{day}{month}{year}#*
 \FrenchEnumerate{arg}#*
-\FrenchFootnotes#*
 \FrenchLabelItem#*
 \frenchpartfirst#*
 \frenchpartsecond#*
@@ -1642,16 +1647,15 @@ SuppressWarning#true,false
 \ifFBfrench#*
 \ifFBFrenchFootnotes#*
 \ifFBFrenchSuperscripts#*
-\ifFBGlobalLayoutFrench#*
 \ifFBIndentFirst#*
 \ifFBINGuillSpace#*
 \ifFBListItemsAsPar#*
-\ifFBListOldLayout#*
 \ifFBLowercaseSuperscripts#*
-\ifFBLuaTeX#*
-\ifFBOldFigTabCaptions#*
 \ifFBOriginalTypewriter#*
 \ifFBPartNameFull#*
+\ifFBnewlists#*
+\ifFBnewfootnotes#*
+\ifFBTocPartNameFull#*
 \ifFBShowOptions#*
 \ifFBSmallCapsFigTabCaptions#*
 \ifFBStandardEnumerateEnv#*
@@ -1663,15 +1667,15 @@ SuppressWarning#true,false
 \ifFBSuppressWarning#*
 \ifFBThinColonSpace#*
 \ifFBThinSpaceInFrenchNumbers#*
-\ifFBunicode#*
-\ifFBXeTeX#*
 \ifLaTeXe#*
+\ifFBUnicodeNoBreakSpaces#*
 \kernFFN#*
 \labelindentFB#*
 \labelwidthFB#*
 \leftmarginFB#*
 \listfigurename#*
 \listindentFB#*
+\newfootnotemarkFB#*
 \No
 \no
 \NoAutoSpaceBeforeFDP#*
@@ -1700,13 +1704,13 @@ SuppressWarning#true,false
 \secundo
 \seename#*
 \sffamilyFB#*
-\StandardFootnotes#*
 \StandardMathComma
 \tertio
 \tild
 \ttfamilyFB#*
 \up{text}
 \xspace
+\setlistindentFB#*
 #endif
 
 ### friulan.ldf v1.3 ###
@@ -2843,7 +2847,7 @@ SuppressWarning#true,false
 \glossaryname#*
 #endif
 
-### italian.ldf v1.4.04 ###
+### italian.ldf v1.5.02 ###
 #ifOption:italian
 \captionsitalian#*
 \dateitalian#*
@@ -2874,6 +2878,8 @@ SuppressWarning#true,false
 \virgoladecimale
 \LtxSymbCaporali#*
 \CaporaliFrom{encoding}{family}{open guill slot}{close guill slot}#*
+\Numbertoday
+\ISOtoday
 #endif
 
 ### japanese.ldf v3.1 ###

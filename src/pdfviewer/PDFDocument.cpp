@@ -769,7 +769,7 @@ PDFWidget::PDFWidget(bool embedded)
 	dpi = globalConfig->dpi;
 	if (dpi <= 0) dpi = 72; //it crashes if dpi=0
 
-	setBackgroundRole(QPalette::Base);
+    setBackgroundRole(QPalette::Dark);
 	setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
 	setFocusPolicy(embedded ? Qt::NoFocus : Qt::StrongFocus);
 	setScaledContents(true);
@@ -983,6 +983,18 @@ void PDFWidget::paintEvent(QPaintEvent *event)
 				painter.setBrush(UtilsUi::colorFromRGBAstr(globalConfig->highlightColor, QColor(255, 255, 0, 63)));
 				painter.drawPath(highlightPath);
 			}
+            if(currentTool== kSelectText && pageNr == m_selectStart.pageNr){
+                painter.save();
+                painter.setRenderHint(QPainter::Antialiasing);
+                painter.setCompositionMode(QPainter::CompositionMode_Multiply);
+                painter.scale(totalScaleFactor(), totalScaleFactor());
+                painter.setPen(QColor(0, 0, 0, 0));
+                painter.setBrush(UtilsUi::colorFromRGBAstr(globalConfig->selectColor, QColor(0, 0, 255, 63)));
+                for(const QRectF &r: m_selectedTextBoxes){
+                    painter.drawRect(r);
+                }
+                painter.restore();
+            }
 			if (currentTool == kPresentation)
 				doc->renderManager->renderToImage(pageNr + 1, this, "", dpi * scaleFactor * overScale, dpi * scaleFactor * overScale, 0, 0, newRect.width() * overScale, newRect.height()*overScale, true, true);
 		} else {
@@ -1043,6 +1055,19 @@ void PDFWidget::paintEvent(QPaintEvent *event)
 						painter.restore();
 					}
 				}
+                if(currentTool== kSelectText && pageNr == m_selectStart.pageNr){
+                    painter.save();
+                    painter.setRenderHint(QPainter::Antialiasing);
+                    painter.setCompositionMode(QPainter::CompositionMode_Multiply);
+                    painter.translate(drawGrid.left(), drawGrid.top());
+                    painter.scale(totalScaleFactor(), totalScaleFactor());
+                    painter.setPen(QColor(0, 0, 0, 0));
+                    painter.setBrush(UtilsUi::colorFromRGBAstr(globalConfig->selectColor, QColor(0, 0, 255, 63)));
+                    for(const QRectF &r: m_selectedTextBoxes){
+                        painter.drawRect(r);
+                    }
+                    painter.restore();
+                }
 			}
             for (; curGrid < gridx * gridy; curGrid++){
 				painter.drawRect(gridPageRect(curGrid));
@@ -1151,6 +1176,30 @@ void PDFWidget::mousePressEvent(QMouseEvent *event)
 	}
 
 	mouseDownModifiers = event->modifiers();
+    // handle text selection
+    if (currentTool == kSelectText) {
+        if ((mouseDownModifiers & Qt::ControlModifier) && !(mouseDownModifiers & Qt::ShiftModifier)) {
+            // ctrl+click
+        }else{
+            QPointF scaledPos;
+            int pageNr;
+            mapToScaledPosition(event->pos(), pageNr, scaledPos);
+            if (pageNr >= 0 && pageNr < realNumPages()) {
+                if (!(mouseDownModifiers & Qt::ControlModifier) && (mouseDownModifiers & Qt::ShiftModifier)) {
+                    // shift+click
+                    if(pageNr==m_selectStart.pageNr){
+                        // same page as before, extend selection
+                        updateSelectedTextBoxes(pageNr,scaledPos);
+                        update();
+                        event->accept();
+                        return;
+                    }
+                }
+                m_selectStart={pageNr,scaledPos};
+            }
+            usingTool= kSelectText;
+        }
+    }
 	if ((mouseDownModifiers & Qt::ControlModifier) && !(mouseDownModifiers & Qt::ShiftModifier)) {
 		// ctrl key - this is a sync click, don't handle the mouseDown here
 	} else if ((mouseDownModifiers & Qt::ControlModifier) && (mouseDownModifiers & Qt::ShiftModifier)) {
@@ -1357,6 +1406,20 @@ void PDFWidget::mouseReleaseEvent(QMouseEvent *event)
 			usingTool = kNone;
 			laserPointer->close();
 			break;
+        case kSelectText:
+            // check if start point is close to end point
+            // deselect if yes
+            {
+                int page;
+                QPointF scaledPos;
+                mapToScaledPosition(event->pos(), page, scaledPos);
+                if (m_selectStart.pageNr == -1 || m_selectStart.pageNr != page ||
+                    (m_selectStart.position - scaledPos).manhattanLength() < 0.01) {
+                    m_selectedTextBoxes.clear();
+                    update();
+                }
+            }
+            break;
 		}
 	}
 	clickedLink.clear();
@@ -1512,10 +1575,10 @@ void PDFWidget::mouseMoveEvent(QMouseEvent *event)
 	}
 	event->accept();
 	break;
-	case kScroll: {
-		QPoint delta = event->globalPos() - scrollClickPos;
-		scrollClickPos = event->globalPos();
-		QAbstractScrollArea	*scrollArea = getScrollArea();
+    case kScroll: {
+        QPoint delta = event->globalPos() - scrollClickPos;
+        scrollClickPos = event->globalPos();
+        QAbstractScrollArea	*scrollArea = getScrollArea();
 		if (scrollArea) {
 			if (scaleOption != kFitTextWidth || !globalConfig->disableHorizontalScrollingForFitToTextWidth) {
 				int oldX = scrollArea->horizontalScrollBar()->value();
@@ -1527,6 +1590,26 @@ void PDFWidget::mouseMoveEvent(QMouseEvent *event)
 	}
 	event->accept();
 	break;
+    case kSelectText: {
+        if(event->buttons() != Qt::LeftButton) {
+            // if not left button, do nothing
+            event->ignore();
+            return;
+        }
+        QPointF scaledPos;
+        int pageNr;
+        mapToScaledPosition(event->pos(), pageNr, scaledPos);
+        if (pageNr >= 0 && pageNr < realNumPages()) {
+            //highlight selected text on page
+            if(pageNr==m_selectStart.pageNr){
+                // same page as before
+                updateSelectedTextBoxes(pageNr,scaledPos);
+                update();
+            }
+        }
+        event->accept();
+        break;
+    }
 	default:
 		event->ignore();
 	}
@@ -1566,6 +1649,14 @@ void PDFWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 
 	QMenu	menu(this);
+
+    // add copy if selection present
+    if (currentTool == kSelectText && !m_selectedText.isEmpty()) {
+        QAction *act = new QAction(tr("Copy Selected Text"), &menu);
+        connect(act, SIGNAL(triggered()), this, SLOT(copyText()));
+        menu.addAction(act);
+        menu.addSeparator();
+    }
 
 	PDFDocument *pdfDoc = getPDFDocument();
 	if (pdfDoc && pdfDoc->hasSyncData()) {
@@ -1689,6 +1780,18 @@ void PDFWidget::jumpToSource()
 		emit syncClick(pageIndex, pagePos, true);
 		*/
 	}
+}
+/*!
+ * \brief in text selection mode, copy selected text to clipboard
+ */
+void PDFWidget::copyText()
+{
+    if (currentTool != kSelectText) return;
+
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    QString text=m_selectedText;
+
+    clipboard->setText(text);
 }
 
 void PDFWidget::wheelEvent(QWheelEvent *event)
@@ -2646,6 +2749,78 @@ void PDFWidget::doZoom(const QPointF &clickPos, int dir, qreal newScaleFactor) /
     }
 }
 
+/*!
+ * \brief find all text boxes for a given
+ * Starting position is given in m_selectStart
+ * \param page end page nr
+ * \param pos end position
+ */
+void PDFWidget::updateSelectedTextBoxes(int page, const QPointF &pos)
+{
+    m_selectedTextBoxes.clear();
+    if(page!=m_selectStart.pageNr) return; // for now, only selection on one page
+    // get poppler page for start position
+    std::unique_ptr<Poppler::Page> popplerPage(document->page(m_selectStart.pageNr));
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    QList<Poppler::TextBox* > textList = popplerPage->textList();
+#else
+    std::vector<std::unique_ptr<Poppler::TextBox>> textList = popplerPage->textList();
+#endif
+    QRectF rect(m_selectStart.position,pos);
+    QSizeF sz=popplerPage->pageSizeF();
+    rect=QRectF(rect.left()*sz.width(),rect.top()*sz.height(),
+                rect.width()*sz.width(),rect.height()*sz.height());
+    bool firstElementFound=false;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    for (QList<Poppler::TextBox* >::iterator it = textList.begin() ; it != textList.end(); ++it){
+        Poppler::TextBox *textBox = *it;
+#else
+    for (std::vector<std::unique_ptr<Poppler::TextBox>>::iterator it = textList.begin() ; it != textList.end(); ++it){
+        Poppler::TextBox *textBox = it->get();
+#endif
+        QRectF r = textBox->boundingBox();
+        if(firstElementFound){
+            if(rect.bottom()>= r.top()) {
+                if(r.bottom()>rect.bottom()){
+                    // last line
+                    if(rect.right()> r.left()){
+                        QRectF &lastElement= m_selectedTextBoxes.last();
+                        m_selectedTextBoxes.append(r);
+                        // check if y overlap -> same line/new line
+                        if(lastElement.bottom() < r.top() || lastElement.top() > r.bottom()){
+                            m_selectedText+="\n"+textBox->text();
+                        }else{
+                            m_selectedText+=" "+textBox->text();
+                        }
+                    }else{
+                        break;
+                    }
+                }else{
+                    // we take complete lines, check y only
+                    QRectF &lastElement= m_selectedTextBoxes.last();
+                    m_selectedTextBoxes.append(r);
+                    // check if y overlap -> same line/new line
+                    if(lastElement.bottom() <= r.top() || lastElement.top() >= r.bottom()){
+                        m_selectedText+="\n"+textBox->text();
+                    }else{
+                        m_selectedText+=" "+textBox->text();
+                    }
+                }
+            }else{
+                // all found
+                break;
+            }
+        }else{
+            if (rect.intersects(r)) {
+                // we found the first element
+                m_selectedTextBoxes.append(r);
+                firstElementFound=true;
+                m_selectedText = textBox->text();
+            }
+        }
+    }
+}
+
 void PDFWidget::zoomIn()
 {
 	QWidget *parent = parentWidget();
@@ -2859,6 +3034,12 @@ void PDFWidget::scrollClicked()
 	updateCursor();
 }
 
+void PDFWidget::selectTextClicked()
+{
+    setTool(kSelectText);
+    updateCursor();
+}
+
 PDFScrollArea *PDFWidget::getScrollArea() const
 {
 	QWidget *parent = parentWidget();
@@ -2926,19 +3107,6 @@ PDFDocument::~PDFDocument()
     ConfigManager *configManager=dynamic_cast<ConfigManager *>(ConfigManager::getInstance());
 
     if(configManager){
-#if (QT_VERSION > 0x050000) && (QT_VERSION <= 0x050700) && (defined(Q_OS_MAC))
-        QList<QKeySequence> keys=configManager->specialShortcuts.keys();
-        foreach(QKeySequence key,keys){
-            QList<QAction *>acts=configManager->specialShortcuts.values(key);
-            foreach(QAction *act,acts){
-                if(act->objectName().startsWith("pdf")){
-                    configManager->specialShortcuts.remove(key,act);
-                }
-            }
-        }
-#endif
-
-
         configManager->menuParents.removeAll(menuroot);
         foreach (QMenu *menu, menus) {
             configManager->managedMenus.removeAll(menu);
@@ -2972,6 +3140,7 @@ void PDFDocument::setupToolBar(){
     toolBar->addSeparator();
     toolBar->addAction(actionMagnify);
     toolBar->addAction(actionScroll);
+    toolBar->addAction(actionSelect_Text);
     toolBar->addSeparator();
     toolBar->addAction(actionBack);
     toolBar->addAction(actionForward);
@@ -3057,6 +3226,9 @@ void PDFDocument::setupMenus(bool embedded)
     actionScroll=configManager->newManagedAction(menuroot,menuView, "scroll", tr("&Scroll"), pdfWidget, SLOT(scrollClicked()), QList<QKeySequence>(),"hand");
     actionScroll->setCheckable(true);
     toolGroup->addAction(actionScroll);
+    actionSelect_Text=configManager->newManagedAction(menuroot,menuView, "selectText", tr("&Select Text"), pdfWidget, SLOT(selectTextClicked()), QList<QKeySequence>(),"cursor");
+    actionSelect_Text->setCheckable(true);
+    toolGroup->addAction(actionSelect_Text);
 
     menuView->addSeparator();
     actionFirst_Page=configManager->newManagedAction(menuroot,menuView, "firstPage", tr("&First Page"), pdfWidget, SLOT(goFirst()), QList<QKeySequence>()<<Qt::Key_Home<<QKeySequence(Qt::ControlModifier | Qt::Key_Home),"go-first");
@@ -3132,6 +3304,7 @@ void PDFDocument::setupMenus(bool embedded)
     actionFocus_Editor=configManager->newManagedAction(menuroot,menuWindow, "focusEditor", tr("Focus Editor"), this, SIGNAL(focusEditor()), QList<QKeySequence>()<<QKeySequence(Qt::ControlModifier|Qt::AltModifier|Qt::Key_Left));
 	menuWindow->addSeparator();
     actionNew_Window=configManager->newManagedAction(menuroot,menuWindow, "newWindow", tr("New Window"), this, SIGNAL(triggeredClone()), QList<QKeySequence>());
+    actionCopy=configManager->newManagedAction(menuroot,menuEdit_2, "copy", tr("&Copy"), pdfWidget, SLOT(copyText()), QList<QKeySequence>()<< QKeySequence(Qt::ControlModifier | Qt::Key_C));
     actionFind=configManager->newManagedAction(menuroot,menuEdit_2, "find", tr("&Find"), this, SLOT(doFindDialog()), QList<QKeySequence>()<< QKeySequence(Qt::ControlModifier | Qt::Key_F));
     actionFind_Again=configManager->newManagedAction(menuroot,menuEdit_2, "findAgain", tr("Find &again"), this, SLOT(doFindAgain()), QList<QKeySequence>()<< QKeySequence(Qt::ControlModifier | Qt::Key_M)<< Qt::Key_F3);
     menuEdit_2->addSeparator();
@@ -3229,7 +3402,7 @@ void PDFDocument::init(bool embedded)
 	toolButtonGroup = new QButtonGroup(toolBar);
 	toolButtonGroup->addButton(qobject_cast<QAbstractButton *>(toolBar->widgetForAction(actionMagnify)), kMagnifier);
 	toolButtonGroup->addButton(qobject_cast<QAbstractButton *>(toolBar->widgetForAction(actionScroll)), kScroll);
-	//	toolButtonGroup->addButton(qobject_cast<QAbstractButton*>(toolBar->widgetForAction(actionSelect_Text)), kSelectText);
+    toolButtonGroup->addButton(qobject_cast<QAbstractButton*>(toolBar->widgetForAction(actionSelect_Text)), kSelectText);
 	//	toolButtonGroup->addButton(qobject_cast<QAbstractButton*>(toolBar->widgetForAction(actionSelect_Image)), kSelectImage);
 #if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
     connect(toolButtonGroup, SIGNAL(idClicked(int)), pdfWidget, SLOT(setTool(int)));
@@ -3312,7 +3485,7 @@ void PDFDocument::init(bool embedded)
 	}
 	scaleButton->addActions(scaleActions->actions());
 
-	QToolButton *buttonZoomOut = new QToolButton(statusBar());
+	buttonZoomOut = new QToolButton(statusBar());
 	buttonZoomOut->setIcon(getRealIcon("zoom-out"));
 	buttonZoomOut->setToolTip(tr("Zoom Out"));
 	statusBar()->addPermanentWidget(buttonZoomOut);
@@ -3331,7 +3504,7 @@ void PDFDocument::init(bool embedded)
 
 	connect(zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(zoomSliderChange(int)));
 
-	QToolButton *buttonZoomIn = new QToolButton(statusBar());
+	buttonZoomIn = new QToolButton(statusBar());
 	buttonZoomIn->setIcon(getRealIcon("zoom-in"));
 	buttonZoomIn->setToolTip(tr("Zoom In"));
 	statusBar()->addPermanentWidget(buttonZoomIn);
@@ -3344,9 +3517,7 @@ void PDFDocument::init(bool embedded)
 	scrollArea->setBackgroundRole(QPalette::Dark);
 	//scrollArea->setAlignment(Qt::AlignCenter);
 	scrollArea->setPDFWidget(pdfWidget);
-	if (embedded) {
-		scrollArea->setFrameStyle(QFrame::NoFrame);
-	}
+    scrollArea->setFrameStyle(QFrame::NoFrame);
 
 	QWidget *container = new QWidget;
 	QVBoxLayout *layout = new QVBoxLayout;
@@ -3940,6 +4111,7 @@ void PDFDocument::updateIcons()
 {
     actionMagnify->setIcon(getRealIcon("magnifier-button"));
     actionScroll->setIcon(getRealIcon("hand"));
+    actionSelect_Text->setIcon(getRealIcon("cursor"));
     actionFirst_Page->setIcon(getRealIcon("go-first"));
     actionBack->setIcon(getRealIcon("back"));
     actionPrevious_Page->setIcon(getRealIcon("go-previous"));
@@ -4512,8 +4684,12 @@ void PDFDocument::enablePageActions(int pageIndex, bool sync)
 
 void PDFDocument::enableZoomActions(qreal scaleFactor)
 {
-	actionZoom_In->setEnabled(scaleFactor < kMaxScaleFactor);
-	actionZoom_Out->setEnabled(scaleFactor > kMinScaleFactor);
+	bool enableIn = scaleFactor < kMaxScaleFactor;
+	bool enableOut = scaleFactor > kMinScaleFactor;
+	actionZoom_In->setEnabled(enableIn);
+	actionZoom_Out->setEnabled(enableOut);
+	buttonZoomIn->setEnabled(enableIn);
+	buttonZoomOut->setEnabled(enableOut);
 }
 
 void PDFDocument::adjustScaleActions(autoScaleOption scaleOption)

@@ -122,6 +122,9 @@ private slots:
 	void browsePathImages();
 	void browsePathPdf();
 	void browsePathCommands();
+    void browseCollaborativeToolPath();
+    void browseCollaborativeClientFolder();
+    void collaborativeEditingToolChanged(int index);
 	void advancedOptionsToggled(bool on);
 	void advancedOptionsClicked(bool on);
 	void metaFilterChanged(const QString &filter);
@@ -144,6 +147,7 @@ private slots:
 	void revertClicked();
 
     void aiProviderChanged(int provider);
+    void enableCustomURLEditor(int provider);
     void retrieveModels();
     void resetAIURL();
     void modelsRetrieved(QNetworkReply *reply);

@@ -486,6 +486,8 @@ void GrammarCheckLanguageToolJSON::init(const GrammarCheckerConfig &config)
     javaPath = config.languageToolJavaPath;
     javaPath.replace("[txs-settings-dir]", config.configDir);
     javaPath.replace("[txs-app-dir]", config.appDir);
+    
+    ltURLParams = config.languageToolURLParams.trimmed();
 
     ignoredRules.clear();
     foreach (const QString &r, config.languageToolIgnoredRules.split(","))
@@ -554,7 +556,7 @@ void GrammarCheckLanguageToolJSON::tryToStart()
     connect(javaProcess, SIGNAL(finished(int,QProcess::ExitStatus)), javaProcess, SLOT(deleteLater()));
     connect(this, SIGNAL(destroyed()), javaProcess, SLOT(deleteLater()));
 
-    javaProcess->start(javaPath,QStringList()<< "-cp" << ltPath << ltArguments.split(" ")); // check sdm
+    javaProcess->start(javaPath,QStringList()<< "-cp" << ltPath << ltArguments.split(" "));
     javaProcess->waitForStarted(500);
     javaProcess->waitForReadyRead(500);
     errorText=javaProcess->readAllStandardError();
@@ -603,7 +605,15 @@ void GrammarCheckLanguageToolJSON::check(uint ticket, uint subticket, const QStr
     req.setHeader(QNetworkRequest::ContentTypeHeader, "text/json");
     QString post;
     post.reserve(text.length() + 50);
-    post.append("language=" + lang + "&text=");
+    post.append("language=" + lang);
+    // Add custom URL parameters if specified
+    if (!ltURLParams.isEmpty()) {
+        if (!ltURLParams.startsWith("&")) {
+            post.append("&");
+        }
+        post.append(ltURLParams);
+    }
+    post.append("&text=");
     post.append(QUrl::toPercentEncoding(text, QByteArray(), QByteArray(" ")));
     post.append("\n");
 

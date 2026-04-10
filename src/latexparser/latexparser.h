@@ -2,6 +2,7 @@
 #define Header_Latex_Parser
 
 #include "commanddescription.h"
+class LatexDocument;
 
 
 /*!
@@ -44,6 +45,9 @@ public:
 	QHash<QString, QSet<QString> > possibleCommands;
 	QHash<QString, QString> specialDefCommands; ///< define special elements, e.g. define color etc
 	QMap<int, QString> mapSpecialArgs;
+    enum ArgumentType { singleArgument, commaSeparated, multiElement };
+    QMap<int, ArgumentType> mapSpecialArgumentTypes; ///< map special argument numbers to argument types
+    QList<LatexDocument*> projectDocuments; ///< list of documents in the project, used for all document related parsing, e.g. for finding labels, references, citations, etc.
 
 	CommandDescriptionHash commandDefs; ///< command definitions
 

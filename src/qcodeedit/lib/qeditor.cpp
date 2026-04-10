@@ -1202,6 +1202,15 @@ void QEditor::reconnectWatcher()
 	watcher()->removeWatch(this);
 	watcher()->addWatch(fileName(), this);
 }
+/*!
+ * \brief disconnect watcher
+ * Needed for collaborative editing where changes are directly communicated and updated
+ * They are additionally written to disk, but we don't want to reload the file in this case
+ */
+ void QEditor::disconnectWatcher()
+{
+    watcher()->removeWatch(this);
+}
 
 /*!
 	\internal
@@ -3158,6 +3167,10 @@ void QEditor::paintEvent(QPaintEvent */*e*/)
 	ctx.palette = palette();
 	if (m_cursor.isValid())
 		ctx.cursors << m_cursor.handle();
+    // add external cursors
+    foreach(const QDocumentCursor& m, m_externalCursors){
+        ctx.cursors << m.handle();
+    }
 	ctx.fillCursorRect = true;
 	ctx.blinkingCursor = flag(CursorOn);
 
@@ -3286,7 +3299,14 @@ void QEditor::timerEvent(QTimerEvent *e)
 			                );
 			m_cursor.expandSelect(m_multiClickCursor.property("isTripleClick").toBool() ? QDocumentCursor::LineUnderCursor : m_doubleClickSelectionType);
 		} else {
-			m_cursor.setSelectionBoundary(newCursor);
+            // consider mousebuttons pressed
+            Qt::KeyboardModifiers modifiers=QApplication::keyboardModifiers();
+            if(modifiers == (Qt::ControlModifier | Qt::AltModifier)){
+                addCursorMirror(newCursor);
+                m_cursor=newCursor;
+            }else{
+                m_cursor.setSelectionBoundary(newCursor);
+            }
 		}
 
 		ensureCursorVisible();
@@ -4272,6 +4292,7 @@ void QEditor::wheelEvent(QWheelEvent *e)
 void QEditor::resizeEvent(QResizeEvent *)
 {
 	const QSize viewportSize = viewport()->size();
+    bool cursorIsVisible = isCursorVisible(); // check cursor visibility before changing scrollbars, as it may change after
 
 	if ( flag(HardLineWrap)||flag(LineWidthConstraint) ){
 	    horizontalScrollBar()->setMaximum(qMax(0, m_LineWidth - viewportSize.width()));
@@ -4288,11 +4309,11 @@ void QEditor::resizeEvent(QResizeEvent *)
 
 	setVerticalScrollBarMaximum();
 
-	emit visibleLinesChanged();
-	//qDebug("page step : %i", viewportSize.height() / ls);
+    if ( cursorIsVisible && flag(LineWrap) ){
+        ensureCursorVisible(KeepDistanceFromViewTop);
+    }
 
-	//if ( isCursorVisible() && flag(LineWrap) )
-	//	ensureCursorVisible();
+    emit visibleLinesChanged();
 }
 
 /*!
@@ -6434,6 +6455,48 @@ void QEditor::addMarkDelayed(int pos, QColor color, QString type){
 void QEditor::paintMarks(){
     MarkedScrollBar *scrlBar=qobject_cast<MarkedScrollBar*>(verticalScrollBar());
     scrlBar->repaint();
+}
+/*!
+ * \brief set external curso
+ * \param userId given by teamtype
+ * \param c cursor to set
+ */
+void QEditor::setExternalCursor(const QString &userId, QDocumentCursor &c)
+{
+    if(userId.isEmpty())
+        return;
+    if(!c.isValid())
+        return;
+
+    int i=m_externalCursorUsers.indexOf(userId);
+    if(i>=0){
+        m_externalCursors[i]=c;
+    }else{
+        m_externalCursorUsers.append(userId);
+        m_externalCursors.append(c);
+    }
+
+    viewport()->update();
+}
+/*!
+ * \brief remove external cursor
+ * \param userId
+ */
+void QEditor::removeExternalCursor(const QString &userId)
+{
+    if(userId.isEmpty()){
+        // remove all
+        m_externalCursors.clear();
+        m_externalCursorUsers.clear();
+        viewport()->update();
+        return;
+    }
+    int i=m_externalCursorUsers.indexOf(userId);
+    if(i>=0){
+        m_externalCursors.removeAt(i);
+        m_externalCursorUsers.removeAt(i);
+        viewport()->update();
+    }
 }
 
 void QEditor::addMark(QDocumentLineHandle *dlh, QColor color, QString type){

@@ -267,7 +267,12 @@ void LatexTables::addColumn(Environment env, const int lineNumber, const int aft
         // move to next row
         // jump over &
         while(tkResult.length==1 || tkResult.length<0 /* first column*/){
-            if(tkResult.length>0) findNextColumn(cur,tkResult);
+            if(tkResult.length>0){
+                bool success=findNextColumn(cur,tkResult);
+                if(!success){
+                    break;
+                }
+            }
             tkResult = findColumn(cur, env);
         }
         if (tkResult.getText()=="\\end{") break;
@@ -1452,7 +1457,7 @@ QString LatexTables::handleColSpec(QString opt)
 {
     // in case of colspec, refine further
     if(opt.contains("colspec")){
-        QRegularExpression re{"(colspec\\s*[=]\\s*)(\\{.*\\})"};
+        QRegularExpression re{"(colspec\\s*[=]\\s*)(.*)"};
         QRegularExpressionMatch match = re.match(opt);
         if (match.hasMatch()) {
             opt = match.captured(2);
@@ -1469,7 +1474,11 @@ QString LatexTables::handleColSpec(QString opt)
                 if(opt.at(i)==']') --squareBracket;
                 if(opt.at(i)==',' && brace==0 && squareBracket==0) break;
             }
-            opt=opt.mid(1,i-2); // remove rest of coldesfinition,cut surrounding braces
+            opt=opt.left(i); // remove rest of coldesfinition
+            // cut out braces if present
+            if (opt.startsWith("{") && opt.endsWith("}")) {
+                opt = opt.mid(1,opt.length()-2);
+            }
         }
     }
     return opt;

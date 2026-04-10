@@ -4,10 +4,11 @@
 
 ### set-up
 
-TeXstudio offers an interface for AI chat assistant. It supports [Mistral AI](https://mistral.ai), [ChatGPT](https://openai.com/chatgpt) or local language models as AI provider. The communication to those servers is done using the official API which incur costs (except for local models). The user must set up an account and enter payment information. The cost is based on the number of words (tokens) in the question and answer, please refer the ai provider for details.
+TeXstudio offers an interface for AI chat assistant. It supports [Mistral AI](https://mistral.ai), [ChatGPT](https://openai.com/chatgpt) (untested),[Claude](https://anthropic.com), [OpenRouter AI](https://openrouter.ai) or local language models as AI provider. The communication to those servers is done using the official API which incur costs (except for local models). The user must set up an account and enter payment information. The cost is based on the number of words (tokens) in the question and answer, please refer the ai provider for details.
 
 ```{warning}
 Using an AI assistant means both questions and selected text is sent to that provider !
+When tool use is activated, the LLM can retrieve additional information on the current document.
 ```
 
 Once an account is registered, an "API key" is provided which needs to be entered into TeXstudio configuration.
@@ -18,9 +19,13 @@ There also the AI provider needs to be chosen as well as the desired ai model. T
 The conversation is stored on disk, so that results can be reused later on. This can be disabled.
 
 Local models can easily be set up via [llamafile](https://github.com/Mozilla-Ocho/llamafile). Please refer their help for details. TeXstudio expects the OpenAI API interface on 127.0.0.1:8080 to work which is the default for llamafile, hence the llamafile needs to be started manually next to TeXstudio.
+The configuration expects to point to the REST api endpoint, in case of openAI compatible interface (like llamafile/ollama or llama.cpp) like `http://localhost:8080/v1/chat/completions`, see TeXstudio default.
 Local models do not leak information to providers. A powerful GPU is recommended to get reasonable response times.
 
-By default, the system prompt is `text:'''%txsSelectedText%'''`
+The default system prompt is `You are an assistant in a latex editor. You generate valid latex code inside an existing documents. You don't explain your result.`. This can be edited in the chat window options.
+By default ai tool use is active which allows the LLM to retrieve further information from TeXstudio. For details, see [below](#llm-tool-calls).
+
+In case that tool use is disabled, the system prompt should be changed to `text:'''%txsSelectedText%'''`
 `%txsSelectedText%` will be replaced by txs by the actual selected text in the editor before sending it to the AI provider.
 The system prompt can be tweaked to deliver better results, however the construct `text:'''%txsSelectedText%'''` should be kept in the system prompt, otherwise the selected text is unknown to the AI.
 
@@ -39,22 +44,43 @@ The "insert" button only inserts the last answer into the current editor. If exp
 
 If a TeXstudio-macro is detected, TeXstudio offers to execute that code directly.
 
+### LLM Tool calls
+
+During a query with an ai provider, TeXstudio provides a list of available functions/tool which the LLM may use to retrieve further information or to trigger actions. Currently the following functions are provided.
+The LLM decides which function to use based on the query and the given descriptions.
+
+| name | description |
+| --- | ----------- |
+| get_filename | Get the name of the current file |
+| get_list_of_docs | Get the names of all files which are included in the current project |
+| get_selection | Get selected text |
+| get_selection | Get complete text of current document |
+| set_cursor | Set cursor to given line, column is optional |
+| get_cursor_position | Get the line number and column number of current cursor. Anchor line and anchor column as well |
+| get_line_text | Get text of a given line|
+| set_selection | Select text from start to end position. If column is not given assume start of line of starting position, end of line for ending position |
+| get_line_length | Get length of a given line |
+| get_number_lines | Get number of lines of current document |
+| find_text | Find text in current document and return first position (line,column,length) after the current cursor position. The result is also selected with the current cursor. |
+| find_regexp | Find regular expression in current document and return first position (line,column,length) after the current cursor position. The result is also selected with the current cursor. Submatches are also returned | 
+| replace_selected_text | Replace selected text with given text. If no text is selected, insert given text at current cursor position |
+
 ### Examples
 
 #### Manipulating texts
 
-TeXstudio predefines selected text as "text".
-Queries can refer to that text (as text) directly and receive any transformed results.
+TeXstudio allows LLMs to access selected text.
+Queries can refer to that text directly and receive any transformed results.
 
 E.g.
 
 Selected text: `TeXstudio is a highly popular and powerful cross-platform open-source LaTeX editor, widely used by academics, researchers, and professionals for creating complex mathematical and scientific documents. Its user-friendly interface and rich features make it an ideal choice for both beginners and advanced LaTeX users.`
 
-Query: `Extend the text`
+Query: `Extend the selected text`
 
 Result (mistral.ai/open-mistral-7b): `TeXstudio is a highly popular and powerful cross-platform open-source LaTeX editor, widely used by academics, researchers, and professionals for creating complex mathematical and scientific documents. Its user-friendly interface, which includes features such as a spell checker, code completion, and a built-in document viewer, makes it an approachable choice for beginners. For more advanced LaTeX users, TeXstudio offers additional functionality such as a built-in compiler, project management tools, and support for various external packages. TeXstudio is also customizable, allowing users to tailor the editor to their specific needs and preferences. Overall, TeXstudio is a versatile and feature-rich tool that is well-suited for creating professional-level LaTeX documents.`
 
-Similarly request like `summarize the text`,`shorten the text` should work well.
+Similarly request like `summarize the selected text`,`shorten the selected text` should work well.
 
 #### Generating LaTeX code
 
@@ -392,10 +418,10 @@ The following table gives an overview on the provided commands.
 | debug(str) | prints str to stdout |
 | writeFile(name, value) | Writes value to file name (requires write privileges) |
 | readFile(name) | Reads the entire file name (requires read privileges) |
-| system(cmd, workingDirectory=\"\") | Calls an external command **cmd**, which includes the program name and its arguments.<br>**cmd** may undergo command-line expansion as follows:<br>If **cmd** contains the string **txs:///** or if it does **not** contain any pipe (\|) characters, then **cmd** undergoes standard command-line expansion like any other [external command](configuration.md#command-syntax-in-detail). When expanding any tokens the current file is assumed to be the empty string, so any tokens that use the current file (e.g. **\%** or **?**) will expand to the empty string too.<br>If **cmd** does not contain the string **txs:///** and it contains at least one pipe character, then it is executed without any string expansion or replacement.<br>If **workingDirectory** is not set, the working directory will be inherited from the TeXstudio executable. This command returns a ProcessX object which has the following methods: <br>-   waitForFinished: Wait until the process is finished<br>-   readAllStandardOutputStr: Returns the stdout<br>-   readAllStandardErrorStr: Returns the stderr<br>-   exitCode: The exit code<br>-   exitStatus: The qt exit status<br>-   terminate or kill: Stops the process<br>If the script does is not granted permission to run the external command, then **system()** returns **null**.<br><br>Examples<br><br>List all the files in the Subversion repository /usr/local/svnrepository<br>The command contains the string **txs:///**, so it undergoes the expansion as an [external command](configuration.md#command-syntax-in-detail).<br>%SCRIPT<br>cmd = system("txs:///svn ls /usr/local/svnrepository")<br>  cmd.waitForFinished()<br>output = cmd.readAllStandardOutputStr()<br>alert (output)<br><br>Download the web page from **http://www.my-website.com??arg1=abc&arg2=def** and save it as the local file **/home/john/page.html**.<br>The command does not contain any pipe characters (\|), so it undergoes the expansion as an [external command](configuration.md#command-syntax-in-detail). Note that we have doubled the character **?** in the URL, otherwise it would be expanded to current file which in our case would be the empty string.<br><br>%SCRIPT<br>cmd = system ("wget -O /home/john/page.html http://www.my-website.com??arg1=abc&arg2=def")<br>cmd.waitForFinished() |
-| ~~setGlobal(name, value)~~ | Unsuppoted since txs 4.x. Sets a temporary, global variable |
-| ~~getGlobal(name)~~ | Unsuppoted since txs 4.x. Reads a global variable |
-| ~~hasGlobal(name)~~ | Unsuppoted since txs 4.x. Checks for the existence of a global variable |
+| system(cmd, workingDirectory=\"\") | Calls an external command **cmd**, which includes the program name and its arguments.<br>**cmd** may undergo command-line expansion as follows:<br>If **cmd** contains the string **txs:///** or if it does **not** contain any pipe (\|) characters, then **cmd** undergoes standard command-line expansion like any other [external command](configuration.md#command-syntax-in-detail). When expanding any tokens the current file is assumed to be the empty string, so any tokens that use the current file (e.g. **\%** or **?**) will expand to the empty string too.<br>If **cmd** does not contain the string **txs:///** and it contains at least one pipe character, then it is executed without any string expansion or replacement.<br>If **workingDirectory** is not set, the working directory will be inherited from the TeXstudio executable. This command returns a ProcessX object which has the following methods: <br>-   waitForFinished: Wait until the process is finished<br>-   getStdout: Returns the stdout<br>-   readAllStandardErrorStr: Returns the stderr<br>-   exitCode: The exit code<br>-   exitStatus: The qt exit status<br>-   terminate or kill: Stops the process<br>If the script does is not granted permission to run the external command, then **system()** returns **null**.<br><br>Examples<br><br>List all the files in the Subversion repository /usr/local/svnrepository<br>The command contains the string **txs:///**, so it undergoes the expansion as an [external command](configuration.md#command-syntax-in-detail).<br>%SCRIPT<br>cmd = system("txs:///svn ls /usr/local/svnrepository")<br>  cmd.waitForFinished()<br>output = cmd.getStdout()<br>alert (output)<br><br>Download the web page from **http://www.my-website.com??arg1=abc&arg2=def** and save it as the local file **/home/john/page.html**.<br>The command does not contain any pipe characters (\|), so it undergoes the expansion as an [external command](configuration.md#command-syntax-in-detail). Note that we have doubled the character **?** in the URL, otherwise it would be expanded to current file which in our case would be the empty string.<br><br>%SCRIPT<br>cmd = system ("wget -O /home/john/page.html http://www.my-website.com??arg1=abc&arg2=def")<br>cmd.waitForFinished() |
+| ~~setGlobal(name, value)~~ | Unsupported since txs 4.x. Sets a temporary, global variable |
+| ~~getGlobal(name)~~ | Unsupported since txs 4.x. Reads a global variable |
+| ~~hasGlobal(name)~~ | Unsupported since txs 4.x. Checks for the existence of a global variable |
 | setPersistent(name, value) | Sets a global configuration variable. (can change the values of the ini file, requires write privileges) |
 | getPersistent(name) | Reads a global configuration variable. (can read all values of the ini file, requires read privileges) |
 | hasPersistent(name) | Checks if a global configuration variable exists. (requires read privileges) |
@@ -404,7 +430,7 @@ The following table gives an overview on the provided commands.
 | registerAsBackgroundScript(\[id\]) | Allows the script to run in the background (necessary iff the script should handle events/signals) |
 | triggerMatches | Matches of the regular trigger expression, if the script was called by an editor [trigger](#triggers). |
 | triggerId | Numeric id of the trigger, if the script was called by an event [trigger](#triggers). |
-| ~~include(script)~~ | Unsuppoted since txs 4.x. Includes another script. Can be a filename or the name of a macro. |
+| ~~include(script)~~ | Unsupported since txs 4.x. Includes another script. Can be a filename or the name of a macro. |
 | pdfs | List of all open, internal pdf viewers . |
 | editor.search(searchFor, \[options\], \[scope\], \[callback\]) | Searches something in the editor.<br>-   searchFor is the text which is searched. It can be either a string (e.g. \"..\") or a regexp (e.g. /\[.\]{2}/). <br>-   options is a string and a combination of \"i\", \"g\", \"w\" to specify a case-*i*nsensitive search, a *g*lobal search (continue after the first match) or a whole-*w*ord-only search.<br>-   scope is a cursor constraining the search scope (see editor.document().cursor).<br>-   callback is a function which is called for every match. A cursor describing the position of the match is passed as first argument.<br>All arguments except searchFor are optional, and the order may be changed (which may not be future compatible). The function returns the number of found matches.|
 | editor.replace(searchFor, \[options\], \[scope\], \[replaceWith\]) | This function searches and replaces something in the editor. It behaves like editor.search apart from the replaceWith argument which can be a simple string or a callback function. If it is a function the return value of replaceWith is used to replace the match described by the cursor passed to replaceWith. |
@@ -438,6 +464,7 @@ The following table gives an overview on the provided commands.
 | editor.setText(*text*) | replace the whole text of the current document by *text* |
 | editor.text() | return the text of the complete document |
 | editor.text(int line) | return text of *line* |
+| editor.getLineTokens(lineNr) | Returns an array of parser tokens for a given zero-based line number. Each token is an object with the following properties:<br>-    type: Token type (integer)<br>-    subtype: Token subtype (integer)<br>-    startColumn: Starting column number (integer)<br>-    level: Token level (integer)<br>-    text: Token text (string)<br><br>The token type and subtype values can be compared with the integer properties of the latexTokenType object. Each property of this object corresponds to one token type:<br><br>`none, word, command, braces, bracket, squareBracket, openBrace, openBracket, openSquare, less, closeBrace, closeBracket, closeSquareBracket, greater, math, comment, commandUnknown, label, bibItem, file, imagefile, bibfile, keyValArg, keyVal_key, keyVal_val, list, text, env, beginEnv, def, labelRef, package, width, placement, colDef, title, shorttitle, todo, url, documentclass, beamertheme, packageoption, color, verbatimStart, verbatimStop, verbatim, symbol, punctuation, number, generalArg, defArgNumber, optionalArgDefinition, definition, defWidth, labelRefList, specialArg, newTheorem, newBibItem, formula, overlay, overlayRegion`<br><br>This method returns false on error. This could happen in one of the following cases:<br>-    lineNr is outside of the range of valid line numbers (negative or greater or equal to the number of document lines).<br>-    The parser has not finished parsing the specified line yet.<br>-    The currently open file is not a TeX file.|
 |editor.document().lineCount() | Returns the number of lines |
 | editor.document().visualLineCount() |Returns the number of visual lines (counting wrapped lines) |
 | ~~editor.document().cursor(line, \[column = 0\], \[lineTo = -1\],\[columnTo = length of lineTo\])~~ |Unsupported in txs 4.x. Use new QDocumentCursor(\...) instead, see section cursor. |
@@ -453,10 +480,12 @@ The following table gives an overview on the provided commands.
 | editor.document().foldBlockAt(bool unFold, lineNr); | Collapses or expands the first block before lineNr |
 | editor.document().getMasterDocument(); | Returns the open document which directly includes this document |
 | ~~editor.document().getTopMasterDocument();~~ | *Deprecated:* Use getRootDocument() instead |
-| editor.document().getRootDocument(); | Returns the open document which indireclty includes this document and is not itself included by any other document |
+| editor.document().getRootDocument(); | Returns the open document which indirectly includes this document and is not itself included by any other document |
 | editor.document().getMagicComment(name); | Returns the content of a magic comment, if it exists |
 | editor.document().updateMagicComment(name, value, \[create = false\]); | Changes a magic comment |
 | editor.document().labelItems/refItems/bibItems | Returns the ids of all labels/references or included bibliography files. |
+| editor.document().countLabels(name) | Returns number of label definitions for a given name |
+| editor.document().countRefs(name) | Returns number of references to a given name |
 | editor.document().getLastEnvName(lineNr) |Returns the name of the current environment (at the end of the line). |
 | documentManager.currentDocument | Current document (usually the same as editor.document(), unless the script is running in background mode) |
 | documents.masterDocument | Master document if defined |
@@ -508,6 +537,7 @@ The following table gives an overview on the provided commands.
 | app.setupToolBars() | recreate toolbars. Call this if a newly created menu is used in the toolbar.  |
 | app.createUI(file, \[parent\]) | Loads a certain ui file and creates a QWidget\* from it |
 | app.createUIFromString(string, \[parent\]) | Creates a QWidget\* described in the string |
+| app.processNotification(string) | print string in messages pane |
 | app.slowOperationStarted()/slowOperationEnded() | Notify txs about the start/end of a slow operation to temporary disable the endless loop detection. |
 | app.simulateKeyPress(shortcut) | Trigger a KeyPress event for the given shortcut, e.g. `app.simulateKeyPress("Shift+Up")`. *Note*: this is mainly intended for shortcuts and navigation. Currently, it does not support all functions of a KeyPress event. In particular, you cannot type any text. |
 | app.aiChat(query) | start the ai chat assistant. If query is not empty, query is executed and the result is shown in the chat assistant, like ai query macros, see [macro](#ai-queries) |
@@ -614,7 +644,7 @@ expression of the pattern `(?[scope-type]:...)`.
 
 | Scope Limiting Expression | Meaning |
 | --- | --- |
-| `(?language:...)`       | The macro is only active if the highlighting of the document matches the given language.<br> Example: `(?language:latex)` |
+| `(?language:...)`       | The macro is only active if the highlighting of the document matches the given languages (comma sepataed list).<br> Example: `(?language:latex)` or `(?language:latex,Sweave)` |
 | `(?highlighted-as:...)` | Restrict the macro to certain highlighted environments. The possible values correspond to the list on the syntax highlighting config page.<br>Example: `(?highlighted-as:numbers,math-delimiter,math-keyword)` |
 | `(?not-highlighted-as:...)` |  Similar to `(?highlighted-as:...)`, but the macro is deactivated in the given environments. |
 | `(?inEnv:...)` | Restrict the macro to certain environments. Only the latest environment is checked in case of nested environments. Environments are only detected in the lines between "\begin"/"\end", excluding the lines that contain those commands! It also checks for aliases, i.e. all math type environments are aliased as "math" as well. "math" is also detected in symbol started mathmode like $...$.<br>Example: `(?inEnv:math)` |

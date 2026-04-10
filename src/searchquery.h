@@ -92,9 +92,22 @@ class LabelSearchQuery : public SearchQuery {
 	Q_OBJECT
 
 public:
-	LabelSearchQuery(QString label);
+    LabelSearchQuery(QString label,bool defintionOnly=false);
 	virtual void run(LatexDocument *doc);
 	virtual void replaceAll();
+protected:
+    bool mDefinitionOnly;
+};
+
+class SpecialDefSearchQuery : public SearchQuery {
+    Q_OBJECT
+
+public:
+    SpecialDefSearchQuery(QString label,int type);
+    virtual void run(LatexDocument *currentDoc);
+    virtual void replaceAll();
+protected:
+    int mTokenType;
 };
 
 

@@ -1,12 +1,9 @@
 # rpgicons package
-# Matthew Bertucci 2024/04/30 for v1.8.2
+# Matthew Bertucci 2026/02/27 for v2.6.0
 
 #keyvals:\usepackage/rpgicons#c
 l3
 pgf
-# specific to l3
-compat
-opacity
 # specific to pgf
 pics
 #endkeyvals
@@ -38,6 +35,16 @@ pics
 \attack{shape}[options%keyvals]
 \condition{shape}
 \condition{shape}[options%keyvals]
+\class{shape}
+\class{shape}[options%keyvals]
+\class[style]{shape}
+\class[style]{shape}[options%keyvals]
+\alignment{shape}
+\alignment{shape}[options%keyvals]
+\alignment[style]{shape}
+\alignment[style]{shape}[options%keyvals]
+\currency{shape}{integer}
+\currency{shape}[options%keyvals]{integer}
 
 \RPGIconsUseIcon{shape}#*
 \RPGIconsUseIcon[options%keyvals]{shape}#*
@@ -45,6 +52,12 @@ pics
 \RPGIconsUseIcon*{shape}#*
 \RPGIconsUseIcon*[options%keyvals]{shape}#*
 \RPGIconsUseIcon*[options%keyvals][integer]{shape}#*
+\RPGIconsPrecomposeIcon{shape}#*
+\RPGIconsPrecomposeIcon[options%keyvals]{shape}#*
+\RPGIconsPrecomposeIcon[options%keyvals][reference]{shape}#*
+\RPGIconsPrecomposeIcon*{shape}#*
+\RPGIconsPrecomposeIcon*[options%keyvals]{shape}#*
+\RPGIconsPrecomposeIcon*[options%keyvals][reference]{shape}#*
 
 \RPGIconsDie{shape}{integer}#*
 \RPGIconsDie{shape}[options%keyvals]{integer}#*
@@ -70,10 +83,20 @@ pics
 \RPGIconsAttack{shape}[options%keyvals]#*
 \RPGIconsCondition{shape}#*
 \RPGIconsCondition{shape}[options%keyvals]#*
+\RPGIconsClass{shape}#*
+\RPGIconsClass{shape}[options%keyvals]#*
+\RPGIconsClass[style]{shape}#*
+\RPGIconsClass[style]{shape}[options%keyvals]#*
+\RPGIconsAlignment{shape}#*
+\RPGIconsAlignment{shape}[options%keyvals]#*
+\RPGIconsAlignment[style]{shape}#*
+\RPGIconsAlignment[style]{shape}[options%keyvals]#*
+\RPGIconsCurrency{shape}{integer}#*
+\RPGIconsCurrency{shape}[options%keyvals]{integer}#*
 
 \rpgiconsset{options%keyvals}
 
-#keyvals:\die#c,\ability#c,\saving#c,\spell#c,\spellschool#c,\damage#c,\attack#c,\condition#c,\RPGIconsUseIcon#c,\RPGIconsUseIcon*#c,\RPGIconsDie#c,\RPGIconsAbility#c,\RPGIconsSaving#c,\RPGIconsSpell#c,\RPGIconsSpellschool#c,\RPGIconsDamage#c,\RPGIconsAttack#c,\RPGIconsCondition#c,\rpgiconsset#c
+#keyvals:\die#c,\ability#c,\saving#c,\spell#c,\spellschool#c,\damage#c,\attack#c,\condition#c,\class#c,\alignment#c,\currency#c,\RPGIconsUseIcon#c,\RPGIconsUseIcon*#c,\RPGIconsPrecomposeIcon#c,\RPGIconsPrecomposeIcon*#c,\RPGIconsDie#c,\RPGIconsAbility#c,\RPGIconsSaving#c,\RPGIconsSpell#c,\RPGIconsSpellschool#c,\RPGIconsDamage#c,\RPGIconsAttack#c,\RPGIconsCondition#c,\RPGIconsAlignment#c,\RPGIconsCurrency#c,\rpgiconsset#c
 frame=#ability,damage,saving,spellschool
 stroke=#%color
 fill=#%color
@@ -89,8 +112,6 @@ line width=##L
 scale=%<factor%>
 scale inner=%<factor%>
 rotate=%<degrees%>
-accessible
-accessible=#basic,full,false
 every die={%<options%>}
 every ability={%<options%>}
 every saving={%<options%>}
@@ -99,10 +120,31 @@ every spellschool={%<options%>}
 every damage={%<options%>}
 every attack={%<options%>}
 every condition={%<options%>}
+every class={%<options%>}
+every alignment={%<options%>}
+every currency={%<options%>}
 every %<shape%>={%<options%>}
+every die add={%<options%>}
+every ability add={%<options%>}
+every saving add={%<options%>}
+every spell add={%<options%>}
+every spellschool add={%<options%>}
+every damage add={%<options%>}
+every attack add={%<options%>}
+every condition add={%<options%>}
+every class add={%<options%>}
+every alignment add={%<options%>}
+every currency add={%<options%>}
+every %<shape%> add={%<options%>}
 before sep=##L
 after sep=##L
 baseline=##L
+precompose
+precompose=%<string%>
+#endkeyvals
+
+#keyvals:\die#c,\ability#c,\saving#c,\spell#c,\spellschool#c,\damage#c,\attack#c,\condition#c,\class#c,\alignment#c,\currency#c,\RPGIconsUseIcon#c,\RPGIconsUseIcon*#c,\RPGIconsPrecomposeIcon#c,\RPGIconsPrecomposeIcon*#c,\RPGIconsDie#c,\RPGIconsAbility#c,\RPGIconsSaving#c,\RPGIconsSpell#c,\RPGIconsSpellschool#c,\RPGIconsDamage#c,\RPGIconsAttack#c,\RPGIconsCondition#c,\RPGIconsAlignment#c,\RPGIconsCurrency#c
+variant=%<integer%>
 #endkeyvals
 
 \roll{roll syntax}
@@ -110,6 +152,10 @@ baseline=##L
 
 #keyvals:\rpgiconsset#c
 roll syntax={%<syntax%>}
+style set={%<style definitions%>}
+style add={%<style definitions%>}
+actualtext={%<settings%>}
+alias={%<string%>}{%<string%>}
 #endkeyvals
 
 # specific to pgf option
@@ -139,6 +185,16 @@ roll syntax={%<syntax%>}
 \rpgiconsattack{shape}[options%keyvals]#*
 \rpgiconscondition{shape}#*
 \rpgiconscondition{shape}[options%keyvals]#*
+\rpgiconsclass{shape}#*
+\rpgiconsclass{shape}[options%keyvals]#*
+\rpgiconsclass[style]{shape}#*
+\rpgiconsclass[style]{shape}[options%keyvals]#*
+\rpgiconsalignment{shape}#*
+\rpgiconsalignment{shape}[options%keyvals]#*
+\rpgiconsalignment[style]{shape}#*
+\rpgiconsalignment[style]{shape}[options%keyvals]#*
+\rpgiconscurrency{shape}#*
+\rpgiconscurrency{shape}[options%keyvals]#*
 \provideprotectedrpgicon{command}{shape}{box name}
 \provideprotectedrpgicon{command}{shape}[options]{box name}
 \provideprotectedrpgicon{command}[style]{shape}{box name}
@@ -146,3 +202,7 @@ roll syntax={%<syntax%>}
 \useprotectedrpgicon{box name}
 \rpgiconsroll{roll syntax}
 #endif
+
+# not documented
+\RPGIconsPDFDestination{arg}#S
+\RPGIconsPDFHash{arg}#S

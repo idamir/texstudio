@@ -117,6 +117,7 @@ bool DefaultInputBinding::runMacros(QKeyEvent *event, QEditor *editor)
     StackEnvironment env;
 
 	foreach (const Macro &m, completerConfig->userMacros) {
+		if (m.checkState() != Qt::Checked) continue;
 		if (!m.isActiveForTrigger(Macro::ST_REGEX)) continue;
 		if (!m.isActiveForLanguage(language)) continue;
         if(m.hasFormatTriggers()){
@@ -296,6 +297,13 @@ bool DefaultInputBinding::keyPressEvent(QKeyEvent *event, QEditor *editor)
             }
 
             LatexCompleter::CompletionFlags flags= ctx==EnumsTokenType::width ? LatexCompleter::CF_FORCE_LENGTH : LatexCompleter::CompletionFlag(0) ;
+            if(ctx>=Token::specialArg){
+                // handle specialArg completion
+                int df = int(ctx - Token::specialArg);
+                QString cmd = LatexEditorView::completer->getLatexParser().mapSpecialArgs.value(df);
+                LatexEditorView::completer->setWorkPath(cmd);
+                flags= LatexCompleter::CF_FORCE_SPECIALOPTION;
+            }
             LatexEditorView::completer->complete(editor, flags);
 		}
 		return true;
@@ -577,6 +585,8 @@ bool DefaultInputBinding::contextMenuEvent(QContextMenuEvent *event, QEditor *ed
                 fn=path+fn;
             }
 			QAction *act = new QAction(LatexEditorView::tr("Open %1").arg(tk.getText()), contextMenu);
+            // encode cursor position into filename/user data
+            fn=QString("%1##%2").arg(fn).arg(cursor.lineNumber());
             act->setData(fn);
 			edView->connect(act, SIGNAL(triggered()), edView, SLOT(openExternalFile()));
 			contextMenu->addAction(act);
@@ -586,6 +596,8 @@ bool DefaultInputBinding::contextMenuEvent(QContextMenuEvent *event, QEditor *ed
 			QAction *act = new QAction(LatexEditorView::tr("Open Bibliography"), contextMenu);
 			QString bibFile;
 			bibFile = tk.getText() + ".bib";
+            // encode cursor position into filename/user data
+            bibFile=QString("%1##%2").arg(bibFile).arg(cursor.lineNumber());
 			act->setData(bibFile);
 			edView->connect(act, SIGNAL(triggered()), edView, SLOT(openExternalFile()));
 			contextMenu->addAction(act);
@@ -628,7 +640,25 @@ bool DefaultInputBinding::contextMenuEvent(QContextMenuEvent *event, QEditor *ed
 				contextMenu->addAction(act);
 			}
 		}
-		if (/* tk.type==Tokens::bibRef || TODO: bibliography references not yet handled by token system */ tk.type == Token::labelRef) {
+        if (tk.type == Token::label || tk.type == Token::labelRef) {
+            // check if one or more definition exist and adapt menu text accordingly
+            int cnt = edView->document->countLabels(tk.getText());
+            if(cnt==1 && tk.type==Token::labelRef){
+                QAction *act = new QAction(LatexEditorView::tr("Go to Definition"), contextMenu);
+                act->setData(QVariant().fromValue<QDocumentCursor>(cursor));
+                edView->connect(act, SIGNAL(triggered()), edView, SLOT(emitGotoDefinitionFromAction()));
+                contextMenu->addAction(act);
+            }
+            if(cnt>1){
+                QAction *act = new QAction(LatexEditorView::tr("Find Definitions"), contextMenu);
+                act->setData(tk.getText());
+                act->setProperty("doc", QVariant::fromValue<LatexDocument *>(edView->document));
+                act->setProperty("definitionOnly", true);
+                edView->connect(act, SIGNAL(triggered()), edView, SLOT(emitFindLabelUsagesFromAction()));
+                contextMenu->addAction(act);
+            }
+        }
+        if (/* tk.type==Tokens::bibRef || TODO: bibliography references not yet handled by token system */tk.type >= Token::specialArg) {
 			QAction *act = new QAction(LatexEditorView::tr("Go to Definition"), contextMenu);
 			act->setData(QVariant().fromValue<QDocumentCursor>(cursor));
 			edView->connect(act, SIGNAL(triggered()), edView, SLOT(emitGotoDefinitionFromAction()));
@@ -638,9 +668,33 @@ bool DefaultInputBinding::contextMenuEvent(QContextMenuEvent *event, QEditor *ed
 			QAction *act = new QAction(LatexEditorView::tr("Find Usages"), contextMenu);
 			act->setData(tk.getText());
 			act->setProperty("doc", QVariant::fromValue<LatexDocument *>(edView->document));
+            act->setProperty("definitionOnly", false);
 			edView->connect(act, SIGNAL(triggered()), edView, SLOT(emitFindLabelUsagesFromAction()));
 			contextMenu->addAction(act);
 		}
+        if (tk.type >= Token::specialArg) {
+            // finnd usage
+            QAction *act = new QAction(LatexEditorView::tr("Find Usages"), contextMenu);
+            act->setData(tk.getText());
+            act->setProperty("doc", QVariant::fromValue<LatexDocument *>(edView->document));
+            act->setProperty("type", tk.type);
+            edView->connect(act, SIGNAL(triggered()), edView, SLOT(emitFindSpecialUsagesFromAction()));
+            contextMenu->addAction(act);
+        }
+        if (tk.type == Token::defSpecialArg) {
+            LatexDocument *doc=edView->document;
+            QString def=doc->getCmdfromSpecialArgToken(tk);
+            QStringList vals=doc->lp->mapSpecialArgs.values();
+            int k=vals.indexOf(def);
+            if(k>-1){
+                QAction *act = new QAction(LatexEditorView::tr("Find Usages"), contextMenu);
+                act->setData(tk.getText());
+                act->setProperty("doc", QVariant::fromValue<LatexDocument *>(edView->document));
+                act->setProperty("type", Token::specialArg+k);
+                edView->connect(act, SIGNAL(triggered()), edView, SLOT(emitFindSpecialUsagesFromAction()));
+                contextMenu->addAction(act);
+            }
+        }
 		if (tk.type == Token::word) {
 			QAction *act = new QAction(LatexEditorView::tr("Thesaurus..."), contextMenu);
 			act->setData(QPoint(cursor.anchorLineNumber(), cursor.anchorColumnNumber()));
@@ -1681,7 +1735,7 @@ bool LatexEditorView::setSpeller(const QString &name, bool updateComment)
     }
 
 	// force new highlighting
-    if(!dontRecheck){
+    if(!dontRecheck && document){
         document->reCheckSyntax(0, document->lineCount());
     }
 
@@ -1833,6 +1887,7 @@ int LatexEditorView::syntaxErrorFormat, LatexEditorView::preEditFormat;
 int LatexEditorView::deleteFormat, LatexEditorView::insertFormat, LatexEditorView::replaceFormat;
 
 QList<int> LatexEditorView::grammarFormats;
+QList<int> LatexEditorView::delimiterFormats;
 QVector<bool> LatexEditorView::grammarFormatsDisabled;
 QList<int> LatexEditorView::formatsList;
 
@@ -1859,6 +1914,7 @@ void LatexEditorView::updateSettings()
 	editor->setFlag(QEditor::VerticalOverScroll, config->verticalOverScroll);
 	editor->setFlag(QEditor::AutoInsertLRM, config->autoInsertLRM);
 	editor->setFlag(QEditor::BidiVisualColumnMode, config->visualColumnMode);
+    editor->setFlag(QEditor::ShowIndentGuides, config->showIndentGuides);
 	editor->setFlag(QEditor::OverwriteOpeningBracketFollowedByPlaceholder, config->overwriteOpeningBracketFollowedByPlaceholder);
 	editor->setFlag(QEditor::OverwriteClosingBracketFollowingPlaceholder, config->overwriteClosingBracketFollowingPlaceholder);
 	//TODO: parenmatch
@@ -1885,7 +1941,11 @@ void LatexEditorView::updateSettings()
 	editor->setDisplayModifyTime(false);
 	searchReplacePanel->setUseLineForSearch(config->useLineForSearch);
 	searchReplacePanel->setSearchOnlyInSelection(config->searchOnlyInSelection);
-	QDocument::setShowSpaces(config->showWhitespace ? (QDocument::ShowTrailing | QDocument::ShowLeading | QDocument::ShowTabs) : QDocument::ShowNone);
+    QDocument::WhiteSpaceMode wsMode=config->showWhitespace ? (QDocument::ShowTrailing | QDocument::ShowLeading | QDocument::ShowTabs) : QDocument::ShowNone;
+    if(config->showIndentGuides){
+        wsMode = wsMode | QDocument::ShowIndentGuides;
+    }
+    QDocument::setShowSpaces(wsMode);
 	QDocument::setTabStop(config->tabStop);
 	QDocument::setLineSpacingFactor(config->lineSpacingPercent / 100.0);
 
@@ -1901,6 +1961,8 @@ void LatexEditorView::updateSettings()
     if (document){
         document->setHideNonTextGrammarErrors(config->hideNonTextGrammarErrors);
         document->setGrammarFormats(grammarFormats);
+        document->enableRainbowDelimiters(config->enableRainbowDelimiters);
+        document->setDelimiterFormats(delimiterFormats);
 		document->updateSettings();
         document->setCenterDocumentInEditor(config->centerDocumentInEditor);
     }
@@ -1967,6 +2029,8 @@ void LatexEditorView::updateFormatSettings()
 		formatsList << referenceMultipleFormat << citationMissingFormat << packageMissingFormat << packagePresentFormat << packageUndefinedFormat << environmentFormat;
 		formatsList << wordRepetitionFormat << structureFormat << todoFormat << insertFormat << deleteFormat << replaceFormat;
 		LatexDocument::syntaxErrorFormat = syntaxErrorFormat;
+        // delimiter colors
+        delimiterFormats << QDocument::defaultFormatScheme()->id("braceLevel0") << QDocument::defaultFormatScheme()->id("braceLevel1") << QDocument::defaultFormatScheme()->id("braceLevel2") << QDocument::defaultFormatScheme()->id("braceLevel3") << QDocument::defaultFormatScheme()->id("braceLevel4") << QDocument::defaultFormatScheme()->id("braceLevel5") << QDocument::defaultFormatScheme()->id("braceLevel6") << QDocument::defaultFormatScheme()->id("braceLevel7");
 	}
 }
 
@@ -1979,13 +2043,25 @@ void LatexEditorView::requestCitation()
 void LatexEditorView::openExternalFile()
 {
 	QAction *act = qobject_cast<QAction *>(sender());
-	QString name = act->data().toString();
+    QString userData = act->data().toString();
+    // split filename and line number at "##"
+    QStringList parts=userData.split("##");
+    QString name = act->data().toString();
+    int line=-1;
+    if(parts.size()==2){
+        name=parts[0];
+        bool ok;
+        line=parts[1].toInt(&ok);
+        if(!ok){
+            line=-1;
+        }
+    }
     name.replace("\\string~",QDir::homePath());
     if(document->getStateImportedFile()){
         name+="#";
     }
 	if (!name.isEmpty())
-		emit openFile(name);
+        emit openFile(name,line);
 }
 
 void LatexEditorView::openPackageDocumentation(QString package)
@@ -2047,7 +2123,18 @@ void LatexEditorView::emitFindLabelUsagesFromAction()
 	if (!action) return;
 	QString labelText = action->data().toString();
 	LatexDocument *doc = action->property("doc").value<LatexDocument *>();
-	emit findLabelUsages(doc, labelText);
+    bool definitionOnly=action->property("definitionOnly").toBool();
+    emit findLabelUsages(doc, labelText,definitionOnly);
+}
+
+void LatexEditorView::emitFindSpecialUsagesFromAction()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (!action) return;
+    QString labelText = action->data().toString();
+    LatexDocument *doc = action->property("doc").value<LatexDocument *>();
+    int type= action->property("type").toInt();
+    emit findSpecialUsages(doc, labelText,type);
 }
 
 void LatexEditorView::emitSyncPDFFromAction()
@@ -2170,8 +2257,9 @@ void LatexEditorView::mayNeedToOpenCompleter(bool fromSingleChar)
     if(fromSingleChar){
         lst << Token::labelRef;
     }
-	if (lst.contains(type))
+    if (lst.contains(type) || type>=Token::specialArg){
 		emit openCompleter();
+    }
     if (ts.isEmpty() || fromSingleChar)
 		return;
 	ts.pop();
@@ -2806,7 +2894,7 @@ void LatexEditorView::mouseHovered(QPoint pos)
                         mText += doc->exportAsHtml(doc->cursor(qMax(0, l - 2), 0, l + 2), true, true, 60);
                 }
 			}
-			QToolTip::showText(editor->mapToGlobal(editor->mapFromFrame(pos)), mText);
+            QToolTip::showText(editor->mapToGlobal(editor->mapFromFrame(pos)), mText,this);
 		}
 		if (tk.type == Token::label) {
 			handled = true;
@@ -2913,6 +3001,23 @@ void LatexEditorView::mouseHovered(QPoint pos)
 			m_point = editor->mapToGlobal(editor->mapFromFrame(pos));
 			emit showImgPreview(fname);
 		}
+        if(tk.type>=Token::specialArg){
+            QString mText;
+            LatexDocument *doc = qobject_cast<LatexDocument *> (editor->document());
+            QString def=doc->lp->mapSpecialArgs.value(tk.type-Token::specialArg);
+            QDocumentLineHandle *target = doc->findCommandDefinition(def+"%"+tk.getText());
+            if (target) {
+                int l = target->document()->indexOf(target);
+                if (target->document() != editor->document()) {
+                    doc = document->parent->findDocument(target->document());
+                    if (doc) mText = tr("<p style='white-space:pre'><b>Filename: %1</b>\n").arg(doc->getFileName());
+                }
+                if (doc)
+                    mText += doc->exportAsHtml(doc->cursor(qMax(0, l - 2), 0, l + 2), true, true, 60);
+                QToolTip::showText(editor->mapToGlobal(editor->mapFromFrame(pos)), mText);
+                handled=true;
+            }
+        }
 
 	}//if tk
 	if (handled)

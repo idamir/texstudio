@@ -1,5 +1,5 @@
 # nicematrix package
-# Matthew Bertucci 2025/05/09 for v7.1c
+# Matthew Bertucci 2026/03/31 for v7.8a
 
 #include:amsmath
 #include:array
@@ -103,6 +103,7 @@ vlines
 vlines=
 hlines
 hlines=
+hlines-except-borders
 hvlines
 hvlines-except-borders
 corners
@@ -124,8 +125,11 @@ nullify-dots
 renew-dots
 code-after=%<code%>
 cell-space-top-limit=##L
+cell-space-top-limit+=##L
 cell-space-bottom-limit=##L
+cell-space-bottom-limit+=##L
 cell-space-limits=##L
+cell-space-limits+=##L
 tabularnote=%<text%>
 notes/para
 notes/bottomrule
@@ -152,6 +156,7 @@ rounded-corners=##L
 no-cell-nodes
 ampersand-in-blocks
 &-in-blocks
+create-blocks-in-col=%<integer%>
 #endkeyvals
 
 #keyvals:\NiceMatrixOptions,\begin{NiceTabular}
@@ -180,6 +185,8 @@ notes/enumitem-keys={%<enumitem keys%>}
 notes/enumitem-keys-para={%<enumitem keys%>}
 matrix/columns-type=#l,c,r
 notes/code-before=%<code%>
+notes/detect-duplicates#true,false
+notes/no-print#true,false
 letter-for-dotted-lines=
 renew-matrix
 exterior-arraycolsep
@@ -217,6 +224,7 @@ tikz={%<TikZ options%>}
 name=%<name%>
 respect-arraystretch
 transparent
+rules/width=##L
 #endkeyvals
 
 \Hline#t
@@ -232,6 +240,8 @@ sep-color=#%color
 tikz={%<TikZ keys%>}
 total-width=##L
 dotted
+start=%<integer%>
+end=%<integer%>
 #endkeyvals
 
 \diagbox{lower}{upper}#t
@@ -278,8 +288,11 @@ respect-blocks
 #keyvals:\RowStyle
 nb-rows=%<number%>
 cell-space-top-limit=##L
+cell-space-top-limit+=##L
 cell-space-bottom-limit=##L
+cell-space-bottom-limit+=##L
 cell-space-limits=##L
+cell-space-limits+=##L
 rowcolor=#%color
 color=#%color
 bold
@@ -316,10 +329,14 @@ horizontal-label
 color=#%color
 radius=##L
 shorten-start=##L
+shorten-start+=##L
 shorten-end=##L
+shorten-end+=##L
 shorten=##L
+shorten+=##L
 inter=##L
 line-style=#standard,solid,dotted,densely dotted,loosely dotted,dashed,densely dashed,loosely dashed#c
+Vbrace
 #endkeyvals
 
 #keyvals:\Ddots,\Iddots
@@ -341,8 +358,13 @@ draw-first
 color=#%color
 horizontal-labels
 shorten=##L
+shorten+=##L
 shorten-start=##L
+shorten-start+=##L
 shorten-end=##L
+shorten-end+=##L
+brace-shift=##L
+brace-shift+=##L
 #endkeyvals
 
 \CodeAfter#t
@@ -369,6 +391,7 @@ xdots/shorten-end=##L
 xdots/shorten=##L
 xdots/inter=##L
 xdots/line-style=#standard,solid,dotted,densely dotted,loosely dotted,dashed,densely dashed,loosely dashed#c
+xdots/nullify
 #endkeyvals
 
 \SubMatrix{delim1}{i-j}{k-l}{delim2}#t
@@ -415,6 +438,7 @@ not-empty
 \tabularnote[symbol]{note%text}
 \begin{TabularNote}
 \end{TabularNote}
+\NiceTabularNotes
 \rotate
 \ShowCellNames#t
 
@@ -444,11 +468,13 @@ vlines
 vlines=
 hlines
 hlines=
+hlines-except-borders
 hvlines
 hvlines-except-borders
 corners
 corners=#NW,SW,NE,SE
 code-before=%<code%>
+code-before+=%<code%>
 columns-width=##L
 first-row
 last-row
@@ -457,9 +483,13 @@ last-col
 last-row=
 last-col=
 code-for-first-row=%<code%>
+code-for-first-row+=%<code%>
 code-for-last-row=%<code%>
+code-for-last-row+=%<code%>
 code-for-first-col=%<code%>
+code-for-first-col+=%<code%>
 code-for-last-col=%<code%>
+code-for-last-col+=%<code%>
 nullify-dots
 renew-dots
 code-after=%<code%>

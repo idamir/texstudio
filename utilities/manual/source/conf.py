@@ -9,7 +9,7 @@
 project = 'TeXstudio'
 copyright = '2022, TeXstudio Team'
 author = 'TeXstudio Team'
-release = '4.8.8'
+release = '4.9.4'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -63,6 +63,7 @@ html_theme = 'furo'
 #
 html_theme_options = {
     "navigation_with_keys": True,
+    "top_of_page_buttons": [],
 }
 
 # html_static_path = ['_static']

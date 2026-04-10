@@ -114,6 +114,7 @@ void SyntaxCheck::run()
                 mReplacementList=newReplacementList;
                 mFormatList=newFormatList;
                 m_nonTextGrammarFormats=m_newNonTextGrammarFormats;
+                m_RainbowFormats=m_newRainbowFormats;
 			}
 			mLtxCommandLock.unlock();
 		}
@@ -146,6 +147,7 @@ void SyntaxCheck::run()
         if (newLine.clearOverlay){
             QList<int> fmtList={syntaxErrorFormat,SpellerUtility::spellcheckErrorFormat};
             fmtList.append(mFormatList.values());
+            fmtList.append(m_RainbowFormats);
             newLine.dlh->clearOverlays(fmtList);
         }
 		//if(newRanges.isEmpty()) continue;
@@ -332,6 +334,27 @@ void SyntaxCheck::setNonTextGrammarFormats(const QList<int> formats)
     mLtxCommandLock.lock();
     newLtxCommandsAvailable = true;
     m_newNonTextGrammarFormats=formats;
+    mLtxCommandLock.unlock();
+}
+/*!
+ * \brief enable/disable rainbow delimiters
+ * \param enable
+ */
+void SyntaxCheck::enableRainbowDelimiter(bool enable)
+{
+    mShowRainbowDelimiter=enable;
+}
+/*!
+ * \brief set colors for rainbow delimiters
+ * \param formats
+ */
+void SyntaxCheck::setDelimiterFormats(const QList<int> formats)
+{
+
+    if (stopped) return;
+    mLtxCommandLock.lock();
+    newLtxCommandsAvailable = true;
+    m_newRainbowFormats=formats;
     mLtxCommandLock.unlock();
 }
 /*!
@@ -540,6 +563,8 @@ bool SyntaxCheck::equalEnvStack(StackEnvironment env1, StackEnvironment env2)
 */
 void SyntaxCheck::markUnclosedEnv(Environment env)
 {
+    if(!mSyntaxChecking) return; // skip when no syntax errors are to be shown
+
 	QDocumentLineHandle *dlh = env.dlh;
 	if (!dlh)
 		return;
@@ -618,7 +643,7 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
         Token &tk = tl[i];
         // remove top env if column exceeds columnlimit
         // used for formula -> brace -> {....}
-        if(!activeEnv.isEmpty() && activeEnv.top().endingColumn>=0 && tk.start>activeEnv.top().endingColumn){
+        while(!activeEnv.isEmpty() && activeEnv.top().endingColumn>=0 && tk.start>activeEnv.top().endingColumn){
             Environment env=activeEnv.pop();
         }
         // handle single command env stop e.g. \ExplSyntaxOff
@@ -730,6 +755,36 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
 				newRanges.append(elem);
 			}
 		}
+        // rainbow delimiter
+        if(mShowRainbowDelimiter && tk.type==Token::braces){
+            Error elem;
+            elem.range = QPair<int, int>(tk.start, 1);
+            elem.type = ERR_highlight;
+            int lvl=tk.level % 8;
+            if(lvl<0) lvl=0;
+            elem.format=m_RainbowFormats[lvl];
+            newRanges.append(elem);
+            elem.range = QPair<int, int>(tk.start+tk.length-1, 1);
+            newRanges.append(elem);
+        }
+        if(mShowRainbowDelimiter && tk.type==Token::openBrace){
+            Error elem;
+            elem.range = QPair<int, int>(tk.start, 1);
+            elem.type = ERR_highlight;
+            int lvl=tk.level % 8;
+            if(lvl<0) lvl=0;
+            elem.format=m_RainbowFormats[lvl];
+            newRanges.append(elem);
+        }
+        if(mShowRainbowDelimiter && tk.type==Token::closeBrace){
+            Error elem;
+            elem.range = QPair<int, int>(tk.start, 1);
+            elem.type = ERR_highlight;
+            int lvl=tk.level % 8;
+            if(lvl<0) lvl=0;
+            elem.format=m_RainbowFormats[lvl];
+            newRanges.append(elem);
+        }
         // math highlighting of formula
         if(tk.subtype==Token::formula){
             // highlight
@@ -754,10 +809,8 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
                 if(tk.type==Token::openBrace){
                     env.endingColumn=-1;
                 }
-                // avoid stacking same env (e.g. braces in braces, see #2411 )
                 Environment topEnv=activeEnv.top();
-                if(topEnv.name!=env.name)
-                    activeEnv.push(env);
+                activeEnv.push(env);
             }
             if(tk.type==Token::closeBrace){
                 if(activeEnv.top().name=="math"){
@@ -989,6 +1042,12 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
                                         if(newRanges.last().range==QPair<int,int>(tk.start,tk.length)){
                                             // yes, remove !
                                             newRanges.removeLast();
+                                        }else{
+                                            // check the one before as well (as rainbow braces may have been added)
+                                            if(mShowRainbowDelimiter && newRanges.size()>2 && newRanges.value(newRanges.size()-3).range==QPair<int,int>(tk.start,tk.length)){
+                                                // yes, remove !
+                                                newRanges.removeAt(newRanges.size()-3);
+                                            }
                                         }
                                     }
                                 }
@@ -1045,6 +1104,10 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
 						option="ll"; // is always 2 columns
 					}else{
                         option = Parsing::getArg(tl.mid(i+1),Token::colDef);
+                        if(option.isEmpty()){
+                            // check if multiline arg
+                            option = Parsing::getArg(tl.mid(i+1),dlh,0,ArgumentList::Mandatory);
+                        }
 					}
 				}
                 if(option.contains("colspec")){
@@ -1259,6 +1322,18 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
             if (ltxCommands->possibleCommands["user"].contains(word))
 				continue;
 
+            if(tk.subtype >= Token::specialArg){
+                // from multi element special argument
+                QString value = line.mid(tk.start, tk.length);
+                QString special = ltxCommands->mapSpecialArgs.value(int(tk.subtype - Token::specialArg));
+                if (!ltxCommands->possibleCommands[special].contains(value)) {
+                    Error elem;
+                    elem.range = QPair<int, int>(tk.start, tk.length);
+                    elem.type = ERR_unrecognizedKey;
+                    newRanges.append(elem);
+                }
+                continue;
+            }
 			if (!checkCommand(word, activeEnv)) {
 				Error elem;
 				if (tkEnvName.type == Token::braces) {
@@ -1298,7 +1373,7 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
                 }
 			}
 		}
-		if (tk.type == Token::specialArg) {
+        if (tk.type >= Token::specialArg) {
 			QString value = line.mid(tk.start, tk.length);
 			QString special = ltxCommands->mapSpecialArgs.value(int(tk.type - Token::specialArg));
 			if (!ltxCommands->possibleCommands[special].contains(value)) {
@@ -1440,7 +1515,7 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
                     }
                     if(options.startsWith("%")){
                         if (!ltxCommands->possibleCommands[options].contains(word)) {
-                            // special treatement for %color (mix)
+                            // special treatment for %color (mix)
                             if(options=="%color"){
                                 if(word=="!") continue;
                                 bool ok;
@@ -1453,10 +1528,27 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
                             newRanges.append(elem);
                         }
                     }else{
+                        if(options.contains(" ")){
+                            // special treatment for values with spaces, i.e. multi word values
+                            for (int k = i + 1; k < tl.length(); ++k) {
+                                Token tk_elem = tl.at(k);
+                                if(tk_elem.subtype!=Token::keyVal_val){
+                                    tk_elem=tl.at(k-1);
+                                    word=line.mid(tk.start,tk_elem.start+tk_elem.length-tk.start); // combine multiple keyVal_val tokens if present
+                                    i=k-1; // skip over those tokens
+                                    break;
+                                }
+                                if(k==tl.length()-1){
+                                    // last token
+                                    word=line.mid(tk.start,tk_elem.start+tk_elem.length-tk.start); // combine multiple keyVal_val tokens if present
+                                    i=k; // skip over those tokens
+                                }
+                            }
+                        }
                         QStringList l = options.split(",");
                         if (!l.contains(word)) {
                             Error elem;
-                            elem.range = QPair<int, int>(tk.start, tk.length);
+                            elem.range = QPair<int, int>(tk.start, word.length());
                             elem.type = ERR_unrecognizedKeyValues;
                             newRanges.append(elem);
                         }
@@ -1469,6 +1561,14 @@ void SyntaxCheck::checkLine(const QString &line, Ranges &newRanges, StackEnviron
         // merge original parenthesis vector with new additions
         // skip duplicates
         QVector<QParenthesis> original_parens=dlh->parenthesis();
+        // remove id 61 as it was added by syntaxcheck earlier
+        for(int i=0;i<original_parens.size();++i){
+            if(original_parens[i].id==61){
+                // remove
+                original_parens.remove(i);
+                --i;
+            }
+        }
         QVector<QParenthesis> result;
         int i=0;
         for(int j=0;j<m_parens.length();++j){

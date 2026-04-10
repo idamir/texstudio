@@ -1,5 +1,5 @@
 # letgut class
-# Matthew Bertucci 2024/10/08 for v0.10
+# Matthew Bertucci 2026/03/04 for v0.9.14
 
 #include:luatex
 #include:fontspec
@@ -11,6 +11,7 @@
 #include:biolinum
 #include:array
 #include:etoc
+#include:typicons
 #include:enumitem
 #include:titlesec
 #include:xcolor
@@ -80,6 +81,8 @@ watermark scale=%<factor%>
 \subtitle{text}
 \subtitle[short subtitle%text]{text}
 
+\vrefsection{label}#r
+
 \person{données}
 \person*{données}
 \author*{données}
@@ -116,6 +119,7 @@ watermark scale=%<factor%>
 \Assogut
 \lettres
 \lettresgut
+\listegut
 \cahier
 \cahiers
 \Cahier#S
@@ -128,6 +132,7 @@ watermark scale=%<factor%>
 \lamport
 \tl
 \tugboat
+\dtk
 \linux
 \macos
 \windows
@@ -143,6 +148,8 @@ watermark scale=%<factor%>
 \lettregut
 \lettregut[opt]
 \lettregut*[opt]
+
+\schedule{heure}{minute}
 
 \begin{ltx-code}
 \begin{ltx-code}[options%keyvals]

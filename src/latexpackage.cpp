@@ -216,12 +216,13 @@ LatexPackage loadCwlFile(const QString fileName, LatexCompleterConfig *config, Q
                 QRegularExpressionMatch rxComMatch2 = rxCom2.match(line); // for commands which don't have a braces part e.g. \item[text]
                 QRegularExpressionMatch rxComMatch3 = rxCom3.match(line); // for commands which don't have a options either e.g. \node (asas)
                 int res3 = rxComMatch3.capturedStart();
+                QString cmd = rxComMatch3.captured(1);
 
 				// get commandDefinition
 				CommandDescription cd = extractCommandDef(line, valid);
                 if(valid.startsWith("beginEnv")){
-                    package.possibleCommands["%beginEnv"]<<line;
-                    package.environmentAliases.insert(line, definition);
+                    package.possibleCommands["%beginEnv"]<<cmd;
+                    package.environmentAliases.insert(cmd, definition);
                     valid=valid.mid(8); // maintain additional classifiers
                 }
                 if(valid.startsWith("endEnv")){
@@ -234,7 +235,6 @@ LatexPackage loadCwlFile(const QString fileName, LatexCompleterConfig *config, Q
 					cd.bracketCommand=true;
 					valid.remove("K");
 				}
-                QString cmd = rxComMatch3.captured(1);
 				if (cmd == "\\begin") {
 					if (!package.commandDescriptions.contains(cmd)) {
 						// one insertion of a general \begin-command
@@ -417,6 +417,10 @@ LatexPackage loadCwlFile(const QString fileName, LatexCompleterConfig *config, Q
 						}
 					}
 					valid.remove('s');
+                    if(valid.contains('g')){
+                        // multi element argument
+
+                    }
 				}
 				if (valid.contains('c')) { // cite command
                     // replace 'c' to 'C' to maintain cwl compatibility
@@ -674,16 +678,24 @@ Token::TokenType tokenTypeFromCwlArg(QString arg, QString &definition)
         if (suffix == "%specialDef"){
             return Token::defSpecialArg;
         }
-		if (suffix == "%special") {
+        if (suffix == "%special" || suffix =="%specialMultiArg") {
 			Token::TokenType type = Token::specialArg;
-			arg.chop(8);
+            arg.chop(suffix.length());
 			LatexParser *latexParserInstance = LatexParser::getInstancePtr();
 			if (latexParserInstance) {
 				if (!latexParserInstance->mapSpecialArgs.values().contains("%" + arg)) {
 					int cnt = latexParserInstance->mapSpecialArgs.count();
 					latexParserInstance->mapSpecialArgs.insert(cnt, "%" + arg);
+                    if(suffix=="%special"){
+                        latexParserInstance->mapSpecialArgumentTypes.insert(cnt, LatexParser::singleArgument);
+                    }else{
+                        latexParserInstance->mapSpecialArgumentTypes.insert(cnt, LatexParser::multiElement);
+                    }
 					type = Token::TokenType(type + cnt);
-				}
+                }else{
+                    int index=latexParserInstance->mapSpecialArgs.values().indexOf("%" + arg);
+                    type=Token::TokenType(type+index);
+                }
 			}
 			return type;
 		}
@@ -837,8 +849,14 @@ CommandDescription extractCommandDefKeyVal(QString line, QString &key)
 {
 	CommandDescription cd;
 	int i = line.indexOf("#");
-	if (i < 0)
+    if (i < 0){
+        // look for fixed arguments only
+        if(line.endsWith("=%<text%>")){
+            cd.arguments={ArgumentDescription{ArgumentDescription::MANDATORY, Token::text}};
+            key=line.left(line.length()-9);
+        }
 		return cd;
+    }
 	key = line.left(i);
     int j= key.indexOf("=");
     if(i>=0){

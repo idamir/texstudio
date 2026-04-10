@@ -1,5 +1,5 @@
 # reledmac package
-# Matthew Bertucci 2025/04/14 for v2.40.4
+# Matthew Bertucci 2026/01/05 for v2.44.0
 
 #include:xargs
 #include:etoolbox
@@ -362,6 +362,8 @@ normal
 \Xendbeforenumber[series]{length}
 \Xendafternumber{length}
 \Xendafternumber[series]{length}
+\afternumberX{length}
+\afternumberX[series]{length}
 \Xnonbreakableafternumber
 \Xnonbreakableafternumber[series]
 \Xbeforesymlinenum{length}
@@ -443,6 +445,16 @@ C
 \notefontsizeX[series]{fontsize commands}
 \Xendnotefontsize{fontsize commands}
 \Xendnotefontsize[series]{fontsize commands}
+\Xwrapcomponents{command}
+\Xwrapcomponents[series]{command}
+\Xendwrapcomponents{command}
+\Xendwrapcomponents[series]{command}
+\wrapcomponentsX{command}
+\wrapcomponentsX[series]{command}
+\Xwrapnumbers{command}
+\Xwrapnumbers[series]{command}
+\Xendwrapnumbers{command}
+\Xendwrapnumbers[series]{command}
 \Xwraplemma{command}
 \Xwraplemma[series]{command}
 \Xwrapendlemma{command}
@@ -493,6 +505,10 @@ C
 \hsizetwocolX[series]{length}
 \hsizethreecolX{length}
 \hsizethreecolX[series]{length}
+\Xcolseparator{code}
+\Xcolseparator[series]{code}
+\colseparatorX{code}
+\colseparatorX[series]{code}
 \Xafternote{length}
 \Xafternote[series]{length}
 \afternoteX{length}

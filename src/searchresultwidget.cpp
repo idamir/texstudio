@@ -114,8 +114,9 @@ void SearchResultWidget::setQuery(SearchQuery *sq)
 
 void SearchResultWidget::updateSearch()
 {
-	if (query) query->setScope(searchScope());
-	emit runSearch(query);
+    /*if (query) query->setScope(searchScope());
+    emit runSearch(query);*/
+    emit signalUpdateSearch();
 }
 /*!
  * \brief change UI and update search when mode is changed
@@ -211,6 +212,12 @@ void SearchResultWidget::clickedSearchResult(const QModelIndex &index)
     const auto scope=searchScope();
     if(scope<SearchQuery::FilesScope){
         query->replaceAll();
+        if(!query->model()->partialSelectionAllowed()){
+            // everything replaced, update to new search word (replacement text)
+            // this is used for findUsage
+            searchTextLabel->setText(query->replacementText());
+            updateSearch();
+        }
     }else{
         // search in files
         QString folder=QFileDialog::getExistingDirectory(this, tr("Select folder where to search"),query->searchFolder());

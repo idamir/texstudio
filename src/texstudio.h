@@ -15,6 +15,7 @@
 #define Header_TexStudio
 
 #include "aichatassistant.h"
+#include "collaborationmanager.h"
 #include "mostQtHeaders.h"
 
 #include "bibtexparser.h"
@@ -90,6 +91,7 @@ public:
     Q_INVOKABLE void runInternalCommand(const QString &cmd, const QString &master, const QString &options);
 
     friend class TexStudioTest;
+    friend class AIChatAssistant;
 
 public slots:
 	LatexEditorView *load(const QString &f , bool asProject = false, bool recheck = true, bool dontAsk = false);
@@ -197,7 +199,7 @@ private:
 	//toolbars
 	QAction *actSave, *actUndo, *actRedo;
 
-	QLabel *statusLabelMode, *statusLabelProcess, *statusLabelLanguageTool;
+    QLabel *statusLabelMode, *statusLabelProcess, *statusLabelLanguageTool, *statusLabelCollab;
 	QToolButton *statusTbLanguage;
 	QToolButton *statusTbEncoding;
 	QActionGroup *spellLanguageActions;
@@ -289,7 +291,7 @@ protected slots:
 	void fileNew(QString fileName = "");
 	void fileNewFromTemplate();
 	void fileMakeTemplate();
-	void fileOpen();
+    void fileOpen(QString currentDir="");
 	void fileRestoreSession(bool showProgress = true, bool warnMissing = true);
     void fileSave(const bool saveSilently = false,QEditor *editor=nullptr);
 	void fileSaveAll();
@@ -315,6 +317,7 @@ protected slots:
 	void fileOpenAllRecent(); ///< open all files in recent file list
 	void fileRecentList();
     void fileClearRecentList();
+	void fileRemoveFromRecentList(const QString &fn);
 	void viewDocumentListHidden(); ///< show names of all hidden document (for debug)
 	void fileDocumentOpenFromChoosen(const QString &doc, int duplicate, int lineNr, int column);
 	void viewDocumentList();
@@ -353,8 +356,9 @@ private slots:
 	void fileDiffMerge();
 	void declareConflictResolved();
 protected slots:
-    LatexEditorView * openExternalFile(QString name, const QString &defaultExt = "tex", LatexDocument *doc = nullptr,bool relativeToCurrentDoc=false); // signaled by latexViewer to open specific file
+    LatexEditorView * openExternalFile(QString name, const QString &defaultExt = "tex", LatexDocument *doc = nullptr,bool relativeToCurrentDoc=false,int lineNr=-1); // signaled by latexViewer to open specific file
     void openExternalFileFromAction();
+    void openExternalFileAtLine(QString name,int lineNr);
 
 	void editUndo(); ///< undo changes in text editor
 	void editRedo(); ///< redo changes in text editor
@@ -391,7 +395,8 @@ protected slots:
 	void editInsertRefToNextLabel(const QString &refCmd = "\\ref", bool backward = false);
 	void editInsertRefToPrevLabel(const QString &refCmd = "\\ref");
 	void runSearch(SearchQuery *query);
-	void findLabelUsages(LatexDocument *doc, const QString &labelText);
+    void findLabelUsages(LatexDocument *doc, const QString &labelText,bool definitionOnly=false);
+    void findSpecialUsages(LatexDocument* doc,const QString &text,int type);
     void findLabelUsagesFromAction();
 	SearchResultWidget *searchResultWidget();
 
@@ -526,6 +531,21 @@ protected slots:
 	void analyseText();
 	void analyseTextFormDestroyed();
 	void generateRandomText();
+
+    void startCollabServer();
+    void connectCollabServer();
+    void disconnectCollabServer();
+    void updateCollabCursors(QDocumentCursor cur, QString userId);
+    void removeCollabCursor(LatexDocument *doc, QString userId);
+    void removeAllCollabCursor(QString userId);
+    void updateCollabChanges(QDocumentCursor cur,QString changes,QString userName);
+    void updateCollaborationEditors(int startLine,int startCol,int endLine,int endCol,const QString& changes);
+    bool registerFileForCollab(const QString filename);
+    void collabClientFinished(int exitCode, QString m_errorMessage);
+    void guestServerSuccessfullyStarted();
+    void hostServerSuccessfullyStarted();
+    void updateCollabStatus();
+    void copyCollabLinkToClipboard();
 
 	bool loadLog();
 	void onCompileError();
@@ -663,6 +683,7 @@ private slots:
 	void packageParserFinished();
 	void readinAllPackageNames();
     void packageListReadCompleted(std::set<QString> packages);
+
 protected:
 	void dragEnterEvent(QDragEnterEvent *event);
 	void dropEvent(QDropEvent *event);
@@ -711,6 +732,8 @@ protected:
 
 	void restoreBookmarks(LatexEditorView *edView);
 
+    QSet<QString> collectPotentialCompletionWords(const QDocument *doc, const QString &word) const;
+
 	bool completerPreview;
     QPixmapCache previewCache;
 
@@ -723,6 +746,10 @@ protected:
     StructureEntry *currentSection;
 
     bool mThesaurusWasStarted=false;
+
+    CollaborationManager *collabManager = nullptr;
+
+    QString mOverloadProgram=QString();
 
 public:
     Q_PROPERTY(QString clipboard READ clipboardText WRITE setClipboardText)

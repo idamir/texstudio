@@ -1,5 +1,5 @@
 # pmdraw package
-# Matthew Bertucci 2025/01/24 for v1.5
+# Matthew Bertucci 2026/03/04 for v2.3
 
 #include:xkeyval
 #include:tikz
@@ -20,49 +20,21 @@ blank top=%<integer%>
 blank bottom=%<integer%>
 row sep=%<integer%>
 vertices={%<\draw options%>}
-no vertex bottom 1=%<integer%>
-no vertex bottom 2=%<integer%>
-no vertex bottom 3=%<integer%>
-no vertex bottom 4=%<integer%>
-no vertex bottom 5=%<integer%>
-no vertex bottom 6=%<integer%>
-no vertex bottom 7=%<integer%>
-no vertex bottom 8=%<integer%>
-no vertex bottom 9=%<integer%>
-no vertex top 1=%<integer%>
-no vertex top 2=%<integer%>
-no vertex top 3=%<integer%>
-no vertex top 4=%<integer%>
-no vertex top 5=%<integer%>
-no vertex top 6=%<integer%>
-no vertex top 7=%<integer%>
-no vertex top 8=%<integer%>
-no vertex top 9=%<integer%>
+no vertex bottom %<num 0-19%>=%<integer%>
+no vertex top %<num 0-19%>=%<integer%>
+ghost vertex bottom %<num 0-19%>=%<integer%>
+ghost vertex top %<num 0-19%>=%<integer%>
+ghosts={%<\draw options%>}
 vertices options={%<code%>}
+ghosts options={%<code%>}
 labels
 labels top
 labels bottom
 labels start=%<integer%>
 labels top start=%<integer%>
 labels bottom start=%<integer%>
-no label bottom 1=%<integer%>
-no label bottom 2=%<integer%>
-no label bottom 3=%<integer%>
-no label bottom 4=%<integer%>
-no label bottom 5=%<integer%>
-no label bottom 6=%<integer%>
-no label bottom 7=%<integer%>
-no label bottom 8=%<integer%>
-no label bottom 9=%<integer%>
-no label top 1=%<integer%>
-no label top 2=%<integer%>
-no label top 3=%<integer%>
-no label top 4=%<integer%>
-no label top 5=%<integer%>
-no label top 6=%<integer%>
-no label top 7=%<integer%>
-no label top 8=%<integer%>
-no label top 9=%<integer%>
+no label bottom %<num 0-19%>=%<integer%>
+no label top %<num 0-19%>=%<integer%>
 labels top draw={%<\draw options%>}
 labels top node={%<\node options%>}
 labels bottom draw={%<\draw options%>}
@@ -88,12 +60,18 @@ edges upper={%<\draw options%>}
 edges lower={%<\draw options%>}
 edges transversal={%<\draw options%>}
 edges first
+edges first=#0,1
+edges last
+edges last=#0,1
 transversals first
 edges phantom
 edges uncover={%<overlay spec%>}
 brace={%<options%>}
 brace draw={%<\draw options%>}
 brace node={%<\node options%>}
+bracket={%<options%>}
+bracket draw={%<\node options%>}
+bracket node={%<\node options%>}
 decorate before={%<code%>}
 decorate after={%<code%>}
 #endkeyvals
@@ -104,8 +82,10 @@ decorate after={%<code%>}
 \pmdProduct[options%keyvals]{A-edges}{T-bricks}{B-bricks}
 \pmdProductTriple{ATedges}{ABedges}{Tbricks}}{Mbricks}{Bbricks}
 \pmdProductTriple[options%keyvals]{ATedges}{ABedges}{Tbricks}}{Mbricks}{Bbricks}
+\pmdEquiv{E bricks}
+\pmdEquiv[options%keyvals]{E bricks}
 
-#keyvals:\pmdDiagram#c,\pmdProduct#c,\pmdProductTriple#c
+#keyvals:\pmdDiagram#c,\pmdProduct#c,\pmdProductTriple#c,\pmdEquiv#c
 row sep=%<integer%>
 tikz={%<TikZ options%>}
 dots options={%<code%>}
@@ -114,7 +94,7 @@ decorate before={%<code%>}
 decorate after={%<code%>}
 #endkeyvals
 
-#keyvals:\pmdProduct#c,\pmdProductTriple#c
+#keyvals:\pmdProduct#c,\pmdProductTriple#c,\pmdEquiv#c
 diagram sep=%<number%>
 vertex sep=%<number%>
 edges added={%<\draw options%>}

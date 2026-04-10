@@ -189,9 +189,10 @@ TerminalWidget::TerminalWidget(QWidget *parent, InternalTerminalConfig *terminal
 #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     layout->setMargin(0);
 #else
-    layout->setContentMargins(0,0,0,0);
+    layout->setContentsMargins(0,0,0,0);
 #endif
 	setLayout(layout);
+    setContextMenuPolicy(Qt::ActionsContextMenu);
 	installEventFilter(this);
 }
 
@@ -209,7 +210,7 @@ bool TerminalWidget::eventFilter(QObject *watched, QEvent *event)
 {
 	if (event->type() == QEvent::ShortcutOverride) {
 		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-		if (keyEvent->modifiers().testFlag(Qt::ControlModifier)
+        if (keyEvent->modifiers().testFlag(Qt::ControlModifier)
 			&& ( (keyEvent->key() == 'C')
 			|| (keyEvent->key() == 'D')
 			|| (keyEvent->key() == 'L')
@@ -217,8 +218,16 @@ bool TerminalWidget::eventFilter(QObject *watched, QEvent *event)
 			|| (keyEvent->key() == 'Y')
 			|| (keyEvent->key() == 'V') ) ) {
 			event->accept();
+            // handle copy/paste
+            if(keyEvent->modifiers()==Qt::ControlModifier|Qt::ShiftModifier){
+                if(keyEvent->key() == 'C'){
+                    qTermWidget->copyClipboard();
+                } else if(keyEvent->key() == 'V'){
+                    qTermWidget->pasteClipboard();
+                }
+            }
 			return true;
-		}
+        }
 	}
 	return QWidget::eventFilter(watched, event);
 }
@@ -243,9 +252,18 @@ void TerminalWidget::initQTermWidget()
 	qTermWidget->setShellProgram(curShell);
 	qTermWidget->setTerminalSizeHint(false);
 	qTermWidget->startShellProgram();
+    qTermWidget->disableBracketedPasteMode(true);
 	layout->addWidget(qTermWidget,0);
     connect( qTermWidget, SIGNAL(finished()), this, SLOT(qTermWidgetFinished()) );
 	updateSettings(true);
+    if(actions().isEmpty()){
+        QAction *copyAction = new QAction(tr("Copy"), this);
+        connect(copyAction, &QAction::triggered, this, [this](){ qTermWidget->copyClipboard(); });
+        addAction(copyAction);
+        QAction *pasteAction = new QAction(tr("Paste"), this);
+        connect(pasteAction, &QAction::triggered, this, [this](){ qTermWidget->pasteSelection(); });
+        addAction(pasteAction);
+    }
 }
 
 void TerminalWidget::setCurrentFileName(const QString &filename)

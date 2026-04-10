@@ -881,12 +881,15 @@ void CompletionListModel::setKeyValWords(const QString &name, const QSet<QString
 		if (str.contains("#") && !str.startsWith("#")) {
 			int j = str.indexOf("#");
 			validValues = str.mid(j + 1);
-			str = str.left(j);
+            str = str.left(j);
 			QStringList lst = validValues.split(",");
 			QString key = str;
 			if (key.endsWith("="))
 				key.chop(1);
             setKeyValWords(name + "/" + key, convertStringListtoSet(lst));
+            if(validValues=="#L"){
+                str+="%<dimension%>"; // add dimension placeholder
+            }
 		}
 		CompletionWord cw(str, false);
 		cw.index = 0;
@@ -1876,6 +1879,8 @@ void LatexCompleter::complete(QEditor *newEditor, const CompletionFlags &flags)
         }
         if (flags & CF_FORCE_KEYVAL) {
             eow.remove(" ");
+            eow.remove("-");
+            eow.remove("/");
         }
 		if (flags == CF_FORCE_VISIBLE_LIST)
 			eow.remove("{");
@@ -1910,7 +1915,7 @@ void LatexCompleter::complete(QEditor *newEditor, const CompletionFlags &flags)
         if(i<0){
             start=0; // take complete text if no eow is detected (#3966)
             // skip spaces at the beginning
-            i = c.columnNumber() - 1;
+            i = c.columnNumber();
             while(start<lineText.length() && lineText.at(start)==' ' && start<i){
                 ++start;
             }
@@ -1985,6 +1990,11 @@ void LatexCompleter::setConfig(LatexCompleterConfig *config)
 LatexCompleterConfig *LatexCompleter::getConfig() const
 {
 	return config;
+}
+
+LatexParser &LatexCompleter::getLatexParser() const
+{
+    return const_cast<LatexParser &>(latexParser);
 }
 
 void LatexCompleter::setPackageList(std::set<QString> *lst)

@@ -270,6 +270,26 @@ void SyntaxCheckTest::checkkeyval_data(){
              <<"\\usepackage{hyperref} \\hypersetup{pdfpagemode=FullScreen}"<<false;
      QTest::newRow("hypersetup, val in argument 2")
              <<"\\usepackage{hyperref} \\hypersetup{pdfpagemode=test}"<<true;
+     QTest::newRow("tcolorbox, different values in 2 args")
+         <<"\\usepackage{tcolorbox} \\newtcbox[auto counter]{cmd}{after skip balanced=glue}"<<false;
+     QTest::newRow("tcolorbox, different values in 2 args, error in 2nd")
+         <<"\\usepackage{tcolorbox} \\newtcbox[auto counter]{cmd}{after kip balanced=glue}"<<true;
+     QTest::newRow("tcolorbox, different values in 2 args, error in 1st")
+         <<"\\usepackage{tcolorbox} \\newtcbox[aut counter]{cmd}{after skip balanced=glue}"<<true;
+     QTest::newRow("tcolorbox, multiline")
+         <<"\\usepackage{tcolorbox} \\begin{tcolorbox}[title=\n{test}]\n\\end{tcolorbox}"<<false;
+     QTest::newRow("tcolorbox, different values in 2 args, error in 1st")
+         <<"\\usepackage{tcolorbox} \\newtcbox[aut counter]{cmd}{after skip balanced=glue}"<<true;
+     QTest::newRow("thmtools,multi word keyval")
+         <<"\\usepackage{thm-kv} \\declaretheorem[numbered=unless unique]{test}"<<false;
+     QTest::newRow("thmtools,multi word keyval,fault in first")
+         <<"\\usepackage{thm-kv} \\declaretheorem[numbered=unles unique]{test}"<<true;
+     QTest::newRow("thmtools,multi word keyval,fault in second")
+         <<"\\usepackage{thm-kv} \\declaretheorem[numbered=unless unque]{test}"<<true;
+     QTest::newRow("newtheorem, flagged")
+         <<"\\newtheorem{test}{abc}\\begin{tet}\\end{tet}"<<true;
+     QTest::newRow("newtheorem, correct")
+         <<"\\newtheorem{test}{abc}\\begin{test}\\end{test}"<<false;
 
 }
 
@@ -301,24 +321,24 @@ void SyntaxCheckTest::checkArguments_data(){
     QTest::addColumn<QString>("text");
     QTest::addColumn<bool>("error");
 
-     QTest::newRow("simple")
-             <<"\\_"<<false;
-     QTest::newRow("at")
-             <<"\\@as"<<false;
-     QTest::newRow("at2")
-             <<"\\sdf@as"<<false;
-     QTest::newRow("unknown command")
-         <<"\\sdfs"<<true;
-     QTest::newRow("newcommand")
-             <<"\\newcommand{\\test}{\\abcd}"<<false;
-     QTest::newRow("newcommand2")
-             <<"\\newcommand{\\test}{\\abcd\n \\abcd}"<<false;
-     QTest::newRow("newcommand3")
-             <<"\\newcommand{\\test}{\\abcd\n{\n \\abcd}\n}"<<false;
-     QTest::newRow("specialDef missing")
-         <<"\\DTLrowcount{tes}\n}"<<true;
-     QTest::newRow("specialDef present")
-         <<"\\DTLnewdb{tes}\n\\DTLrowcount{tes}\n}"<<false;
+    QTest::newRow("simple")
+        <<"\\_"<<false;
+    QTest::newRow("at")
+        <<"\\@as"<<false;
+    QTest::newRow("at2")
+        <<"\\sdf@as"<<false;
+    QTest::newRow("unknown command")
+        <<"\\sdfs"<<true;
+    QTest::newRow("newcommand")
+        <<"\\newcommand{\\test}{\\abcd}"<<false;
+    QTest::newRow("newcommand2")
+        <<"\\newcommand{\\test}{\\abcd\n \\abcd}"<<false;
+    QTest::newRow("newcommand3")
+        <<"\\newcommand{\\test}{\\abcd\n{\n \\abcd}\n}"<<false;
+    QTest::newRow("specialDef missing")
+        <<"\\DTLrowcount{tes}\n}"<<true;
+    QTest::newRow("specialDef present")
+        <<"\\DTLnewdb{tes}\n\\DTLrowcount{tes}\n}"<<false;
 }
 
 void SyntaxCheckTest::checkArguments(){
@@ -371,6 +391,12 @@ void SyntaxCheckTest::checkMathHighlight_data(){
              <<"\\textbf{text $\\textbf{text}abc$}"<<QList<int>{14}<<QList<int>{16}<<QList<int>{22}<<QList<int>{4};
      QTest::newRow("nested math in text in math in text")
              <<"\\textbf{text $\\textbf{text $abc$}abc$}"<<QList<int>{14,28}<<QList<int>{22,3}<<QList<int>{22}<<QList<int>{4};
+     QTest::newRow("formula")
+         <<"\\usepackage{amsmath}\\boxed{a}"<<QList<int>{27,26,27}<<QList<int>{1,3,1}<<QList<int>{}<<QList<int>{};
+     QTest::newRow("nested math and formula") // issue #2411
+         <<"\\usepackage{amsmath}$\\boxed{a}$ test"<<QList<int>{21,27,28}<<QList<int>{9,3,1}<<QList<int>{}<<QList<int>{};
+     QTest::newRow("nested math and formula (2)") // issue #2411
+         <<"\\usepackage{amsmath}$\\boxed{{a}}$ test"<<QList<int>{21,27,28,29}<<QList<int>{11,5,3,1}<<QList<int>{}<<QList<int>{};
 }
 
 void SyntaxCheckTest::checkMathHighlight(){
@@ -488,6 +514,8 @@ void SyntaxCheckTest::checkExplHighlight_data(){
         <<"\\ExplSyntaxOn \\test_asd_asd:NN \\ExplSyntaxOff"<<QList<int>{14}<<QList<int>{14}<<QList<int>{28}<<QList<int>{2};
     QTest::newRow("two cmds")
         <<"\\ExplSyntaxOn \\test \\test \\ExplSyntaxOff"<<QList<int>{14,20}<<QList<int>{5,5}<<QList<int>{}<<QList<int>{};
+    QTest::newRow("simple cmd,ProvidesExplPackage")
+        <<"\\ProvidesExplPackage{Test}{date}{version}{description} \\test \\ExplSyntaxOff"<<QList<int>{55}<<QList<int>{5}<<QList<int>{}<<QList<int>{};
 }
 
 void SyntaxCheckTest::checkExplHighlight(){
@@ -527,5 +555,44 @@ void SyntaxCheckTest::checkExplHighlight(){
     edView->getConfig()->realtimeChecking = realtimeChecking;
 }
 
+void SyntaxCheckTest::checkMultilineFormula_data(){
+    QTest::addColumn<QString>("text");
+    QTest::addColumn<bool>("error");
+    // issue #4331
+    QTest::newRow("boxed single line")
+        <<"\\usepackage{amsmath}\n\\[\n  \\boxed{x}\n\\]"<<false;
+    QTest::newRow("boxed multiline")
+        <<"\\usepackage{amsmath}\n\\[\n  \\boxed{\n  }\n\\]"<<false;
+    QTest::newRow("boxed multiline with content")
+        <<"\\usepackage{amsmath}\n\\[\n  \\boxed{\n    x\n  }\n\\]"<<false;
+    QTest::newRow("boxed multiline in $")
+        <<"\\usepackage{amsmath}\n$\n  \\boxed{\n  }\n$"<<false;
+}
+
+void SyntaxCheckTest::checkMultilineFormula(){
+    QFETCH(QString, text);
+    QFETCH(bool, error);
+
+    bool inlineSyntaxChecking = edView->getConfig()->inlineSyntaxChecking;
+    bool realtimeChecking = edView->getConfig()->realtimeChecking;
+
+    edView->getConfig()->inlineSyntaxChecking = true;
+    edView->getConfig()->realtimeChecking = true;
+
+    edView->editor->setText(text, false);
+    LatexDocument *doc=edView->getDocument();
+    doc->synChecker.waitForQueueProcess(); // wait for syntax checker to finish (as it runs in a parallel thread)
+
+    bool errorFlag=false;
+    for(int i=0;i<doc->lines();++i){
+        QDocumentLineHandle *dlh=doc->line(i).handle();
+        QList<QFormatRange> formats=dlh->getOverlays(LatexEditorView::syntaxErrorFormat);
+        errorFlag|=!formats.isEmpty();
+    }
+    QEQUAL(errorFlag,error);
+
+    edView->getConfig()->inlineSyntaxChecking = inlineSyntaxChecking;
+    edView->getConfig()->realtimeChecking = realtimeChecking;
+}
 #endif
 

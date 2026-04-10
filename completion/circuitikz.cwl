@@ -1,5 +1,5 @@
 # circuitikz package
-# updated 2023/06/24 for v1.6.3
+# updated 2026/02/11 for v1.8.5
 
 #include:tikz
 #include:tikzlibrarycalc
@@ -105,6 +105,7 @@ example
 \comnpatname#S
 \compattikzset{options}#S
 \drawpoles#*
+\ctikzprocessvif#*
 
 # from pgfcircshapes.tex
 # no user commands
@@ -140,6 +141,7 @@ example
 \tunablewidth#S
 \pgfcircdeclaresolderjumper{name}{0|1}#*
 \pgfcircdeclaredoublesolderjumper{name}{0|1}{0|1}#*
+\pgfcircdeclareIGCT{name}{0|1}{-1|1}#*
 
 # from pgfcirctripoles.tex
 \pgfcircdeclarelogicport{name}{number}{code}#*
@@ -246,9 +248,11 @@ example
 \labeldist#S
 \partheightf#S
 \whichtypeshift#S
+\ctikzactivatevoltagedirections{arg}#*
 
 # from pgfcirccurrent.tex
-# no user commands
+\ctikzactivatecurrentdirections{arg}#*
 
 # from pgfcircflow.tex
+\ctikzactivateflowdirections{arg}#*
 \absfshift#S

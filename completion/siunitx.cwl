@@ -1,7 +1,7 @@
 # dbitouze/2015-03-20 for siunitx v2.6e
 # thatlittleboy/2018-06-18
 # r0the/2021-10-07 for siunitx v3
-# Matthew Bertucci 2025-05-17 for v3.4.11
+# Matthew Bertucci 2026-04-06 for v3.5.1
 
 #include:translations
 #include:amstext
@@ -12,148 +12,150 @@
 #include:xspace
 #endif
 
-\A#*
-\ampere
-\amu#*
+\A#*/%unit
+\ampere#/%unit
+\amu#*/%unit
 \ang[%<options%>]{%<angle%>}
 \ang{%<angle%>}
-\arcminute
-\arcsecond
-\as#*
+\arcminute#/%unit
+\arcsecond#/%unit
+\as#*/%unit
 \astronomicalunit
-\atto
-\becquerel
-\bel
-\bit
-\byte
-\C#*
-\candela
-\centi
-\cm#*
+\atto#/%unit
+\becquerel#/%unit
+\bel#/%unit
+\bit#/%unit
+\byte#/%unit
+\C#*/%unit
+\candela#/%unit
+\centi#/%unit
+\cm#*/%unit
 \complexnum{%<number%>}
 \complexnum[%<options%>]{%<number%>}
-\complexqty{number}{unit%formula}
-\complexqty[options%keyvals]{number}{unit%formula}
-\coulomb
-\cubed
-\cubic
-\dalton
-\dB#*
-\deca
-\deci
-\decibel
+\complexqty{number}{unit%specialMultiArg}
+\complexqty[options%keyvals]{number}{unit%specialMultiArg}
+\coulomb#/%unit
+\cubed#/%unit
+\cubic#/%unit
+\dalton#/%unit
+\dB#*/%unit
+\deca#/%unit
+\deci#/%unit
+\decibel#/%unit
 \DeclareSIPower{symbol-before%cmd}{symbol-after%cmd}{power}#d
 \DeclareSIPrefix{prefix macro%cmd}{symbol}{power of 10}#d
 \DeclareSIQualifier{qualifier%cmd}{symbol}#d
-\DeclareSIUnit[options%keyvals]{unit%cmd}{definition}#d
-\DeclareSIUnit{unit%cmd}{definition}#d
-\degreeCelsius
-\degree
-\deka
-\dm#*
-\electronvolt
-\eV#*
-\exa
-\exbi
-\F#*
-\farad
-\femto
-\fF#*
-\fg#*
-\fH#*
-\fmol#*
-\fs#*
-\g#*
-\GeV#*
-\GHz#*
-\gibi
-\giga
-\GPa#*
-\gram
-\gray
-\GW#*
-\hectare
-\hecto
-\henry
-\hertz
-\highlight
-\hL#*
-\hl#*
-\hour
-\Hz#*
-\J#*
-\joule
-\K#*
-\kA#*
-\katal
-\kelvin
-\keV#*
-\kg#*
-\kHz#*
-\kibi
-\kilo
-\kilogram
-\kJ#*
-\km#*
-\kmol#*
-\kN#*
-\kohm#*
-\kPa#*
-\kV#*
-\kW#*
-\kWh#*
-\L#*
-\l#*
-\liter
-\litre
-\lumen
-\lux
-\m#*
-\mA#*
-\mC#*
-\mebi
-\mega
-\meter
-\metre
-\MeV#*
-\meV#*
-\mF#*
-\mg#*
-\mH#*
-\MHz#*
-\mHz#*
-\micro
-\milli
-\minute
-\mJ#*
-\mL#*
-\ml#*
-\mm#*
-\mmol#*
-\MN#*
-\mN#*
-\Mohm#*
-\mohm#*
-\mol#*
+\DeclareSIUnit[options%keyvals]{unit%specialDef}{definition}#s#%unit
+\DeclareSIUnit{unit%specialDef}{definition}#s#%unit
+\degreeCelsius#/%unit
+\degree#/%unit
+\deka#/%unit
+\dm#*/%unit
+\duration{duration}
+\duration[options%keyvals]{duration}
+\electronvolt#/%unit
+\eV#*/%unit
+\exa#/%unit
+\exbi#/%unit
+\F#*/%unit
+\farad#/%unit
+\femto#/%unit
+\fF#*/%unit
+\fg#*/%unit
+\fH#*/%unit
+\fmol#*/%unit
+\fs#*/%unit
+\g#*/%unit
+\GeV#*/%unit
+\GHz#*/%unit
+\gibi#/%unit
+\giga#/%unit
+\GPa#*/%unit
+\gram#/%unit
+\gray#/%unit
+\GW#*/%unit
+\hectare#/%unit
+\hecto#/%unit
+\henry#/%unit
+\hertz#/%unit
+\highlight#/%unit
+\hL#*/%unit
+\hl#*/%unit
+\hour#/%unit
+\Hz#*/%unit
+\J#*/%unit
+\joule#/%unit
+\K#*/%unit
+\kA#*/%unit
+\katal#/%unit
+\kelvin#/%unit
+\keV#*/%unit
+\kg#*/%unit
+\kHz#*/%unit
+\kibi#/%unit
+\kilo#/%unit
+\kilogram#/%unit
+\kJ#*/%unit
+\km#*/%unit
+\kmol#*/%unit
+\kN#*/%unit
+\kohm#*/%unit
+\kPa#*/%unit
+\kV#*/%unit
+\kW#*/%unit
+\kWh#*/%unit
+\L#*/%unit
+\l#*/%unit
+\liter#/%unit
+\litre#/%unit
+\lumen#/%unit
+\lux#/%unit
+\m#*/%unit
+\mA#*/%unit
+\mC#*/%unit
+\mebi#/%unit
+\mega#/%unit
+\meter#/%unit
+\metre#/%unit
+\MeV#*/%unit
+\meV#*/%unit
+\mF#*/%unit
+\mg#*/%unit
+\mH#*/%unit
+\MHz#*/%unit
+\mHz#*/%unit
+\micro#/%unit
+\milli#/%unit
+\minute#/%unit
+\mJ#*/%unit
+\mL#*/%unit
+\ml#*/%unit
+\mm#*/%unit
+\mmol#*/%unit
+\MN#*/%unit
+\mN#*/%unit
+\Mohm#*/%unit
+\mohm#*/%unit
+\mol#*/%unit
 \mole
-\mp#*
-\MPa#*
-\ms#*
-\mT#*
-\mV#*
-\MW#*
-\mW#*
-\N#*
-\nA#*
-\nano
-\nC#*
-\neper
-\newton
-\nF#*
-\ng#*
-\nm#*
-\nmol#*
-\ns#*
+\mp#*/%unit
+\MPa#*/%unit
+\ms#*/%unit
+\mT#*/%unit
+\mV#*/%unit
+\MW#*/%unit
+\mW#*/%unit
+\N#*/%unit
+\nA#*/%unit
+\nano#/%unit
+\nC#*/%unit
+\neper#/%unit
+\newton#/%unit
+\nF#*/%unit
+\ng#*/%unit
+\nm#*/%unit
+\nmol#*/%unit
+\ns#*/%unit
 \num[%<options%>]{%<number%>}
 \num{%<number%>}
 \numlist[%<options%>]{%<numbers%>}
@@ -162,83 +164,83 @@
 \numproduct{%<numbers%>}
 \numrange[%<options%>]{%<number1%>}{%<number2%>}
 \numrange{%<number1%>}{%<number2%>}
-\nV#*
-\nW#*
-\of{text%plain}
-\ohm
-\Pa#*
-\pA#*
-\pascal
-\pebi
-\per
-\percent
-\peta
-\pF#*
-\pg#*
-\pH#*
-\pico
-\pm#*
-\pmol#*
-\ps#*
-\pV#*
-\qty[options%keyvals]{number}{unit%formula}
-\qty{number}{unit%formula}
-\qtylist[options%keyvals]{numbers}{unit%formula}
-\qtylist{numbers}{unit%formula}
-\qtyproduct[options%keyvals]{numbers}{unit%formula}
-\qtyproduct{numbers}{unit%formula}
-\qtyrange[options%keyvals]{number1}{number2}{unit%formula}
-\qtyrange{number1}{number2}{unit%formula}
-\quecto
-\quetta
-\radian
+\nV#*/%unit
+\nW#*/%unit
+\of{text%plain}#/%unit
+\ohm#/%unit
+\Pa#*/%unit
+\pA#*/%unit
+\pascal#/%unit
+\pebi#/%unit
+\per#/%unit
+\percent#/%unit
+\peta#/%unit
+\pF#*/%unit
+\pg#*/%unit
+\pH#*/%unit
+\pico#/%unit
+\pm#*/%unit
+\pmol#*/%unit
+\ps#*/%unit
+\pV#*/%unit
+\qty[options%keyvals]{number}{unit%specialMultiArg}
+\qty{number}{unit%specialMultiArg}
+\qtylist[options%keyvals]{numbers}{unit%specialMultiArg}
+\qtylist{numbers}{unit%specialMultiArg}
+\qtyproduct[options%keyvals]{numbers}{unit%specialMultiArg}
+\qtyproduct{numbers}{unit%specialMultiArg}
+\qtyrange[options%keyvals]{number1}{number2}{unit%specialMultiArg}
+\qtyrange{number1}{number2}{unit%specialMultiArg}
+\quecto#/%unit
+\quetta#/%unit
+\radian#/%unit
 \raiseto{%<power%>}
-\ronna
-\ronto
-\s#*
-\second
-\siemens
-\sievert
+\ronna#/%unit
+\ronto#/%unit
+\s#*/%unit
+\second#/%unit
+\siemens#/%unit
+\sievert#/%unit
 \sisetup{%<options%>}
-\square
-\squared
-\steradian
-\T#*
+\square#/%unit
+\squared#/%unit
+\steradian#/%unit
+\T#*/%unit
 \tablenum{%<number%>}#t
 \tablenum[%<options%>]{%<number%>}#t
-\tebi
-\tera
-\tesla
-\TeV#*
-\THz#*
-\tonne
-\tothe{%<power%>}
-\uA#*
-\uC#*
-\uF#*
-\ug#*
-\uH#*
-\uJ#*
-\uL#*
-\ul#*
-\um#*
-\umol#*
-\unit[options%keyvals]{unit%formula}
-\unit{unit%formula}
-\us#*
-\uT#*
-\uV#*
-\uW#*
-\V#*
-\volt
-\W#*
-\watt
-\weber
-\yobi
-\yocto
-\yotta
-\zebi
-\zepto
+\tebi#/%unit
+\tera#/%unit
+\tesla#/%unit
+\TeV#*/%unit
+\THz#*/%unit
+\tonne#/%unit
+\tothe{%<power%>}#/%unit
+\uA#*/%unit
+\uC#*/%unit
+\uF#*/%unit
+\ug#*/%unit
+\uH#*/%unit
+\uJ#*/%unit
+\uL#*/%unit
+\ul#*/%unit
+\um#*/%unit
+\umol#*/%unit
+\unit[options%keyvals]{unit%specialMultiArg}
+\unit{unit%specialMultiArg}
+\us#*/%unit
+\uT#*/%unit
+\uV#*/%unit
+\uW#*/%unit
+\V#*/%unit
+\volt#/%unit
+\W#*/%unit
+\watt#/%unit
+\weber#/%unit
+\yobi#/%unit
+\yocto#/%unit
+\yotta#/%unit
+\zebi#/%unit
+\zepto#/%unit
 \zetta
 
 # deprecated
@@ -249,9 +251,9 @@
 \bohr#S
 \celsius#S
 \clight#S
-\DeclareBinaryPrefix{prefix macro%cmd}{symbol}{power of 2}#*d
-\DeclareSIPostPower{power macro%cmd}{number}#*d
-\DeclareSIPrePower{power macro%cmd}{number}#*d
+\DeclareBinaryPrefix{prefix macro%cmd}{symbol}{power of 2}#Sd
+\DeclareSIPostPower{power macro%cmd}{number}#Sd
+\DeclareSIPrePower{power macro%cmd}{number}#Sd
 \electronmass#S
 \elementarycharge#S
 \hartree#S
@@ -279,8 +281,8 @@
 \SIUnitSymbolOhm#S
 
 # Options
-## 4.2 Printing
-#keyvals:\sisetup,\ang,\complexnum,\complexqty,\DeclareSIUnit,\num,\numlist,\numproduct,\numrange,\qty,\qtylist,\qtyproduct,\qtyrange,\tablenum,\unit,\SI,\si,\SIlist,\SIrange
+## Printing
+#keyvals:\sisetup,\ang,\complexnum,\complexqty,\DeclareSIUnit,\duration,\num,\numlist,\numproduct,\numrange,\qty,\qtylist,\qtyproduct,\qtyrange,\tablenum,\unit,\SI,\si,\SIlist,\SIrange
 color=#%color
 mode=#match,math,text
 number-color=#%color
@@ -299,8 +301,8 @@ unit-color=#%color
 unit-mode=#match,math,text
 #endkeyvals
 
-## 4.3 Parsing numbers
-#keyvals:\sisetup,\ang,\complexnum,\complexqty,\DeclareSIUnit,\num,\numlist,\numproduct,\numrange,\qty,\qtylist,\qtyproduct,\qtyrange,\tablenum,\SI,\si,\SIlist,\SIrange
+## Parsing numbers
+#keyvals:\sisetup,\ang,\complexnum,\complexqty,\DeclareSIUnit,\duration,\num,\numlist,\numproduct,\numrange,\qty,\qtylist,\qtyproduct,\qtyrange,\tablenum,\SI,\si,\SIlist,\SIrange
 evaluate-expression#true,false
 expression=%<expression%>
 input-close-uncertainty=%<symbols%>
@@ -326,8 +328,8 @@ retain-zero-uncertainty#true,false
 \le
 \ge
 
-## 4.4 Post-processing numbers
-#keyvals:\sisetup,\ang,\complexnum,\complexqty,\DeclareSIUnit,\num,\numlist,\numproduct,\numrange,\qty,\qtylist,\qtyproduct,\qtyrange,\tablenum,\SI,\si,\SIlist,\SIrange
+## Post-processing numbers
+#keyvals:\sisetup,\ang,\complexnum,\complexqty,\DeclareSIUnit,\duration,\num,\numlist,\numproduct,\numrange,\qty,\qtylist,\qtyproduct,\qtyrange,\tablenum,\SI,\si,\SIlist,\SIrange
 drop-exponent#true,false
 drop-uncertainty#true,false
 drop-zero-decimal#true,false
@@ -346,8 +348,8 @@ round-zero-positive#true,false
 uncertainty-round-direction=#nearest,up,down
 #endkeyvals
 
-## 4.5 Printing numbers
-#keyvals:\sisetup,\ang,\complexnum,\complexqty,\DeclareSIUnit,\num,\numlist,\numproduct,\numrange,\qty,\qtylist,\qtyproduct,\qtyrange,\tablenum,\SI,\si,\SIlist,\SIrange
+## Printing numbers
+#keyvals:\sisetup,\ang,\complexnum,\complexqty,\DeclareSIUnit,\duration,\num,\numlist,\numproduct,\numrange,\qty,\qtylist,\qtyproduct,\qtyrange,\tablenum,\SI,\si,\SIlist,\SIrange
 allow-uncertainty-breaks#true,false
 bracket-ambiguous-numbers#true,false
 bracket-negative-numbers#true,false
@@ -356,6 +358,7 @@ digit-group-first-size=%<integer%>
 digit-group-other-size=%<integer%>
 exponent-base=%<value%>
 exponent-product=%<symbol%>
+final-digit-group-min-size=%<integer%>
 group-digits=#none,decimal,integer
 group-minimum-digits=%<integer%>
 group-separator=%<separator%>
@@ -382,7 +385,7 @@ zero-decimal-as-symbol#true,false
 zero-symbol=%<symbol%>
 #endkeyvals
 
-## 4.6 Lists, products and ranges
+## Lists, products and ranges
 #keyvals:\sisetup,\numlist,\qtylist,\SIlist
 list-close-bracket=%<symbol%>
 list-exponents=#individual,combine-bracket,combine
@@ -415,7 +418,7 @@ range-phrase=%<text%>
 range-units=#bracket,repeat,single
 #endkeyvals
 
-## 4.7 Complex numbers
+## Complex numbers
 #keyvals:\sisetup,\complexnum,\complexqty
 complex-angle-unit=#degrees,radians
 complex-mode=#cartesian,polar,input
@@ -427,20 +430,32 @@ output-complex-root=%<symbol%>
 print-complex-unity#true,false
 #endkeyvals
 
-## 4.8 Angles
+## Angles
 #keyvals:\sisetup,\ang
 angle-mode=#arc,decimal
+angle-separator=%<separator%>
 angle-symbol-degree=%<symbol%>
 angle-symbol-minute=%<symbol%>
 angle-symbol-over-decimal#true,false
 angle-symbol-second=%<symbol%>
-angle-separator=%<separator%>
 fill-angle-degrees#true,false
 fill-angle-minutes#true,false
 fill-angle-seconds#true,false
 #endkeyvals
 
-## 4.9 Creating units
+## Durations
+#keyvals:\sisetup,\duration
+duration-mode=#component,decimal
+duration-separator=%<separator%>
+fill-duration-hours#true,false
+fill-duration-minutes#true,false
+fill-duration-seconds#true,false
+duration-unit-hour=%<unit%>
+duration-unit-minute=%<unit%>
+duration-unit-second=%<unit%>
+#endkeyvals
+
+## Creating units
 #keyvals:\sisetup
 free-standing-units#true,false
 overwrite-functions#true,false
@@ -449,7 +464,7 @@ unit-optional-argument#true,false
 use-xspace#true,false
 #endkeyvals
 
-## 4.10 Using units
+## Using units
 #keyvals:\sisetup,\DeclareSIUnit,\qty,\qtylist,\qtyproduct,\qtyrange,\unit,\si
 bracket-unit-denominator#true,false
 forbid-literal-units#true,false
@@ -468,7 +483,7 @@ sticky-per#true,false
 unit-font-command=%<command%>
 #endkeyvals
 
-## 4.11 Quantities
+## Quantities
 #keyvals:\sisetup,\DeclareSIUnit,\qty,\qtylist,\qtyproduct,\qtyrange,\SI,\SIlist,\SIrange
 allow-quantity-breaks#true,false
 extract-mass-in-kilograms#true,false
@@ -477,7 +492,7 @@ quantity-product=%<symbol%>
 separate-uncertainty-units=#bracket,repeat,single
 #endkeyvals
 
-## 4.12 Tabular material
+## Tabular material
 #keyvals:\sisetup,\tablenum
 table-align-comparator#true,false
 table-align-exponent#true,false
@@ -495,16 +510,18 @@ table-number-alignment=#left,center,right
 table-text-alignment=#left,center,right,none
 #endkeyvals
 
-## 4.13 Locale options
-#keyvals:\sisetup,\ang,\complexnum,\complexqty,\DeclareSIUnit,\num,\numlist,\numproduct,\numrange,\qty,\qtylist,\qtyproduct,\qtyrange,\tablenum,\unit,\SI,\si,\SIlist,\SIrange
+## Locale options
+#keyvals:\sisetup,\ang,\complexnum,\complexqty,\DeclareSIUnit,\duration,\num,\numlist,\numproduct,\numrange,\qty,\qtylist,\qtyproduct,\qtyrange,\tablenum,\unit,\SI,\si,\SIlist,\SIrange
 locale=#BR,DE,FR,UK,US,ZA
 #endkeyvals
 
-## 4.14 Preamble-only options
+## Preamble-only options
 #keyvals:\sisetup
 list-input-separator=%<separator%>
 product-input-separator=%<separator%>
 table-column-type=%<tokens%>
+disable-deprecated-commands
+disable-deprecated-options
 #endkeyvals
 
 ## (deprecated) Detecting Fonts ; section 5.2

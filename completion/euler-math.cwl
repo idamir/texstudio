@@ -1,5 +1,5 @@
 # euler-math package
-# Matthew Bertucci 2025/02/16 for v0.62
+# Matthew Bertucci 2026/02/21 for v0.75
 
 #include:iftex
 #include:unicode-math
@@ -17,15 +17,15 @@ Numbers=#Uppercase,UppercaseOff,Lowercase,LowercaseOff,Lining,LiningOff,OldStyle
 \bigstar#m
 \blacktriangle#m
 \blacktriangledown#m
-\cuberoot{arg}#m
 \cuberootsign{arg}#*m
+\cuberoot{arg}#m
 \doublebarwedge#m
 \downdasharrow#m
 \eqqslantgtr#m
 \eqqslantless#m
 \Finv#m
-\fourthroot{arg}#m
 \fourthrootsign{arg}#*m
+\fourthroot{arg}#m
 \Game#m
 \geqqslant#m
 \harrowextender#*m
@@ -37,6 +37,7 @@ Numbers=#Uppercase,UppercaseOff,Lowercase,LowercaseOff,Lining,LiningOff,OldStyle
 \lgblkcircle#m
 \lgblksquare#m
 \lgwhtsquare#m
+\mbfvarPhi#*m
 \mdblkcircle#m
 \mdblkdiamond#m
 \mdblklozenge#m
@@ -52,6 +53,7 @@ Numbers=#Uppercase,UppercaseOff,Lowercase,LowercaseOff,Lining,LiningOff,OldStyle
 \mdwhtdiamond#m
 \mdwhtlozenge#m
 \mdwhtsquare#m
+\mupvarPhi#*m
 \pitchfork#m
 \precapprox#m
 \preceqq#m
@@ -81,6 +83,7 @@ Numbers=#Uppercase,UppercaseOff,Lowercase,LowercaseOff,Lining,LiningOff,OldStyle
 \upbackepsilon#*m
 \updasharrow#m
 \updigamma#*m
+\varPhi#m
 \vartriangle#m
 \Vvert#m
 \vysmblksquare#m
@@ -154,6 +157,65 @@ Numbers=#Uppercase,UppercaseOff,Lowercase,LowercaseOff,Lining,LiningOff,OldStyle
 \Box#m
 \Diamond#m
 
-\fileversion#S
-\filedate#S
+# sans greek
+\msansAlpha#*m
+\msansBeta#*m
+\msansGamma#*m
+\msansDelta#*m
+\msansEpsilon#*m
+\msansZeta#*m
+\msansEta#*m
+\msansTheta#*m
+\msansIota#*m
+\msansKappa#*m
+\msansLambda#*m
+\msansMu#*m
+\msansNu#*m
+\msansXi#*m
+\msansOmicron#*m
+\msansPi#*m
+\msansRho#*m
+\msansvarTheta#*m
+\msansSigma#*m
+\msansTau#*m
+\msansUpsilon#*m
+\msansPhi#*m
+\msansChi#*m
+\msansPsi#*m
+\msansOmega#*m
+\msansnabla#*m
+\msansalpha#*m
+\msansbeta #*m
+\msansgamma#*m
+\msansdelta#*m
+\msansvarepsilon#*m
+\msanszeta#*m
+\msanseta#*m
+\msanstheta#*m
+\msansiota#*m
+\msanskappa#*m
+\msanslambda#*m
+\msansmu#*m
+\msansnu#*m
+\msansxi#*m
+\msansomicron#*m
+\msanspi#*m
+\msansrho#*m
+\msansvarsigma#*m
+\msanssigma#*m
+\msanstau#*m
+\msansupsilon#*m
+\msansphi#*m
+\msanschi#*m
+\msanspsi#*m
+\msansomega#*m
+\msanspartial#*m
+\msansepsilon#*m
+\msansvartheta#*m
+\msansvarkappa#*m
+\msansvarphi#*m
+\msansvarrho#*m
+\msansvarpi#*m
+
+# not documented
 \NEUtoks#S

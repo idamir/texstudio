@@ -34,6 +34,27 @@ void TableManipulationTest::splitColDef(){
 	QEQUAL(LatexTables::splitColDef(def).join("-"), splittedDef);
 }
 
+void TableManipulationTest::handleColSpec_data(){
+    QTest::addColumn<QString>("def");
+    QTest::addColumn<QString>("detectedDef"); // for simplicity use a single string instead of a QStringList and '-' as separator
+
+    QTest::newRow("no colspec") << "l" << "l";
+    QTest::newRow("colspec with brace") << "colspec={abc}" << "abc";
+    QTest::newRow("colspec with brace and other options") << "colspec={a|b|c},hlines" << "a|b|c";
+    QTest::newRow("colspec with nested brace") << "colspec={a{bc}}" << "a{bc}";
+    QTest::newRow("colspec with brace and spaces") << "colspec = {abc}" << "abc";
+    QTest::newRow("colspec with brace in serveral options") << "colspec={abc},test={dhe}" << "abc";
+    QTest::newRow("colspec, no brace") << "colspec= abc,hlines" << "abc";
+    QTest::newRow("colspec, no brace, but later") << "colspec= abc,hlines {avs}" << "abc";
+}
+
+void TableManipulationTest::handleColSpec(){
+    QFETCH(QString, def);
+    QFETCH(QString, detectedDef);
+
+    QEQUAL(LatexTables::handleColSpec(def), detectedDef);
+}
+
 void TableManipulationTest::simplifyColDef_data(){
 	// for simplicity use a single string instead of a QStringList and '-' as separator
 	QTest::addColumn<QString>("def");
@@ -146,10 +167,18 @@ void TableManipulationTest::addCol_data(){
         << "\\begin{tabular}{xy}\na&b\\\\\nc&d\\\\\ne&f\n\\end{tabular}\n"
         << 1 << 1
         << "\\begin{tabular}{xly}\na& &b\\\\\nc& &d\\\\\ne& &f\n\\end{tabular}\n";
+    QTest::newRow("add last col, last \\\\ missing")
+        << "\\begin{tabular}{xy}\na&b\\\\\nc&d\\\\\ne&f\n\\end{tabular}\n\n"
+        << 2 << 3
+        << "\\begin{tabular}{xyl}\na&b& \\\\\nc&d& \\\\\ne&f& \n\\end{tabular}\n\n";
     QTest::newRow("add third col, last \\\\ missing")
         << "\\begin{tabular}{xy}\na&b\\\\\nc&d\\\\\ne&f\n\\end{tabular}\n"
         << 1 << 2
         << "\\begin{tabular}{xyl}\na&b& \\\\\nc&d& \\\\\ne&f& \n\\end{tabular}\n";
+    QTest::newRow("add last col, crash, last \\\\ missing")
+        << "\\begin{tabular}{lllll}\n   AEM13920 &  & & & \\\\\n  NEH7100  &  & & & \n\\end{tabular}\n"
+        << 1 << 21
+        << "\\begin{tabular}{llllll}\n   AEM13920 &  & & & & \\\\\n  NEH7100  &  & & & & \n\\end{tabular}\n";
     QTest::newRow("add 2nd col, single col, last \\\\ missing")
         << "\\begin{tabular}{x}\na\\\\\nc\\\\\ne\n\\end{tabular}\n"
         << 1 << 1

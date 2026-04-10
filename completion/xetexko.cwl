@@ -1,5 +1,5 @@
 # xetexko package
-# Matthew Bertucci 2022/05/05 for v4.1
+# Matthew Bertucci 2025/08/24 for v4.6
 
 #include:xetex
 #include:fontspec
@@ -104,6 +104,9 @@ hanja
 \hangulmarks
 \hanjamarks
 \prevfontmarks
+\xetexkostretchshrink{glue}
+\xetexkoprehanjaspacing
+\xetexkoposthanjaspacing
 \everyhangul{code}
 \everyhanja{code}
 \disablekoreanfonts

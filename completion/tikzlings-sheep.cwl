@@ -1,5 +1,5 @@
 # tikzlings-sheep package
-# Matthew Bertucci 2025/03/25 for v2.3
+# Matthew Bertucci 2025/12/01 for v2.4
 
 #include:tikz
 #include:tikzlings-addons
@@ -143,6 +143,13 @@ stick
 stick=#%color
 leaf
 leaf=#%color
+towel
+towel=#%color
+present
+present=#%color
+present top=#%color
+present bottom=#%color
+present ribbon=#%color
 ## << common tikz options >> ##
 rotate=%<degrees%>
 scale=%<factor%>

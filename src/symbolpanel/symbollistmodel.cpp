@@ -229,14 +229,27 @@ QVariant SymbolListModel::data(const QModelIndex &index, int role) const
 void SymbolListModel::incrementUsage(const QString &id)
 {
 	usageCount.insert(id, usageCount.value(id, 0) + 1);
-	for (int i=0; i<symbols.count(); i++) {
+    for (int i=0; i<symbols.count(); i++) {
 		if (symbols[i].id == id) {
 
 			emit dataChanged(index(i, 0), index(i, 0), (QVector<int>() << UsageCountRole));
 
 			break;
 		}
-	}
+    }
+}
+
+QModelIndex SymbolListModel::indexFromCommand(const QString &cmd) const
+{
+    for (int i=0; i<symbols.count(); i++) {
+        if (symbols[i].command == cmd) {
+            return index(i,0);
+        }
+        if (symbols[i].unicode == cmd) {
+            return index(i,0);
+        }
+    }
+    return QModelIndex();
 }
 /*!
  * \brief activate dark mode
@@ -257,9 +270,9 @@ void SymbolListModel::addFavorite(const QString &id)
 		favoriteIds.append(id);
 		for (int i=0; i<symbols.count(); i++) {
 			if (symbols[i].id == id) {
-				emit dataChanged(index(i, 0), index(i, 0), (QVector<int>() << FavoriteRole));
+                emit dataChanged(index(i, 0), index(i, 0), (QVector<int>() << FavoriteRole));
 
-				emit favoritesChanged();
+                //emit favoritesChanged();
 				break;
 			}
 		}
@@ -276,7 +289,7 @@ void SymbolListModel::removeFavorite(const QString &id)
 			if (symbols[i].id == id) {
 				emit dataChanged(index(i, 0), index(i, 0), (QVector<int>() << FavoriteRole));
 
-				emit favoritesChanged();
+                //emit favoritesChanged();
 				break;
 			}
 		}

@@ -1,9 +1,81 @@
 # CHANGELOG
+## TeXstudio 4.9.4
+
+- disable AI wizard by default
+- enable LLM to use tool functions to access the current document. This allows LLM to manipulate the document directly. This can be disabled.
+- fix losing cursor position when view witdh changes (soft wrap) [#3418](https://github.com/texstudio-org/texstudio/issues/3418)
+- fix file detection in TOC when creating new file from include/input
+
+## TeXstudio 4.9.3
+
+- preview updated to handle special document classes [#4322](https://github.com/texstudio-org/texstudio/pull/4322)
+- add functionality to remove entries from the recent files list [#4338](https://github.com/texstudio-org/texstudio/pull/4338)
+- equalize editor sizes with a double-click on the splitter [#4341](https://github.com/texstudio-org/texstudio/pull/4341)
+- switch review command support from easyReview to the changes package [#4177](https://github.com/texstudio-org/texstudio/issues/4177)
+- fix opening documentation of latex packages with miktex (Help/Packages Help...)[#4359](https://github.com/texstudio-org/texstudio/issues/4359)
+- fix searching in pdf [#4337](https://github.com/texstudio-org/texstudio/issues/4337)
+- fix inserting tables from libreoffice [#4328](https://github.com/texstudio-org/texstudio/issues/4328)
+- fix highlighting in some nested environments [#4331](https://github.com/texstudio-org/texstudio/issues/4331)
+- fix potential crash when using "Remodel Table"
+- add the option to turn macros on or off using checkboxes in the macro browser [#3971](https://github.com/texstudio-org/texstudio/issues/3971)
+- show ai chat as messenger-like UI
+- close windowed pdf viewer on txs quit [#4368](https://github.com/texstudio-org/texstudio/issues/4368)
+- fix keyval val/key detection for completion [#4369](https://github.com/texstudio-org/texstudio/issues/4369)
+- improve glossary completion [#4370](https://github.com/texstudio-org/texstudio/issues/4370)
+
+## TeXstudio 4.9.2
+
+- fix background in windowed pdf viewer with win11 style
+- switch focus along with enlarge/shrink pdf viewer [#4290](https://github.com/texstudio-org/texstudio/issues/4290)
+- fix crash [#4291](https://github.com/texstudio-org/texstudio/issues/4291)
+- fix usepackage detection in included files 
+- fix crash on terminating txs on OSX
+- cleanup Packages Help (TeXdoc) dialog when filtered list gets empty [#4294](https://github.com/texstudio-org/texstudio/pull/4294)
+- fix sometimes invisible lines [#4319](https://github.com/texstudio-org/texstudio/issues/4319)
+- fix rare crash in pdf viewer [poppler fix](https://gitlab.freedesktop.org/poppler/poppler/-/merge_requests/2021), [#4023](https://github.com/texstudio-org/texstudio/issues/4023)
+
+## TeXstudio 4.9.1
+
+- add ctrl+enter shortcut (accept dialog) for universal dialog, checkin, ai wizard
+- fix teamtype server start [#4251](https://github.com/texstudio-org/texstudio/issues/4251)
+- fix hang with addColumn (table manipulation) when last row does not end with `\\` [#4254](https://github.com/texstudio-org/texstudio/issues/4254)
+- fix detection \bibitem [#4265](https://github.com/texstudio-org/texstudio/issues/4265)
+- fix symbols favorites/most used [#4267](https://github.com/texstudio-org/texstudio/issues/4267)
+- fix horizontal text scrolling [#4266](https://github.com/texstudio-org/texstudio/issues/4266)
+
+## TeXstudio 4.9.0
+
+- implement peer-to-peer collaborative editing with teamtype, [see manual](https://texstudio-org.github.io/editing.html#collaborative-editing-pair-programming)
+- fix table insert from libreoffice calc, see [#4186](https://github.com/texstudio-org/texstudio/issues/4186)
+- fix stylesheet application on windowed pdf viewer, see [#4185](https://github.com/texstudio-org/texstudio/discussions/4185)
+- fix showing log for labels with colon in its name, see [#4184](https://github.com/texstudio-org/texstudio/issues/4184)
+- fix quotation mark replacement in rnw files, see [#4180](https://github.com/texstudio-org/texstudio/issues/4180)
+- handle units in siunitx special to reduce completion offer and syntax check
+- add indent guides (optional), see [#4129](https://github.com/texstudio-org/texstudio/issues/4129)
+- extend cwl to allow multiple keyval arguments for one command
+- fixes around keyval syntax detection
+- change glossary to use special arguments, independent of label/ref [#4212](https://github.com/texstudio-org/texstudio/pull/4212)
+- extend find usage/goto definition for special arguments (e.g. glossary)
+- fix tabular column definition detection to handle split lines
+- add rainbow colored braces (default:off) [#4224](https://github.com/texstudio-org/texstudio/pull/4224)
+- don't add expl3 as user commands [#3919](https://github.com/texstudio-org/texstudio/issues/3919)
+
+## TeXstudio 4.8.9
+
+- extend close env to close env or delimiter (alt+return)
+- add text selection in pdf viewer (on single page only)
+- fix verbatim highlighting issue, see [#4136](https://github.com/texstudio-org/texstudio/issues/4136)
+- fix invisible close button on tabs in OSX [#4000](https://github.com/texstudio-org/texstudio/issues/4000)
+- allow extra arguments for LanguaTool [#4147](https://github.com/texstudio-org/texstudio/pull/4147)
+- text completion also take other open documents as source [#4126](https://github.com/texstudio-org/texstudio/issues/4126)
+- fix crash when opening unopened file via global TOC [#4127](https://github.com/texstudio-org/texstudio/issues/4129)
+
 ## TeXstudio 4.8.8
 
 - improve handling tblr env for table manipulation
 - provide win-arm build
 - small bug fixes
+- implement macro function editor.getLineTokens, see [#4111](https://github.com/texstudio-org/texstudio/issues/4111)
 
 ## TeXstudio 4.8.7
 

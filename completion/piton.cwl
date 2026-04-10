@@ -1,9 +1,11 @@
 # piton package
-# Matthew Bertucci 2025/06/19 for v4.6
+# Matthew Bertucci 2026/01/11 for v4.11
 
 #include:luacode
 #include:xcolor
 #include:amstext
+#include:marginalia
+#include:transparent
 
 #keyvals:\usepackage/piton#c
 footnote
@@ -29,9 +31,9 @@ beamer#true,false
 \begin{Piton}#V
 \begin{Piton}[options%keyvals]#V
 \end{Piton}
-# beamer only (breaks keyval completion so commented out)
-#\begin{Piton}<overlay spec>#*V
-#\begin{Piton}<overlay spec>[options%keyvals]#*V
+# beamer only
+\begin{Piton}<overlay spec>#*V
+\begin{Piton}<overlay spec>[options%keyvals]#*V
 
 \PitonInputFile{file}
 \PitonInputFile[options%keyvals]{file}
@@ -80,6 +82,7 @@ math-comments#true,false
 path={%<list of paths%>}
 raw-detected-commands={%<csname1,csname2,...%>}
 vertical-detected-commands={%<csname1,csname2,...%>}
+label-as-zlabel
 #endkeyvals
 
 # keys for \begin{Piton} only
@@ -89,6 +92,7 @@ line-numbers/start
 
 # keys for both \PitonOptions and \begin{Piton}
 #keyvals:\PitonOptions,\begin{Piton}
+annotation#true,false
 auto-gobble
 background-color=#%color
 box=#c,t,b,m
@@ -106,20 +110,31 @@ font-command=%<font commands%>
 gobble
 gobble=%<integer%>
 indent-broken-lines
+indentations-for-Fox#true,false
 join=%<file%>
+join-separation=
 language=#Python,OCaml,C,SQL,minimal,verbatim,%newpitonlang
 left-margin=##L
 line-numbers
 line-numbers/format=%<font commands%>
 line-numbers/label-empty-lines#true,false
+line-numbers/position=#left,right
 line-numbers/resume
 line-numbers/sep=##L
 line-numbers/skip-empty-lines#true,false
+line-numbers/step=%<integer%>
 line-numbers={%<options%>}
 max-width=##L
+no-join
+no-write
+paperclip
+paperclip=%<file%>
 path-write=%<path%>
 print#true,false
 prompt-background-color=#%color
+right-margin=##L
+rounded-corners
+rounded-corners=##L
 show-spaces
 show-spaces-in-strings
 split-on-empty-lines#true,false
@@ -284,6 +299,7 @@ tag=%<<char1><char2>%>
 \SetPitonIdentifier{id1,id2,...}{code}
 \SetPitonIdentifier[language]{id1,id2,...}{code}
 
+\OptionalLocalPitonStyle{arg}#S
 \PitonDetectedCommands#S
 \PitonRawDetectedCommands#S
 \PitonBeamerCommands#S

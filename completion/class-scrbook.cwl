@@ -1,5 +1,5 @@
 # scrbook class
-# Matthew Bertucci 2025/06/03 for v3.44
+# Matthew Bertucci 2025/12/01 for v3.49
 
 #include:scrkbase
 #include:tocbasic
@@ -122,6 +122,9 @@ titlehead
 \AtEndBibliography{code}#*
 \autodot#*
 \backmatter
+\backmatter[numbering style]
+\backmatter*
+\backmatter*[numbering style]
 \begin{addmargin*}[inner indent%l]{indent%l}
 \begin{addmargin*}{indent%l}
 \begin{addmargin}[left indent%l]{indent%l}
@@ -136,18 +139,8 @@ titlehead
 \BreakBibliography{interruption code}#*
 \capfont#*
 \caplabelfont#*
-\captionabove[entry]{title%text}
-\captionabove[entry]{title%text}
-\captionabove{title%text}
-\captionaboveof{float type}[entry]{title%text}
-\captionaboveof{float type}{title%text}
-\captionbelow{title%text}
-\captionbelowof{float type}[entry]{title%text}
-\captionbelowof{float type}{title%text}
 \captionformat#*
 \captionnopagebreak#*
-\captionof{float type}[entry]{title%text}
-\captionof{float type}{title%text}
 \changefontsizes{font size%l}#*
 \chapapp#*
 \chapappifchapterprefix{additional test}#*
@@ -216,6 +209,9 @@ titlehead
 \footfont#*
 \frontispiece{frontispiece%text}
 \frontmatter
+\frontmatter[numbering style]
+\frontmatter*
+\frontmatter*[numbering style]
 \headfont#*
 \IfChapterUsesPrefixLine{then code}{else code}#*
 \Ifnumbered{section level}{then code}{else code}#*
@@ -233,6 +229,9 @@ titlehead
 \listoftocname#*
 \lowertitleback{titlebackfoot%text}
 \mainmatter
+\mainmatter[numbering style]
+\mainmatter*
+\mainmatter*[numbering style]
 \maketitle[page number]
 \MakeCaptionLabelCase{text}#*
 \MakeCaptionTextCase{text}#*

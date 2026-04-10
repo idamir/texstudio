@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10.0)
 
-project(TeXstudio VERSION 4.8.8 LANGUAGES C CXX)
+project(TeXstudio VERSION 4.9.4 LANGUAGES C CXX)
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 set(CMAKE_DEBUG_POSTFIX "d")
 set(CMAKE_AUTOMOC ON)
@@ -19,12 +19,13 @@ else()
     if(APPLE)
     set(CMAKE_CXX_STANDARD 20)
     else()
-    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD 20)
     endif()
 endif()
 
-
-
+if(MINGW)
+  add_compile_options(-Wa,-mbig-obj)
+endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -56,7 +57,11 @@ if(WIN32 AND NOT MSVC)
         #add_compile_options(-Wa,-mbig-obj)
 endif()
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+if(QT_VERSION_MAJOR)
+    find_package(QT NAMES Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
+else()
+    find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+endif()
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Network Xml Concurrent Widgets UiTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS PrintSupport Svg Qml REQUIRED)
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -181,12 +186,10 @@ add_subdirectory(src/latexparser)
 add_subdirectory(src/symbolpanel)
 
 #qtermwidget
-if(${QT_VERSION_MAJOR} LESS_EQUAL 5)
-    find_package(QTermWidget QUIET)
-    if(QTermWidget_FOUND)
-        message(STATUS "Using QTermWidget5")
-        set(ADDITIONAL_DEFINITIONS ${ADDITIONAL_DEFINITIONS} -DINTERNAL_TERMINAL)
-    endif()
+find_package(QTermWidget QUIET)
+if(QTermWidget_FOUND)
+	message(STATUS "Using QTermWidget")
+	set(ADDITIONAL_DEFINITIONS ${ADDITIONAL_DEFINITIONS} -DINTERNAL_TERMINAL)
 endif()
 
 # QuaZIP
@@ -453,8 +456,8 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
 endif()
 
 #qtermwidget
-if(QTERMWIDGET_FOUND AND ${QT_VERSION_MAJOR} LESS_EQUAL 5 )
-   target_link_libraries(texstudio PUBLIC qtermwidget5)
+if(QTERMWIDGET_FOUND)
+   target_link_libraries(texstudio PUBLIC qtermwidget${QT_VERSION_MAJOR})
 endif()
 
 #mediaplayer

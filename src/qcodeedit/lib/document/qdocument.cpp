@@ -3642,12 +3642,6 @@ void QDocumentLineHandle::draw(int lineNr,	QPainter *p,
 
 	if ( m_layout )
 	{
-		//if (!hasFlag(QDocumentLine::FormatsApplied))
-		//m_layout->setAdditionalFormats(decorations()); (this causes a crash on qt>5.3)
-
-		//if ( !hasFlag(QDocumentLine::FormatsApplied) )
-		//	applyOverlays();
-
         const qreal lineSpacing = QDocumentPrivate::m_lineSpacing;
 
 		QVector<QTextLayout::FormatRange> selections;
@@ -3772,6 +3766,7 @@ void QDocumentLineHandle::draw(int lineNr,	QPainter *p,
 		const bool showTabs = QDocument::showSpaces() & QDocument::ShowTabs,
 				showLeading = QDocument::showSpaces() & QDocument::ShowLeading,
 				showTrailing = QDocument::showSpaces() & QDocument::ShowTrailing;
+        const bool showIndentGuide = QDocument::showSpaces() & QDocument::ShowIndentGuides;
 
 		//const int fns = nextNonSpaceChar(0);
         qreal indent = qMax(0., m_indent) + QDocumentPrivate::m_leftPadding;
@@ -3839,7 +3834,7 @@ void QDocumentLineHandle::draw(int lineNr,	QPainter *p,
                     p->restore();
 				}
 			}
-			if ( ypos < yStart ) continue;
+            if ( ypos-yStart < -1e-3 ) continue; // skip not visible lines, add tolerance for floating point precision (#4319)
 
 			if ( leading && !(r.format & FORMAT_SPACE) )
 			{
@@ -3993,6 +3988,13 @@ void QDocumentLineHandle::draw(int lineNr,	QPainter *p,
                             p->drawLine(QPointF(-headSize, headSize),QPointF(0,0));
 							p->restore();
 						}
+                        if( showIndentGuide && leading){
+                            // draw indent guide (vertical line)
+                            p->save();
+                            p->setPen(Qt::lightGray);
+                            p->drawLine(QPointF(xpos,0),QPointF(xpos,yEnd));
+                            p->restore();
+                        }
 
 						xpos += xoff;
 						if(mergeXpos>=0){
@@ -4029,6 +4031,16 @@ void QDocumentLineHandle::draw(int lineNr,	QPainter *p,
 						if(mergeXpos>=0){
 							mergeText+=" ";
 						}
+
+                        if( showIndentGuide && leading && (column%QDocumentPrivate::m_defaultTabStop == 1)){
+                            // draw indent guide (vertical line)
+                            qreal xoff = currentSpaceWidth;
+                            p->save();
+                            p->setPen(Qt::lightGray);
+                            p->drawLine(QPointF(xpos-xoff,0),QPointF(xpos-xoff,yEnd));
+                            p->restore();
+                        }
+
 					}
 				}
 
@@ -5505,8 +5517,10 @@ void QDocumentCursorHandle::insertText(const QString& s, bool keepAnchor)
 										m_begLine,
 										m_begOffset,
 										s,
-										m_doc
-									);
+                                        m_doc,
+                                        nullptr,
+                                        hasFlag(ExternalCursor)
+                                    );
 
 	command->setKeepAnchor(keepAnchor);
 	command->setTargetCursor(this);
@@ -5538,7 +5552,9 @@ void QDocumentCursorHandle::eraseLine()
 			0,
 			endLine + 1,
 			0,
-			m_doc
+            m_doc,
+            nullptr,
+            hasFlag(ExternalCursor)
 		);
     } else if (startLine > 0) {
 		// special handling to remove a selection including the last line
@@ -5550,7 +5566,9 @@ void QDocumentCursorHandle::eraseLine()
 			m_doc->line(startLine-1).length(),
 			endLine,
 			m_doc->line(endLine).length(),
-			m_doc
+            m_doc,
+            nullptr,
+            hasFlag(ExternalCursor)
 		);
 	} else {
         // very special case
@@ -5561,7 +5579,9 @@ void QDocumentCursorHandle::eraseLine()
             0,
             startLine,
             m_doc->line(startLine).length(),
-            m_doc
+            m_doc,
+            nullptr,
+            hasFlag(ExternalCursor)
         );
 	}
 	command->setTargetCursor(this);
@@ -5617,7 +5637,9 @@ void QDocumentCursorHandle::deleteChar()
 			m_begOffset,
 			m_begLine,
 			m_begOffset + charCount,
-			m_doc
+            m_doc,
+            nullptr,
+            hasFlag(ExternalCursor)
 		);
 
 	} else {
@@ -5627,7 +5649,9 @@ void QDocumentCursorHandle::deleteChar()
 			m_begOffset,
 			m_begLine + 1,
 			0,
-			m_doc
+            m_doc,
+            nullptr,
+            hasFlag(ExternalCursor)
 		);
 
 	}
@@ -5660,7 +5684,9 @@ void QDocumentCursorHandle::deletePreviousChar()
 			m_begOffset - charCount,
 			m_begLine,
 			m_begOffset,
-			m_doc
+            m_doc,
+            nullptr,
+            hasFlag(ExternalCursor)
 		);
 
 	} else {
@@ -5672,7 +5698,9 @@ void QDocumentCursorHandle::deletePreviousChar()
 			prev.length(),
 			m_begLine,
 			m_begOffset,
-			m_doc
+            m_doc,
+            nullptr,
+            hasFlag(ExternalCursor)
 		);
 
 	}
@@ -6390,7 +6418,9 @@ void QDocumentCursorHandle::removeSelectedText(bool keepAnchor)
 										m_begOffset,
 										m_endLine,
 										m_endOffset,
-										m_doc
+                                        m_doc,
+                                        nullptr,
+                                        hasFlag(ExternalCursor)
 									);
 
 	} else if ( m_begLine > m_endLine ) {
@@ -6399,7 +6429,9 @@ void QDocumentCursorHandle::removeSelectedText(bool keepAnchor)
 										m_endOffset,
 										m_begLine,
 										m_begOffset,
-										m_doc
+                                        m_doc,
+                                        nullptr,
+                                        hasFlag(ExternalCursor)
 									);
 
 		//m_begLine = m_endLine;
@@ -6411,7 +6443,9 @@ void QDocumentCursorHandle::removeSelectedText(bool keepAnchor)
 										qMin(m_begOffset, m_endOffset),
 										m_endLine,
 										qMax(m_begOffset, m_endOffset),
-										m_doc
+                                        m_doc,
+                                        nullptr,
+                                        hasFlag(ExternalCursor)
 									);
 
 		//m_begOffset = qMin(m_begOffset, m_endOffset);
@@ -6755,10 +6789,6 @@ void QDocumentPrivate::drawTextLine(QPainter *p, QDocument::PaintContext &cxt, D
 
 	QDocumentLineHandle *dlh = m_lines.at(lcxt.docLineNr);
 
-	// ugly workaround..., disabled 20.12.'09 because it slows down rendering speed on mac considerably and i don't see its function
-	//if( !m_fixedPitch && !h->hasFlag(QDocumentLine::Hidden))
-	//	adjustWidth(i);
-
 	const int wrap = dlh->m_frontiers.count();
 	const bool wrapped = wrap;
 
@@ -6924,7 +6954,7 @@ void QDocumentPrivate::drawTextLine(QPainter *p, QDocument::PaintContext &cxt, D
 		&&  (m_LineCache.contains(dlh) || m_LineCacheAlternative.contains(dlh))
 	) {
 		// cache is activated, available, and up-to-date: simply draw the cached object
-        p->drawPixmap(QPointF(m_lineCacheXOffset, 0), *m_LineCache.object(dlh));
+        p->drawPixmap(QPointF(0, 0), *m_LineCache.object(dlh));
 	} else {
         qreal ht = m_lineSpacing*(wrap+1 - pseudoWrap);
 		QImage *image = nullptr;
@@ -6974,7 +7004,7 @@ void QDocumentPrivate::drawTextLine(QPainter *p, QDocument::PaintContext &cxt, D
         dlh->draw(lcxt.docLineNr, pr, cxt.xoffset, m_lineCacheWidth, selectionBoundaries, cxt.palette, fullSelection,y,ht);
 
 		if (useLineCache) {
-            p->drawPixmap(QPointF(cxt.xoffset, 0), *pixmap);
+            p->drawPixmap(QPointF(0, 0), *pixmap);
             delete pr;
             m_LineCache.insert(dlh, pixmap);
 		} else {
@@ -7080,6 +7110,9 @@ void QDocumentPrivate::drawCursors(QPainter *p, const QDocument::PaintContext &c
                     QPen pen(p->pen());
                     if (m_drawCursorBold) {
                        pen.setWidthF(2.);
+                    }
+                    if(cur.handle()->hasFlag(QDocumentCursorHandle::ExternalCursor)){
+                        pen.setColor(Qt::blue);
                     }
                     p->setPen(pen);
                     p->drawLine(pt, pt + curHt);
@@ -8621,6 +8654,18 @@ void QDocumentPrivate::emitContentsChange(int line, int lines)
 
 	if ( n > lines )
 		emitFormatsChange(line + lines, n - lines);
+}
+/*!
+ * \brief emit changed text for collaboration support
+ * \param startLine
+ * \param startCol
+ * \param endLine
+ * \param endCol
+ * \param text
+ */
+void QDocumentPrivate::emitContentsChange(int startLine, int startCol, int endLine, int endCol, const QString &text)
+{
+    emit m_doc->changedText(startLine, startCol, endLine, endCol, text);
 }
 
 void QDocumentPrivate::markFormatCacheDirty(){

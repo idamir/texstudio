@@ -20,6 +20,7 @@
 #include <QSysInfo>
 
 #include <QDomElement>
+#include <QStandardPaths>
 
 #if (QT_VERSION >= 0x060500)
 #include <QStyleHints>
@@ -36,9 +37,6 @@
 #ifdef ADWAITA
 #include "adwaitastyle.h"
 #endif
-
-const QString TXS_AUTO_REPLACE_QUOTE_OPEN = "TMX:Replace Quote Open";
-const QString TXS_AUTO_REPLACE_QUOTE_CLOSE = "TMX:Replace Quote Close";
 
 const char *PROPERTY_COMMAND_ID = "cmdID";
 const char *PROPERTY_NAME_WIDGET = "nameWidget";
@@ -84,7 +82,7 @@ static ConfigManager *globalConfigManager = nullptr;
 
 ConfigManagerInterface *ConfigManagerInterface::getInstance()
 {
-	Q_ASSERT(globalConfigManager);
+    //Q_ASSERT(globalConfigManager);
 	return globalConfigManager;
 }
 
@@ -438,7 +436,7 @@ ConfigManager::ConfigManager(QObject *parent): QObject (parent),
 	managedToolBars.append(ManagedToolBar("Format", QStringList() << "main/latex/sectioning" << "separator" << "main/latex/references" << "separator" << "main/latex/fontsizes"));
 	managedToolBars.append(ManagedToolBar("Table", QStringList() << "main/latex/tabularmanipulation/addRow" << "main/latex/tabularmanipulation/addColumn" << "main/latex/tabularmanipulation/pasteColumn" << "main/latex/tabularmanipulation/removeRow" << "main/latex/tabularmanipulation/removeColumn" << "main/latex/tabularmanipulation/cutColumn" << "main/latex/tabularmanipulation/alignColumns"));
 	managedToolBars.append(ManagedToolBar("Diff", QStringList() << "main/file/svn/prevdiff" << "main/file/svn/nextdiff"  ));
-    managedToolBars.append(ManagedToolBar("Review", QStringList() << "main/latex/review/alert" << "main/latex/review/comment" << "main/latex/review/add" << "main/latex/review/delete" << "main/latex/review/replace" ));
+    managedToolBars.append(ManagedToolBar("Review", QStringList() << "main/latex/review/highlight" << "main/latex/review/comment" << "main/latex/review/added" << "main/latex/review/deleted" << "main/latex/review/replaced" ));
 	managedToolBars.append(ManagedToolBar("Central", QStringList() << "main/edit/goto/goback" << "main/edit/goto/goforward" << "separator" << "main/latex/fontstyles/textbf" << "main/latex/fontstyles/textit" << "main/latex/fontstyles/underline" << "main/latex/environment/flushleft" << "main/latex/environment/center" << "main/latex/environment/flushright" << "separator" <<
 	                                      "main/latex/verticalSpacing/newline" << "separator" <<
 	                                      "main/math/mathmode" << "main/math/subscript" << "main/math/superscript" << "main/math/frac" << "main/math/dfrac" << "main/math/sqrt"));
@@ -533,6 +531,7 @@ ConfigManager::ConfigManager(QObject *parent): QObject (parent),
 	registerOption("Editor/Indent with Spaces", &editorConfig->replaceIndentTabs, false, &pseudoDialog->checkBoxReplaceIndentTabByWhitespace);
 	registerOption("Editor/ReplaceTextTabs", &editorConfig->replaceTextTabs, false, &pseudoDialog->checkBoxReplaceTextTabByWhitespace);
 	registerOption("Editor/RemoveTrailingWsOnSave", &editorConfig->removeTrailingWsOnSave, false, &pseudoDialog->checkboxRemoveTrailingWsOnSave);
+    registerOption("Editor/Show Indent Guides", &editorConfig->showIndentGuides, true, &pseudoDialog->checkBoxShowIndentGuides);
 	registerOption("Editor/Folding", &editorConfig->folding, true, &pseudoDialog->checkBoxFolding);
 	registerOption("Editor/Show Line State", &editorConfig->showlinestate, true, &pseudoDialog->checkBoxLineState);
 	registerOption("Editor/Show Cursor State", &editorConfig->showcursorstate, true, &pseudoDialog->checkBoxState);
@@ -546,6 +545,7 @@ ConfigManager::ConfigManager(QObject *parent): QObject (parent),
 	registerOption("Editor/Check In Non TeX Files", &editorConfig->inlineCheckNonTeXFiles, true, &pseudoDialog->checkBoxInlineCheckNonTeXFiles);
 	registerOption("Editor/Hide Spelling Errors in Non Text", &editorConfig->hideNonTextSpellingErrors, true, &pseudoDialog->checkBoxHideSpellingErrorsInNonText);
 	registerOption("Editor/Hide Grammar Errors in Non Text", &editorConfig->hideNonTextGrammarErrors, true, &pseudoDialog->checkBoxHideGrammarErrorsInNonText);
+    registerOption("Editor/Enable Rainbow Delimiters", &editorConfig->enableRainbowDelimiters, false, &pseudoDialog->checkBoxEnableRainbowDelimiters);
 	registerOption("Editor/Show Whitespace", &editorConfig->showWhitespace, false, &pseudoDialog->checkBoxShowWhitespace);
 	registerOption("Editor/TabStop", &editorConfig->tabStop, 4 , &pseudoDialog->sbTabSpace);
 	registerOption("Editor/ToolTip Help", &editorConfig->toolTipHelp, true, &pseudoDialog->checkBoxToolTipHelp2);
@@ -644,6 +644,7 @@ ConfigManager::ConfigManager(QObject *parent): QObject (parent),
 #else
 	registerOption("Grammar/Language Tool URL", &grammarCheckerConfig->languageToolURL, "http://localhost:8081/", &pseudoDialog->lineEditGrammarLTUrl);
 #endif
+	registerOption("Grammar/Language Tool URL Parameters", &grammarCheckerConfig->languageToolURLParams, "", &pseudoDialog->lineEditGrammarLTURLParams);
 	registerOption("Grammar/Language Tool Path", &grammarCheckerConfig->languageToolPath, "", &pseudoDialog->lineEditGrammarLTPath);
 	registerOption("Grammar/Language Tool Arguments", &grammarCheckerConfig->languageToolArguments, "org.languagetool.server.HTTPServer -p 8081", &pseudoDialog->lineEditGrammarLTArguments);
 	registerOption("Grammar/Language Tool Java Path", &grammarCheckerConfig->languageToolJavaPath, "java", &pseudoDialog->lineEditGrammarLTJava);
@@ -703,10 +704,22 @@ ConfigManager::ConfigManager(QObject *parent): QObject (parent),
     registerOption("AIchat/PreferredModel",&ai_preferredModel,"open-mistral-7b",&pseudoDialog->cbAIPreferredModel);
     registerOption("AIchat/CustomURL",&ai_apiurl,"http://localhost:8080/v1/chat/completions",&pseudoDialog->leAIAPIURL);
     registerOption("AIchat/KnownModels",&ai_knownModels,QStringList(),nullptr);
-    registerOption("AIchat/SystemPrompt",&ai_systemPrompt,"text:'''%txsSelectedText%'''\n");
-    registerOption("AIchat/Temperature",&ai_temperature,"0.7");
+    registerOption("AIchat/SystemPrompt",&ai_systemPrompt,"You are an assistant in a latex editor. You generate valid latex code inside an existing documents. You don't explain your result.");
+    registerOption("AIchat/Temperature",&ai_temperature,"-");
+    registerOption("AIchat/maxTokens",&ai_maxTokens,1024);
     registerOption("AIchat/RecordConversation",&ai_recordConversation,true,&pseudoDialog->cbAIRecordConversation);
     registerOption("AIchat/StreamResults",&ai_streamResults,false);
+    registerOption("AIchat/UseFunctions",&ai_useFunctions,true,&pseudoDialog->cbAIUseTools);
+    registerOption("AIchat/Width",&ai_width,1000);
+    registerOption("AIchat/Height",&ai_height,400);
+    registerOption("AIchat/Splitter",&ai_splitter,0.3);
+
+    // collaborative editing
+    registerOption("CollaborativeEditing/Tool",&ce_tool,0,&pseudoDialog->comboBoxCollaborativeTool);
+    registerOption("CollaborativeEditing/ToolPath",&ce_toolPath,"teamtype",&pseudoDialog->lineEditCollaborativeToolPath);
+    const QString pth=QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    registerOption("CollaborativeEditing/ClientFolder",&ce_clientPath,pth+QDir::separator()+tr("txsCollaborationFolder"),&pseudoDialog->lineEditCollaborativeClientFolder);
+    registerOption("CollaborativeEditing/UserName",&ce_userName,"txs",&pseudoDialog->lineEditCollaborativeUserName);
 
 	//interfaces
     int defaultStyle=0;
@@ -791,7 +804,7 @@ ConfigManager::ConfigManager(QObject *parent): QObject (parent),
 	registerOption("Preview/EnlargedEmbedded", &viewerEnlarged, false);
 
 	// LogView
-	registerOption("LogView/WarnIfFileSizeLargerMB", &logViewWarnIfFileSizeLargerMB, 2.0);
+    registerOption("LogView/WarnIfFileSizeLargerMB", &logViewWarnIfFileSizeLargerMB, 16.0);
     registerOption("LogView/RememberChoiceLargeFile", &logViewRememberChoice, 0);
 
 #ifndef QT_NO_DEBUG
@@ -871,6 +884,11 @@ QSettings *ConfigManager::readSettings(bool reread)
 		// reset this option when loading any old config.
 		config->remove("texmaker/centralVSplitterState");
 	}
+    QString txsVersionConfigWritten=config->value("version/written_by_TXS_version").toString();
+    if(Version::compareStringVersion(txsVersionConfigWritten,"4.9.4")==Version::Lower){
+        // insert <disable> at position 0
+        ai_provider+=1;
+    }
 
 	config->beginGroup("texmaker");
 	if (config->contains("Files/Auto Detect Encoding Of Loaded Files")) { // import old setting
@@ -1718,7 +1736,8 @@ bool ConfigManager::execConfigDialog(QWidget *parentToDialog)
             if (replaceQuotes){
 				foreach (const Macro &m, completerConfig->userMacros) {
 					if (m.name == TXS_AUTO_REPLACE_QUOTE_OPEN ||
-					        m.name == TXS_AUTO_REPLACE_QUOTE_CLOSE) continue;
+							m.name == TXS_AUTO_REPLACE_QUOTE_CLOSE ||
+							m.checkState() != Qt::Checked) continue;
 					if (m.trigger == "(?language:latex)(?<=\\s|^)\"" || m.trigger == "(?language:latex)(?<=^)\"" || m.trigger == "(?language:latex)(?<=\\S)\"") {
 						conflict = true;
 						break;
@@ -2142,7 +2161,8 @@ void ConfigManager::updateUserMacroShortcuts(){
     // if the macro shortcuts have been changed via options, the macros needs to be updated to reflect that shortcuts
     int i=0;
     for(auto &m : completerConfig->userMacros){
-        if (!m.document){
+        if (!m.document && m.name != TXS_AUTO_REPLACE_QUOTE_OPEN && m.name != TXS_AUTO_REPLACE_QUOTE_CLOSE
+            && m.checkState() == Qt::Checked){
             QString mn=m.menu;
             if(!mn.isEmpty()){
                 mn.append('/');
@@ -2152,8 +2172,8 @@ void ConfigManager::updateUserMacroShortcuts(){
             if(act){
                 m.setShortcut(act->shortcut().toString());
             }
-            i++;
         }
+        i++;
     }
 }
 
@@ -2176,7 +2196,7 @@ void ConfigManager::updateUserMacroMenu()
         if (!m.document){
             menu=recreatedMenu;
             QList<QKeySequence> shortcuts;
-            if(!m.shortcut().isEmpty()){
+            if(!m.shortcut().isEmpty() && m.checkState()==Qt::Checked){
                 shortcuts<<QKeySequence(m.shortcut());
             }
             // create/find apropriate submenu
@@ -2188,8 +2208,9 @@ void ConfigManager::updateUserMacroMenu()
 
             QString id = "tag" + QString::number(i);
             QAction *act = newOrLostOldManagedAction(menu, id, m.name , SLOT(insertUserTag()), &shortcuts);
-            act->setData(i++);
+            act->setData(i);
         }
+        i++;
     }
     recreatedMenu->addSeparator();
     newOrLostOldManagedAction(recreatedMenu, "manage", QCoreApplication::translate("Texstudio", "Edit &Macros..."), SLOT(editMacros()));
@@ -2198,8 +2219,8 @@ void ConfigManager::updateUserMacroMenu()
 	if (replaceQuotes >= 1 && replaceQuotes < autoQuoteCount) {
 		static const char *open[autoQuoteCount] = {"",  "``", "\"<", "\"`", "\\og{}",  "\">", "\\enquote{", "\xE2\x80\x9C" /*“*/, ",,", "\u201E"};
 		static const char *close[autoQuoteCount] = {"", "''", "\">", "\"'", "\\fg{}", "\"<", "}"         , "\xE2\x80\x9D" /*”*/, "''", "\u201D"};
-		completerConfig->userMacros.append(Macro(TXS_AUTO_REPLACE_QUOTE_OPEN, QString::fromUtf8(open[replaceQuotes]), "", "(?language:latex)(?<=\\s|[(:]|^)\""));
-		completerConfig->userMacros.append(Macro(TXS_AUTO_REPLACE_QUOTE_CLOSE, QString::fromUtf8(close[replaceQuotes]), "", "(?language:latex)(?<=\\S)\""));
+        completerConfig->userMacros.append(Macro(TXS_AUTO_REPLACE_QUOTE_OPEN, QString::fromUtf8(open[replaceQuotes]), "", "(?language:latex,Sweave)(?<=\\s|[(:]|^)\""));
+        completerConfig->userMacros.append(Macro(TXS_AUTO_REPLACE_QUOTE_CLOSE, QString::fromUtf8(close[replaceQuotes]), "", "(?language:latex,Sweave)(?<=\\S)\""));
 	}
 }
 
@@ -2880,22 +2901,26 @@ void ConfigManager::setInterfaceStyle()
 #ifdef ADWAITA
     if(newStyle=="Adwaita (txs)"){
         QApplication::setStyle(new Adwaita::Style(false));
+        darkMode=false;
+        ignoreSystemPalette=true; // ignore palette changes from OS
         handled=true;
         return;
     }
     if(newStyle=="Adwaita Dark (txs)"){
         QApplication::setStyle(new Adwaita::Style(true));
         darkMode=true;
+        ignoreSystemPalette=true; // ignore palette changes from OS
         handled=true;
         return;
     }
 #endif
     if(newStyle=="Orion Dark"){
         QFile file(":/utilities/stylesheet_francesco.qss");
-        file.open(QFile::ReadOnly);
+        if(!file.open(QFile::ReadOnly)) return;
         QString styleSheet = QString::fromLatin1(file.readAll());
         qApp->setStyleSheet(styleSheet);
         darkMode=true;
+        ignoreSystemPalette=true; // ignore palette changes from OS
         handled=true;
         return;
     }
@@ -2913,6 +2938,9 @@ void ConfigManager::setInterfaceStyle()
     // dark mode is derived from system text color (very light => dark mode)
     // however if system colors are ignored, only style manhattan - dark results in dark mode
     // do the check after setting style, as the style can also activate a dark mode
+
+    ignoreSystemPalette=useTexmakerPalette; // use config setting
+
     if(useTexmakerPalette){
         darkMode=modernStyle>1;
     }else{

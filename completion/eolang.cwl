@@ -1,5 +1,5 @@
 # eolang package
-# Matthew Bertucci 2024/01/12 for v0.19.0
+# Matthew Bertucci 2025/12/17 for v0.22.0
 
 #include:stmaryrd
 #include:amsmath
@@ -27,6 +27,7 @@
 #keyvals:\usepackage/eolang#c
 tmpdir=%<path%>
 nocomments
+nodollar
 anonymous
 noshell
 #endkeyvals
@@ -46,7 +47,7 @@ noshell
 \xmir
 
 \phiSlot{arg}#m
-\phiConst#m
+\phiTerminal{arg}
 \phiWave#m
 \phiDotted#m
 \phiOset{over}{arg}#m

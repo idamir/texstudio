@@ -113,7 +113,7 @@ QString SearchQuery::searchFolder() const
 
 SearchInfo SearchQuery::searchInFile(QString file, const QRegularExpression &regex){
     QFile f(file);
-    f.open(QIODevice::ReadOnly);
+    if(!f.open(QIODevice::ReadOnly)) return SearchInfo();
     QTextStream textStream(&f);
     SearchInfo result;
     int lineNr=0;
@@ -272,7 +272,7 @@ void SearchQuery::replaceAll()
 }
 
 
-LabelSearchQuery::LabelSearchQuery(QString label) :
+LabelSearchQuery::LabelSearchQuery(QString label, bool defintionOnly) :
 	SearchQuery(label, label, IsWord | IsCaseSensitive | SearchAgainAllowed | ReplaceAllowed)
 {
 	mModel = new LabelSearchResultModel(this);
@@ -281,6 +281,8 @@ LabelSearchQuery::LabelSearchQuery(QString label) :
 	mScope = ProjectScope;
 	mType = tr("Label Search");
 	mModel->setAllowPartialSelection(false);
+
+    mDefinitionOnly=defintionOnly;
 }
 
 void LabelSearchQuery::run(LatexDocument *doc)
@@ -288,7 +290,9 @@ void LabelSearchQuery::run(LatexDocument *doc)
 	mModel->removeAllSearches();
 	QString labelText = searchExpression();
 	QMultiHash<QDocumentLineHandle *, int> usages = doc->getLabels(labelText);
-	usages += doc->getRefs(labelText);
+    if(!mDefinitionOnly){
+        usages += doc->getRefs(labelText);
+    }
 	QHash<QDocument *, QList<QDocumentLineHandle *> > usagesByDocument;
 	foreach (QDocumentLineHandle *dlh, usages.keys()) {
 		QDocument *doc = dlh->document();
@@ -320,3 +324,103 @@ void LabelSearchQuery::replaceAll()
     setExpression(mModel->replacementText());
 }
 
+SpecialDefSearchQuery::SpecialDefSearchQuery(QString label,int type) :
+    SearchQuery(label, label, IsWord | IsCaseSensitive | SearchAgainAllowed | ReplaceAllowed)
+{
+    mModel = new SpecialDefSearchResultModel(this,type);
+    mModel->setSearchExpression(label, label, flag(IsCaseSensitive), flag(IsWord), flag(IsRegExp));
+
+    mScope = ProjectScope;
+    mType = tr("Special Definition Search");
+    mModel->setAllowPartialSelection(false);
+
+    mTokenType=type;
+}
+
+void SpecialDefSearchQuery::run(LatexDocument *currentDoc)
+{
+    mModel->removeAllSearches();
+    QString labelText = searchExpression();
+    QList<LatexDocument *> docs = currentDoc->getListOfDocs();
+    foreach (LatexDocument *doc, docs) {
+        if (!doc) continue;
+        QList<QDocumentLineHandle *> dlhs;
+        for(int i=0;i<doc->lines();++i) {
+            QDocumentLineHandle *dlh = doc->line(i).handle();
+            TokenList tl = dlh->getCookieLocked(QDocumentLine::LEXER_COOKIE).value<TokenList >();
+            for(const Token &tk:tl){
+                if(tk.type==mTokenType && tk.getInnerText()==labelText){
+                    dlhs.append(dlh);
+                    break; // one entry per line sufficient
+                }
+                if(tk.type==Token::defSpecialArg){
+                    // check if new definition of specialArg
+                    QString def=doc->getCmdfromSpecialArgToken(tk);
+                    QStringList vals=doc->lp->mapSpecialArgs.values();
+                    int k=vals.indexOf(def);
+                    if(k>-1 && Token::specialArg+k==mTokenType){
+                        QString defArgText=tk.getInnerText();
+                        if(defArgText==labelText){
+                            dlhs.append(dlh);
+                            break; // one entry per line sufficient
+                        }
+                    }
+                }
+            }
+        }
+        if(dlhs.size()>0){
+            addDocSearchResult(doc, dlhs);
+        }
+    }
+
+    emit runCompleted();
+}
+
+void SpecialDefSearchQuery::replaceAll()
+{
+    QList<SearchInfo> searches = mModel->getSearches();
+    QString oldLabel = searchExpression();
+    QString newLabel = mModel->replacementText();
+    foreach (SearchInfo search, searches) {
+        LatexDocument *doc = qobject_cast<LatexDocument *>(search.doc.data());
+        if (doc) {
+            QDocumentCursor *cur = new QDocumentCursor(doc);
+            for(QDocumentLineHandle *dlh:search.lines){
+                // replace text in lines
+                TokenList tl = dlh->getCookieLocked(QDocumentLine::LEXER_COOKIE).value<TokenList >();
+                QString lineText=dlh->text();
+                bool replaced=false;
+                for(int i=tl.length()-1;i>=0;--i){
+                    // run reverse to not mess up token positions on earlier tokens
+                    Token tk=tl.at(i);
+                    if(tk.type==mTokenType && tk.getInnerText()==oldLabel){
+                        lineText.replace(tk.start,tk.length,newLabel);
+                        replaced=true;
+                    }
+                    if(tk.type==Token::defSpecialArg){
+                        // check if new definition of specialArg
+                        QString def=doc->getCmdfromSpecialArgToken(tk);
+                        QStringList vals=doc->lp->mapSpecialArgs.values();
+                        int k=vals.indexOf(def);
+                        if(k>-1 && Token::specialArg+k==mTokenType){
+                            QString defArgText=tk.getInnerText();
+                            if(defArgText==oldLabel){
+                                lineText.replace(tk.start,tk.length,newLabel);
+                                replaced=true;
+                            }
+                        }
+                    }
+                }
+                if(replaced){
+                    // use cursor to replace line text
+                    int lineNr = doc->indexOf(dlh);
+                    cur->select(lineNr, 0, lineNr, dlh->length());
+                    cur->replaceSelectedText(lineText);
+                }
+            }
+        }
+    }
+    // as label is renamed, update the search expression to renamed label
+    // see also #3805
+    setExpression(mModel->replacementText());
+}

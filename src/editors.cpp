@@ -33,6 +33,7 @@ Editors::Editors(QWidget *parent) :
     QWidget(parent), splitter(nullptr), currentGroupIndex(-1)
 {
 	splitter = new MiniSplitter(Qt::Horizontal);
+	splitter->setDoubleClickResizeEnabled(true);
 	splitter->setChildrenCollapsible(false);
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
@@ -547,6 +548,13 @@ void Editors::moveAllToGroupZeroifEmpty()
 bool Editors::getSplitVertical()
 {
     return splitter->orientation() == Qt::Vertical;
+}
+
+void Editors::updatePalette()
+{
+    for(TxsTabWidget *tw:tabGroups){
+        tw->updateStyle();
+    }
 }
 
 /*!

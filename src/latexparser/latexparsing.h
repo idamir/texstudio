@@ -28,9 +28,11 @@ TokenList getArgContent(Token &tk);
 TokenList getArgContent(TokenList &tl, int pos, int level, int runAwayPrevention = 10);
 TokenStack getContext(QDocumentLineHandle *dlh, int pos);
 QString getCommandFromToken(Token tk); ///< get command name from Token \a tk which is an argument
+Token getCommandTokenFromToken(Token tk);
 Token getCommandTokenFromToken(TokenList tl, Token tk);
 Token::TokenType getCompleterContext(QDocumentLineHandle *dlh, int column);
 
+int determineKeyValIndex(const CommandDescription &cd);
 }
 
 #endif // LATEXPARSING_H

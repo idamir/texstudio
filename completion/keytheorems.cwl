@@ -1,5 +1,5 @@
 # keytheorems package
-# Matthew Bertucci 2025/05/19 for v0.2.7
+# Matthew Bertucci 2026/02/20 for v0.3.5
 
 #include:aliascnt
 #include:amsthm
@@ -34,6 +34,8 @@ continues*=#%label
 restate-keys={%<keyvals%>}
 listhack=#true,false
 seq=%<name%>
+tcb-append={%<tcolorbox keys%>}
+ignore=#true,false
 #endkeyvals
 \listoftheorems
 \listoftheorems[options%keyvals]
@@ -64,6 +66,8 @@ restate-counter
 qed-symbol=%<symbol%>
 auto-translate#true,false
 store-sets-label
+predefined
+predefined={%<options%>}
 #endkeyvals
 
 #keyvals:\keytheoremset#c
@@ -84,6 +88,8 @@ continues-code=%<code%>
 name=%<display name%>
 refname=%<ref name%>
 Refname=%<ref name%>
+plural-refname=%<ref name%>
+plural-Refname=%<ref name%>
 #endkeyvals
 
 # keys that can be used in styles
@@ -178,6 +184,7 @@ no-chapter-skip#true,false
 chapter-skip-length=##L
 no-toc#true,false
 format-code=%<code%>
+one-col#true,false
 #endkeyvals
 
 \addtheoremcontentsline{level}{text}#*
@@ -191,3 +198,6 @@ format-code=%<code%>
 
 # expl3 interface
 \l_keythms_thmuse_envname_tl#/%expl3
+\keythms_getthm_theorem:nnnnn {%<⟨name⟩%>} {%<⟨number⟩%>} {%<⟨restate counters⟩%>} {%<⟨keys⟩%>} {%<⟨body text⟩%>}#/%expl3
+\keythms_getthm_body:nnn {%<⟨name⟩%>} {%<⟨restate counters⟩%>} {%<⟨body text⟩%>}#/%expl3
+\keythms_listof_listcmd:nnnnnnn {%<⟨name⟩%>} {%<⟨number⟩%>} {%<⟨Href⟩%>} {%<⟨page⟩%>} {%<⟨restate counters⟩%>} {%<⟨keys⟩%>} {%<⟨body text⟩%>}#/%expl3

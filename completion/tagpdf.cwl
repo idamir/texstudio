@@ -1,7 +1,7 @@
 # tagpdf package
-# Matthew Bertucci 2025/05/17 for v0.99q
+# Matthew Bertucci 2026/03/21 for v0.99z
 
-#include:pdfmanagement-testphase
+#include:pdfmanagement
 
 \tagpdfsetup{keyvals}
 
@@ -9,7 +9,7 @@
 activate=%<tag%>
 activate/all#true,false
 activate/mc#true,false
-activate/softhyphen#true,false
+activate/softhyphen=#false,off,char,artifact,true,on
 activate/spaces#true,false
 activate/struct#true,false
 activate/struct-dest#true,false
@@ -47,15 +47,6 @@ table/header-rows=%<comma list%>
 text/lang=%<lang%>
 #endkeyvals
 
-\tagtool{keyvals}
-
-#keyvals:\tagtool
-para/tagging#true,false
-para/maintag=%<tag%>
-para/tag=%<tag%>
-para/flattened#true,false
-#endkeyvals
-
 \tagmcbegin{keyvals}
 
 #keyvals:\tagmcbegin
@@ -65,6 +56,7 @@ stash#true,false
 label=%<name%>
 alt=%<text%>
 actualtext=%<text%>
+lang=%<lang%>
 raw=%<PDF code%>
 #endkeyvals
 
@@ -87,8 +79,7 @@ attribute-class={%<attr1,attr2,...%>}
 title=%<text%>
 title-o=%<text%>
 AF=%<object%>
-root-AF=%<object%>
-root-supplemental-file=%<file name%>
+catalog-supplemental-file=%<file name%>
 AFinline=%<text%>
 AFinline-o=%<text%>
 texsource=%<text%>
@@ -127,6 +118,9 @@ debug/structures
 \tag_if_box_tagged:NT %<⟨box⟩%> {%<⟨true code⟩%>}#/%expl3
 \tag_if_box_tagged:NTF %<⟨box⟩%> {%<⟨true code⟩%>} {%<⟨false code⟩%>}#/%expl3
 \tag_if_box_tagged_p:N %<⟨box⟩%>#/%expl3
+\tag_if_in:nF {%<⟨structure⟩%>} {%<⟨false code⟩%>}#/%expl3
+\tag_if_in:nT {%<⟨structure⟩%>} {%<⟨true code⟩%>}#/%expl3
+\tag_if_in:nTF {%<⟨structure⟩%>} {%<⟨true code⟩%>} {%<⟨false code⟩%>}#/%expl3
 \tag_mc_add_missing_to_stream:Nn %<⟨box⟩%> {%<⟨stream name⟩%>}#/%expl3
 \tag_mc_artifact_group_begin:n {%<⟨name⟩%>}#/%expl3
 \tag_mc_artifact_group_end:#/%expl3
@@ -154,4 +148,3 @@ debug/structures
 \tag_struct_parent_int:#/%expl3
 \tag_struct_use:n {%<⟨label⟩%>}#/%expl3
 \tag_struct_use_num:n {%<⟨struct number⟩%>}#/%expl3
-\tag_tool:n {%<⟨keyval⟩%>}#/%expl3
